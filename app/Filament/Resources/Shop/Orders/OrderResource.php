@@ -27,11 +27,17 @@ class OrderResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'number';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Shop';
+    protected static string | UnitEnum | null $navigationGroup = 'Cửa hàng';
 
     protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-shopping-bag';
 
     protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationLabel = 'Đơn hàng';
+    
+    protected static ?string $modelLabel = 'Đơn hàng';
+    
+    protected static ?string $pluralModelLabel = 'Đơn hàng';
 
     public static function form(Schema $schema): Schema
     {
@@ -82,7 +88,7 @@ class OrderResource extends Resource
         /** @var Order $record */
 
         return [
-            'Customer' => optional($record->customer)->name,
+            'Khách hàng' => optional($record->customer)->name,
         ];
     }
 

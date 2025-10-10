@@ -42,10 +42,10 @@ class CategoryForm
                         Select::make('parent_id')
                             ->relationship('parent', 'name', fn (Builder $query) => $query->where('parent_id', null))
                             ->searchable()
-                            ->placeholder('Select parent category'),
+                            ->placeholder('Chọn danh mục cha'),
 
                         Toggle::make('is_visible')
-                            ->label('Visibility')
+                            ->label('Hiển thị')
                             ->default(true),
 
                         RichEditor::make('description'),
@@ -57,7 +57,7 @@ class CategoryForm
                             ->state(fn (Category $record): ?string => $record->created_at?->diffForHumans()),
 
                         TextEntry::make('updated_at')
-                            ->label('Last modified at')
+                            ->label('Lần sửa cuối')
                             ->state(fn (Category $record): ?string => $record->updated_at?->diffForHumans()),
                     ])
                     ->columnSpan(['lg' => 1])

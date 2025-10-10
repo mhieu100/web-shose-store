@@ -26,7 +26,7 @@ class LinkForm
                     ->required()
                     ->columnSpanFull(),
                 TextInput::make('url')
-                    ->label('URL')
+                    ->label('Liên kết URL')
                     ->required()
                     ->maxLength(255)
                     ->columnSpanFull(),

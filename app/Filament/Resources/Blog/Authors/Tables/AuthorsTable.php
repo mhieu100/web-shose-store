@@ -20,13 +20,14 @@ class AuthorsTable
                 Split::make([
                     Stack::make([
                         TextColumn::make('name')
+                            ->label('Tên tác giả')
                             ->searchable()
                             ->sortable()
                             ->weight('medium')
                             ->alignLeft(),
 
                         TextColumn::make('email')
-                            ->label('Email address')
+                            ->label('Địa chỉ email')
                             ->searchable()
                             ->sortable()
                             ->color('gray')
@@ -36,10 +37,11 @@ class AuthorsTable
                     Stack::make([
                         TextColumn::make('github_handle')
                             ->icon('icon-github')
-                            ->label('GitHub handle')
+                            ->label('Tài khoản GitHub')
                             ->alignLeft(),
 
                         TextColumn::make('twitter_handle')
+                            ->label('Tài khoản Twitter')
                             ->icon('icon-twitter')
                             ->alignLeft(),
                     ])->space(2),
@@ -56,7 +58,7 @@ class AuthorsTable
                 DeleteBulkAction::make()
                     ->action(function (): void {
                         Notification::make()
-                            ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
+                            ->title('Này, này, đừng tinh nghịch, để lại một số bản ghi cho người khác chơi với!')
                             ->warning()
                             ->send();
                     }),

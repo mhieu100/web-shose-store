@@ -29,12 +29,12 @@ class ListOrders extends ListRecords
     public function getTabs(): array
     {
         return [
-            null => Tab::make('All'),
-            'new' => Tab::make()->query(fn ($query) => $query->where('status', 'new')),
-            'processing' => Tab::make()->query(fn ($query) => $query->where('status', 'processing')),
-            'shipped' => Tab::make()->query(fn ($query) => $query->where('status', 'shipped')),
-            'delivered' => Tab::make()->query(fn ($query) => $query->where('status', 'delivered')),
-            'cancelled' => Tab::make()->query(fn ($query) => $query->where('status', 'cancelled')),
+            null => Tab::make('Tất cả'),
+            'new' => Tab::make('Mới')->query(fn ($query) => $query->where('status', 'new')),
+            'processing' => Tab::make('Đang xử lý')->query(fn ($query) => $query->where('status', 'processing')),
+            'shipped' => Tab::make('Đã gửi')->query(fn ($query) => $query->where('status', 'shipped')),
+            'delivered' => Tab::make('Đã giao')->query(fn ($query) => $query->where('status', 'delivered')),
+            'cancelled' => Tab::make('Đã hủy')->query(fn ($query) => $query->where('status', 'cancelled')),
         ];
     }
 }

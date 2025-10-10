@@ -28,7 +28,11 @@ class ProductResource extends Resource
 
     protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-bolt';
 
-    protected static ?string $navigationLabel = 'Products';
+    protected static ?string $navigationLabel = 'Sản phẩm';
+    
+    protected static ?string $modelLabel = 'Sản phẩm';
+    
+    protected static ?string $pluralModelLabel = 'Sản phẩm';
 
     protected static ?int $navigationSort = 0;
 
@@ -75,7 +79,7 @@ class ProductResource extends Resource
         /** @var Product $record */
 
         return [
-            'Brand' => optional($record->brand)->name,
+            'Thương hiệu' => optional($record->brand)->name,
         ];
     }
 

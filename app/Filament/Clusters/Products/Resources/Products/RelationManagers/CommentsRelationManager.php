@@ -41,7 +41,7 @@ class CommentsRelationManager extends RelationManager
                     ->required(),
 
                 Toggle::make('is_visible')
-                    ->label('Public visibility')
+                    ->label('Hiển thị công khai')
                     ->default(true),
 
                 RichEditor::make('content')
@@ -57,7 +57,7 @@ class CommentsRelationManager extends RelationManager
                 TextEntry::make('title'),
                 TextEntry::make('customer.name'),
                 IconEntry::make('is_visible')
-                    ->label('Public visibility'),
+                    ->label('Hiển thị công khai'),
                 TextEntry::make('content')
                     ->markdown(),
             ]);
@@ -76,7 +76,7 @@ class CommentsRelationManager extends RelationManager
                     ->sortable(),
 
                 IconColumn::make('is_visible')
-                    ->label('Public visibility')
+                    ->label('Hiển thị công khai')
                     ->sortable(),
             ])
             ->filters([
@@ -89,9 +89,9 @@ class CommentsRelationManager extends RelationManager
                         $user = auth()->user();
 
                         Notification::make()
-                            ->title('New comment')
+                            ->title('Bình luận mới')
                             ->icon('heroicon-o-chat-bubble-bottom-center-text')
-                            ->body("**{$record->customer->name} commented on product ({$record->commentable->name}).**")
+                            ->body("**{$record->customer->name} đã bình luận về sản phẩm ({$record->commentable->name}).**")
                             ->sendToDatabase($user);
                     }),
             ])

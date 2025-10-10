@@ -18,7 +18,7 @@ class AuthorForm
                     ->maxLength(255),
 
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label('Địa chỉ email')
                     ->required()
                     ->maxLength(255)
                     ->email()
@@ -28,7 +28,7 @@ class AuthorForm
                     ->columnSpan('full'),
 
                 TextInput::make('github_handle')
-                    ->label('GitHub handle')
+                    ->label('Tài khoản GitHub')
                     ->maxLength(255),
 
                 TextInput::make('twitter_handle')

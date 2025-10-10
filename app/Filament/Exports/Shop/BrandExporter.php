@@ -15,19 +15,19 @@ class BrandExporter extends Exporter
     {
         return [
             ExportColumn::make('id')
-                ->label('ID'),
+                ->label('Mã ID'),
             ExportColumn::make('name'),
             ExportColumn::make('slug'),
             ExportColumn::make('website'),
             ExportColumn::make('created_at'),
             ExportColumn::make('updated_at')
-                ->label('Last modified at'),
+                ->label('Lần sửa cuối'),
         ];
     }
 
     public static function getCompletedNotificationBody(Export $export): string
     {
-        $body = 'Your brand export has completed and ' . number_format($export->successful_rows) . ' ' . str('row')->plural($export->successful_rows) . ' exported.';
+        $body = 'Việc xuất thương hiệu của bạn đã hoàn thành và ' . number_format($export->successful_rows) . ' ' . str('dòng')->plural($export->successful_rows) . ' đã được xuất.';
 
         if ($failedRowsCount = $export->getFailedRowsCount()) {
             $body .= ' ' . number_format($failedRowsCount) . ' ' . str('row')->plural($failedRowsCount) . ' failed to export.';

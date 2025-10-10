@@ -65,8 +65,8 @@ class PaymentsRelationManager extends RelationManager
                 ToggleButtons::make('method')
                     ->inline()
                     ->options([
-                        'credit_card' => 'Credit card',
-                        'bank_transfer' => 'Bank transfer',
+                        'credit_card' => 'Thẻ tín dụng',
+                        'bank_transfer' => 'Chuyển khoản ngân hàng',
                         'paypal' => 'PayPal',
                     ])
                     ->required(),
@@ -82,7 +82,7 @@ class PaymentsRelationManager extends RelationManager
                     ->searchable()
                     ->sortable(),
 
-                ColumnGroup::make('Details')
+                ColumnGroup::make('Chi tiết')
                     ->columns([
                         TextColumn::make('reference')
                             ->searchable(),
@@ -92,7 +92,7 @@ class PaymentsRelationManager extends RelationManager
                             ->money(fn ($record) => $record->currency),
                     ]),
 
-                ColumnGroup::make('Context')
+                ColumnGroup::make('Ngữ cảnh')
                     ->columns([
                         TextColumn::make('provider')
                             ->formatStateUsing(fn ($state) => Str::headline($state))

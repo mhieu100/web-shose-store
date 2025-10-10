@@ -45,7 +45,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(fn () => view('filament.app.logo'))
             ->brandLogoHeight('1.25rem')
             ->navigationGroups([
-                'Shop',
+                'Cửa hàng',
                 'Blog',
             ])
             ->databaseNotifications()
@@ -65,7 +65,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugin(
                 SpatieTranslatablePlugin::make()
-                    ->defaultLocales(['en', 'es', 'nl']),
+                    ->defaultLocales(['vi', 'en']),
             )
             ->spa()
             ->colors([

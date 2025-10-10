@@ -19,7 +19,7 @@ class LinkInfolist
                 TextEntry::make('description')
                     ->columnSpanFull(),
                 TextEntry::make('url')
-                    ->label('URL')
+                    ->label('Liên kết URL')
                     ->columnSpanFull()
                     ->url(fn (Link $record): string => '#' . urlencode($record->url)),
                 SpatieMediaLibraryImageEntry::make('image')

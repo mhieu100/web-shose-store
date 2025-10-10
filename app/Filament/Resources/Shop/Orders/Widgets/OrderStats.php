@@ -32,14 +32,14 @@ class OrderStats extends BaseWidget
             ->count();
 
         return [
-            Stat::make('Orders', $this->getPageTableQuery()->count())
+            Stat::make('Đơn hàng', $this->getPageTableQuery()->count())
                 ->chart(
                     $orderData
                         ->map(fn (TrendValue $value) => $value->aggregate)
                         ->toArray()
                 ),
-            Stat::make('Open orders', $this->getPageTableQuery()->whereIn('status', ['open', 'processing'])->count()),
-            Stat::make('Average price', number_format((float) $this->getPageTableQuery()->avg('total_price'), 2)),
+            Stat::make('Đơn hàng mở', $this->getPageTableQuery()->whereIn('status', ['open', 'processing'])->count()),
+            Stat::make('Giá trung bình', number_format((float) $this->getPageTableQuery()->avg('total_price'), 2)),
         ];
     }
 }
