@@ -27,6 +27,12 @@ class CategoryResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    protected static ?string $navigationLabel = 'Danh mục Blog';
+    
+    protected static ?string $modelLabel = 'Danh mục Blog';
+    
+    protected static ?string $pluralModelLabel = 'Danh mục Blog';
+
     public static function form(Schema $schema): Schema
     {
         return CategoryForm::configure($schema);

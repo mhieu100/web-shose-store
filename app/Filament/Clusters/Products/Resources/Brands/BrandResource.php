@@ -26,7 +26,13 @@ class BrandResource extends Resource
 
     protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-bookmark-square';
 
-    protected static ?string $navigationParentItem = 'Products';
+    protected static ?string $navigationLabel = 'Thương hiệu';
+    
+    protected static ?string $modelLabel = 'Thương hiệu';
+    
+    protected static ?string $pluralModelLabel = 'Thương hiệu';
+
+    protected static ?string $navigationParentItem = 'Sản phẩm';
 
     protected static ?int $navigationSort = 2;
 

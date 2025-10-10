@@ -10,9 +10,11 @@ class ProductsCluster extends Cluster
 {
     protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-squares-2x2';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Shop';
+    protected static string | UnitEnum | null $navigationGroup = 'Cửa hàng';
 
     protected static ?int $navigationSort = 0;
+
+    protected static ?string $navigationLabel = 'Sản phẩm';
 
     protected static ?string $slug = 'shop/products';
 }

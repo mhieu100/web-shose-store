@@ -50,13 +50,13 @@ class PostForm
                             ->required(),
 
                         DatePicker::make('published_at')
-                            ->label('Publishing date'),
+                            ->label('Ngày xuất bản'),
 
                         SpatieTagsInput::make('tags'),
                     ])
                     ->columns(2),
 
-                Section::make('Image')
+                Section::make('Hình ảnh')
                     ->schema([
                         SpatieMediaLibraryFileUpload::make('image')
                             ->collection('post-images')

@@ -23,20 +23,25 @@ class OrdersTable
         return $table
             ->columns([
                 TextColumn::make('number')
+                    ->label('Số đơn hàng')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('customer.name')
+                    ->label('Khách hàng')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('status')
+                    ->label('Trạng thái')
                     ->badge(),
                 TextColumn::make('currency')
+                    ->label('Tiền tệ')
                     ->getStateUsing(fn ($record): ?string => Currency::find($record->currency)->name ?? null)
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('total_price')
+                    ->label('Tổng tiền')
                     ->searchable()
                     ->sortable()
                     ->summarize([
@@ -44,7 +49,7 @@ class OrdersTable
                             ->money(),
                     ]),
                 TextColumn::make('shipping_price')
-                    ->label('Shipping cost')
+                    ->label('Phí vận chuyển')
                     ->searchable()
                     ->sortable()
                     ->toggleable()
@@ -53,7 +58,7 @@ class OrdersTable
                             ->money(),
                     ]),
                 TextColumn::make('created_at')
-                    ->label('Order date')
+                    ->label('Ngày đặt hàng')
                     ->date()
                     ->toggleable(),
             ])
@@ -61,12 +66,12 @@ class OrdersTable
                 TrashedFilter::make(),
 
                 Filter::make('created_at')
-                    ->label('Order date')
+                    ->label('Ngày đặt hàng')
                     ->schema([
                         DatePicker::make('created_from')
-                            ->placeholder(fn ($state): string => 'Dec 18, ' . now()->subYear()->format('Y')),
+                            ->placeholder(fn ($state): string => '18 Th12, ' . now()->subYear()->format('Y')),
                         DatePicker::make('created_until')
-                            ->placeholder(fn ($state): string => now()->format('M d, Y')),
+                            ->placeholder(fn ($state): string => now()->format('d/m/Y')),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -82,10 +87,10 @@ class OrdersTable
                     ->indicateUsing(function (array $data): array {
                         $indicators = [];
                         if ($data['created_from'] ?? null) {
-                            $indicators['created_from'] = 'Order from ' . Carbon::parse($data['created_from'])->toFormattedDateString();
+                            $indicators['created_from'] = 'Đơn hàng từ ' . Carbon::parse($data['created_from'])->toFormattedDateString();
                         }
                         if ($data['created_until'] ?? null) {
-                            $indicators['created_until'] = 'Order until ' . Carbon::parse($data['created_until'])->toFormattedDateString();
+                            $indicators['created_until'] = 'Đơn hàng đến ' . Carbon::parse($data['created_until'])->toFormattedDateString();
                         }
 
                         return $indicators;
@@ -98,14 +103,14 @@ class OrdersTable
                 DeleteBulkAction::make()
                     ->action(function (): void {
                         Notification::make()
-                            ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
+                            ->title('Này, này, đừng tinh nghịch, để lại một số bản ghi cho người khác chơi với!')
                             ->warning()
                             ->send();
                     }),
             ])
             ->groups([
                 Group::make('created_at')
-                    ->label('Order date')
+                    ->label('Ngày đặt hàng')
                     ->date()
                     ->collapsible(),
             ]);

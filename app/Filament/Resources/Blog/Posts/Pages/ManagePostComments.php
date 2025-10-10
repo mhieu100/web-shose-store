@@ -42,7 +42,7 @@ class ManagePostComments extends ManageRelatedRecords
                     ->required(),
 
                 Toggle::make('is_visible')
-                    ->label('Public visibility')
+                    ->label('Hiển thị công khai')
                     ->default(true),
 
                 RichEditor::make('content')
@@ -59,7 +59,7 @@ class ManagePostComments extends ManageRelatedRecords
                 TextEntry::make('title'),
                 TextEntry::make('customer.name'),
                 IconEntry::make('is_visible')
-                    ->label('Public visibility'),
+                    ->label('Hiển thị công khai'),
                 TextEntry::make('content')
                     ->markdown(),
             ]);
@@ -79,7 +79,7 @@ class ManagePostComments extends ManageRelatedRecords
                     ->sortable(),
 
                 IconColumn::make('is_visible')
-                    ->label('Public visibility')
+                    ->label('Hiển thị công khai')
                     ->sortable(),
             ])
             ->filters([

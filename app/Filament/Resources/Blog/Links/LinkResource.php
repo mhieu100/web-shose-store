@@ -29,6 +29,12 @@ class LinkResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    protected static ?string $navigationLabel = 'Liên kết';
+    
+    protected static ?string $modelLabel = 'Liên kết';
+    
+    protected static ?string $pluralModelLabel = 'Liên kết';
+
     public static function form(Schema $schema): Schema
     {
         return LinkForm::configure($schema);

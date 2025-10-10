@@ -16,16 +16,18 @@ class BrandsTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Tên thương hiệu')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('website')
+                    ->label('Trang web')
                     ->searchable()
                     ->sortable(),
                 IconColumn::make('is_visible')
-                    ->label('Visibility')
+                    ->label('Hiển thị')
                     ->sortable(),
                 TextColumn::make('updated_at')
-                    ->label('Last modified at')
+                    ->label('Lần sửa cuối')
                     ->date()
                     ->sortable(),
             ])
@@ -39,7 +41,7 @@ class BrandsTable
                 DeleteBulkAction::make()
                     ->action(function (): void {
                         Notification::make()
-                            ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
+                            ->title('Này, này, đừng tinh nghịch, để lại một số bản ghi cho người khác chơi với!')
                             ->warning()
                             ->send();
                     }),

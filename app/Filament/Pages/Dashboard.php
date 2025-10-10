@@ -13,6 +13,10 @@ class Dashboard extends BaseDashboard
 {
     use BaseDashboard\Concerns\HasFiltersForm;
 
+    protected static ?string $navigationLabel = 'Bảng điều khiển';
+
+    protected static ?string $title = 'Bảng điều khiển';
+
     public function filtersForm(Schema $schema): Schema
     {
         return $schema

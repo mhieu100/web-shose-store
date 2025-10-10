@@ -51,7 +51,7 @@ class ProductForm
                             ])
                             ->columns(2),
 
-                        Section::make('Images')
+                        Section::make('Hình ảnh')
                             ->schema([
                                 SpatieMediaLibraryFileUpload::make('media')
                                     ->collection('product-images')
@@ -63,7 +63,7 @@ class ProductForm
                             ])
                             ->collapsible(),
 
-                        Section::make('Pricing')
+                        Section::make('Định giá')
                             ->schema([
                                 TextInput::make('price')
                                     ->numeric()
@@ -71,54 +71,54 @@ class ProductForm
                                     ->required(),
 
                                 TextInput::make('old_price')
-                                    ->label('Compare at price')
+                                    ->label('Giá so sánh')
                                     ->numeric()
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                     ->required(),
 
                                 TextInput::make('cost')
-                                    ->label('Cost per item')
-                                    ->helperText('Customers won\'t see this price.')
+                                    ->label('Giá vốn mỗi sản phẩm')
+                                    ->helperText('Khách hàng sẽ không thấy giá này.')
                                     ->numeric()
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                     ->required(),
                             ])
                             ->columns(2),
-                        Section::make('Inventory')
+                        Section::make('Kho hàng')
                             ->schema([
                                 TextInput::make('sku')
-                                    ->label('SKU (Stock Keeping Unit)')
+                                    ->label('Mã SKU (Đơn vị lưu kho)')
                                     ->unique(Product::class, 'sku', ignoreRecord: true)
                                     ->maxLength(255)
                                     ->required(),
 
                                 TextInput::make('barcode')
-                                    ->label('Barcode (ISBN, UPC, GTIN, etc.)')
+                                    ->label('Mã vạch (ISBN, UPC, GTIN, v.v.)')
                                     ->unique(Product::class, 'barcode', ignoreRecord: true)
                                     ->maxLength(255)
                                     ->required(),
 
                                 TextInput::make('qty')
-                                    ->label('Quantity')
+                                    ->label('Số lượng')
                                     ->numeric()
                                     ->rules(['integer', 'min:0'])
                                     ->required(),
 
                                 TextInput::make('security_stock')
-                                    ->helperText('The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock.')
+                                    ->helperText('Tồn kho an toàn là giới hạn tồn kho cho sản phẩm của bạn, cảnh báo khi sản phẩm sắp hết hàng.')
                                     ->numeric()
                                     ->rules(['integer', 'min:0'])
                                     ->required(),
                             ])
                             ->columns(2),
 
-                        Section::make('Shipping')
+                        Section::make('Vận chuyển')
                             ->schema([
                                 Checkbox::make('backorder')
-                                    ->label('This product can be returned'),
+                                    ->label('Sản phẩm này có thể được trả lại'),
 
                                 Checkbox::make('requires_shipping')
-                                    ->label('This product will be shipped'),
+                                    ->label('Sản phẩm này sẽ được vận chuyển'),
                             ])
                             ->columns(2),
                     ])
@@ -126,20 +126,20 @@ class ProductForm
 
                 Group::make()
                     ->schema([
-                        Section::make('Status')
+                        Section::make('Trạng thái')
                             ->schema([
                                 Toggle::make('is_visible')
-                                    ->label('Visibility')
-                                    ->helperText('This product will be hidden from all sales channels.')
+                                    ->label('Hiển thị')
+                                    ->helperText('Sản phẩm này sẽ bị ẩn khỏi tất cả các kênh bán hàng.')
                                     ->default(true),
 
                                 DatePicker::make('published_at')
-                                    ->label('Publishing date')
+                                    ->label('Ngày xuất bản')
                                     ->default(now())
                                     ->required(),
                             ]),
 
-                        Section::make('Associations')
+                        Section::make('Liên kết')
                             ->schema([
                                 Select::make('shop_brand_id')
                                     ->relationship('brand', 'name')

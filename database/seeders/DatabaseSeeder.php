@@ -92,7 +92,7 @@ class DatabaseSeeder extends Seeder
 
         foreach ($orders->random(rand(5, 8)) as $order) {
             Notification::make()
-                ->title('New order')
+                ->title('Đơn hàng mới')
                 ->icon('heroicon-o-shopping-bag')
                 ->body("{$order->customer->name} ordered {$order->items->count()} products.")
                 ->actions([

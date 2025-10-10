@@ -23,19 +23,19 @@ class CategoryImporter extends Importer
                 ->rules(['required', 'max:255'])
                 ->example('category-a'),
             ImportColumn::make('description')
-                ->example('This is the description for Category A.'),
+                ->example('Đây là mô tả cho Danh mục A.'),
             ImportColumn::make('is_visible')
-                ->label('Visibility')
+                ->label('Hiển thị')
                 ->requiredMapping()
                 ->boolean()
                 ->rules(['required', 'boolean'])
                 ->example('yes'),
             ImportColumn::make('seo_title')
-                ->label('SEO title')
+                ->label('Tiêu đề SEO')
                 ->rules(['max:60'])
                 ->example('Awesome Category A'),
             ImportColumn::make('seo_description')
-                ->label('SEO description')
+                ->label('Mô tả SEO')
                 ->rules(['max:160'])
                 ->example('Wow! It\'s just so amazing.'),
         ];
@@ -50,7 +50,7 @@ class CategoryImporter extends Importer
 
     public static function getCompletedNotificationBody(Import $import): string
     {
-        $body = 'Your blog category import has completed and ' . number_format($import->successful_rows) . ' ' . str('row')->plural($import->successful_rows) . ' imported.';
+        $body = 'Việc nhập danh mục blog của bạn đã hoàn thành và ' . number_format($import->successful_rows) . ' ' . str('dòng')->plural($import->successful_rows) . ' đã được nhập.';
 
         if ($failedRowsCount = $import->getFailedRowsCount()) {
             $body .= ' ' . number_format($failedRowsCount) . ' ' . str('row')->plural($failedRowsCount) . ' failed to import.';

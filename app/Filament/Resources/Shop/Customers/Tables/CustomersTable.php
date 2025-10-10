@@ -17,15 +17,18 @@ class CustomersTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Tên khách hàng')
                     ->searchable(isIndividual: true)
                     ->sortable(),
                 TextColumn::make('email')
-                    ->label('Email address')
+                    ->label('Địa chỉ email')
                     ->searchable(isIndividual: true, isGlobal: false)
                     ->sortable(),
                 TextColumn::make('country')
+                    ->label('Quốc gia')
                     ->getStateUsing(fn ($record): ?string => Country::find($record->addresses->first()?->country)->name ?? null),
                 TextColumn::make('phone')
+                    ->label('Số điện thoại')
                     ->searchable()
                     ->sortable(),
             ])
@@ -39,7 +42,7 @@ class CustomersTable
                 DeleteBulkAction::make()
                     ->action(function (): void {
                         Notification::make()
-                            ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
+                            ->title('Này, này, đừng tinh nghịch, để lại một số bản ghi cho người khác chơi với!')
                             ->warning()
                             ->send();
                     }),
