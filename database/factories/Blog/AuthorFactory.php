@@ -17,12 +17,26 @@ class AuthorFactory extends Factory
 
     public function definition(): array
     {
+        $authors = [
+            'Nguyễn Văn An',
+            'Trần Thị Bình',
+            'Lê Hoàng Cường', 
+            'Phạm Thị Diệu',
+            'Hoàng Văn Đức',
+            'Võ Thị Giang',
+            'Đỗ Minh Hải',
+            'Bùi Thị Lan'
+        ];
+        
+        $name = $this->faker->randomElement($authors) . ' ' . $this->faker->numberBetween(1, 100);
+        $firstName = explode(' ', $name)[2] ?? 'An';
+        
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'bio' => $this->faker->realTextBetween(),
-            'github_handle' => $this->faker->userName(),
-            'twitter_handle' => $this->faker->userName(),
+            'name' => $name,
+            'email' => strtolower(str_replace(' ', '.', $name)) . '@techblog.vn',
+            'bio' => 'Tác giả ' . $name . ' - Chuyên gia về công nghệ và viết lách, có nhiều năm kinh nghiệm trong lĩnh vực truyền thông.',
+            'github_handle' => strtolower($firstName) . '_dev',
+            'twitter_handle' => '@' . strtolower($firstName) . '_writer',
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
             'updated_at' => $this->faker->dateTimeBetween('-5 month', 'now'),
         ];

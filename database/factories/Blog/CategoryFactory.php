@@ -18,11 +18,24 @@ class CategoryFactory extends Factory
 
     public function definition(): array
     {
+        $categories = [
+            'Công nghệ',
+            'Kinh doanh', 
+            'Giáo dục',
+            'Sức khỏe',
+            'Du lịch',
+            'Ẩm thực',
+            'Thể thao',
+            'Giải trí'
+        ];
+        
+        $name = $this->faker->unique()->randomElement($categories);
+        
         return [
-            'name' => $name = $this->faker->unique()->words(3, true),
+            'name' => $name,
             'slug' => Str::slug($name),
-            'description' => $this->faker->realText(),
-            'is_visible' => $this->faker->boolean(),
+            'description' => 'Danh mục ' . $name . ' với các bài viết chất lượng cao.',
+            'is_visible' => true,
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
             'updated_at' => $this->faker->dateTimeBetween('-5 month', 'now'),
         ];
