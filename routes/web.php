@@ -20,3 +20,9 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
 
 Route::get('form', Form::class);
 
+// Invoice routes - chỉ admin mới được in hóa đơn
+Route::middleware(['auth', 'admin.only'])->group(function () {
+    Route::get('/invoice/{order}/download', [\App\Http\Controllers\InvoiceController::class, 'downloadInvoice'])->name('invoice.download');
+    Route::get('/invoice/{order}/view', [\App\Http\Controllers\InvoiceController::class, 'viewInvoice'])->name('invoice.view');
+});
+

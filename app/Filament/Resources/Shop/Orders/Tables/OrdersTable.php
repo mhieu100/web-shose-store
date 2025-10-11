@@ -6,6 +6,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
+use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\Summarizers\Sum;
@@ -103,6 +104,12 @@ class OrdersTable
                     ->label('Xem'),
                 EditAction::make()
                     ->label('Sửa'),
+                Action::make('print_invoice')
+                    ->label('In hóa đơn')
+                    ->icon('heroicon-o-printer')
+                    ->color('success')
+                    ->url(fn ($record) => route('invoice.download', $record))
+                    ->openUrlInNewTab(),                
                 DeleteAction::make()
                     ->label('Xóa')
                     ->requiresConfirmation()
