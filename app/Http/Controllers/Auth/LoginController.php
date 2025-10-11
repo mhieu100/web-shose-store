@@ -9,7 +9,15 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     /**
-     * Handle user login and update last_login_at timestamp
+     * Show the login form
+     */
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    /**
+     * Handle user login and redirect based on role
      */
     public function login(Request $request)
     {
@@ -18,7 +26,9 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
+        $remember = $request->boolean('remember');
+
+        if (Auth::attempt($credentials, $remember)) {
             $user = Auth::user();
             
             // Check if user is active
@@ -34,11 +44,30 @@ class LoginController extends Controller
 
             $request->session()->regenerate();
 
+            // Redirect based on role
+            if ($user->hasRole('admin')) {
+                return redirect()->intended('/admin');
+            }
+
+            // CTV and registered users go to home
             return redirect()->intended('/');
         }
 
         return back()->withErrors([
             'email' => 'Thông tin đăng nhập không chính xác.',
         ]);
+    }
+
+    /**
+     * Handle logout
+     */
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }
