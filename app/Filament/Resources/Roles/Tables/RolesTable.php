@@ -13,11 +13,6 @@ class RolesTable
     {
         return $table
             ->columns([
-                \Filament\Tables\Columns\TextColumn::make('sort_order')
-                    ->label('#')
-                    ->sortable()
-                    ->width(50),
-
                 \Filament\Tables\Columns\TextColumn::make('name')
                     ->label('Tên role')
                     ->searchable()
