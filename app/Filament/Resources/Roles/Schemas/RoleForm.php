@@ -57,6 +57,8 @@ class RoleForm
                                 'manage_customers' => 'Quản lý khách hàng',
                                 'manage_brands' => 'Quản lý thương hiệu',
                                 'manage_categories' => 'Quản lý danh mục',
+                                'manage_commissions' => 'Quản lý hoa hồng',
+                                'manage_withdrawals' => 'Quản lý rút tiền',
                                 'view_dashboard' => 'Xem dashboard',
                                 'manage_settings' => 'Quản lý cài đặt',
                                 'view_products' => 'Xem sản phẩm',
