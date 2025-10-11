@@ -37,14 +37,10 @@ class DatabaseSeeder extends Seeder
         // Clear images
         Storage::deleteDirectory('public');
 
-        // Admin
-        $this->command->warn(PHP_EOL . 'Creating admin user...');
-        $user = $this->withProgressBar(1, fn () => User::factory(1)->create([
-            'name' => 'Demo User',
-            'email' => 'admin@filamentphp.com',
-            'password' => Hash::make('demo.Filament@2021!'),
-        ]));
-        $this->command->info('Admin user created.');
+        // Create users via UserRoleSeeder
+        $this->call([
+            UserRoleSeeder::class,
+        ]);
 
         // Shop
         $this->command->warn(PHP_EOL . 'Creating shop brands...');
@@ -86,6 +82,9 @@ class DatabaseSeeder extends Seeder
             )
             ->create());
 
+        // Get admin user for notifications
+        $adminUser = User::where('role', 'admin')->first();
+        
         foreach ($orders->random(rand(2, 3)) as $order) {
             Notification::make()
                 ->title('Đơn hàng mới')
@@ -95,7 +94,7 @@ class DatabaseSeeder extends Seeder
                     Action::make('View')
                         ->url(OrderResource::getUrl('edit', ['record' => $order])),
                 ])
-                ->sendToDatabase($user);
+                ->sendToDatabase($adminUser);
         }
         $this->command->info('Shop orders created.');
 

@@ -8,10 +8,11 @@ class Login extends \Filament\Auth\Pages\Login
     {
         parent::mount();
 
+        // Xóa thông tin mặc định - để trống cho user tự nhập
         $this->form->fill([
-            'email' => 'admin@filamentphp.com',
-            'password' => 'demo.Filament@2021!',
-            'remember' => true,
+            'email' => '',
+            'password' => '',
+            'remember' => false,
         ]);
     }
 }
