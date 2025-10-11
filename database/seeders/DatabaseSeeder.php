@@ -37,9 +37,10 @@ class DatabaseSeeder extends Seeder
         // Clear images
         Storage::deleteDirectory('public');
 
-        // Create users via UserRoleSeeder
+        // Create roles and users with proper relationships
         $this->call([
-            UserRoleSeeder::class,
+            RoleSeeder::class,
+            UserSeeder::class,
         ]);
 
         // Shop
@@ -83,7 +84,9 @@ class DatabaseSeeder extends Seeder
             ->create());
 
         // Get admin user for notifications
-        $adminUser = User::where('role', 'admin')->first();
+        $adminUser = User::whereHas('role', function($q) {
+            $q->where('name', 'admin');
+        })->first();
         
         foreach ($orders->random(rand(2, 3)) as $order) {
             Notification::make()
@@ -124,6 +127,13 @@ class DatabaseSeeder extends Seeder
             ->count(5)
             ->create());
         $this->command->info('Blog links created.');
+
+        // Commission system
+        $this->command->warn(PHP_EOL . 'Creating commission data...');
+        $this->call([
+            CommissionSeeder::class,
+        ]);
+        $this->command->info('Commission data created.');
     }
 
     protected function withProgressBar(int $amount, Closure $createCollectionOfOne): Collection

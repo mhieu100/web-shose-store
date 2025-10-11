@@ -38,8 +38,10 @@ class UsersTable
                 TextColumn::make('role.label')
                     ->label('Vai trò')
                     ->badge()
+                    ->default('Không có vai trò')
                     ->color(function ($record): string {
-                        return match($record->role?->name) {
+                        $roleName = $record->role?->name;
+                        return match($roleName) {
                             'admin' => 'danger',
                             'ctv' => 'warning',
                             'registered' => 'secondary',
@@ -70,13 +72,10 @@ class UsersTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('role')
+                SelectFilter::make('role_id')
                     ->label('Vai trò')
-                    ->options([
-                        'registered' => 'Người mua hàng',
-                        'ctv' => 'Cộng tác viên',
-                        'admin' => 'Quản trị viên',
-                    ]),
+                    ->relationship('role', 'label')
+                    ->preload(),
 
                 TernaryFilter::make('is_active')
                     ->label('Trạng thái')

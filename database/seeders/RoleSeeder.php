@@ -28,13 +28,16 @@ class RoleSeeder extends Seeder
                     'manage_categories',
                     'view_dashboard',
                     'manage_settings',
+                    'manage_commissions',
+                    'manage_withdrawals',
                 ],
+                'is_active' => true,
                 'sort_order' => 1,
             ],
             [
                 'name' => 'ctv',
                 'label' => 'Cộng tác viên',
-                'description' => 'Hỗ trợ bán hàng và chăm sóc khách hàng',
+                'description' => 'Hỗ trợ bán hàng và chăm sóc khách hàng, nhận hoa hồng',
                 'permissions' => [
                     'view_products',
                     'create_orders',
@@ -45,7 +48,10 @@ class RoleSeeder extends Seeder
                     'update_customers',
                     'view_own_profile',
                     'update_own_profile',
+                    'view_own_commissions',
+                    'request_withdrawals',
                 ],
+                'is_active' => true,
                 'sort_order' => 2,
             ],
             [
@@ -58,6 +64,7 @@ class RoleSeeder extends Seeder
                     'view_own_orders',
                     'update_own_profile',
                 ],
+                'is_active' => true,
                 'sort_order' => 3,
             ],
         ];
@@ -69,6 +76,6 @@ class RoleSeeder extends Seeder
             );
         }
 
-        $this->command->info('Đã tạo xong các roles: Admin, CTV, Registered');
+        $this->command->info('✅ Đã tạo xong các roles: Admin, CTV, Registered');
     }
 }
