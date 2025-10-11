@@ -27,7 +27,11 @@ class ProductsTable
                 SpatieMediaLibraryImageColumn::make('image')
                     ->label('Hình ảnh')
                     ->collection('product-images')
-                    ->conversion('thumb'),
+                    ->conversion('thumb')
+                    ->limit(1)
+                    ->circular()
+                    ->stacked()
+                    ->size(60),
 
                 TextColumn::make('name')
                     ->label('Tên sản phẩm')
