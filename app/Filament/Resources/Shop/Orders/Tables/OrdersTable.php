@@ -4,6 +4,9 @@ namespace App\Filament\Resources\Shop\Orders\Tables;
 
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
+use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\Summarizers\Sum;
@@ -97,16 +100,23 @@ class OrdersTable
                     }),
             ])
             ->recordActions([
-                EditAction::make(),
-            ])
-            ->groupedBulkActions([
-                DeleteBulkAction::make()
-                    ->action(function (): void {
-                        Notification::make()
-                            ->title('Này, này, đừng tinh nghịch, để lại một số bản ghi cho người khác chơi với!')
-                            ->warning()
-                            ->send();
-                    }),
+                ViewAction::make()
+                    ->label('Xem'),
+                EditAction::make()
+                    ->label('Sửa'),
+                Action::make('print_invoice')
+                    ->label('In hóa đơn')
+                    ->icon('heroicon-o-printer')
+                    ->color('success')
+                    ->url(fn ($record) => route('invoice.download', $record))
+                    ->openUrlInNewTab(),                
+                DeleteAction::make()
+                    ->label('Xóa')
+                    ->requiresConfirmation()
+                    ->modalHeading('Xác nhận xóa')
+                    ->modalDescription('Bạn có chắc chắn muốn xóa? Hành động này không thể hoàn tác.')
+                    ->modalSubmitActionLabel('Xóa')
+                    ->modalCancelActionLabel('Hủy'),
             ])
             ->groups([
                 Group::make('created_at')

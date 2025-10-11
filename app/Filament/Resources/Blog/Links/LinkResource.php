@@ -14,12 +14,10 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use LaraZeus\SpatieTranslatable\Resources\Concerns\Translatable;
 use UnitEnum;
 
 class LinkResource extends Resource
 {
-    use Translatable;
 
     protected static ?string $model = Link::class;
 

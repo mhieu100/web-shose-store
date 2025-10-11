@@ -37,14 +37,11 @@ class DatabaseSeeder extends Seeder
         // Clear images
         Storage::deleteDirectory('public');
 
-        // Admin
-        $this->command->warn(PHP_EOL . 'Creating admin user...');
-        $user = $this->withProgressBar(1, fn () => User::factory(1)->create([
-            'name' => 'Demo User',
-            'email' => 'admin@filamentphp.com',
-            'password' => Hash::make('demo.Filament@2021!'),
-        ]));
-        $this->command->info('Admin user created.');
+        // Create roles and users with proper relationships
+        $this->call([
+            RoleSeeder::class,
+            UserSeeder::class,
+        ]);
 
         // Shop
         $this->command->warn(PHP_EOL . 'Creating shop brands...');
@@ -86,6 +83,11 @@ class DatabaseSeeder extends Seeder
             )
             ->create());
 
+        // Get admin user for notifications
+        $adminUser = User::whereHas('role', function($q) {
+            $q->where('name', 'admin');
+        })->first();
+        
         foreach ($orders->random(rand(2, 3)) as $order) {
             Notification::make()
                 ->title('Đơn hàng mới')
@@ -95,7 +97,7 @@ class DatabaseSeeder extends Seeder
                     Action::make('View')
                         ->url(OrderResource::getUrl('edit', ['record' => $order])),
                 ])
-                ->sendToDatabase($user);
+                ->sendToDatabase($adminUser);
         }
         $this->command->info('Shop orders created.');
 
@@ -125,6 +127,13 @@ class DatabaseSeeder extends Seeder
             ->count(5)
             ->create());
         $this->command->info('Blog links created.');
+
+        // Commission system
+        $this->command->warn(PHP_EOL . 'Creating commission data...');
+        $this->call([
+            CommissionSeeder::class,
+        ]);
+        $this->command->info('Commission data created.');
     }
 
     protected function withProgressBar(int $amount, Closure $createCollectionOfOne): Collection

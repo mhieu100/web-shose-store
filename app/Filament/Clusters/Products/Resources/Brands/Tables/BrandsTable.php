@@ -4,6 +4,8 @@ namespace App\Filament\Clusters\Products\Resources\Brands\Tables;
 
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -35,16 +37,17 @@ class BrandsTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
-            ])
-            ->groupedBulkActions([
-                DeleteBulkAction::make()
-                    ->action(function (): void {
-                        Notification::make()
-                            ->title('Này, này, đừng tinh nghịch, để lại một số bản ghi cho người khác chơi với!')
-                            ->warning()
-                            ->send();
-                    }),
+                ViewAction::make()
+                    ->label('Xem'),
+                EditAction::make()
+                    ->label('Sửa'),
+                DeleteAction::make()
+                    ->label('Xóa')
+                    ->requiresConfirmation()
+                    ->modalHeading('Xác nhận xóa')
+                    ->modalDescription('Bạn có chắc chắn muốn xóa? Hành động này không thể hoàn tác.')
+                    ->modalSubmitActionLabel('Xóa')
+                    ->modalCancelActionLabel('Hủy'),
             ])
             ->defaultSort('sort')
             ->reorderable('sort');
