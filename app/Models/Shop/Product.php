@@ -105,12 +105,28 @@ class Product extends Model implements HasMedia
         $this
             ->addMediaCollection('product-images')
             ->useDisk('product-images')
-            ->acceptsMimeTypes(['image/jpeg'])
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp', 'image/jpg'])
             ->registerMediaConversions(function (Media $media): void {
                 $this
                     ->addMediaConversion('thumb')
-                    ->width(40)
-                    ->height(40);
+                    ->width(300)
+                    ->height(300)
+                    ->sharpen(10)
+                    ->format('webp')
+                    ->optimize()
+                    ->nonQueued();
             });
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('thumb')
+            ->width(300)
+            ->height(300)
+            ->sharpen(10)
+            ->format('webp')
+            ->optimize()
+            ->nonQueued(); // Process immediately for better UX
     }
 }

@@ -47,4 +47,13 @@ class Category extends Model implements HasMedia
     {
         return $this->belongsToMany(Product::class, 'shop_category_product', 'shop_category_id', 'shop_product_id');
     }
+
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('category-image')
+            ->useDisk('public')
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp'])
+            ->singleFile();
+    }
 }

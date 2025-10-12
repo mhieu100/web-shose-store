@@ -1,0 +1,142 @@
+/* Product Detail Page Enhancements */
+.product-single-info .product-description {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    color: #666;
+}
+
+.product-single-info .product-category {
+    margin-bottom: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.product-single-info .product-category span {
+    color: #333;
+    font-size: 14px;
+}
+
+.prices {
+    margin-bottom: 20px;
+}
+
+.price-old {
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.price {
+    color: #e74c3c;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.rating-box-wrap {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.rating-box i.fa-star {
+    color: #ffc107;
+}
+
+.rating-box i.fa-star-o {
+    color: #ddd;
+}
+
+.review-status a {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.product-flag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+}
+
+.product-flag ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.product-flag li.discount {
+    background: #e74c3c;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Related Products Section */
+.product-area .section-title .title {
+    margin-bottom: 10px;
+}
+
+.product-area .section-title .desc p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Product Images Enhancement */
+.product-single-thumb .swiper-slide img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.single-product-nav-slider .swiper-slide {
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.single-product-nav-slider .swiper-slide.swiper-slide-thumb-active {
+    border-color: #007bff;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .product-single-info {
+        margin-top: 30px;
+    }
+
+    .price {
+        font-size: 20px;
+    }
+
+    .rating-box-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+/* Loading Animation */
+.product-item .product-thumb img {
+    transition: transform 0.3s ease;
+}
+
+.product-item:hover .product-thumb img {
+    transform: scale(1.05);
+}
+
+/* Product Actions Enhancement */
+.product-action {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-item:hover .product-action {
+    opacity: 1;
+}

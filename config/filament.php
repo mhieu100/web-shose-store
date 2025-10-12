@@ -37,4 +37,39 @@ return [
 
     'default_filesystem_disk' => env('FILAMENT_FILESYSTEM_DISK', 'public'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Assets Path
+    |--------------------------------------------------------------------------
+    |
+    | This is the directory where Filament's assets will be published to.
+    | It is relative to the `public` directory.
+    |
+    */
+
+    'assets_path' => null,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cache Path
+    |--------------------------------------------------------------------------
+    |
+    | This is the directory that Filament will use to store cache files.
+    |
+    */
+
+    'cache_path' => base_path('bootstrap/cache/filament'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Livewire Loading Delay
+    |--------------------------------------------------------------------------
+    |
+    | This sets the delay before the loading indicator appears.
+    | Setting this can improve perceived performance.
+    |
+    */
+
+    'livewire_loading_delay' => 'default',
+
 ];

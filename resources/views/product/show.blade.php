@@ -1,22 +1,28 @@
 @extends('layouts.frontend')
 
-@section('title', 'Chi tiết sản phẩm - Shoe Store')
+@section('title', $product->name . ' - Shoe Store')
+@section('description', $product->description ? strip_tags($product->description) : 'Chi tiết sản phẩm ' . $product->name)
 
 @section('content')
+@php use Illuminate\Support\Facades\Storage; @endphp
     <!--== Start Page Header Area Wrapper ==-->
     <div class="page-header-area" data-bg-img="{{ asset('img/photos/bg3.webp') }}">
       <div class="container pt--0 pb--0">
         <div class="row">
           <div class="col-12">
             <div class="page-header-content">
-              <h2 class="title" data-aos="fade-down" data-aos-duration="1000">Chi tiết sản phẩm</h2>
+              <h2 class="title" data-aos="fade-down" data-aos-duration="1000">{{ $product->name }}</h2>
               <nav class="breadcrumb-area" data-aos="fade-down" data-aos-duration="1200">
                 <ul class="breadcrumb">
                   <li><a href="{{ route('home') }}">Trang chủ</a></li>
                   <li class="breadcrumb-sep">//</li>
                   <li><a href="{{ route('shop') }}">Cửa hàng</a></li>
+                  @if($product->categories->count() > 0)
+                    <li class="breadcrumb-sep">//</li>
+                    <li><a href="{{ route('shop') }}">{{ $product->categories->first()->name }}</a></li>
+                  @endif
                   <li class="breadcrumb-sep">//</li>
-                  <li>Chi tiết sản phẩm</li>
+                  <li>{{ $product->name }}</li>
                 </ul>
               </nav>
             </div>
@@ -38,50 +44,36 @@
                   <div class="product-single-thumb">
                     <div class="swiper-container single-product-thumb single-product-thumb-slider">
                       <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                          <a class="lightbox-image" data-fancybox="gallery" href="{{ asset('img/shop/product-single/1.webp') }}">
-                            <img src="{{ asset('img/shop/product-single/1.webp') }}" width="570" height="541" alt="Sản phẩm">
-                          </a>
-                        </div>
-                        <div class="swiper-slide">
-                          <a class="lightbox-image" data-fancybox="gallery" href="{{ asset('img/shop/product-single/2.webp') }}">
-                            <img src="{{ asset('img/shop/product-single/2.webp') }}" width="570" height="541" alt="Sản phẩm">
-                          </a>
-                        </div>
-                        <div class="swiper-slide">
-                          <a class="lightbox-image" data-fancybox="gallery" href="{{ asset('img/shop/product-single/3.webp') }}">
-                            <img src="{{ asset('img/shop/product-single/3.webp') }}" width="570" height="541" alt="Sản phẩm">
-                          </a>
-                        </div>
-                        <div class="swiper-slide">
-                          <a class="lightbox-image" data-fancybox="gallery" href="{{ asset('img/shop/product-single/4.webp') }}">
-                            <img src="{{ asset('img/shop/product-single/4.webp') }}" width="570" height="541" alt="Sản phẩm">
-                          </a>
-                        </div>
-                        <div class="swiper-slide">
-                          <a class="lightbox-image" data-fancybox="gallery" href="{{ asset('img/shop/product-single/5.webp') }}">
-                            <img src="{{ asset('img/shop/product-single/5.webp') }}" width="570" height="541" alt="Sản phẩm">
-                          </a>
-                        </div>
+                        @if($product->getMedia('product-images')->count() > 0)
+                          @foreach($product->getMedia('product-images') as $media)
+                            <div class="swiper-slide">
+                              <a class="lightbox-image" data-fancybox="gallery" href="{{ $media->getUrl() }}">
+                                <img src="{{ $media->getUrl() }}" width="570" height="541" alt="{{ $product->name }}">
+                              </a>
+                            </div>
+                          @endforeach
+                        @else
+                          <div class="swiper-slide">
+                            <a class="lightbox-image" data-fancybox="gallery" href="{{ asset('img/shop/product-single/1.webp') }}">
+                              <img src="{{ asset('img/shop/product-single/1.webp') }}" width="570" height="541" alt="{{ $product->name }}">
+                            </a>
+                          </div>
+                        @endif
                       </div>
                     </div>
                     <div class="swiper-container single-product-nav single-product-nav-slider">
                       <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                          <img src="{{ asset('img/shop/product-single/nav-1.webp') }}" width="127" height="127" alt="Sản phẩm">
-                        </div>
-                        <div class="swiper-slide">
-                          <img src="{{ asset('img/shop/product-single/nav-2.webp') }}" width="127" height="127" alt="Sản phẩm">
-                        </div>
-                        <div class="swiper-slide">
-                          <img src="{{ asset('img/shop/product-single/nav-3.webp') }}" width="127" height="127" alt="Sản phẩm">
-                        </div>
-                        <div class="swiper-slide">
-                          <img src="{{ asset('img/shop/product-single/nav-4.webp') }}" width="127" height="127" alt="Sản phẩm">
-                        </div>
-                        <div class="swiper-slide">
-                          <img src="{{ asset('img/shop/product-single/nav-5.webp') }}" width="127" height="127" alt="Sản phẩm">
-                        </div>
+                        @if($product->getMedia('product-images')->count() > 0)
+                          @foreach($product->getMedia('product-images') as $media)
+                            <div class="swiper-slide">
+                              <img src="{{ $media->getUrl('thumb') }}" width="127" height="127" alt="{{ $product->name }}">
+                            </div>
+                          @endforeach
+                        @else
+                          <div class="swiper-slide">
+                            <img src="{{ asset('img/shop/product-single/nav-1.webp') }}" width="127" height="127" alt="{{ $product->name }}">
+                          </div>
+                        @endif
                       </div>
                     </div>
                   </div>
@@ -90,24 +82,41 @@
                 <div class="col-xl-6">
                   <!--== Start Product Info Area ==-->
                   <div class="product-single-info">
-                    <h3 class="main-title">{{ ['Giày da nam cao cấp', 'Giày thể thao Nike', 'Giày boot cổ cao', 'Giày sneaker Adidas', 'Giày oxford thanh lịch', 'Giày cao gót nữ', 'Giày canvas casual', 'Giày running professional'][($id ?? 1) - 1] ?? 'Giày thời trang cao cấp' }}</h3>
+                    <h3 class="main-title">{{ $product->name }}</h3>
                     <div class="prices">
-                      <span class="price">{{ number_format(rand(1500000, 3000000)) }} VNĐ</span>
+                      @if($product->old_price && $product->old_price > $product->price)
+                        <span class="price-old">{{ number_format($product->old_price) }} VNĐ</span>
+                        <span class="price">{{ number_format($product->price) }} VNĐ</span>
+                      @else
+                        <span class="price">{{ number_format($product->price) }} VNĐ</span>
+                      @endif
                     </div>
                     <div class="rating-box-wrap">
                       <div class="rating-box">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
+                        @for($i = 1; $i <= 5; $i++)
+                          <i class="fa fa-star{{ $i <= ($product->rating ?? 5) ? '' : '-o' }}"></i>
+                        @endfor
                       </div>
                       <div class="review-status">
-                        <a href="javascript:void(0)">({{ rand(3, 15) }} đánh giá khách hàng)</a>
+                        <a href="javascript:void(0)">({{ $product->comments_count ?? 0 }} đánh giá khách hàng)</a>
                       </div>
                     </div>
-                    <p>Sản phẩm được làm từ chất liệu cao cấp, thiết kế hiện đại và phong cách. Đây là lựa chọn hoàn hảo cho những ai yêu thích sự thoải mái và thời trang. Sản phẩm có độ bền cao, phù hợp với nhiều hoạt động khác nhau trong cuộc sống hàng ngày.</p>
-                    
+                    @if($product->description)
+                      <div class="product-description">
+                        {!! nl2br(e($product->description)) !!}
+                      </div>
+                    @endif
+
+                    @if($product->categories->count() > 0)
+                      <div class="product-category">
+                        <span><strong>Danh mục:</strong>
+                          @foreach($product->categories as $category)
+                            {{ $category->name }}@if(!$loop->last), @endif
+                          @endforeach
+                        </span>
+                      </div>
+                    @endif
+
                     <div class="product-color">
                       <h6 class="title">Màu sắc</h6>
                       <ul class="color-list">
@@ -117,7 +126,7 @@
                         <li data-bg-color="#c7bb9b"></li>
                       </ul>
                     </div>
-                    
+
                     <div class="product-size">
                       <h6 class="title">Kích thước</h6>
                       <ul class="size-list">
@@ -129,7 +138,7 @@
                         <li>43</li>
                       </ul>
                     </div>
-                    
+
                     <div class="product-quick-action">
                       <div class="qty-wrap">
                         <div class="pro-qty">
@@ -138,14 +147,14 @@
                       </div>
                       <a class="btn-theme" href="{{ route('cart') }}">Add to Cart</a>
                     </div>
-                    
+
                     <div class="product-wishlist-compare">
                       <a href="{{ route('wishlist') }}"><i class="pe-7s-like"></i>Thêm vào yêu thích</a>
                       <a href="{{ route('compare') }}"><i class="pe-7s-shuffle"></i>So sánh sản phẩm</a>
                     </div>
-                    
+
                     <div class="product-info-footer">
-                      <h6 class="code"><span>Mã sản phẩm:</span> SP-{{ str_pad($id ?? 1, 3, '0', STR_PAD_LEFT) }}</h6>
+                      <h6 class="code"><span>Mã sản phẩm:</span> {{ $product->sku ?? 'SP-' . str_pad($product->id, 3, '0', STR_PAD_LEFT) }}</h6>
                       <div class="social-icons">
                         <span>Chia sẻ</span>
                         <a href="#/" target="_blank"><i class="fa fa-facebook"></i></a>
@@ -307,42 +316,62 @@
           </div>
         </div>
         <div class="row">
-          @for($i = 1; $i <= 4; $i++)
+          @forelse($relatedProducts as $relatedProduct)
           <div class="col-sm-6 col-lg-3">
             <!--== Start Product Item ==-->
             <div class="product-item">
               <div class="inner-content">
                 <div class="product-thumb">
-                  <a href="{{ route('product.show', $i + 10) }}">
-                    <img src="{{ asset('img/shop/' . (($i - 1) % 8 + 1) . '.webp') }}" width="270" height="274" alt="Sản phẩm {{ $i }}">
+                  <a href="{{ route('product.show', $relatedProduct->id) }}">
+                    @if($relatedProduct->getFirstMediaUrl('product-images'))
+                      <img src="{{ $relatedProduct->getFirstMediaUrl('product-images') }}" width="270" height="274" alt="{{ $relatedProduct->name }}">
+                    @else
+                      <img src="{{ asset('img/shop/1.webp') }}" width="270" height="274" alt="{{ $relatedProduct->name }}">
+                    @endif
                   </a>
+                  @if($relatedProduct->old_price && $relatedProduct->old_price > $relatedProduct->price)
+                    <div class="product-flag">
+                      <ul>
+                        <li class="discount">-{{ round((($relatedProduct->old_price - $relatedProduct->price) / $relatedProduct->old_price) * 100) }}%</li>
+                      </ul>
+                    </div>
+                  @endif
                   <div class="product-action">
-                    <a class="btn-product-wishlist" href="{{ route('wishlist') }}"><i class="fa fa-heart"></i></a>
-                    <a class="btn-product-cart" href="{{ route('cart') }}"><i class="fa fa-shopping-cart"></i></a>
-                    <button type="button" class="btn-product-quick-view-open">
+                    <a class="btn-product-wishlist" href="{{ route('wishlist') }}" title="{{ __('home.add_to_wishlist') }}"><i class="fa fa-heart"></i></a>
+                    <a class="btn-product-cart" href="{{ route('cart') }}" title="{{ __('home.add_to_cart') }}"><i class="fa fa-shopping-cart"></i></a>
+                    <button type="button" class="btn-product-quick-view-open" title="{{ __('home.quick_view') }}">
                       <i class="fa fa-arrows"></i>
                     </button>
-                    <a class="btn-product-compare" href="{{ route('compare') }}"><i class="fa fa-random"></i></a>
+                    <a class="btn-product-compare" href="{{ route('compare') }}" title="{{ __('home.compare') }}"><i class="fa fa-random"></i></a>
                   </div>
                 </div>
                 <div class="product-info">
-                  <div class="category">
-                    <ul>
-                      <li><a href="{{ route('shop') }}">{{ $i % 2 == 0 ? 'Nam' : 'Nữ' }}</a></li>
-                      <li class="sep">/</li>
-                      <li><a href="{{ route('shop') }}">{{ $i % 3 == 0 ? 'Thể thao' : 'Thời trang' }}</a></li>
-                    </ul>
-                  </div>
-                  <h4 class="title"><a href="{{ route('product.show', $i + 10) }}">Sản phẩm liên quan {{ $i }}</a></h4>
+                  @if($relatedProduct->categories->count() > 0)
+                    <div class="category">
+                      <ul>
+                        <li><a href="{{ route('shop') }}">{{ $relatedProduct->categories->first()->name }}</a></li>
+                      </ul>
+                    </div>
+                  @endif
+                  <h4 class="title"><a href="{{ route('product.show', $relatedProduct->id) }}">{{ $relatedProduct->name }}</a></h4>
                   <div class="prices">
-                    <span class="price">{{ number_format(rand(1500000, 2800000)) }} VNĐ</span>
+                    @if($relatedProduct->old_price && $relatedProduct->old_price > $relatedProduct->price)
+                      <span class="price-old">{{ number_format($relatedProduct->old_price) }} VNĐ</span>
+                      <span class="price">{{ number_format($relatedProduct->price) }} VNĐ</span>
+                    @else
+                      <span class="price">{{ number_format($relatedProduct->price) }} VNĐ</span>
+                    @endif
                   </div>
                 </div>
               </div>
             </div>
             <!--== End Product Item ==-->
           </div>
-          @endfor
+          @empty
+          <div class="col-12">
+            <p class="text-center">Chưa có sản phẩm liên quan nào.</p>
+          </div>
+          @endforelse
         </div>
       </div>
     </section>

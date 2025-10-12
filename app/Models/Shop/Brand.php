@@ -49,12 +49,18 @@ class Brand extends Model implements HasMedia
             ->addMediaCollection('brand-images')
             ->useDisk('brand-images')
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp'])
-            ->singleFile()
-            ->registerMediaConversions(function (Media $media): void {
-                $this
-                    ->addMediaConversion('thumb')
-                    ->width(150)
-                    ->height(150);
-            });
+            ->singleFile();
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('thumb')
+            ->width(150)
+            ->height(150)
+            ->sharpen(10)
+            ->format('webp')
+            ->optimize()
+            ->nonQueued(); // Process immediately for better UX
     }
 }
