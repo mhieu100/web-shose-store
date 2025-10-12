@@ -77,24 +77,15 @@ class ProductForm
                         Section::make('Định giá')
                             ->schema([
                                 TextInput::make('price')
+                                    ->label('Giá sản phẩm')
                                     ->numeric()
-                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
-                                    ->required(),
-
-                                TextInput::make('old_price')
-                                    ->label('Giá so sánh')
-                                    ->numeric()
-                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
-                                    ->required(),
-
-                                TextInput::make('cost')
-                                    ->label('Giá vốn mỗi sản phẩm')
-                                    ->helperText('Khách hàng sẽ không thấy giá này.')
-                                    ->numeric()
-                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
-                                    ->required(),
-                            ])
-                            ->columns(2),
+                                    ->rules(['numeric', 'min:0', 'max:9999999999'])
+                                    ->required()
+                                    ->suffix('VNĐ')
+                                    ->helperText('Giá bán sản phẩm cho khách hàng (tối đa 9.999.999.999 VNĐ)')
+                                    ->formatStateUsing(fn ($state) => $state ? number_format($state, 0, ',', '.') : '')
+                                    ->dehydrateStateUsing(fn ($state) => $state ? (float) str_replace(['.', ','], '', $state) : null),
+                            ]),
                         Section::make('Kho hàng')
                             ->schema([
                                 TextInput::make('sku')
