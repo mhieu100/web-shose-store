@@ -32,6 +32,14 @@ class ProductFactory extends Factory
         
         $name = $this->faker->unique()->randomElement($products);
         
+        // Tạo sizes ngẫu nhiên (giày thường có nhiều size)
+        $allSizes = ['35', '36', '37', '38', '39', '40', '41', '42', '43', '44', 'S', 'M', 'L', 'XL'];
+        $sizes = $this->faker->randomElements($allSizes, $this->faker->numberBetween(3, 6));
+        
+        // Tạo colors ngẫu nhiên  
+        $allColors = ['Đen', 'Trắng', 'Nâu', 'Xanh navy', 'Đỏ', 'Xám', 'Be', 'Xanh lá'];
+        $colors = $this->faker->randomElements($allColors, $this->faker->numberBetween(2, 4));
+        
         return [
             'name' => $name,
             'slug' => Str::slug($name),
@@ -49,6 +57,8 @@ class ProductFactory extends Factory
             'published_at' => $this->faker->dateTimeBetween('-1 year', '+1 year'),
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
             'updated_at' => $this->faker->dateTimeBetween('-5 month', 'now'),
+            'sizes' => $sizes,
+            'colors' => $colors,
         ];
     }
 

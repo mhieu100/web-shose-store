@@ -9,6 +9,7 @@ use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\QueryBuilder;
@@ -65,6 +66,16 @@ class ProductsTable
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
+
+                TagsColumn::make('sizes')
+                    ->label('Kích cỡ')
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+
+                TagsColumn::make('colors')
+                    ->label('Màu sắc')
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
 
                 TextColumn::make('security_stock')
                     ->label('Tồn kho an toàn')

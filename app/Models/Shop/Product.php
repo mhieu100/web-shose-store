@@ -26,6 +26,43 @@ class Product extends Model implements HasMedia
     protected $table = 'shop_products';
 
     /**
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'shop_brand_id',
+        'name',
+        'slug',
+        'sku',
+        'barcode',
+        'description',
+        'qty',
+        'security_stock',
+        'featured',
+        'is_visible',
+        'old_price',
+        'price',
+        'cost',
+        'type',
+        'backorder',
+        'requires_shipping',
+        'published_at',
+        'seo_title',
+        'seo_description',
+        'weight_value',
+        'weight_unit',
+        'height_value',
+        'height_unit',
+        'width_value',
+        'width_unit',
+        'depth_value',
+        'depth_unit',
+        'volume_value',
+        'volume_unit',
+        'sizes',
+        'colors',
+    ];
+
+    /**
      * @var array<string, string>
      */
     protected $casts = [
@@ -34,6 +71,8 @@ class Product extends Model implements HasMedia
         'backorder' => 'boolean',
         'requires_shipping' => 'boolean',
         'published_at' => 'date',
+        'sizes' => 'array',
+        'colors' => 'array',
     ];
 
     /** @return BelongsTo<Brand, $this> */

@@ -9,6 +9,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Group;
@@ -48,6 +49,16 @@ class ProductForm
 
                                 RichEditor::make('description')
                                     ->columnSpan('full'),
+
+                                TagsInput::make('sizes')
+                                    ->label('Kích cỡ')
+                                    ->helperText('Nhập các kích cỡ có sẵn (ví dụ: S, M, L, XL hoặc 39, 40, 41, 42)')
+                                    ->placeholder('Nhập kích cỡ và nhấn Enter'),
+
+                                TagsInput::make('colors')
+                                    ->label('Màu sắc')
+                                    ->helperText('Nhập các màu sắc có sẵn (ví dụ: Đỏ, Xanh, Vàng, Đen)')
+                                    ->placeholder('Nhập màu sắc và nhấn Enter'),
                             ])
                             ->columns(2),
 
