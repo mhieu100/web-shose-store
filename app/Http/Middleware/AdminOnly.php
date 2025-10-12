@@ -29,7 +29,7 @@ class AdminOnly
 
         // Chỉ admin mới được truy cập admin panel
         if (!$user->hasRole('admin')) {
-            return redirect('/')->with('error', 'Bạn không có quyền truy cập trang quản trị.');
+            abort(404);
         }
 
         return $next($request);
