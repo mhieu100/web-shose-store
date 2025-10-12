@@ -76,8 +76,8 @@
 <!--== Start Aside Search Menu ==-->
 @include('partials.frontend.search-sidebar')
 
-<!--== Start Aside Menu ==-->
-@include('partials.frontend.mobile-menu')
+<!--== Start Quick View Menu ==-->
+@include('partials.frontend.quick-view')
 
 <!--== Javascript Files ==-->
 <!--== Modernizr js ==-->

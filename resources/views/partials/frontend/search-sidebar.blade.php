@@ -1,12 +1,24 @@
-<!-- Search Sidebar -->
-<aside class="aside-search-box-wrapper offcanvas offcanvas-top" tabindex="-1" id="AsideOffcanvasSearch">
+<!--== Start Aside Search Menu ==-->
+<aside class="aside-search-box-wrapper offcanvas offcanvas-top" tabindex="-1" id="AsideOffcanvasSearch" aria-labelledby="offcanvasTopLabel">
   <div class="offcanvas-header">
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <h5 class="d-none" id="offcanvasTopLabel">Aside Search</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="pe-7s-close"></i></button>
   </div>
   <div class="offcanvas-body">
-    <form action="{{ route('shop.search') }}" method="GET">
-      <input type="search" name="q" placeholder="Tìm kiếm sản phẩm..." class="form-control">
-      <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-    </form>
+    <div class="container pt--0 pb--0">
+      <div class="search-box-form-wrap">
+        <div class="search-note">
+          <p>Start typing and press Enter to search</p>
+        </div>
+        <form action="{{ route('shop.search') }}" method="GET">
+          <div class="search-form position-relative">
+            <label for="search-input" class="visually-hidden">Search</label>
+            <input id="search-input" type="search" name="q" class="form-control" placeholder="Search entire store…" value="{{ request('q') }}">
+            <button class="search-button"><i class="fa fa-search"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </aside>
+<!--== End Aside Search Menu ==-->

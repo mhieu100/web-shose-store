@@ -6,7 +6,7 @@
             <div class="header-top-align">
               <div class="header-top-align-start">
                 <div class="desc">
-                  <p>World Wide Completely Free Returns and Free Shipping</p>
+                  <p>Trên toàn thế giới Hoàn trả hàng miễn phí và giao hàng miễn phí</p>
                 </div>
               </div>
               <div class="header-top-align-end">
