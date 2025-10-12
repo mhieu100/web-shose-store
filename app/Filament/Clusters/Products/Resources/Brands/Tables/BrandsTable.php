@@ -8,6 +8,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -17,6 +18,12 @@ class BrandsTable
     {
         return $table
             ->columns([
+                SpatieMediaLibraryImageColumn::make('image')
+                    ->label('Hình ảnh')
+                    ->collection('brand-images')
+                    ->conversion('thumb')
+                    ->size(60)
+                    ->circular(),
                 TextColumn::make('name')
                     ->label('Tên thương hiệu')
                     ->searchable()
