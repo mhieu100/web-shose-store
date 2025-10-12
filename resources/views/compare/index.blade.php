@@ -25,97 +25,84 @@
     </div>
     <!--== End Page Header Area Wrapper ==-->
 
-    <!--== Start Compare Area ==-->
-    <section class="compare-area">
+    <!--== Start Shopping Compare Area Wrapper ==-->
+    <section class="shopping-compare-area">
       <div class="container">
         <div class="row">
-          <div class="col-12">
-            <div class="compare-table-wrap">
-              <div class="compare-table table-responsive">
-                <table class="table">
-                  <tbody>
-                    <tr class="compare-remove">
-                      <th>Xóa</th>
-                      @for($i = 1; $i <= 3; $i++)
-                      <td>
-                        <a href="#" class="remove-compare"><i class="fa fa-trash"></i></a>
-                      </td>
-                      @endfor
-                    </tr>
-                    <tr class="compare-thumbnail">
-                      <th>Hình ảnh</th>
-                      @for($i = 1; $i <= 3; $i++)
-                      <td>
+          <div class="col-md-12">
+            <div class="shopping-compare-form table-responsive">
+
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th class="fz-13">Thông tin sản phẩm</th>
+                    @for($i = 1; $i <= 3; $i++)
+                    <td>
+                      <div class="product-remove">
+                        <a href="#/"><i class="fa fa-times"></i>Xóa</a>
+                      </div>
+                      <div class="product-thumb">
                         <a href="{{ route('product.show', $i) }}">
-                          <img src="{{ asset('img/shop/' . $i . '.webp') }}" width="200" height="200" alt="Sản phẩm {{ $i }}">
+                          <img src="{{ asset('img/shop/product-mini/' . $i . '.webp') }}" width="90" height="110" alt="Image-HasTech">
                         </a>
-                      </td>
-                      @endfor
-                    </tr>
-                    <tr class="compare-title">
-                      <th>Tên sản phẩm</th>
-                      @for($i = 1; $i <= 3; $i++)
-                      <td>
-                        <h5><a href="{{ route('product.show', $i) }}">{{ ['Giày da nam cao cấp', 'Giày thể thao Nike', 'Giày boot cổ cao'][$i-1] }}</a></h5>
-                      </td>
-                      @endfor
-                    </tr>
-                    <tr class="compare-rating">
-                      <th>Đánh giá</th>
-                      @for($i = 1; $i <= 3; $i++)
-                      <td>
-                        <div class="rating">
-                          @for($j = 1; $j <= 5; $j++)
-                            <i class="fa fa-star{{ $j > (4 + $i % 2) ? '-o' : '' }}"></i>
-                          @endfor
-                        </div>
-                      </td>
-                      @endfor
-                    </tr>
-                    <tr class="compare-price">
-                      <th>Giá</th>
-                      @for($i = 1; $i <= 3; $i++)
-                      <td>
-                        <span class="price">{{ number_format(rand(1500000, 2800000)) }} VNĐ</span>
-                      </td>
-                      @endfor
-                    </tr>
-                    <tr class="compare-description">
-                      <th>Mô tả</th>
-                      @for($i = 1; $i <= 3; $i++)
-                      <td>
-                        <p>{{ ['Giày da thật cao cấp, thiết kế sang trọng, phù hợp cho công việc và dự tiệc.', 'Giày thể thao hiện đại, êm ái, phù hợp cho hoạt động thể thao và đi bộ hàng ngày.', 'Giày boot cổ cao, phong cách cá tính, thích hợp cho mùa đông và phong cách street.'][$i-1] }}</p>
-                      </td>
-                      @endfor
-                    </tr>
-                    <tr class="compare-stock">
-                      <th>Tình trạng</th>
-                      @for($i = 1; $i <= 3; $i++)
-                      <td>
-                        <span class="stock-status in-stock">Còn hàng</span>
-                      </td>
-                      @endfor
-                    </tr>
-                    <tr class="compare-addcart">
-                      <th>Thêm vào giỏ</th>
-                      @for($i = 1; $i <= 3; $i++)
-                      <td>
-                        <a href="{{ route('cart') }}" class="btn-compare-cart">Thêm vào giỏ</a>
-                      </td>
-                      @endfor
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="compare-action">
-                <a href="{{ route('shop') }}" class="btn-compare-continue">Tiếp tục mua sắm</a>
-                <button type="submit" class="btn-compare-clear">Xóa tất cả</button>
-              </div>
+                      </div>
+                      <div class="product-name">
+                        <h4 class="title"><a href="{{ route('product.show', $i) }}">{{ ['Giày da nam cao cấp', 'Giày thể thao Nike', 'Giày boot cổ cao'][$i-1] }}</a></h4>
+                      </div>
+                      <a href="{{ route('cart') }}" class="btn-cart">Thêm vào giỏ</a>
+                    </td>
+                    @endfor
+                  </tr>
+
+                  <tr>
+                    <th>Giá</th>
+                    @for($i = 1; $i <= 3; $i++)
+                    <td class="price">{{ number_format(rand(1500000, 2800000)) }} VNĐ</td>
+                    @endfor
+                  </tr>
+
+                  <tr>
+                    <th>Mã sản phẩm</th>
+                    @for($i = 1; $i <= 3; $i++)
+                    <td class="product-sku">SP-{{ 790 + $i }}</td>
+                    @endfor
+                  </tr>
+
+                  <tr>
+                    <th>Mô tả</th>
+                    @for($i = 1; $i <= 3; $i++)
+                    <td class="product-desc">{{ ['Giày da thật cao cấp, thiết kế sang trọng, phù hợp cho công việc và dự tiệc.', 'Giày thể thao hiện đại, êm ái, phù hợp cho hoạt động thể thao và đi bộ hàng ngày.', 'Giày boot cổ cao, phong cách cá tính, thích hợp cho mùa đông và phong cách street.'][$i-1] }}</td>
+                    @endfor
+                  </tr>
+
+                  <tr>
+                    <th>Tình trạng</th>
+                    @for($i = 1; $i <= 3; $i++)
+                    <td><span class="product-stock">Còn hàng</span></td>
+                    @endfor
+                  </tr>
+
+                  <tr>
+                    <th>Khối lượng</th>
+                    @for($i = 1; $i <= 3; $i++)
+                    <td class="product-weight">{{ rand(300, 600) }}g</td>
+                    @endfor
+                  </tr>
+
+                  <tr>
+                    <th>Kích thước</th>
+                    @for($i = 1; $i <= 3; $i++)
+                    <td class="product-dimensions">{{ ['26 x 15 x 10 cm', '28 x 16 x 11 cm', '27 x 15.5 x 12 cm'][$i-1] }}</td>
+                    @endfor
+                  </tr>
+                </tbody>
+              </table>
+
             </div>
           </div>
         </div>
       </div>
     </section>
-    <!--== End Compare Area ==-->
+    <!--== End Shopping Compare Area Wrapper ==-->
 </main>
 @endsection
