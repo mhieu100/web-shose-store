@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Public API routes
+Route::get('/banners', [\App\Http\Controllers\BannerController::class, 'index']);

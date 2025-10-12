@@ -8,6 +8,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $banners = \App\Http\Controllers\BannerController::getHomepageBanners();
+        
+        return view('home', compact('banners'));
     }
 }
