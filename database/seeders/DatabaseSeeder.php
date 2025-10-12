@@ -134,6 +134,13 @@ class DatabaseSeeder extends Seeder
             CommissionSeeder::class,
         ]);
         $this->command->info('Commission data created.');
+
+        // Coupons
+        $this->command->warn(PHP_EOL . 'Creating coupons...');
+        $this->call([
+            CouponSeeder::class,
+        ]);
+        $this->command->info('Coupons created.');
     }
 
     protected function withProgressBar(int $amount, Closure $createCollectionOfOne): Collection
