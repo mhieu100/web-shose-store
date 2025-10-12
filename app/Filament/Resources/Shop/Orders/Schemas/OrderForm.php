@@ -34,11 +34,11 @@ class OrderForm
                             ->schema(static::getDetailsComponents())
                             ->columns(2),
 
-                        Section::make('Order items')
+                        Section::make('Mặt hàng đặt')
                             ->afterHeader([
                                 Action::make('reset')
-                                    ->modalHeading('Are you sure?')
-                                    ->modalDescription('All existing items will be removed from the order.')
+                                    ->modalHeading('Bạn có chắc chắn?')
+                                    ->modalDescription('Tất cả các mục hiện có sẽ bị xóa khỏi đơn hàng.')
                                     ->requiresConfirmation()
                                     ->color('danger')
                                     ->action(fn (Set $set) => $set('items', [])),
@@ -52,11 +52,11 @@ class OrderForm
                 Section::make()
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label('Order date')
+                            ->label('Ngày đặt hàng')
                             ->state(fn (Order $record): ?string => $record->created_at?->diffForHumans()),
 
                         TextEntry::make('updated_at')
-                            ->label('Last modified at')
+                            ->label('Lần sửa cuối')
                             ->state(fn (Order $record): ?string => $record->updated_at?->diffForHumans()),
                     ])
                     ->columnSpan(['lg' => 1])
@@ -89,7 +89,7 @@ class OrderForm
                         ->maxLength(255),
 
                     TextInput::make('email')
-                        ->label('Email address')
+                        ->label('Địa chỉ email')
                         ->required()
                         ->email()
                         ->maxLength(255)
@@ -100,8 +100,8 @@ class OrderForm
                 ])
                 ->createOptionAction(function (Action $action) {
                     return $action
-                        ->modalHeading('Create customer')
-                        ->modalSubmitActionLabel('Create customer')
+                        ->modalHeading('Tạo khách hàng')
+                        ->modalSubmitActionLabel('Tạo khách hàng')
                         ->modalWidth('lg');
                 }),
 
@@ -129,15 +129,15 @@ class OrderForm
         return Repeater::make('items')
             ->relationship()
             ->table([
-                TableColumn::make('Product'),
-                TableColumn::make('Quantity')
+                TableColumn::make('Sản phẩm'),
+                TableColumn::make('Số lượng')
                     ->width(100),
-                TableColumn::make('Unit Price')
+                TableColumn::make('Đơn giá')
                     ->width(110),
             ])
             ->schema([
                 Select::make('shop_product_id')
-                    ->label('Product')
+                    ->label('Sản phẩm')
                     ->options(Product::query()->pluck('name', 'id'))
                     ->required()
                     ->reactive()
@@ -147,7 +147,7 @@ class OrderForm
                     ->searchable(),
 
                 TextInput::make('qty')
-                    ->label('Quantity')
+                    ->label('Số lượng')
                     ->numeric()
                     ->default(1)
                     ->required(),
@@ -160,7 +160,7 @@ class OrderForm
             ])
             ->extraItemActions([
                 Action::make('openProduct')
-                    ->tooltip('Open product')
+                    ->tooltip('Mở sản phẩm')
                     ->icon('heroicon-m-arrow-top-right-on-square')
                     ->url(function (array $arguments, Repeater $component): ?string {
                         $itemData = $component->getRawItemState($arguments['item']);

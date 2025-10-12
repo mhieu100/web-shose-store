@@ -23,46 +23,52 @@ class PostsTable
         return $table
             ->columns([
                 SpatieMediaLibraryImageColumn::make('image')
+                    ->label('Hình ảnh')
                     ->collection('post-images')
                     ->conversion('thumb'),
 
                 TextColumn::make('title')
+                    ->label('Tiêu đề')
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('slug')
+                    ->label('Đường dẫn')
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('author.name')
+                    ->label('Tác giả')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
 
                 TextColumn::make('status')
+                    ->label('Trạng thái')
                     ->badge()
-                    ->getStateUsing(fn (Post $record): string => $record->published_at?->isPast() ? 'Published' : 'Draft')
+                    ->getStateUsing(fn (Post $record): string => $record->published_at?->isPast() ? 'Đã xuất bản' : 'Bản nháp')
                     ->colors([
-                        'success' => 'Published',
+                        'success' => 'Đã xuất bản',
                     ]),
 
                 TextColumn::make('category.name')
+                    ->label('Danh mục')
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('published_at')
-                    ->label('Publishing date')
+                    ->label('Ngày xuất bản')
                     ->date(),
             ])
             ->filters([
                 Filter::make('published_at')
                     ->schema([
                         DatePicker::make('published_from')
-                            ->placeholder(fn ($state): string => 'Dec 18, ' . now()->subYear()->format('Y')),
+                            ->placeholder(fn ($state): string => '18 Th12, ' . now()->subYear()->format('Y')),
                         DatePicker::make('published_until')
-                            ->placeholder(fn ($state): string => now()->format('M d, Y')),
+                            ->placeholder(fn ($state): string => now()->format('d/m/Y')),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -78,10 +84,10 @@ class PostsTable
                     ->indicateUsing(function (array $data): array {
                         $indicators = [];
                         if ($data['published_from'] ?? null) {
-                            $indicators['published_from'] = 'Published from ' . Carbon::parse($data['published_from'])->toFormattedDateString();
+                            $indicators['published_from'] = 'Xuất bản từ ' . Carbon::parse($data['published_from'])->toFormattedDateString();
                         }
                         if ($data['published_until'] ?? null) {
-                            $indicators['published_until'] = 'Published until ' . Carbon::parse($data['published_until'])->toFormattedDateString();
+                            $indicators['published_until'] = 'Xuất bản đến ' . Carbon::parse($data['published_until'])->toFormattedDateString();
                         }
 
                         return $indicators;
@@ -98,7 +104,7 @@ class PostsTable
                 DeleteBulkAction::make()
                     ->action(function (): void {
                         Notification::make()
-                            ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
+                            ->title('Này, này, đừng tinh nghịch, để lại một số bản ghi cho người khác chơi với!')
                             ->warning()
                             ->send();
                     }),

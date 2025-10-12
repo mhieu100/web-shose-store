@@ -14,12 +14,10 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use LaraZeus\SpatieTranslatable\Resources\Concerns\Translatable;
 use UnitEnum;
 
 class LinkResource extends Resource
 {
-    use Translatable;
 
     protected static ?string $model = Link::class;
 
@@ -28,6 +26,12 @@ class LinkResource extends Resource
     protected static string | UnitEnum | null $navigationGroup = 'Blog';
 
     protected static ?int $navigationSort = 3;
+
+    protected static ?string $navigationLabel = 'Liên kết';
+    
+    protected static ?string $modelLabel = 'Liên kết';
+    
+    protected static ?string $pluralModelLabel = 'Liên kết';
 
     public static function form(Schema $schema): Schema
     {

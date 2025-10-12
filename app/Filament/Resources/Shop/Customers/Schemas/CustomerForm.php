@@ -22,7 +22,7 @@ class CustomerForm
                             ->required(),
 
                         TextInput::make('email')
-                            ->label('Email address')
+                            ->label('Địa chỉ email')
                             ->required()
                             ->email()
                             ->maxLength(255)
@@ -43,7 +43,7 @@ class CustomerForm
                             ->state(fn (Customer $record): ?string => $record->created_at?->diffForHumans()),
 
                         TextEntry::make('updated_at')
-                            ->label('Last modified at')
+                            ->label('Lần sửa cuối')
                             ->state(fn (Customer $record): ?string => $record->updated_at?->diffForHumans()),
                     ])
                     ->columnSpan(['lg' => 1])

@@ -3,6 +3,7 @@
 namespace App\Models\Shop;
 
 use App\Models\Comment;
+use App\Models\Shop\Coupon;
 use Database\Factories\Shop\ProductFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +27,43 @@ class Product extends Model implements HasMedia
     protected $table = 'shop_products';
 
     /**
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'shop_brand_id',
+        'name',
+        'slug',
+        'sku',
+        'barcode',
+        'description',
+        'qty',
+        'security_stock',
+        'featured',
+        'is_visible',
+        'old_price',
+        'price',
+        'cost',
+        'type',
+        'backorder',
+        'requires_shipping',
+        'published_at',
+        'seo_title',
+        'seo_description',
+        'weight_value',
+        'weight_unit',
+        'height_value',
+        'height_unit',
+        'width_value',
+        'width_unit',
+        'depth_value',
+        'depth_unit',
+        'volume_value',
+        'volume_unit',
+        'sizes',
+        'colors',
+    ];
+
+    /**
      * @var array<string, string>
      */
     protected $casts = [
@@ -34,6 +72,8 @@ class Product extends Model implements HasMedia
         'backorder' => 'boolean',
         'requires_shipping' => 'boolean',
         'published_at' => 'date',
+        'sizes' => 'array',
+        'colors' => 'array',
     ];
 
     /** @return BelongsTo<Brand, $this> */
@@ -52,6 +92,12 @@ class Product extends Model implements HasMedia
     public function comments(): MorphMany
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    /** @return BelongsToMany<Coupon, $this> */
+    public function coupons(): BelongsToMany
+    {
+        return $this->belongsToMany(Coupon::class, 'shop_coupon_product', 'shop_product_id', 'shop_coupon_id')->withTimestamps();
     }
 
     public function registerMediaCollections(): void

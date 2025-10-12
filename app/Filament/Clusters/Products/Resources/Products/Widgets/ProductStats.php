@@ -21,9 +21,9 @@ class ProductStats extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Total Products', $this->getPageTableQuery()->count()),
-            Stat::make('Product Inventory', $this->getPageTableQuery()->sum('qty')),
-            Stat::make('Average price', number_format((float) $this->getPageTableQuery()->avg('price'), 2)),
+            Stat::make('Tổng sản phẩm', $this->getPageTableQuery()->count()),
+            Stat::make('Tồn kho sản phẩm', $this->getPageTableQuery()->sum('qty')),
+            Stat::make('Giá trung bình', number_format((float) $this->getPageTableQuery()->avg('price'), 2)),
         ];
     }
 }

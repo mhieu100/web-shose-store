@@ -4,6 +4,8 @@ namespace App\Filament\Resources\Shop\Customers\Tables;
 
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
@@ -17,15 +19,18 @@ class CustomersTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Tên khách hàng')
                     ->searchable(isIndividual: true)
                     ->sortable(),
                 TextColumn::make('email')
-                    ->label('Email address')
+                    ->label('Địa chỉ email')
                     ->searchable(isIndividual: true, isGlobal: false)
                     ->sortable(),
                 TextColumn::make('country')
+                    ->label('Quốc gia')
                     ->getStateUsing(fn ($record): ?string => Country::find($record->addresses->first()?->country)->name ?? null),
                 TextColumn::make('phone')
+                    ->label('Số điện thoại')
                     ->searchable()
                     ->sortable(),
             ])
@@ -33,16 +38,17 @@ class CustomersTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                EditAction::make(),
-            ])
-            ->groupedBulkActions([
-                DeleteBulkAction::make()
-                    ->action(function (): void {
-                        Notification::make()
-                            ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
-                            ->warning()
-                            ->send();
-                    }),
+                ViewAction::make()
+                    ->label('Xem'),
+                EditAction::make()
+                    ->label('Sửa'),
+                DeleteAction::make()
+                    ->label('Xóa')
+                    ->requiresConfirmation()
+                    ->modalHeading('Xác nhận xóa')
+                    ->modalDescription('Bạn có chắc chắn muốn xóa? Hành động này không thể hoàn tác.')
+                    ->modalSubmitActionLabel('Xóa')
+                    ->modalCancelActionLabel('Hủy'),
             ]);
     }
 }

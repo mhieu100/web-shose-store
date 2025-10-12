@@ -25,7 +25,13 @@ class CategoryResource extends Resource
 
     protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $navigationParentItem = 'Products';
+    protected static ?string $navigationLabel = 'Danh mục';
+    
+    protected static ?string $modelLabel = 'Danh mục';
+    
+    protected static ?string $pluralModelLabel = 'Danh mục';
+
+    protected static ?string $navigationParentItem = 'Sản phẩm';
 
     protected static ?int $navigationSort = 1;
 

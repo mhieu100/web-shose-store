@@ -35,6 +35,12 @@ class PostResource extends Resource
 
     protected static ?int $navigationSort = 0;
 
+    protected static ?string $navigationLabel = 'Bài viết';
+    
+    protected static ?string $modelLabel = 'Bài viết';
+    
+    protected static ?string $pluralModelLabel = 'Bài viết';
+
     protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function form(Schema $schema): Schema
@@ -94,11 +100,11 @@ class PostResource extends Resource
         $details = [];
 
         if ($record->author) {
-            $details['Author'] = $record->author->name;
+            $details['Tác giả'] = $record->author->name;
         }
 
         if ($record->category) {
-            $details['Category'] = $record->category->name;
+            $details['Danh mục'] = $record->category->name;
         }
 
         return $details;

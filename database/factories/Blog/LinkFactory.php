@@ -19,17 +19,28 @@ class LinkFactory extends Factory
      */
     public function definition(): array
     {
+        $links = [
+            ['title' => 'VnExpress - Báo điện tử hàng đầu Việt Nam', 'url' => 'https://vnexpress.net', 'desc' => 'Tin tức nhanh và chính xác nhất'],
+            ['title' => 'Tiki - Mua sắm trực tuyến', 'url' => 'https://tiki.vn', 'desc' => 'Siêu thị trực tuyến hàng đầu Việt Nam'],
+            ['title' => 'Shopee Vietnam', 'url' => 'https://shopee.vn', 'desc' => 'Nền tảng thương mại điện tử'],
+            ['title' => 'Zalo - Ứng dụng nhắn tin', 'url' => 'https://zalo.me', 'desc' => 'Ứng dụng nhắn tin phổ biến tại Việt Nam'],
+            ['title' => 'VTC News', 'url' => 'https://vtc.vn', 'desc' => 'Kênh tin tức và giải trí'],
+            ['title' => 'Sendo - Mua bán online', 'url' => 'https://sendo.vn', 'desc' => 'Sàn thương mại điện tử Việt Nam'],
+            ['title' => 'FPT Edu - Giáo dục', 'url' => 'https://fpt.edu.vn', 'desc' => 'Hệ thống giáo dục FPT'],
+            ['title' => 'VinID - Ứng dụng tiện ích', 'url' => 'https://vinid.net', 'desc' => 'Siêu ứng dụng của Vingroup']
+        ];
+        
+        $link = $this->faker->unique()->randomElement($links);
+        
         return [
-            'url' => $this->faker->url(),
+            'url' => $link['url'],
             'title' => [
-                'en' => Str::title($this->faker->words(asText: true)),
-                'es' => Str::title($this->faker->words(asText: true)),
-                'nl' => Str::title($this->faker->words(asText: true)),
+                'vi' => $link['title'],
+                'en' => $link['title'],
             ],
             'description' => [
-                'en' => $this->faker->sentence(),
-                'es' => $this->faker->sentence(),
-                'nl' => $this->faker->sentence(),
+                'vi' => $link['desc'],
+                'en' => $link['desc'],
             ],
             'color' => $this->faker->hexColor(),
         ];

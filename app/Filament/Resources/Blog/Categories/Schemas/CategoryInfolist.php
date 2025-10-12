@@ -16,9 +16,9 @@ class CategoryInfolist
                 TextEntry::make('slug'),
                 TextEntry::make('description'),
                 IconEntry::make('is_visible')
-                    ->label('Visibility'),
+                    ->label('Hiển thị'),
                 TextEntry::make('updated_at')
-                    ->label('Last modified at')
+                    ->label('Lần sửa cuối')
                     ->dateTime(),
             ])
             ->columns(1)

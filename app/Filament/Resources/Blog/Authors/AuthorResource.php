@@ -26,6 +26,12 @@ class AuthorResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
+    protected static ?string $navigationLabel = 'Tác giả';
+    
+    protected static ?string $modelLabel = 'Tác giả';
+    
+    protected static ?string $pluralModelLabel = 'Tác giả';
+
     public static function form(Schema $schema): Schema
     {
         return AuthorForm::configure($schema);

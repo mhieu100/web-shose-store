@@ -16,6 +16,11 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
+        // Nếu truy cập admin routes, redirect về trang login chính
+        if ($request->is('admin') || $request->is('admin/*')) {
+            return route('login');
+        }
+        
         return Filament::getLoginUrl();
     }
 }

@@ -7,6 +7,8 @@ use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables\Columns\ColorColumn;
@@ -31,8 +33,10 @@ class LinksTable
                         ->imageWidth('100%'),
                     Stack::make([
                         TextColumn::make('title')
+                            ->label('Tiêu đề')
                             ->weight(FontWeight::Bold),
                         TextColumn::make('url')
+                            ->label('URL')
                             ->formatStateUsing(fn (string $state): string => str($state)->after('://')->ltrim('www.')->trim('/'))
                             ->color('gray')
                             ->lineClamp(1),
@@ -43,6 +47,7 @@ class LinksTable
                         ColorColumn::make('color')
                             ->grow(false),
                         TextColumn::make('description')
+                            ->label('Mô tả')
                             ->color('gray'),
                     ]),
                 ])->collapsible(),
@@ -62,7 +67,7 @@ class LinksTable
             ])
             ->recordActions([
                 Action::make('visit')
-                    ->label('Visit link')
+                    ->label('Truy cập liên kết')
                     ->icon('heroicon-m-arrow-top-right-on-square')
                     ->color('gray')
                     ->url(fn (Link $record): string => '#' . urlencode($record->url)),
@@ -73,7 +78,7 @@ class LinksTable
                     DeleteBulkAction::make()
                         ->action(function (): void {
                             Notification::make()
-                                ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
+                                ->title('Này, này, đừng tinh nghịch, để lại một số bản ghi cho người khác chơi với!')
                                 ->warning()
                                 ->send();
                         }),

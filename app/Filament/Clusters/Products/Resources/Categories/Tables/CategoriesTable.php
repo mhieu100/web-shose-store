@@ -4,6 +4,8 @@ namespace App\Filament\Clusters\Products\Resources\Categories\Tables;
 
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -16,16 +18,18 @@ class CategoriesTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Tên danh mục')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('parent.name')
+                    ->label('Danh mục cha')
                     ->searchable()
                     ->sortable(),
                 IconColumn::make('is_visible')
-                    ->label('Visibility')
+                    ->label('Hiển thị')
                     ->sortable(),
                 TextColumn::make('updated_at')
-                    ->label('Last modified at')
+                    ->label('Lần sửa cuối')
                     ->date()
                     ->sortable(),
             ])
@@ -33,16 +37,17 @@ class CategoriesTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
-            ])
-            ->groupedBulkActions([
-                DeleteBulkAction::make()
-                    ->action(function (): void {
-                        Notification::make()
-                            ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
-                            ->warning()
-                            ->send();
-                    }),
+                ViewAction::make()
+                    ->label('Xem'),
+                EditAction::make()
+                    ->label('Sửa'),
+                DeleteAction::make()
+                    ->label('Xóa')
+                    ->requiresConfirmation()
+                    ->modalHeading('Xác nhận xóa')
+                    ->modalDescription('Bạn có chắc chắn muốn xóa? Hành động này không thể hoàn tác.')
+                    ->modalSubmitActionLabel('Xóa')
+                    ->modalCancelActionLabel('Hủy'),
             ]);
     }
 }

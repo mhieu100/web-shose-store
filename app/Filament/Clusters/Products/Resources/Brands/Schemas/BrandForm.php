@@ -4,6 +4,7 @@ namespace App\Filament\Clusters\Products\Resources\Brands\Schemas;
 
 use App\Models\Shop\Brand;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\TextEntry;
@@ -42,19 +43,34 @@ class BrandForm
                             ->url(),
 
                         Toggle::make('is_visible')
-                            ->label('Visibility')
+                            ->label('Hiển thị')
                             ->default(true),
 
                         RichEditor::make('description'),
                     ])
                     ->columnSpan(['lg' => fn (?Brand $record) => $record === null ? 3 : 2]),
+
+                Section::make('Hình ảnh thương hiệu')
+                    ->schema([
+                        SpatieMediaLibraryFileUpload::make('image')
+                            ->collection('brand-images')
+                            ->hiddenLabel()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->image()
+                            ->imageResizeMode('cover')
+                            ->imageCropAspectRatio('1:1')
+                            ->imageResizeTargetWidth('300')
+                            ->imageResizeTargetHeight('300'),
+                    ])
+                    ->columnSpan(['lg' => 1])
+                    ->collapsible(),
                 Section::make()
                     ->schema([
                         TextEntry::make('created_at')
                             ->state(fn (Brand $record): ?string => $record->created_at?->diffForHumans()),
 
                         TextEntry::make('updated_at')
-                            ->label('Last modified at')
+                            ->label('Lần sửa cuối')
                             ->state(fn (Brand $record): ?string => $record->updated_at?->diffForHumans()),
                     ])
                     ->columnSpan(['lg' => 1])
