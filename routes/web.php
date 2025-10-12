@@ -4,9 +4,10 @@ use App\Http\Controllers\HomeController;
 use App\Livewire\Form;
 use Illuminate\Support\Facades\Route;
 
+
+
 // Frontend routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/home-two', function() { return view('home-two'); })->name('home.two');
 
 // Shop routes
 Route::get('/shop', function() { return view('shop.index'); })->name('shop');
@@ -16,7 +17,7 @@ Route::get('/shop/four-columns', function() { return view('shop.four-columns'); 
 Route::get('/shop/right-sidebar', function() { return view('shop.right-sidebar'); })->name('shop.right-sidebar');
 
 // Product routes
-Route::get('/product/{id}', function($id) { return view('product.show', compact('id')); })->name('product.show');
+Route::get('/product/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('product.show');
 Route::get('/product/normal', function() { return view('product.normal'); })->name('product.normal');
 Route::get('/product/variable', function() { return view('product.variable'); })->name('product.variable');
 Route::get('/product/group', function() { return view('product.group'); })->name('product.group');

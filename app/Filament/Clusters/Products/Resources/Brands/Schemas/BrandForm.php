@@ -60,7 +60,10 @@ class BrandForm
                             ->imageResizeMode('cover')
                             ->imageCropAspectRatio('1:1')
                             ->imageResizeTargetWidth('300')
-                            ->imageResizeTargetHeight('300'),
+                            ->imageResizeTargetHeight('300')
+                            ->maxSize(2048) // Limit to 2MB
+                            ->previewable()
+                            ->downloadable(),
                     ])
                     ->columnSpan(['lg' => 1])
                     ->collapsible(),

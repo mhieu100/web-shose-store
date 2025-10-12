@@ -69,8 +69,14 @@ class ProductForm
                                     ->multiple()
                                     ->maxFiles(5)
                                     ->reorderable()
-                                    ->acceptedFileTypes(['image/jpeg'])
-                                    ->hiddenLabel(),
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                                    ->hiddenLabel()
+                                    ->maxSize(2048) // Limit to 2MB
+                                    ->previewable()
+                                    ->downloadable()
+                                    ->imageResizeMode('cover')
+                                    ->imageResizeTargetWidth('800')
+                                    ->imageResizeTargetHeight('800'),
                             ])
                             ->collapsible(),
 

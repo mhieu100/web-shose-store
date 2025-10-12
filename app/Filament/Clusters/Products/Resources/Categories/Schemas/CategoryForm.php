@@ -5,6 +5,7 @@ namespace App\Filament\Clusters\Products\Resources\Categories\Schemas;
 use App\Models\Shop\Category;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Infolists\Components\TextEntry;
@@ -51,6 +52,24 @@ class CategoryForm
                         RichEditor::make('description'),
                     ])
                     ->columnSpan(['lg' => fn (?Category $record) => $record === null ? 3 : 2]),
+
+                Section::make('Hình ảnh danh mục')
+                    ->schema([
+                        SpatieMediaLibraryFileUpload::make('image')
+                            ->collection('category-image')
+                            ->hiddenLabel()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->image()
+                            ->imageResizeMode('cover')
+                            ->imageCropAspectRatio('16:9')
+                            ->imageResizeTargetWidth('400')
+                            ->imageResizeTargetHeight('225')
+                            ->maxSize(2048) // Limit to 2MB
+                            ->previewable()
+                            ->downloadable(),
+                    ])
+                    ->columnSpan(['lg' => 1])
+                    ->collapsible(),
                 Section::make()
                     ->schema([
                         TextEntry::make('created_at')

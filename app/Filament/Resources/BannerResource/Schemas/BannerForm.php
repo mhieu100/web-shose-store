@@ -41,8 +41,18 @@ class BannerForm
                             ->disk('public')
                             ->visibility('public')
                             ->maxSize(5120) // 5MB
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp'])
-                            ->helperText('Kích thước tối đa: 5MB. Định dạng: JPG, PNG, GIF, WebP')
+                            ->imageEditor()
+                            ->imageResizeMode('cover')
+                            ->imageCropAspectRatio('16:9')
+                            ->imageResizeTargetWidth('1920')
+                            ->imageResizeTargetHeight('1080')
+                            ->rules([
+                                'required',
+                                'file',
+                                'max:5120',
+                                'mimetypes:image/jpeg,image/jpg,image/png,image/gif,image/webp',
+                            ])
+                            ->helperText('Kích thước tối đa: 5MB. Định dạng: JPG, PNG, GIF, WebP. Khuyến nghị: 1920x1080px')
                             ->downloadable()
                             ->openable()
                             ->previewable(),
