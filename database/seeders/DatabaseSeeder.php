@@ -141,6 +141,13 @@ class DatabaseSeeder extends Seeder
             CouponSeeder::class,
         ]);
         $this->command->info('Coupons created.');
+
+        // Banners
+        $this->command->warn(PHP_EOL . 'Creating banners...');
+        $this->call([
+            BannerSeeder::class,
+        ]);
+        $this->command->info('Banners created.');
     }
 
     protected function withProgressBar(int $amount, Closure $createCollectionOfOne): Collection
