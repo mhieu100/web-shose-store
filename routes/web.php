@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Shop routes
-Route::get('/shop', function() { return view('shop.index'); })->name('shop');
+Route::get('/shop', [App\Http\Controllers\ShopController::class, 'index'])->name('shop');
 Route::get('/shop/search', function() { return view('shop.search'); })->name('shop.search');
 Route::get('/shop/three-columns', function() { return view('shop.three-columns'); })->name('shop.three-columns');
 Route::get('/shop/four-columns', function() { return view('shop.four-columns'); })->name('shop.four-columns');
@@ -30,12 +30,12 @@ Route::get('/wishlist', function() { return view('wishlist.index'); })->name('wi
 Route::get('/compare', function() { return view('compare.index'); })->name('compare');
 
 // Blog routes
-Route::get('/blog', function() { return view('blog.index'); })->name('blog');
-Route::get('/blog/left-sidebar', function() { return view('blog.left-sidebar'); })->name('blog.left-sidebar');
-Route::get('/blog/right-sidebar', function() { return view('blog.right-sidebar'); })->name('blog.right-sidebar');
-Route::get('/blog/details', function() { return view('blog.details'); })->name('blog.details');
-Route::get('/blog/details-left', function() { return view('blog.details-left'); })->name('blog.details-left');
-Route::get('/blog/details-right', function() { return view('blog.details-right'); })->name('blog.details-right');
+Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');
+Route::get('/blog/left-sidebar', [App\Http\Controllers\BlogController::class, 'leftSidebar'])->name('blog.left-sidebar');
+Route::get('/blog/right-sidebar', [App\Http\Controllers\BlogController::class, 'rightSidebar'])->name('blog.right-sidebar');
+Route::get('/blog/details/{slug?}', [App\Http\Controllers\BlogController::class, 'details'])->name('blog.details');
+Route::get('/blog/details-left/{slug?}', [App\Http\Controllers\BlogController::class, 'detailsLeft'])->name('blog.details-left');
+Route::get('/blog/details-right/{slug?}', [App\Http\Controllers\BlogController::class, 'detailsRight'])->name('blog.details-right');
 
 // Other pages
 Route::get('/about', function() { return view('pages.about'); })->name('about');

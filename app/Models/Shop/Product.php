@@ -100,6 +100,12 @@ class Product extends Model implements HasMedia
         return $this->belongsToMany(Coupon::class, 'shop_coupon_product', 'shop_product_id', 'shop_coupon_id')->withTimestamps();
     }
 
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany<OrderItem, $this> */
+    public function orderItems(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OrderItem::class, 'shop_product_id');
+    }
+
     public function registerMediaCollections(): void
     {
         $this
