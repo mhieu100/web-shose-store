@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -134,5 +135,18 @@ class Product extends Model implements HasMedia
             ->format('webp')
             ->optimize()
             ->nonQueued(); // Process immediately for better UX
+    }
+
+    /** @return HasMany<Wishlist, $this> */
+    public function wishlists(): HasMany
+    {
+        return $this->hasMany(Wishlist::class, 'shop_product_id');
+    }
+
+    /** @return BelongsToMany<\App\Models\User, $this> */
+    public function wishlistUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(\App\Models\User::class, 'shop_wishlists', 'shop_product_id', 'user_id')
+                    ->withTimestamps();
     }
 }

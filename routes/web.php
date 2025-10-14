@@ -24,10 +24,22 @@ Route::get('/product/group', function() { return view('product.group'); })->name
 Route::get('/product/affiliate', function() { return view('product.affiliate'); })->name('product.affiliate');
 
 // Cart & Checkout routes
-Route::get('/cart', function() { return view('cart.index'); })->name('cart');
+Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
+Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'store'])->name('cart.add');
+Route::put('/cart/update', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/remove', [App\Http\Controllers\CartController::class, 'destroy'])->name('cart.remove');
+Route::delete('/cart/clear', [App\Http\Controllers\CartController::class, 'clear'])->name('cart.clear');
+Route::get('/cart/count', [App\Http\Controllers\CartController::class, 'count'])->name('cart.count');
 Route::get('/checkout', function() { return view('checkout.index'); })->name('checkout');
-Route::get('/wishlist', function() { return view('wishlist.index'); })->name('wishlist');
 Route::get('/compare', function() { return view('compare.index'); })->name('compare');
+
+// Wishlist routes
+Route::get('/wishlist', [App\Http\Controllers\WishlistController::class, 'index'])->name('wishlist');
+Route::post('/wishlist/add', [App\Http\Controllers\WishlistController::class, 'store'])->name('wishlist.add');
+Route::delete('/wishlist/remove', [App\Http\Controllers\WishlistController::class, 'destroy'])->name('wishlist.remove');
+Route::post('/wishlist/toggle', [App\Http\Controllers\WishlistController::class, 'toggle'])->name('wishlist.toggle');
+Route::delete('/wishlist/clear', [App\Http\Controllers\WishlistController::class, 'clear'])->name('wishlist.clear');
+Route::get('/wishlist/count', [App\Http\Controllers\WishlistController::class, 'count'])->name('wishlist.count');
 
 // Blog routes
 Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');

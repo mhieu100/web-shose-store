@@ -10,6 +10,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
@@ -130,5 +132,74 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
     public function getTenants(Panel $panel): Collection
     {
         return Team::all();
+    }
+
+    /**
+     * Get the user's wishlist items
+     */
+    public function wishlists(): HasMany
+    {
+        return $this->hasMany(\App\Models\Shop\Wishlist::class);
+    }
+
+    /**
+     * Get the products in the user's wishlist
+     */
+    public function wishlistProducts(): BelongsToMany
+    {
+        return $this->belongsToMany(\App\Models\Shop\Product::class, 'shop_wishlists', 'user_id', 'shop_product_id')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Check if a product is in the user's wishlist
+     */
+    public function hasInWishlist($productId): bool
+    {
+        return $this->wishlistProducts()->where('shop_product_id', $productId)->exists();
+    }
+
+    /**
+     * Get the user's cart items
+     */
+    public function carts(): HasMany
+    {
+        return $this->hasMany(\App\Models\Shop\Cart::class);
+    }
+
+    /**
+     * Get the products in the user's cart
+     */
+    public function cartProducts(): BelongsToMany
+    {
+        return $this->belongsToMany(\App\Models\Shop\Product::class, 'shop_carts', 'user_id', 'shop_product_id')
+                    ->withPivot(['quantity', 'price'])
+                    ->withTimestamps();
+    }
+
+    /**
+     * Check if a product is in the user's cart
+     */
+    public function hasInCart($productId): bool
+    {
+        return $this->cartProducts()->where('shop_product_id', $productId)->exists();
+    }
+
+    /**
+     * Get total cart items count
+     */
+    public function getCartCountAttribute(): int
+    {
+        return $this->carts()->sum('quantity');
+    }
+
+    /**
+     * Get total cart amount
+     */
+    public function getCartTotalAttribute(): float
+    {
+        return $this->carts()->with('product')->get()->sum(function ($cartItem) {
+            return $cartItem->quantity * $cartItem->price;
+        });
     }
 }
