@@ -149,7 +149,8 @@
                     </div>
 
                     <div class="product-wishlist-compare">
-                      <a href="{{ route('wishlist') }}"><i class="pe-7s-like"></i>Thêm vào yêu thích</a>
+                      <x-wishlist-button :product="$product" class="wishlist-btn" />
+                      <span class="wishlist-text">Thêm vào yêu thích</span>
                       <a href="{{ route('compare') }}"><i class="pe-7s-shuffle"></i>So sánh sản phẩm</a>
                     </div>
 
@@ -337,7 +338,7 @@
                     </div>
                   @endif
                   <div class="product-action">
-                    <a class="btn-product-wishlist" href="{{ route('wishlist') }}" title="{{ __('home.add_to_wishlist') }}"><i class="fa fa-heart"></i></a>
+                    <x-wishlist-button :product="$relatedProduct" class="btn-product-wishlist" />
                     <a class="btn-product-cart" href="{{ route('cart') }}" title="{{ __('home.add_to_cart') }}"><i class="fa fa-shopping-cart"></i></a>
                     <button type="button" class="btn-product-quick-view-open" title="{{ __('home.quick_view') }}">
                       <i class="fa fa-arrows"></i>
@@ -377,3 +378,12 @@
     </section>
     <!--== End Product Area Wrapper ==-->
 @endsection
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/wishlist-shared.css') }}">
+<link rel="stylesheet" href="{{ asset('css/product-wishlist.css') }}">
+@endpush
+
+@push('scripts')
+<script src="{{ asset('js/wishlist.js') }}"></script>
+@endpush

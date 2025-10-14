@@ -323,13 +323,14 @@
                                                                 </div>
                                                             @endif
                                                             <div class="product-action">
-                                                                <a class="btn-product-wishlist"
-                                                                    href="{{ route('wishlist') }}"
-                                                                    title="{{ __('home.add_to_wishlist') }}"><i
-                                                                        class="fa fa-heart"></i></a>
-                                                                <a class="btn-product-cart" href="{{ route('cart') }}"
-                                                                    title="{{ __('home.add_to_cart') }}"><i
-                                                                        class="fa fa-shopping-cart"></i></a>
+                                                                <x-wishlist-button :product="$product" class="btn-product-wishlist" />
+                                                                <button type="button" class="btn-product-cart add-to-cart"
+                                                                        data-product-id="{{ $product->id }}"
+                                                                        data-product-name="{{ $product->name }}"
+                                                                        data-product-price="{{ $product->sale_price ?? $product->price }}"
+                                                                        title="{{ __('home.add_to_cart') }}">
+                                                                    <i class="fa fa-shopping-cart"></i>
+                                                                </button>
                                                                 <button type="button" class="btn-product-quick-view-open"
                                                                     title="{{ __('home.quick_view') }}">
                                                                     <i class="fa fa-arrows"></i>
@@ -425,10 +426,7 @@
                                                                         </div>
                                                                     @endif
                                                                     <div class="product-action">
-                                                                        <a class="btn-product-wishlist"
-                                                                            href="{{ route('wishlist') }}"
-                                                                            title="{{ __('home.add_to_wishlist') }}"><i
-                                                                                class="fa fa-heart"></i></a>
+                                                                        <x-wishlist-button :product="$product" class="btn-product-wishlist" />
                                                                         <a class="btn-product-cart"
                                                                             href="{{ route('cart') }}"
                                                                             title="{{ __('home.add_to_cart') }}"><i
@@ -594,9 +592,7 @@
                                                 </div>
                                             @endif
                                             <div class="product-action">
-                                                <a class="btn-product-wishlist" href="{{ route('wishlist') }}"
-                                                    title="{{ __('home.add_to_wishlist') }}"><i
-                                                        class="fa fa-heart"></i></a>
+                                                <x-wishlist-button :product="$product" class="btn-product-wishlist" />
                                                 <a class="btn-product-cart" href="{{ route('cart') }}"
                                                     title="{{ __('home.add_to_cart') }}"><i
                                                         class="fa fa-shopping-cart"></i></a>
@@ -684,3 +680,15 @@
 
     </main>
 @endsection
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/wishlist-shared.css') }}">
+@endpush
+
+@push('scripts')
+<script src="{{ asset('js/wishlist.js') }}"></script>
+@endpush
+
+@push('scripts')
+<script src="{{ asset('js/shop.js') }}"></script>
+@endpush

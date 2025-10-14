@@ -1,0 +1,9 @@
+/* Product specific wishlist/wishlist button adjustments (currently empty; relies on wishlist-shared.css) */
+
+/* Example: adjust spacing in product detail section */
+.product-wishlist-compare { display:flex; align-items:center; gap:15px; margin:20px 0; }
+
+/* Notifications container override (if needed different from others) */
+.wishlist-notifications { position:fixed; top:20px; right:20px; z-index:9999; max-width:400px; }
+
+/* Additional overrides can be placed here without duplicating shared styles */

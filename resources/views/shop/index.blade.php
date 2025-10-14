@@ -156,12 +156,14 @@
                                                                     </div>
                                                                 @endif
                                                                 <div class="product-action">
-                                                                    <a class="btn-product-wishlist"
-                                                                        href="{{ route('wishlist') }}"><i
-                                                                            class="fa fa-heart"></i></a>
-                                                                    <a class="btn-product-cart"
-                                                                        href="{{ route('cart') }}"><i
-                                                                            class="fa fa-shopping-cart"></i></a>
+                                                                    <x-wishlist-button :product="$product" class="btn-product-wishlist" />
+                                                                    <button type="button" class="btn-product-cart add-to-cart"
+                                                                            data-product-id="{{ $product->id }}"
+                                                                            data-product-name="{{ $product->name }}"
+                                                                            data-product-price="{{ $product->sale_price ?? $product->price }}"
+                                                                            title="Add to Cart">
+                                                                        <i class="fa fa-shopping-cart"></i>
+                                                                    </button>
                                                                     <button type="button"
                                                                         class="btn-product-quick-view-open">
                                                                         <i class="fa fa-arrows"></i>
@@ -266,10 +268,12 @@
                                                                 </div>
                                                                 <p>{{ Str::limit($product->description, 100) }}</p>
                                                                 <div class="product-action">
-                                                                    <a class="btn-product-cart"
-                                                                        href="{{ route('cart') }}">Thêm vào giỏ</a>
-                                                                    <a class="btn-product-wishlist"
-                                                                        href="{{ route('wishlist') }}">Yêu thích</a>
+                                                                    <button type="button" class="btn-product-cart add-to-cart"
+                                                                            data-product-id="{{ $product->id }}"
+                                                                            data-product-name="{{ $product->name }}"
+                                                                            data-product-price="{{ $product->sale_price ?? $product->price }}"
+                                                                            title="Add to Cart">Thêm vào giỏ</button>
+                                                                    <x-wishlist-button :product="$product" class="btn-product-wishlist" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -747,9 +751,15 @@
 
     @push('scripts')
         <script src="{{ asset('js/shop-page.js') }}"></script>
+        <script src="{{ asset('js/wishlist.js') }}"></script>
     @endpush
 
     @push('styles')
         <link href="{{ asset('css/shop-page.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/wishlist-shared.css') }}" rel="stylesheet" />
+    @endpush
+
+    @push('scripts')
+    <script src="{{ asset('js/shop.js') }}"></script>
     @endpush
 @endsection
