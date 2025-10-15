@@ -362,16 +362,16 @@ table p {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top right;
-  padding: 140px 0 146px;
+  padding: 80px 0 86px;
 }
 @media only screen and (max-width: 1199px) {
   .page-header-area {
-    padding: 120px 0 126px;
+    padding: 70px 0 76px;
   }
 }
 @media only screen and (max-width: 991px) {
   .page-header-area {
-    padding: 100px 0 106px;
+    padding: 60px 0 66px;
   }
 }
 
@@ -2227,22 +2227,22 @@ table p {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 748px;
+  height: 500px;
   position: relative;
 }
 @media only screen and (max-width: 1199px) {
   .home-slider-area .home-slider-container .home-slider-wrapper.slider-default .slider-content-area {
-    height: 600px;
+    height: 450px;
   }
 }
 @media only screen and (max-width: 991px) {
   .home-slider-area .home-slider-container .home-slider-wrapper.slider-default .slider-content-area {
-    height: 490px;
+    height: 400px;
   }
 }
 @media only screen and (max-width: 767px) {
   .home-slider-area .home-slider-container .home-slider-wrapper.slider-default .slider-content-area {
-    height: 430px;
+    height: 350px;
   }
 }
 @media only screen and (max-width: 575px) {
