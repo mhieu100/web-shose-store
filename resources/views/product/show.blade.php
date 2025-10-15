@@ -142,10 +142,18 @@
                     <div class="product-quick-action">
                       <div class="qty-wrap">
                         <div class="pro-qty">
-                          <input type="text" title="Quantity" value="1">
+                          <button type="button" class="dec qtybtn">-</button>
+                          <input type="number" id="product-quantity" class="quantity-input" title="Quantity" value="1" min="1" max="{{ $product->qty ?? 100 }}">
+                          <button type="button" class="inc qtybtn">+</button>
                         </div>
                       </div>
-                      <a class="btn-theme" href="{{ route('cart') }}">Add to Cart</a>
+                      <button type="button" class="btn-theme add-to-cart"
+                              data-product-id="{{ $product->id }}"
+                              data-product-name="{{ $product->name }}"
+                              data-product-price="{{ $product->price }}">
+                        <i class="fa fa-shopping-cart me-2"></i>
+                        Add to Cart
+                      </button>
                     </div>
 
                     <div class="product-wishlist-compare">
@@ -386,4 +394,150 @@
 
 @push('scripts')
 <script src="{{ asset('js/wishlist.js') }}"></script>
+<script src="{{ asset('js/shop.js') }}"></script>
+<script>
+$(document).ready(function() {
+    // Quantity increase/decrease buttons
+    $('.qtybtn').on('click', function() {
+        var $input = $(this).siblings('.quantity-input');
+        var currentVal = parseInt($input.val()) || 1;
+        var maxVal = parseInt($input.attr('max')) || 100;
+        var minVal = parseInt($input.attr('min')) || 1;
+
+        if ($(this).hasClass('inc')) {
+            if (currentVal < maxVal) {
+                $input.val(currentVal + 1);
+            }
+        } else {
+            if (currentVal > minVal) {
+                $input.val(currentVal - 1);
+            }
+        }
+    });
+
+    // Validate quantity input
+    $('#product-quantity').on('change', function() {
+        var val = parseInt($(this).val()) || 1;
+        var max = parseInt($(this).attr('max')) || 100;
+        var min = parseInt($(this).attr('min')) || 1;
+
+        if (val > max) $(this).val(max);
+        if (val < min) $(this).val(min);
+    });
+
+    // Add to cart with quantity
+    $('.product-quick-action .add-to-cart').on('click', function(e) {
+        e.preventDefault();
+
+        const button = $(this);
+        const productId = button.data('product-id');
+        const productName = button.data('product-name');
+        const productPrice = button.data('product-price');
+        const quantity = parseInt($('#product-quantity').val()) || 1;
+
+        // Disable button and show loading
+        button.prop('disabled', true);
+        const originalHtml = button.html();
+        button.html('<i class="fa fa-spinner fa-spin me-2"></i>Adding...');
+
+        // AJAX request to add product to cart
+        $.ajax({
+            url: '/cart/add',
+            type: 'POST',
+            data: {
+                product_id: productId,
+                quantity: quantity,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if (response.success) {
+                    // Show success message
+                    showNotification('success', `${productName} (x${quantity}) đã được thêm vào giỏ hàng!`);
+
+                    // Update cart count in header if exists
+                    if (response.cart_count) {
+                        $('.cart-count, .header-cart-count').text(response.cart_count);
+                    }
+
+                    // Reset to 1 after adding
+                    $('#product-quantity').val(1);
+
+                    // Show success state
+                    button.html('<i class="fa fa-check me-2"></i>Đã thêm!');
+                    button.addClass('btn-success');
+
+                    // Reset button after 2 seconds
+                    setTimeout(() => {
+                        button.html(originalHtml);
+                        button.removeClass('btn-success');
+                        button.prop('disabled', false);
+                    }, 2000);
+                } else {
+                    showNotification('error', response.message || 'Không thể thêm sản phẩm vào giỏ hàng');
+                    button.html(originalHtml);
+                    button.prop('disabled', false);
+                }
+            },
+            error: function(xhr) {
+                console.error('Cart Error:', xhr);
+                let message = 'Không thể thêm sản phẩm vào giỏ hàng';
+
+                if (xhr.status === 401) {
+                    message = 'Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng';
+                }
+
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
+                }
+
+                showNotification('error', message);
+                button.html(originalHtml);
+                button.prop('disabled', false);
+            }
+        });
+    });
+
+    // Show notification function
+    function showNotification(type, message) {
+        // Remove existing notifications
+        $('.product-notification').remove();
+
+        // Create notification element
+        const notification = $(`
+            <div class="product-notification alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show" role="alert">
+                <i class="fa fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'} me-2"></i>
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `);
+
+        // Insert at top of product info
+        $('.product-single-info').prepend(notification);
+
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+            notification.fadeOut(() => {
+                notification.remove();
+            });
+        }, 5000);
+    }
+});
+</script>
+<style>
+.product-notification {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.btn-theme.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-theme:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+</style>
 @endpush

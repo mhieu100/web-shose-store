@@ -6,4 +6,94 @@
 /* Notifications container override (if needed different from others) */
 .wishlist-notifications { position:fixed; top:20px; right:20px; z-index:9999; max-width:400px; }
 
+/* Product Quantity Controls */
+.product-quick-action {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.qty-wrap .pro-qty {
+    display: flex;
+    align-items: center;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.qty-wrap .pro-qty .qtybtn {
+    background: #f8f9fa;
+    border: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+    width: 40px;
+    height: 45px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.qty-wrap .pro-qty .qtybtn:hover {
+    background: #eb3e32;
+    color: #fff;
+}
+
+.qty-wrap .pro-qty .quantity-input {
+    width: 60px;
+    height: 45px;
+    border: none;
+    border-left: 1px solid #e1e1e1;
+    border-right: 1px solid #e1e1e1;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.qty-wrap .pro-qty .quantity-input:focus {
+    outline: none;
+}
+
+/* Remove spinner arrows for number input */
+.qty-wrap .pro-qty .quantity-input::-webkit-inner-spin-button,
+.qty-wrap .pro-qty .quantity-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.qty-wrap .pro-qty .quantity-input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.product-quick-action .btn-theme {
+    padding: 12px 30px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.product-quick-action .btn-theme:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(235, 62, 50, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+    .product-quick-action {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .product-quick-action .btn-theme {
+        width: 100%;
+    }
+}
+
 /* Additional overrides can be placed here without duplicating shared styles */
+

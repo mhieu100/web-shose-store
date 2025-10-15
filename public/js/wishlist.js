@@ -1,4 +1,211 @@
 /**
+ * Enhanced Wishlist JavaScript with Add to Cart functionality
+ */
+
+$(document).ready(function() {
+    // Initialize wishlist functionality
+    initWishlist();
+    
+    // Update wishlist count on page load
+    updateWishlistCount();
+});
+
+function initWishlist() {
+    // Remove from wishlist
+    $(document).on('click', '.remove-from-wishlist', function(e) {
+        e.preventDefault();
+        const productId = $(this).data('product-id');
+        const row = $(this).closest('tr');
+        
+        removeFromWishlist(productId, row);
+    });
+
+    // Add to cart from wishlist
+    $(document).on('click', '.add-to-cart-btn', function(e) {
+        e.preventDefault();
+        const button = $(this);
+        const productId = button.data('product-id');
+        const productName = button.data('product-name');
+        const productPrice = button.data('product-price');
+        
+        addToCartFromWishlist(productId, productName, productPrice, button);
+    });
+
+    // Quick view functionality
+    $(document).on('click', '.quick-view-btn', function(e) {
+        e.preventDefault();
+        const productId = $(this).data('product-id');
+        showQuickView(productId);
+    });
+}
+
+function removeFromWishlist(productId, row) {
+    // Add loading state
+    row.addClass('removing');
+    
+    $.ajax({
+        url: '/wishlist/remove',
+        method: 'DELETE',
+        data: {
+            product_id: productId,
+            _token: $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            if (response.success) {
+                // Animate row removal
+                row.fadeOut(400, function() {
+                    $(this).remove();
+                    
+                    // Check if wishlist is empty
+                    if ($('.cart-wishlist-item').length === 0) {
+                        location.reload(); // Reload to show empty state
+                    }
+                });
+                
+                // Update wishlist count
+                updateWishlistCount();
+                
+                // Show success message
+                showToast('success', response.message);
+            } else {
+                row.removeClass('removing');
+                showToast('error', response.message);
+            }
+        },
+        error: function(xhr) {
+            row.removeClass('removing');
+            showToast('error', 'An error occurred while removing the item');
+        }
+    });
+}
+
+function addToCartFromWishlist(productId, productName, productPrice, button) {
+    // Add loading state
+    button.prop('disabled', true);
+    button.html('<i class="fa fa-spinner fa-spin"></i> Adding...');
+    
+    $.ajax({
+        url: '/cart/add',
+        method: 'POST',
+        data: {
+            product_id: productId,
+            quantity: 1,
+            _token: $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            if (response.success) {
+                // Show success message
+                showToast('success', `${productName} added to cart successfully!`);
+                
+                // Update cart count if function exists
+                if (typeof updateCartCount === 'function') {
+                    updateCartCount();
+                }
+                
+                // Reset button
+                button.prop('disabled', false);
+                button.html('<i class="fa fa-shopping-cart"></i> Add to Cart');
+                
+                // Optional: Remove from wishlist after adding to cart
+                // Uncomment the line below if you want this behavior
+                // removeFromWishlist(productId, button.closest('tr'));
+                
+            } else {
+                button.prop('disabled', false);
+                button.html('<i class="fa fa-shopping-cart"></i> Add to Cart');
+                showToast('error', response.message);
+            }
+        },
+        error: function(xhr) {
+            button.prop('disabled', false);
+            button.html('<i class="fa fa-shopping-cart"></i> Add to Cart');
+            
+            let errorMessage = 'An error occurred while adding to cart';
+            if (xhr.responseJSON && xhr.responseJSON.message) {
+                errorMessage = xhr.responseJSON.message;
+            }
+            
+            showToast('error', errorMessage);
+        }
+    });
+}
+
+function showQuickView(productId) {
+    // You can implement quick view modal here
+    // For now, redirect to product page
+    window.location.href = `/product/${productId}`;
+}
+
+function updateWishlistCount() {
+    $.ajax({
+        url: '/wishlist/count',
+        method: 'GET',
+        success: function(response) {
+            if (response.success) {
+                // Update wishlist counter in header
+                $('.wishlist-count, .wishlist-counter').text(response.count);
+                
+                // Update badge
+                if (response.count > 0) {
+                    $('.wishlist-badge').text(response.count).show();
+                } else {
+                    $('.wishlist-badge').hide();
+                }
+            }
+        },
+        error: function(xhr) {
+            console.error('Failed to update wishlist count');
+        }
+    });
+}
+
+function showToast(type, message) {
+    // Remove existing toasts
+    $('.toast-notification').remove();
+    
+    // Create toast HTML
+    const toastHtml = `
+        <div class="toast-notification ${type}">
+            <div class="toast-content">
+                <div class="toast-icon">
+                    <i class="fa ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                </div>
+                <div class="toast-message">${message}</div>
+                <button class="toast-close" onclick="$(this).closest('.toast-notification').remove()">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+    `;
+    
+    // Add to body
+    $('body').append(toastHtml);
+    
+    // Show toast
+    setTimeout(() => {
+        $('.toast-notification').addClass('show');
+    }, 100);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        $('.toast-notification').removeClass('show');
+        setTimeout(() => {
+            $('.toast-notification').remove();
+        }, 300);
+    }, 5000);
+}
+
+// Enhanced image loading
+$(document).on('load', '.product-image', function() {
+    $(this).closest('.product-image-wrapper').addClass('loaded');
+});
+
+$(document).on('error', '.product-image', function() {
+    $(this).attr('src', '/img/shop/placeholder.webp');
+    $(this).addClass('placeholder-image');
+});
+
+/**
  * Wishlist functionality
  */
 $(document).ready(function() {

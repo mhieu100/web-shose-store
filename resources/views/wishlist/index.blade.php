@@ -51,12 +51,23 @@
                                                 </a>
                                             </td>
                                             <td class="product-thumb">
-                                                <a href="{{ route('product.show', $item->product->id) }}">
-                                                    @if($item->product->getFirstMediaUrl('default'))
-                                                        <img src="{{ $item->product->getFirstMediaUrl('default') }}" width="90" height="110" alt="{{ $item->product->name }}">
-                                                    @else
-                                                        <img src="{{ asset('img/shop/placeholder.webp') }}" width="90" height="110" alt="{{ $item->product->name }}">
-                                                    @endif
+                                                <a href="{{ route('product.show', $item->product->id) }}" class="product-image-link">
+                                                    <div class="product-image-wrapper">
+                                                        @if($item->product->getFirstMediaUrl('default'))
+                                                            <img src="{{ $item->product->getFirstMediaUrl('default') }}" 
+                                                                 class="product-image" 
+                                                                 alt="{{ $item->product->name }}"
+                                                                 loading="lazy">
+                                                        @else
+                                                            <img src="{{ asset('img/shop/placeholder.webp') }}" 
+                                                                 class="product-image placeholder-image" 
+                                                                 alt="{{ $item->product->name }}"
+                                                                 loading="lazy">
+                                                        @endif
+                                                        <div class="image-overlay">
+                                                            <i class="fa fa-eye"></i>
+                                                        </div>
+                                                    </div>
                                                 </a>
                                             </td>
                                             <td class="product-name">
@@ -76,9 +87,25 @@
                                             </td>
                                             <td class="product-action">
                                                 @if($item->product->qty > 0)
-                                                    <button class="btn-cart add-to-cart" data-product-id="{{ $item->product->id }}">Add to cart</button>
+                                                    <div class="action-buttons">
+                                                        <button class="btn btn-primary add-to-cart-btn" 
+                                                                data-product-id="{{ $item->product->id }}"
+                                                                data-product-name="{{ $item->product->name }}"
+                                                                data-product-price="{{ $item->product->price }}">
+                                                            <i class="fa fa-shopping-cart"></i>
+                                                            Add to Cart
+                                                        </button>
+                                                        <button class="btn btn-outline-secondary quick-view-btn" 
+                                                                data-product-id="{{ $item->product->id }}"
+                                                                title="Quick View">
+                                                            <i class="fa fa-eye"></i>
+                                                        </button>
+                                                    </div>
                                                 @else
-                                                    <button class="btn-cart" disabled>Out of Stock</button>
+                                                    <button class="btn btn-secondary" disabled>
+                                                        <i class="fa fa-times"></i>
+                                                        Out of Stock
+                                                    </button>
                                                 @endif
                                             </td>
                                         </tr>
@@ -103,6 +130,11 @@
     <!--== End Wishlist Area Wrapper ==-->
 @endsection
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/wishlist.css') }}">
+@endpush
+
 @push('scripts')
 <script src="{{ asset('js/wishlist.js') }}"></script>
+<script src="{{ asset('js/cart.js') }}"></script>
 @endpush
