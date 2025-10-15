@@ -102,6 +102,7 @@
                                         <li><a href="{{ route('account') }}"><span>Tài khoản</span></a></li>
                                         <li><a href="{{ route('login') }}"><span>Đăng nhập</span></a></li>
                                         <li><a href="{{ route('register') }}"><span>Đăng ký</span></a></li>
+                                        <li><a href="{{ route('collaborator.register') }}"><span>Đăng ký cộng tác viên</span></a></li>
                                         <li><a href="{{ route('404') }}"><span>Không tìm thấy</span></a></li>
                                     </ul>
                                 </li>

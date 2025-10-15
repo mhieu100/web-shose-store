@@ -79,6 +79,11 @@ Route::get('/auth-status', function() {
     return view('auth-status');
 });
 
+// Collaborator routes
+Route::get('/dang-ky-cong-tac-vien', [App\Http\Controllers\CollaboratorController::class, 'showForm'])->name('collaborator.register');
+Route::post('/dang-ky-cong-tac-vien', [App\Http\Controllers\CollaboratorController::class, 'store'])->name('collaborator.store');
+Route::get('/trang-thai-cong-tac-vien', [App\Http\Controllers\CollaboratorController::class, 'status'])->name('collaborator.status');
+
 // Invoice routes - chỉ admin mới được in hóa đơn
 Route::middleware(['auth', 'admin.only'])->group(function () {
     Route::get('/invoice/{order}/download', [\App\Http\Controllers\InvoiceController::class, 'downloadInvoice'])->name('invoice.download');
