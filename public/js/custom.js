@@ -1,5 +1,5 @@
 (function($) {
-  
+
   "use strict";
 
   // Background Image Js
@@ -75,7 +75,7 @@
       else
       $(".header-navigation-area li a[href='"+curpage+"']").parents("li").addClass("active");
     }
-    
+
   // Popup Quick View JS
     var popupProduct = $(".product-quick-view-modal");
     $(".btn-product-quick-view-open").on('click', function() {
@@ -214,7 +214,9 @@
         // Element jarallax Parallax
     });
 
-  // Product Quantity JS
+  // Product Quantity JS - DISABLED (using custom implementation in product page)
+  // This code is commented out to prevent duplicate quantity buttons
+  /*
     var proQty = $(".pro-qty");
     proQty.append('<div class= "dec qty-btn">-</div>');
     proQty.append('<div class="inc qty-btn">+</div>');
@@ -234,6 +236,7 @@
       }
       $button.parent().find('input').val(newVal);
     });
+  */
 
   // Slider Range Js
     $('#price-range').slider({
@@ -248,7 +251,7 @@
     });
     $('.ui-slider-handle:eq(0)').html( '<span>' + '$' + $( "#price-range" ).slider( "values", 0 ) + '</span>' );
     $('.ui-slider-handle:eq(1)').html( '<span>' + '$' + $( "#price-range" ).slider( "values", 1 ) + '</span>' );
-    
+
   // Review Form JS
     $(".review-write-btn").on('click', function() {
       $(".reviews-form-area, .review-write-btn").toggleClass("show").focus();

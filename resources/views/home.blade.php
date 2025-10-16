@@ -129,20 +129,20 @@
         <!--== End Hero Area Wrapper ==-->
 
         <!--== Start Product Brand Area ==-->
-        <section class="product-category-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="section-title text-center">
-                            <h3 class="title">{{ __('home.popular_brands') }}</h3>
-                            <div class="desc">
-                                <p>Khám phá những thương hiệu giày nổi tiếng và được yêu thích nhất</p>
+        @if ($brands && $brands->count() > 0)
+            <section class="product-category-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="section-title text-center">
+                                <h3 class="title">{{ __('home.popular_brands') }}</h3>
+                                <div class="desc">
+                                    <p>Khám phá những thương hiệu giày nổi tiếng và được yêu thích nhất</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    @if ($brands->count() > 0)
+                    <div class="row">
                         @foreach ($brands->take(4) as $brand)
                             <div class="col-md-6 col-lg-3">
                                 <!--== Start Brand Item ==-->
@@ -157,8 +157,8 @@
                                                 <img src="{{ Storage::disk('public')->url($brand->logo) }}" width="270"
                                                     height="320" alt="{{ $brand->name }}">
                                             @else
-                                                <img src="{{ asset('img/brands/brand-' . (($loop->index % 4) + 1) . '.webp') }}"
-                                                    width="270" height="320" alt="{{ $brand->name }}">
+                                                <img src="{{ asset('img/shop/placeholder.webp') }}" width="270"
+                                                    height="320" alt="{{ $brand->name }}">
                                             @endif
                                         </a>
                                     </div>
@@ -172,68 +172,10 @@
                                 <!--== End Brand Item ==-->
                             </div>
                         @endforeach
-                    @else
-                        <!-- Default brands if no brands in database -->
-                        <div class="col-md-6 col-lg-3">
-                            <div class="category-item" data-aos="fade-up" data-aos-duration="1000">
-                                <div class="category-thumb-wrap">
-                                    <a href="{{ route('shop') }}">
-                                        <img src="{{ asset('img/brands/nike.webp') }}" width="270" height="320"
-                                            alt="Nike">
-                                    </a>
-                                </div>
-                                <div class="category-content">
-                                    <h5 class="title"><a href="{{ route('shop') }}">Nike</a></h5>
-                                    <p class="count">150+ sản phẩm</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="category-item" data-aos="fade-up" data-aos-duration="1200">
-                                <div class="category-thumb-wrap">
-                                    <a href="{{ route('shop') }}">
-                                        <img src="{{ asset('img/brands/adidas.webp') }}" width="270" height="320"
-                                            alt="Adidas">
-                                    </a>
-                                </div>
-                                <div class="category-content">
-                                    <h5 class="title"><a href="{{ route('shop') }}">Adidas</a></h5>
-                                    <p class="count">120+ sản phẩm</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="category-item" data-aos="fade-up" data-aos-duration="1400">
-                                <div class="category-thumb-wrap">
-                                    <a href="{{ route('shop') }}">
-                                        <img src="{{ asset('img/brands/converse.webp') }}" width="270" height="320"
-                                            alt="Converse">
-                                    </a>
-                                </div>
-                                <div class="category-content">
-                                    <h5 class="title"><a href="{{ route('shop') }}">Converse</a></h5>
-                                    <p class="count">95+ sản phẩm</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="category-item" data-aos="fade-up" data-aos-duration="1600">
-                                <div class="category-thumb-wrap">
-                                    <a href="{{ route('shop') }}">
-                                        <img src="{{ asset('img/brands/vans.webp') }}" width="270" height="320"
-                                            alt="Vans">
-                                    </a>
-                                </div>
-                                <div class="category-content">
-                                    <h5 class="title"><a href="{{ route('shop') }}">Vans</a></h5>
-                                    <p class="count">80+ sản phẩm</p>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
         <!--== End Product Brand Area ==-->
 
         <!--== Start Product Area Wrapper ==-->
@@ -323,12 +265,14 @@
                                                                 </div>
                                                             @endif
                                                             <div class="product-action">
-                                                                <x-wishlist-button :product="$product" class="btn-product-wishlist" />
-                                                                <button type="button" class="btn-product-cart add-to-cart"
-                                                                        data-product-id="{{ $product->id }}"
-                                                                        data-product-name="{{ $product->name }}"
-                                                                        data-product-price="{{ $product->sale_price ?? $product->price }}"
-                                                                        title="{{ __('home.add_to_cart') }}">
+                                                                <x-wishlist-button :product="$product"
+                                                                    class="btn-product-wishlist" />
+                                                                <button type="button"
+                                                                    class="btn-product-cart add-to-cart"
+                                                                    data-product-id="{{ $product->id }}"
+                                                                    data-product-name="{{ $product->name }}"
+                                                                    data-product-price="{{ $product->sale_price ?? $product->price }}"
+                                                                    title="{{ __('home.add_to_cart') }}">
                                                                     <i class="fa fa-shopping-cart"></i>
                                                                 </button>
                                                                 <button type="button" class="btn-product-quick-view-open"
@@ -426,7 +370,8 @@
                                                                         </div>
                                                                     @endif
                                                                     <div class="product-action">
-                                                                        <x-wishlist-button :product="$product" class="btn-product-wishlist" />
+                                                                        <x-wishlist-button :product="$product"
+                                                                            class="btn-product-wishlist" />
                                                                         <a class="btn-product-cart"
                                                                             href="{{ route('cart') }}"
                                                                             title="{{ __('home.add_to_cart') }}"><i
@@ -682,13 +627,13 @@
 @endsection
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/wishlist-shared.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/wishlist-shared.css') }}">
 @endpush
 
 @push('scripts')
-<script src="{{ asset('js/wishlist.js') }}"></script>
+    <script src="{{ asset('js/wishlist.js') }}"></script>
 @endpush
 
 @push('scripts')
-<script src="{{ asset('js/shop.js') }}"></script>
+    <script src="{{ asset('js/shop.js') }}"></script>
 @endpush
