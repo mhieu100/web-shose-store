@@ -170,6 +170,9 @@
                         <a href="#/" target="_blank"><i class="fa fa-twitter"></i></a>
                         <a href="#/" target="_blank"><i class="fa fa-pinterest-p"></i></a>
                       </div>
+                      
+                      {{-- Affiliate Share Button --}}
+                      <x-affiliate-share-button :product="$product" />
                     </div>
                   </div>
                   <!--== End Product Info Area ==-->

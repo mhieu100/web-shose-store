@@ -12,6 +12,17 @@ use Filament\Schemas\Schema;
 class Dashboard extends BaseDashboard
 {
     use BaseDashboard\Concerns\HasFiltersForm;
+    
+    public function getWidgets(): array
+    {
+        return [
+            \App\Filament\Widgets\StatsOverviewWidget::class,
+            \App\Filament\Widgets\CtvStatsWidget::class,
+            \App\Filament\Widgets\CustomersChart::class,
+            \App\Filament\Widgets\OrdersChart::class,
+            \App\Filament\Widgets\LatestOrders::class,
+        ];
+    }
 
     protected static ?string $navigationLabel = 'Bảng điều khiển';
 

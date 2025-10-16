@@ -38,6 +38,9 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
         'phone',
         'address',
         'role_id',
+        'affiliate_code',
+        'commission_rate',
+        'is_affiliate_active',
         'is_active',
         'last_login_at',
     ];
@@ -57,6 +60,8 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
         'is_active' => 'boolean',
+        'commission_rate' => 'decimal:2',
+        'is_affiliate_active' => 'boolean',
     ];
 
     /**
@@ -201,5 +206,97 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
         return $this->carts()->with('product')->get()->sum(function ($cartItem) {
             return $cartItem->quantity * $cartItem->price;
         });
+    }
+
+    /**
+     * Get the user's affiliate links
+     */
+    public function affiliateLinks(): HasMany
+    {
+        return $this->hasMany(\App\Models\AffiliateLink::class);
+    }
+
+    /**
+     * Get the user's commissions
+     */
+    public function commissions(): HasMany
+    {
+        return $this->hasMany(\App\Models\Commission::class);
+    }
+
+    /**
+     * Generate a unique affiliate code for the user
+     */
+    public function generateAffiliateCode(): string
+    {
+        do {
+            $code = 'CTV' . strtoupper(substr(uniqid(), -6));
+        } while (self::where('affiliate_code', $code)->exists());
+
+        return $code;
+    }
+
+    /**
+     * Check if user is an active affiliate
+     */
+    public function isActiveAffiliate(): bool
+    {
+        return $this->hasRole('ctv') && $this->is_affiliate_active && !empty($this->affiliate_code);
+    }
+
+    /**
+     * Create affiliate link for a product
+     */
+    public function createAffiliateLink($productId): ?\App\Models\AffiliateLink
+    {
+        if (!$this->isActiveAffiliate()) {
+            return null;
+        }
+
+        // Check if link already exists
+        $existingLink = $this->affiliateLinks()->where('shop_product_id', $productId)->first();
+        if ($existingLink) {
+            return $existingLink;
+        }
+
+        $product = \App\Models\Shop\Product::find($productId);
+        if (!$product) {
+            return null;
+        }
+
+        $linkCode = \App\Models\AffiliateLink::generateLinkCode();
+        $originalUrl = route('product.show', $product->id);
+        $affiliateUrl = route('product.show', ['id' => $product->id, 'ref' => $this->affiliate_code]);
+
+        return $this->affiliateLinks()->create([
+            'shop_product_id' => $productId,
+            'link_code' => $linkCode,
+            'original_url' => $originalUrl,
+            'affiliate_url' => $affiliateUrl,
+        ]);
+    }
+
+    /**
+     * Get total pending commissions
+     */
+    public function getTotalPendingCommissions(): float
+    {
+        return $this->commissions()->where('status', 'pending')->sum('commission_amount');
+    }
+
+    /**
+     * Get total approved commissions
+     */
+    public function getTotalApprovedCommissions(): float
+    {
+        return $this->commissions()->where('status', 'approved')->sum('commission_amount');
+    }
+
+    /**
+     * Get total paid commissions
+     */
+    public function getTotalPaidCommissions(): float
+    {
+        return $this->commissions()->where('status', 'paid')->sum('commission_amount');
     }
 }

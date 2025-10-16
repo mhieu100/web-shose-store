@@ -103,6 +103,11 @@
                                         <li><a href="{{ route('login') }}"><span>Đăng nhập</span></a></li>
                                         <li><a href="{{ route('register') }}"><span>Đăng ký</span></a></li>
                                         <li><a href="{{ route('collaborator.register') }}"><span>Đăng ký cộng tác viên</span></a></li>
+                                        @auth
+                                            @if(Auth::user()->isActiveAffiliate())
+                                                <li><a href="{{ route('affiliate.dashboard') }}"><span>Dashboard CTV</span></a></li>
+                                            @endif
+                                        @endauth
                                         <li><a href="{{ route('404') }}"><span>Không tìm thấy</span></a></li>
                                     </ul>
                                 </li>
