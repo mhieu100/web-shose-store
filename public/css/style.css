@@ -3650,10 +3650,7 @@ table p {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
-  height: 427px;
   overflow: hidden;
   margin-bottom: 0;
   position: relative;
