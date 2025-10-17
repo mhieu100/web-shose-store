@@ -19,17 +19,17 @@ class CommissionResource extends Resource
 {
     protected static ?string $model = Commission::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-banknotes';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-currency-dollar';
     
     protected static string | UnitEnum | null $navigationGroup = 'Quản lý CTV';
     
-    protected static ?string $navigationLabel = 'Hoa hồng CTV';
+    protected static ?string $navigationLabel = 'Hoa hồng';
+    
+    protected static ?int $navigationSort = 3;
     
     protected static ?string $modelLabel = 'Hoa hồng';
     
     protected static ?string $pluralModelLabel = 'Hoa hồng CTV';
-    
-    protected static ?int $navigationSort = 1;
 
     public static function form(Schema $schema): Schema
     {

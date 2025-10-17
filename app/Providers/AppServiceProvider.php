@@ -30,5 +30,8 @@ class AppServiceProvider extends ServiceProvider
         if (app()->environment('production')) {
             URL::forceScheme('https');
         }
+
+        // Register observers
+        \App\Models\Shop\Order::observe(\App\Observers\OrderObserver::class);
     }
 }

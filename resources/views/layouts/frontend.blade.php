@@ -39,6 +39,8 @@
     <link href="{{ asset('css/custom-tabs.css') }}" rel="stylesheet" />
     <!--== Product Detail CSS ==-->
     <link href="{{ asset('css/product-detail.css') }}" rel="stylesheet" />
+    <!--== Wishlist CSS ==-->
+    <link href="{{ asset('css/wishlist.css') }}" rel="stylesheet" />
 
     @stack('styles')
 

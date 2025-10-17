@@ -33,11 +33,17 @@ class ShopController extends Controller
         }
 
         // Filter by price range
-        if ($request->has('min_price')) {
-            $query->where('price', '>=', $request->get('min_price'));
+        if ($request->has('min_price') && is_numeric($request->get('min_price'))) {
+            $minPrice = (float) $request->get('min_price');
+            if ($minPrice >= 0) {
+                $query->where('price', '>=', $minPrice);
+            }
         }
-        if ($request->has('max_price')) {
-            $query->where('price', '<=', $request->get('max_price'));
+        if ($request->has('max_price') && is_numeric($request->get('max_price'))) {
+            $maxPrice = (float) $request->get('max_price');
+            if ($maxPrice > 0) {
+                $query->where('price', '<=', $maxPrice);
+            }
         }
 
         // Search by keyword

@@ -22,7 +22,7 @@
                                             @auth
                                                 <a href="{{ route('account') }}">{{ auth()->user()->name }}</a>
                                             @else
-                                                <a href="{{ route('login') }}">Account</a>
+                                                <a href="{{ route('login') }}">Tài khoản</a>
                                             @endauth
                                         </li>
                                     </ul>
@@ -52,7 +52,7 @@
                         <div class="header-middle-align-center">
                             <div class="header-search-area">
                                 <form class="header-searchbox" action="{{ route('shop.search') }}" method="GET">
-                                    <input type="search" name="q" class="form-control" placeholder="Search"
+                                    <input type="search" name="q" class="form-control" placeholder="Tìm kiếm sản phẩm..."
                                         value="{{ request('q') }}">
                                     <button class="btn-submit" type="submit"><i class="pe-7s-search"></i></button>
                                 </form>
@@ -103,80 +103,86 @@
                     <div class="header-align">
                         <div class="header-navigation-area position-relative">
                             <ul class="main-menu nav">
-                                <li><a href="{{ route('home') }}"><span>Home</span></a></li>
-                                <li><a href="{{ route('about') }}"><span>About</span></a></li>
-                                <li class="has-submenu"><a href="#/"><span>Pages</span></a>
+                                <li><a href="{{ route('home') }}"><span>Trang chủ</span></a></li>
+                                <li><a href="{{ route('about') }}"><span>Giới thiệu</span></a></li>
+                                <li class="has-submenu"><a href="#/"><span>Trang</span></a>
                                     <ul class="submenu-nav">
-                                        <li><a href="{{ route('account') }}"><span>Account</span></a></li>
-                                        <li><a href="{{ route('login') }}"><span>Login</span></a></li>
-                                        <li><a href="{{ route('register') }}"><span>Register</span></a></li>
-                                        <li><a href="{{ route('404') }}"><span>Page Not Found</span></a></li>
+                                        <li><a href="{{ route('account') }}"><span>Tài khoản</span></a></li>
+                                        <li><a href="{{ route('login') }}"><span>Đăng nhập</span></a></li>
+                                        <li><a href="{{ route('register') }}"><span>Đăng ký</span></a></li>
+                                        <li><a href="{{ route('collaborator.register') }}"><span>Đăng ký cộng tác viên</span></a></li>
+                                        @auth
+                                            @if(Auth::user()->isActiveAffiliate())
+                                                <li><a href="{{ route('affiliate.dashboard') }}"><span>Dashboard CTV</span></a></li>
+                                            @endif
+                                        @endauth
+                                        <li><a href="{{ route('404') }}"><span>Không tìm thấy</span></a></li>
                                     </ul>
                                 </li>
-                                <li class="has-submenu position-static"><a href="#/"><span>Shop</span></a>
+                                <li class="has-submenu position-static"><a href="#/"><span>Cửa hàng</span></a>
                                     <ul class="submenu-nav submenu-nav-mega column-3">
-                                        <li class="mega-menu-item"><a href="#/" class="mega-title"><span>Shop
-                                                    Layout</span></a>
+                                        <li class="mega-menu-item"><a href="#/" class="mega-title"><span>Bố cục
+                                                    cửa hàng</span></a>
                                             <ul>
                                                 <li><a href="{{ route('shop.three-columns') }}"><span>Shop 3
-                                                            Column</span></a></li>
+                                                            cột</span></a></li>
                                                 <li><a href="{{ route('shop.four-columns') }}"><span>Shop 4
-                                                            Column</span></a></li>
-                                                <li><a href="{{ route('shop') }}"><span>Shop Left Sidebar</span></a>
+                                                            cột</span></a></li>
+                                                <li><a href="{{ route('shop') }}"><span>Shop thanh bên trái</span></a>
                                                 </li>
-                                                <li><a href="{{ route('shop.right-sidebar') }}"><span>Shop Right
-                                                            Sidebar</span></a></li>
+                                                <li><a href="{{ route('shop.right-sidebar') }}"><span>Shop thanh bên
+                                                            phải</span></a></li>
                                             </ul>
                                         </li>
-                                        <li class="mega-menu-item"><a href="#/" class="mega-title"><span>Single
-                                                    Product</span></a>
+                                        <li class="mega-menu-item"><a href="#/" class="mega-title"><span>Chi tiết
+                                                    sản phẩm</span></a>
                                             <ul>
-                                                <li><a href="{{ route('product.normal') }}"><span>Single Product
-                                                            Normal</span></a></li>
-                                                <li><a href="{{ route('product.variable') }}"><span>Single Product
-                                                            Variable</span></a></li>
-                                                <li><a href="{{ route('product.group') }}"><span>Single Product
-                                                            Group</span></a></li>
-                                                <li><a href="{{ route('product.affiliate') }}"><span>Single Product
-                                                            Affiliate</span></a></li>
+                                                <li><a href="{{ route('product.normal') }}"><span>Sản phẩm
+                                                            thường</span></a></li>
+                                                <li><a href="{{ route('product.variable') }}"><span>Sản phẩm
+                                                            biến thể</span></a></li>
+                                                <li><a href="{{ route('product.group') }}"><span>Sản phẩm
+                                                            nhóm</span></a></li>
+                                                <li><a href="{{ route('product.affiliate') }}"><span>Sản phẩm
+                                                            liên kết</span></a></li>
                                             </ul>
                                         </li>
-                                        <li class="mega-menu-item"><a href="#/" class="mega-title"><span>Others
-                                                    Pages</span></a>
+                                        <li class="mega-menu-item"><a href="#/" class="mega-title"><span>Trang
+                                                    khác</span></a>
                                             <ul>
-                                                <li><a href="{{ route('cart') }}"><span>Shopping Cart</span></a></li>
-                                                <li><a href="{{ route('checkout') }}"><span>Checkout</span></a></li>
-                                                <li><a href="{{ route('wishlist') }}"><span>Wishlist</span></a></li>
-                                                <li><a href="{{ route('compare') }}"><span>Compare</span></a></li>
+                                                <li><a href="{{ route('cart') }}"><span>Giỏ hàng</span></a></li>
+                                                <li><a href="{{ route('checkout') }}"><span>Thanh toán</span></a></li>
+                                                <li><a href="{{ route('wishlist') }}"><span>Yêu thích</span></a></li>
+                                                <li><a href="{{ route('compare') }}"><span>So sánh</span></a></li>
                                             </ul>
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="has-submenu"><a href="#/"><span>Blog</span></a>
+                                <li class="has-submenu"><a href="#/"><span>Tin tức</span></a>
                                     <ul class="submenu-nav submenu-nav-mega">
-                                        <li class="mega-menu-item"><a href="#/" class="mega-title">Blog
-                                                Layout</a>
+                                        <li class="mega-menu-item"><a href="#/" class="mega-title">Bố cục
+                                                tin tức</a>
                                             <ul>
-                                                <li><a href="{{ route('blog') }}">Blog Grid</a></li>
-                                                <li><a href="{{ route('blog.left-sidebar') }}">Blog Left Sidebar</a>
+                                                <li><a href="{{ route('blog') }}">Tin tức lưới</a></li>
+                                                <li><a href="{{ route('blog.left-sidebar') }}">Tin tức thanh bên trái</a>
                                                 </li>
-                                                <li><a href="{{ route('blog.right-sidebar') }}">Blog Right Sidebar</a>
+                                                <li><a href="{{ route('blog.right-sidebar') }}">Tin tức thanh bên phải</a>
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li class="mega-menu-item"><a href="#/" class="mega-title">Single
-                                                Blog</a>
+                                        <li class="mega-menu-item"><a href="#/" class="mega-title">Chi tiết
+                                                tin tức</a>
                                             <ul>
-                                                <li><a href="{{ route('blog.details') }}">Blog Details</a></li>
-                                                <li><a href="{{ route('blog.details-left') }}">Blog Details Left
-                                                        Sidebar</a></li>
-                                                <li><a href="{{ route('blog.details-right') }}">Blog Details Right
-                                                        Sidebar</a></li>
+                                                <li><a href="{{ route('blog.details') }}">Chi tiết tin tức</a></li>
+                                                <li><a href="{{ route('blog.details-left') }}">Chi tiết thanh bên
+                                                        trái</a></li>
+                                                <li><a href="{{ route('blog.details-right') }}">Chi tiết thanh bên
+                                                        phải</a></li>
                                             </ul>
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="{{ route('contact') }}"><span>Contact</span></a></li>
+                                <li><a href="{{ route('contact') }}"><span>Liên hệ</span></a></li>
                             </ul>
                         </div>
                     </div>

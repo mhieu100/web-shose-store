@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Commissions\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -114,6 +115,59 @@ class CommissionsTable
                     }),
             ])
             ->recordActions([
+                Action::make('approve')
+                    ->label('Duyệt')
+                    ->icon('heroicon-o-check-circle')
+                    ->color('success')
+                    ->visible(fn ($record) => $record->status === 'pending')
+                    ->requiresConfirmation()
+                    ->action(function ($record) {
+                        $record->update([
+                            'status' => 'approved',
+                            'approved_at' => now(),
+                        ]);
+                        
+                        \Filament\Notifications\Notification::make()
+                            ->title('Đã duyệt hoa hồng')
+                            ->success()
+                            ->send();
+                    }),
+                    
+                Action::make('pay')
+                    ->label('Thanh toán')
+                    ->icon('heroicon-o-banknotes')
+                    ->color('info')
+                    ->visible(fn ($record) => $record->status === 'approved')
+                    ->requiresConfirmation()
+                    ->action(function ($record) {
+                        $record->update([
+                            'status' => 'paid',
+                            'paid_at' => now(),
+                        ]);
+                        
+                        \Filament\Notifications\Notification::make()
+                            ->title('Đã thanh toán hoa hồng')
+                            ->success()
+                            ->send();
+                    }),
+                    
+                Action::make('cancel')
+                    ->label('Hủy')
+                    ->icon('heroicon-o-x-circle')
+                    ->color('danger')
+                    ->visible(fn ($record) => in_array($record->status, ['pending', 'approved']))
+                    ->requiresConfirmation()
+                    ->action(function ($record) {
+                        $record->update([
+                            'status' => 'cancelled',
+                        ]);
+                        
+                        \Filament\Notifications\Notification::make()
+                            ->title('Đã hủy hoa hồng')
+                            ->warning()
+                            ->send();
+                    }),
+                    
                 EditAction::make()
                     ->label('Sửa'),
             ])

@@ -34,6 +34,9 @@ class Order extends Model
         'shipping_price',
         'shipping_method',
         'notes',
+        'affiliate_user_id',
+        'affiliate_code',
+        'affiliate_link_code',
     ];
 
     protected $casts = [
@@ -62,5 +65,31 @@ class Order extends Model
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    /** @return BelongsTo<\App\Models\User, $this> */
+    public function affiliateUser(): BelongsTo
+    {
+        return $this->belongsTo(\App\Models\User::class, 'affiliate_user_id');
+    }
+
+    /**
+     * Check if this order was referred by an affiliate
+     */
+    public function hasAffiliate(): bool
+    {
+        return !empty($this->affiliate_user_id) && !empty($this->affiliate_code);
+    }
+
+    /**
+     * Calculate commission for affiliate user
+     */
+    public function calculateAffiliateCommission(): float
+    {
+        if (!$this->hasAffiliate() || !$this->affiliateUser) {
+            return 0;
+        }
+
+        return $this->total_price * ($this->affiliateUser->commission_rate / 100);
     }
 }

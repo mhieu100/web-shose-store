@@ -62,13 +62,41 @@ Route::prefix('admin')->middleware(['auth', 'admin.only'])->group(function () {
 });
 
 // Authentication routes
-Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
-Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
-Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+    Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+});
 
 Route::get('form', Form::class);
+
+// Test auth status page (temporary)
+Route::get('/auth-status', function() {
+    return view('auth-status');
+});
+
+// Collaborator routes
+Route::get('/dang-ky-cong-tac-vien', [App\Http\Controllers\CollaboratorController::class, 'showForm'])->name('collaborator.register');
+Route::post('/dang-ky-cong-tac-vien', [App\Http\Controllers\CollaboratorController::class, 'store'])->name('collaborator.store');
+Route::get('/trang-thai-cong-tac-vien', [App\Http\Controllers\CollaboratorController::class, 'status'])->name('collaborator.status');
+
+// Affiliate routes - only for authenticated CTVs
+Route::middleware(['auth'])->prefix('affiliate')->name('affiliate.')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\AffiliateController::class, 'dashboard'])->name('dashboard');
+    Route::get('/products', [App\Http\Controllers\AffiliateController::class, 'products'])->name('products');
+    Route::get('/guide', function() {
+        return view('affiliate.guide');
+    })->name('guide');
+    Route::post('/create-link', [App\Http\Controllers\AffiliateController::class, 'createLink'])->name('create-link');
+    Route::get('/get-link/{product}', [App\Http\Controllers\AffiliateController::class, 'getLink'])->name('get-link');
+    Route::post('/toggle-link/{affiliateLink}', [App\Http\Controllers\AffiliateController::class, 'toggleLink'])->name('toggle-link');
+    Route::get('/stats', [App\Http\Controllers\AffiliateController::class, 'stats'])->name('stats');
+});
 
 // Invoice routes - chỉ admin mới được in hóa đơn
 Route::middleware(['auth', 'admin.only'])->group(function () {

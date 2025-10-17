@@ -13,7 +13,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::with(['categories', 'media', 'comments.user'])
+        $product = Product::with(['categories', 'media', 'comments.customer'])
             ->withCount('comments')
             ->findOrFail($id);
 

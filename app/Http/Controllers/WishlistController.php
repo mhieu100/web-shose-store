@@ -17,7 +17,7 @@ class WishlistController extends Controller
      */
     public function index(): View
     {
-        $wishlistItems = [];
+        $wishlistItems = collect([]);
         
         if (Auth::check()) {
             $wishlistItems = Auth::user()->wishlists()
