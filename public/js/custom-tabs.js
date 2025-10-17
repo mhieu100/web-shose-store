@@ -91,17 +91,24 @@ document.addEventListener('DOMContentLoaded', function() {
         const tabMenu = document.querySelector('.product-tab-nav');
         const windowWidth = window.innerWidth;
 
+        // Check if tabMenu exists before accessing its style
+        if (!tabMenu) return;
+
         if (windowWidth <= 768) {
             tabMenu.style.flexDirection = 'column';
             tabButtons.forEach(btn => {
-                btn.style.width = '100%';
-                btn.style.maxWidth = '280px';
+                if (btn && btn.style) {
+                    btn.style.width = '100%';
+                    btn.style.maxWidth = '280px';
+                }
             });
         } else {
             tabMenu.style.flexDirection = 'row';
             tabButtons.forEach(btn => {
-                btn.style.width = 'auto';
-                btn.style.maxWidth = 'none';
+                if (btn && btn.style) {
+                    btn.style.width = 'auto';
+                    btn.style.maxWidth = 'none';
+                }
             });
         }
     }

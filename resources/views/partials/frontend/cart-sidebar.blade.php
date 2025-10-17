@@ -6,20 +6,20 @@
   </div>
   <div class="offcanvas-body">
     @php
-        $cartItems = [];
+        $cartItems = collect([]);
         $cartTotal = 0;
         $cartCount = 0;
-        
+
         if (auth()->check()) {
             $cartItems = auth()->user()->carts()
                 ->with(['product.media'])
                 ->latest()
                 ->get();
-            
+
             $cartTotal = $cartItems->sum(function($item) {
                 return $item->quantity * $item->price;
             });
-            
+
             $cartCount = $cartItems->sum('quantity');
         }
     @endphp
@@ -32,10 +32,10 @@
                         <a href="#" class="remove" data-product-id="{{ $item->shop_product_id }}" title="Xóa sản phẩm">×</a>
                         <a href="{{ route('product.show', $item->shop_product_id) }}">
                             @if($item->product->getFirstMediaUrl('product-images'))
-                                <img src="{{ $item->product->getFirstMediaUrl('product-images', 'thumb') }}" 
+                                <img src="{{ $item->product->getFirstMediaUrl('product-images', 'thumb') }}"
                                      width="90" height="110" alt="{{ $item->product->name }}">
                             @else
-                                <img src="{{ asset('img/shop/placeholder.webp') }}" 
+                                <img src="{{ asset('img/shop/placeholder.webp') }}"
                                      width="90" height="110" alt="{{ $item->product->name }}">
                             @endif
                             <span class="product-title">{{ $item->product->name }}</span>
@@ -54,12 +54,12 @@
                     </li>
                 @endforeach
             </ul>
-            
+
             <p class="cart-total">
                 <span>Tổng cộng:</span>
                 <span class="amount" id="sidebar-cart-total">{{ number_format($cartTotal, 0, ',', '.') }} VNĐ</span>
             </p>
-            
+
             <a class="btn-theme" data-margin-bottom="10" href="{{ route('cart') }}">Xem giỏ hàng</a>
             <a class="btn-theme" href="{{ route('checkout') }}">Thanh toán</a>
             <a class="d-block text-end lh-1" href="{{ route('checkout') }}">

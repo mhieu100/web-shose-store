@@ -31,7 +31,14 @@ Route::delete('/cart/remove', [App\Http\Controllers\CartController::class, 'dest
 Route::delete('/cart/clear', [App\Http\Controllers\CartController::class, 'clear'])->name('cart.clear');
 Route::get('/cart/count', [App\Http\Controllers\CartController::class, 'count'])->name('cart.count');
 Route::get('/cart/sidebar-content', [App\Http\Controllers\CartController::class, 'getSidebarContent'])->name('cart.sidebar-content');
-Route::get('/checkout', function() { return view('checkout.index'); })->name('checkout');
+// Checkout routes
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/checkout/process', [App\Http\Controllers\CheckoutController::class, 'processCheckout'])->name('checkout.process');
+    Route::post('/checkout/apply-coupon', [App\Http\Controllers\CheckoutController::class, 'applyCoupon'])->name('checkout.apply_coupon');
+    Route::delete('/checkout/remove-coupon', [App\Http\Controllers\CheckoutController::class, 'removeCoupon'])->name('checkout.remove_coupon');
+    Route::get('/order/confirmation/{order}', [App\Http\Controllers\CheckoutController::class, 'confirmation'])->name('order.confirmation');
+});
 Route::get('/compare', function() { return view('compare.index'); })->name('compare');
 
 // Wishlist routes
@@ -41,6 +48,11 @@ Route::delete('/wishlist/remove', [App\Http\Controllers\WishlistController::clas
 Route::post('/wishlist/toggle', [App\Http\Controllers\WishlistController::class, 'toggle'])->name('wishlist.toggle');
 Route::delete('/wishlist/clear', [App\Http\Controllers\WishlistController::class, 'clear'])->name('wishlist.clear');
 Route::get('/wishlist/count', [App\Http\Controllers\WishlistController::class, 'count'])->name('wishlist.count');
+
+// Test route for wishlist modal
+Route::get('/test-wishlist-modal', function() { 
+    return view('test-wishlist-modal'); 
+})->name('test.wishlist.modal');
 
 // Blog routes
 Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');
