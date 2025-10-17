@@ -84,6 +84,19 @@ Route::get('/dang-ky-cong-tac-vien', [App\Http\Controllers\CollaboratorControlle
 Route::post('/dang-ky-cong-tac-vien', [App\Http\Controllers\CollaboratorController::class, 'store'])->name('collaborator.store');
 Route::get('/trang-thai-cong-tac-vien', [App\Http\Controllers\CollaboratorController::class, 'status'])->name('collaborator.status');
 
+// Affiliate routes - only for authenticated CTVs
+Route::middleware(['auth'])->prefix('affiliate')->name('affiliate.')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\AffiliateController::class, 'dashboard'])->name('dashboard');
+    Route::get('/products', [App\Http\Controllers\AffiliateController::class, 'products'])->name('products');
+    Route::get('/guide', function() {
+        return view('affiliate.guide');
+    })->name('guide');
+    Route::post('/create-link', [App\Http\Controllers\AffiliateController::class, 'createLink'])->name('create-link');
+    Route::get('/get-link/{product}', [App\Http\Controllers\AffiliateController::class, 'getLink'])->name('get-link');
+    Route::post('/toggle-link/{affiliateLink}', [App\Http\Controllers\AffiliateController::class, 'toggleLink'])->name('toggle-link');
+    Route::get('/stats', [App\Http\Controllers\AffiliateController::class, 'stats'])->name('stats');
+});
+
 // Invoice routes - chỉ admin mới được in hóa đơn
 Route::middleware(['auth', 'admin.only'])->group(function () {
     Route::get('/invoice/{order}/download', [\App\Http\Controllers\InvoiceController::class, 'downloadInvoice'])->name('invoice.download');

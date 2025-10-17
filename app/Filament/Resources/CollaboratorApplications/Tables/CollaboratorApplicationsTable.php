@@ -84,6 +84,10 @@ class CollaboratorApplicationsTable
                         // Update user role to collaborator (role ID = 2)
                         $record->user->update(['role_id' => 2]);
                         
+                        // Generate affiliate code and activate affiliate features
+                        $commissionService = app(\App\Services\CommissionService::class);
+                        $commissionService->generateAffiliateCodeForUser($record->user);
+                        
                         Notification::make()
                             ->title('Đã duyệt đơn đăng ký cộng tác viên')
                             ->success()

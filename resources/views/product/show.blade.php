@@ -176,6 +176,7 @@
                                         </ul>
                                     </div>
 
+
                                     <div class="product-quick-action">
                                         <div class="qty-wrap">
                                             <div>
@@ -220,6 +221,7 @@
                                 <!--== End Product Info Area ==-->
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

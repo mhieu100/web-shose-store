@@ -21,6 +21,20 @@ class UserResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
 
     protected static ?string $navigationLabel = 'Người dùng';
+    
+    public static function getNavigationBadge(): ?string
+    {
+        $pendingCtvs = \App\Models\User::byRole('ctv')
+            ->where('is_affiliate_active', false)
+            ->count();
+        
+        return $pendingCtvs > 0 ? (string) $pendingCtvs : null;
+    }
+    
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
+    }
 
     protected static ?string $modelLabel = 'Người dùng';
 

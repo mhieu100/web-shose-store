@@ -78,7 +78,35 @@ class UserForm
                             ->columnSpan('full'),
                     ])
                     ->columns(2)
-                    ->columnSpan(['lg' => 3]),
+                    ->columnSpan(['lg' => 2]),
+                    
+                // Affiliate Settings Section
+                \Filament\Schemas\Components\Section::make('Cài đặt Affiliate (CTV)')
+                    ->schema([
+                        TextInput::make('affiliate_code')
+                            ->label('Mã CTV')
+                            ->maxLength(20)
+                            ->unique(\App\Models\User::class, 'affiliate_code', ignoreRecord: true)
+                            ->placeholder('VD: CTV123456')
+                            ->helperText('Để trống để tự động tạo khi kích hoạt'),
+                            
+                        TextInput::make('commission_rate')
+                            ->label('Tỷ lệ hoa hồng (%)')
+                            ->numeric()
+                            ->default(5.00)
+                            ->step(0.01)
+                            ->minValue(0)
+                            ->maxValue(100)
+                            ->suffix('%')
+                            ->placeholder('5.00'),
+                            
+                        Toggle::make('is_affiliate_active')
+                            ->label('Kích hoạt Affiliate')
+                            ->default(false)
+                            ->helperText('Cho phép user này tạo link affiliate và nhận hoa hồng'),
+                    ])
+                    ->columnSpan(['lg' => 1])
+                    ->visible(fn (?Model $record) => $record?->hasRole('ctv') ?? false),
             ])
             ->columns(3);
     }

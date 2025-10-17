@@ -9,6 +9,7 @@ use App\Filament\Resources\CollaboratorApplications\Schemas\CollaboratorApplicat
 use App\Filament\Resources\CollaboratorApplications\Tables\CollaboratorApplicationsTable;
 use App\Models\CollaboratorApplication;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,7 +19,9 @@ class CollaboratorApplicationResource extends Resource
 {
     protected static ?string $model = CollaboratorApplication::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-user-plus';
+    
+    protected static string|UnitEnum|null $navigationGroup = 'Quản lý CTV';
     
     protected static ?string $navigationLabel = 'Đơn đăng ký CTV';
     
