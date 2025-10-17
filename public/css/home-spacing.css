@@ -1,0 +1,188 @@
+/**
+ * Home Page Section Spacing
+ * Điều chỉnh padding giữa các section cho cân đối
+ */
+
+/* Hero Slider - Giữ nguyên không cần padding */
+.home-slider-area {
+    margin-bottom: 0;
+}
+
+
+
+/* Product Area (Sản phẩm mới) - Padding lớn hơn vì quan trọng */
+.product-area.product-default-area:first-of-type {
+    padding: 100px 0 80px 0;
+}
+
+/* Banner Area - Padding nhỏ hơn */
+
+
+/* Featured Products - Padding vừa phải */
+.product-area.product-default-area:last-of-type {
+    padding: 80px 0 60px 0;
+}
+
+/* Container với pt--0 class */
+.container.pt--0 {
+    padding-top: 0 !important;
+}
+
+/* Divider Area - Padding lớn để tạo điểm nhấn */
+.bg-color-f2 {
+    padding: 100px 0;
+}
+
+.container.pt--0.pb--0 {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    /* Giảm padding trên tablet */
+    .product-category-area {
+        padding: 60px 0 40px 0;
+    }
+
+    .product-area.product-default-area:first-of-type {
+        padding: 80px 0 60px 0;
+    }
+
+    .banner-area {
+        padding: 40px 0;
+    }
+
+    .product-area.product-default-area:last-of-type {
+        padding: 60px 0 40px 0;
+    }
+
+    .bg-color-f2 {
+        padding: 80px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Giảm padding trên mobile */
+    .product-category-area {
+        padding: 50px 0 30px 0;
+    }
+
+    .product-area.product-default-area:first-of-type {
+        padding: 60px 0 40px 0;
+    }
+
+    .banner-area {
+        padding: 30px 0;
+    }
+
+    .product-area.product-default-area:last-of-type {
+        padding: 50px 0 30px 0;
+    }
+
+    .bg-color-f2 {
+        padding: 60px 0;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Padding tối thiểu trên mobile nhỏ */
+    .product-category-area {
+        padding: 40px 0 25px 0;
+    }
+
+    .product-area.product-default-area:first-of-type {
+        padding: 50px 0 30px 0;
+    }
+
+    .banner-area {
+        padding: 25px 0;
+    }
+
+    .product-area.product-default-area:last-of-type {
+        padding: 40px 0 25px 0;
+    }
+
+    .bg-color-f2 {
+        padding: 50px 0;
+    }
+}
+
+/* Fine-tuning cho section title */
+.section-title {
+    margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        margin-bottom: 35px;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-title {
+        margin-bottom: 25px;
+    }
+}
+
+/* Điều chỉnh khoảng cách giữa brands */
+.product-category-area .row:last-child {
+    margin-top: 20px;
+}
+
+/* Điều chỉnh banner items */
+.banner-item {
+    margin-bottom: 30px;
+}
+
+@media (min-width: 992px) {
+    .banner-item {
+        margin-bottom: 0;
+    }
+}
+
+/* Cải thiện khoảng cách cho product tabs */
+.product-tab-menu {
+    margin-bottom: 60px;
+}
+
+@media (max-width: 768px) {
+    .product-tab-menu {
+        margin-bottom: 40px;
+    }
+}
+
+/* Tạo rhythm tốt hơn cho toàn bộ trang */
+main.main-content > section:not(:last-child) {
+    position: relative;
+}
+
+/* Thêm subtle separator giữa các section (optional) */
+main.main-content > section:not(:last-child):after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #e0e0e0, transparent);
+    opacity: 0.5;
+}
+
+/* Ẩn separator cho hero và divider */
+.home-slider-area:after,
+.bg-color-f2:after {
+    display: none;
+}
+
+/* Đảm bảo consistent vertical rhythm */
+.product-item {
+    margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+    .product-item {
+        margin-bottom: 25px;
+    }
+}

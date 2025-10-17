@@ -84,14 +84,60 @@ class ProductForm
                             ->schema([
                                 TextInput::make('price')
                                     ->label('Giá sản phẩm')
-                                    ->numeric()
-                                    ->rules(['numeric', 'min:0', 'max:9999999999'])
+                                    ->rules(['required', 'string'])
                                     ->required()
                                     ->suffix('VNĐ')
-                                    ->helperText('Giá bán sản phẩm cho khách hàng (tối đa 9.999.999.999 VNĐ)')
+                                    ->helperText('Giá bán sản phẩm cho khách hàng (tối đa 9.999.999.999 VNĐ). Nhập số nguyên hoặc có dấu chấm phân cách hàng nghìn.')
+                                    ->placeholder('Ví dụ: 3000000 hoặc 3.000.000')
                                     ->formatStateUsing(fn ($state) => $state ? number_format($state, 0, ',', '.') : '')
-                                    ->dehydrateStateUsing(fn ($state) => $state ? (float) str_replace(['.', ','], '', $state) : null),
-                            ]),
+                                    ->dehydrateStateUsing(function ($state) {
+                                        if (!$state) return null;
+                                        // Remove thousand separators (dots) and keep only digits
+                                        $cleaned = preg_replace('/[^\d]/', '', $state);
+                                        // Validate the cleaned value is numeric and within range
+                                        if (!is_numeric($cleaned) || $cleaned < 0 || $cleaned > 9999999999) {
+                                            throw new \Exception('Giá không hợp lệ. Vui lòng nhập số từ 0 đến 9.999.999.999');
+                                        }
+                                        return (int) $cleaned;
+                                    }),
+
+                                TextInput::make('old_price')
+                                    ->label('Giá gốc')
+                                    ->rules(['nullable', 'string'])
+                                    ->suffix('VNĐ')
+                                    ->helperText('Giá gốc trước khi giảm (để tạo hiệu ứng sale)')
+                                    ->placeholder('Ví dụ: 4000000 hoặc 4.000.000')
+                                    ->formatStateUsing(fn ($state) => $state ? number_format($state, 0, ',', '.') : '')
+                                    ->dehydrateStateUsing(function ($state) {
+                                        if (!$state) return null;
+                                        // Remove thousand separators (dots) and keep only digits
+                                        $cleaned = preg_replace('/[^\d]/', '', $state);
+                                        // Validate the cleaned value is numeric and within range
+                                        if (!is_numeric($cleaned) || $cleaned < 0 || $cleaned > 9999999999) {
+                                            throw new \Exception('Giá gốc không hợp lệ. Vui lòng nhập số từ 0 đến 9.999.999.999');
+                                        }
+                                        return (int) $cleaned;
+                                    }),
+
+                                TextInput::make('cost')
+                                    ->label('Giá vốn')
+                                    ->rules(['nullable', 'string'])
+                                    ->suffix('VNĐ')
+                                    ->helperText('Giá vốn để tính toán lợi nhuận (không hiển thị cho khách hàng)')
+                                    ->placeholder('Ví dụ: 2000000 hoặc 2.000.000')
+                                    ->formatStateUsing(fn ($state) => $state ? number_format($state, 0, ',', '.') : '')
+                                    ->dehydrateStateUsing(function ($state) {
+                                        if (!$state) return null;
+                                        // Remove thousand separators (dots) and keep only digits
+                                        $cleaned = preg_replace('/[^\d]/', '', $state);
+                                        // Validate the cleaned value is numeric and within range
+                                        if (!is_numeric($cleaned) || $cleaned < 0 || $cleaned > 9999999999) {
+                                            throw new \Exception('Giá vốn không hợp lệ. Vui lòng nhập số từ 0 đến 9.999.999.999');
+                                        }
+                                        return (int) $cleaned;
+                                    }),
+                            ])
+                            ->columns(1),
                         Section::make('Kho hàng')
                             ->schema([
                                 TextInput::make('sku')

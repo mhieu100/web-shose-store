@@ -234,8 +234,8 @@ table p {
 /*-------- Spacing Style Css --------*/
 .container,
 .container-fluid {
-  padding-bottom: 80px;
-  padding-top: 110px;
+  padding-bottom: 20px;
+  padding-top: 40px;
 }
 @media only screen and (max-width: 1199px) {
   .container,
@@ -3197,7 +3197,7 @@ table p {
 -----------------------------------------------------------------------
 */
 .product-area.product-default-area .container {
-  padding-bottom: 70px;
+  padding-bottom: 40px;
 }
 @media only screen and (max-width: 1199px) {
   .product-area.product-default-area .container {

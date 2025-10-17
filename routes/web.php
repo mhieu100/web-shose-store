@@ -30,6 +30,7 @@ Route::put('/cart/update', [App\Http\Controllers\CartController::class, 'update'
 Route::delete('/cart/remove', [App\Http\Controllers\CartController::class, 'destroy'])->name('cart.remove');
 Route::delete('/cart/clear', [App\Http\Controllers\CartController::class, 'clear'])->name('cart.clear');
 Route::get('/cart/count', [App\Http\Controllers\CartController::class, 'count'])->name('cart.count');
+Route::get('/cart/sidebar-content', [App\Http\Controllers\CartController::class, 'getSidebarContent'])->name('cart.sidebar-content');
 Route::get('/checkout', function() { return view('checkout.index'); })->name('checkout');
 Route::get('/compare', function() { return view('compare.index'); })->name('compare');
 

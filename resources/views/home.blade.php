@@ -5,6 +5,7 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/minimal-ui.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home-spacing.css') }}">
 @endpush
 
 @section('content')
@@ -129,20 +130,20 @@
         <!--== End Hero Area Wrapper ==-->
 
         <!--== Start Product Brand Area ==-->
-        <section class="product-category-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="section-title text-center">
-                            <h3 class="title">{{ __('home.popular_brands') }}</h3>
-                            <div class="desc">
-                                <p>Khám phá những thương hiệu giày nổi tiếng và được yêu thích nhất</p>
+        @if ($brands && $brands->count() > 0)
+            <section class="product-category-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="section-title text-center">
+                                <h3 class="title">{{ __('home.popular_brands') }}</h3>
+                                <div class="desc">
+                                    <p>Khám phá những thương hiệu giày nổi tiếng và được yêu thích nhất</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    @if ($brands->count() > 0)
+                    <div class="row">
                         @foreach ($brands->take(4) as $brand)
                             <div class="col-md-6 col-lg-3">
                                 <!--== Start Brand Item ==-->
@@ -157,8 +158,8 @@
                                                 <img src="{{ Storage::disk('public')->url($brand->logo) }}" width="270"
                                                     height="320" alt="{{ $brand->name }}">
                                             @else
-                                                <img src="{{ asset('img/brands/brand-' . (($loop->index % 4) + 1) . '.webp') }}"
-                                                    width="270" height="320" alt="{{ $brand->name }}">
+                                                <img src="{{ asset('img/shop/placeholder.webp') }}" width="270"
+                                                    height="320" alt="{{ $brand->name }}">
                                             @endif
                                         </a>
                                     </div>
@@ -172,68 +173,10 @@
                                 <!--== End Brand Item ==-->
                             </div>
                         @endforeach
-                    @else
-                        <!-- Default brands if no brands in database -->
-                        <div class="col-md-6 col-lg-3">
-                            <div class="category-item" data-aos="fade-up" data-aos-duration="1000">
-                                <div class="category-thumb-wrap">
-                                    <a href="{{ route('shop') }}">
-                                        <img src="{{ asset('img/brands/nike.webp') }}" width="270" height="320"
-                                            alt="Nike">
-                                    </a>
-                                </div>
-                                <div class="category-content">
-                                    <h5 class="title"><a href="{{ route('shop') }}">Nike</a></h5>
-                                    <p class="count">150+ sản phẩm</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="category-item" data-aos="fade-up" data-aos-duration="1200">
-                                <div class="category-thumb-wrap">
-                                    <a href="{{ route('shop') }}">
-                                        <img src="{{ asset('img/brands/adidas.webp') }}" width="270" height="320"
-                                            alt="Adidas">
-                                    </a>
-                                </div>
-                                <div class="category-content">
-                                    <h5 class="title"><a href="{{ route('shop') }}">Adidas</a></h5>
-                                    <p class="count">120+ sản phẩm</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="category-item" data-aos="fade-up" data-aos-duration="1400">
-                                <div class="category-thumb-wrap">
-                                    <a href="{{ route('shop') }}">
-                                        <img src="{{ asset('img/brands/converse.webp') }}" width="270" height="320"
-                                            alt="Converse">
-                                    </a>
-                                </div>
-                                <div class="category-content">
-                                    <h5 class="title"><a href="{{ route('shop') }}">Converse</a></h5>
-                                    <p class="count">95+ sản phẩm</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="category-item" data-aos="fade-up" data-aos-duration="1600">
-                                <div class="category-thumb-wrap">
-                                    <a href="{{ route('shop') }}">
-                                        <img src="{{ asset('img/brands/vans.webp') }}" width="270" height="320"
-                                            alt="Vans">
-                                    </a>
-                                </div>
-                                <div class="category-content">
-                                    <h5 class="title"><a href="{{ route('shop') }}">Vans</a></h5>
-                                    <p class="count">80+ sản phẩm</p>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
         <!--== End Product Brand Area ==-->
 
         <!--== Start Product Area Wrapper ==-->
@@ -297,90 +240,9 @@
                                     @if ($latestProducts->count() > 0)
                                         @foreach ($latestProducts as $product)
                                             <div class="col-sm-6 col-lg-3">
-                                                <!--== Start Product Item ==-->
-                                                <div class="product-item" data-aos="fade-up"
-                                                    data-aos-duration="{{ 1000 + $loop->index * 100 }}">
-                                                    <div class="inner-content">
-                                                        <div class="product-thumb">
-                                                            <a href="{{ route('product.show', $product->id) }}">
-                                                                @if ($product->getMedia('product-images')->count() > 0)
-                                                                    <img src="{{ $product->getFirstMediaUrl('product-images') }}"
-                                                                        width="270" height="274"
-                                                                        alt="{{ $product->name }}">
-                                                                @else
-                                                                    <img src="{{ asset('img/shop/default-product.webp') }}"
-                                                                        width="270" height="274"
-                                                                        alt="{{ $product->name }}">
-                                                                @endif
-                                                            </a>
-                                                            @if ($product->sale_price && $product->sale_price < $product->price)
-                                                                <div class="product-flag">
-                                                                    <ul>
-                                                                        <li class="discount">
-                                                                            -{{ round((($product->price - $product->sale_price) / $product->price) * 100) }}%
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            @endif
-                                                            <div class="product-action">
-                                                                <x-wishlist-button :product="$product" class="btn-product-wishlist" />
-                                                                <button type="button" class="btn-product-cart add-to-cart"
-                                                                        data-product-id="{{ $product->id }}"
-                                                                        data-product-name="{{ $product->name }}"
-                                                                        data-product-price="{{ $product->sale_price ?? $product->price }}"
-                                                                        title="{{ __('home.add_to_cart') }}">
-                                                                    <i class="fa fa-shopping-cart"></i>
-                                                                </button>
-                                                                <button type="button" class="btn-product-quick-view-open"
-                                                                    title="{{ __('home.quick_view') }}">
-                                                                    <i class="fa fa-arrows"></i>
-                                                                </button>
-                                                                <a class="btn-product-compare"
-                                                                    href="{{ route('compare') }}"
-                                                                    title="{{ __('home.compare') }}"><i
-                                                                        class="fa fa-random"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-info">
-                                                            <div class="category">
-                                                                <ul>
-                                                                    @if ($product->brand)
-                                                                        <li><a
-                                                                                href="{{ route('shop') }}?brand={{ $product->brand->slug ?? $product->brand->id }}">{{ $product->brand->name }}</a>
-                                                                        </li>
-                                                                        @if ($product->categories->count() > 0)
-                                                                            <li class="sep">/</li>
-                                                                        @endif
-                                                                    @endif
-                                                                    @if ($product->categories->count() > 0)
-                                                                        <li><a
-                                                                                href="{{ route('shop') }}?category={{ $product->categories->first()->slug ?? $product->categories->first()->id }}">{{ $product->categories->first()->name }}</a>
-                                                                        </li>
-                                                                    @endif
-                                                                </ul>
-                                                            </div>
-                                                            <h4 class="title"><a
-                                                                    href="{{ route('product.show', $product->id) }}">{{ $product->name }}</a>
-                                                            </h4>
-                                                            <div class="prices">
-                                                                @if ($product->sale_price && $product->sale_price < $product->price)
-                                                                    <span
-                                                                        class="price-old">{{ number_format($product->price) }}
-                                                                        VNĐ</span>
-                                                                    <span class="sep">-</span>
-                                                                    <span
-                                                                        class="price">{{ number_format($product->sale_price) }}
-                                                                        VNĐ</span>
-                                                                @else
-                                                                    <span
-                                                                        class="price">{{ number_format($product->price) }}
-                                                                        VNĐ</span>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--== End Product Item ==-->
+                                                <x-product-card 
+                                                    :product="$product" 
+                                                    :aos-delay="$loop->index * 100" />
                                             </div>
                                         @endforeach
                                     @else
@@ -400,88 +262,9 @@
                                             @if (isset($categoryProducts[$category->id]) && $categoryProducts[$category->id]->count() > 0)
                                                 @foreach ($categoryProducts[$category->id] as $product)
                                                     <div class="col-sm-6 col-lg-3">
-                                                        <!--== Start Product Item ==-->
-                                                        <div class="product-item" data-aos="fade-up"
-                                                            data-aos-duration="{{ 1000 + $loop->index * 100 }}">
-                                                            <div class="inner-content">
-                                                                <div class="product-thumb">
-                                                                    <a href="{{ route('product.show', $product->id) }}">
-                                                                        @if ($product->getMedia('product-images')->count() > 0)
-                                                                            <img src="{{ $product->getFirstMediaUrl('product-images') }}"
-                                                                                width="270" height="274"
-                                                                                alt="{{ $product->name }}">
-                                                                        @else
-                                                                            <img src="{{ asset('img/shop/default-product.webp') }}"
-                                                                                width="270" height="274"
-                                                                                alt="{{ $product->name }}">
-                                                                        @endif
-                                                                    </a>
-                                                                    @if ($product->sale_price && $product->sale_price < $product->price)
-                                                                        <div class="product-flag">
-                                                                            <ul>
-                                                                                <li class="discount">
-                                                                                    -{{ round((($product->price - $product->sale_price) / $product->price) * 100) }}%
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    @endif
-                                                                    <div class="product-action">
-                                                                        <x-wishlist-button :product="$product" class="btn-product-wishlist" />
-                                                                        <a class="btn-product-cart"
-                                                                            href="{{ route('cart') }}"
-                                                                            title="{{ __('home.add_to_cart') }}"><i
-                                                                                class="fa fa-shopping-cart"></i></a>
-                                                                        <button type="button"
-                                                                            class="btn-product-quick-view-open"
-                                                                            title="{{ __('home.quick_view') }}">
-                                                                            <i class="fa fa-arrows"></i>
-                                                                        </button>
-                                                                        <a class="btn-product-compare"
-                                                                            href="{{ route('compare') }}"
-                                                                            title="{{ __('home.compare') }}"><i
-                                                                                class="fa fa-random"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="product-info">
-                                                                    <div class="category">
-                                                                        <ul>
-                                                                            @if ($product->brand)
-                                                                                <li><a
-                                                                                        href="{{ route('shop') }}?brand={{ $product->brand->slug ?? $product->brand->id }}">{{ $product->brand->name }}</a>
-                                                                                </li>
-                                                                                @if ($product->categories->count() > 0)
-                                                                                    <li class="sep">/</li>
-                                                                                @endif
-                                                                            @endif
-                                                                            @if ($product->categories->count() > 0)
-                                                                                <li><a
-                                                                                        href="{{ route('shop') }}?category={{ $product->categories->first()->slug ?? $product->categories->first()->id }}">{{ $product->categories->first()->name }}</a>
-                                                                                </li>
-                                                                            @endif
-                                                                        </ul>
-                                                                    </div>
-                                                                    <h4 class="title"><a
-                                                                            href="{{ route('product.show', $product->id) }}">{{ $product->name }}</a>
-                                                                    </h4>
-                                                                    <div class="prices">
-                                                                        @if ($product->sale_price && $product->sale_price < $product->price)
-                                                                            <span
-                                                                                class="price-old">{{ number_format($product->price) }}
-                                                                                VNĐ</span>
-                                                                            <span class="sep">-</span>
-                                                                            <span
-                                                                                class="price">{{ number_format($product->sale_price) }}
-                                                                                VNĐ</span>
-                                                                        @else
-                                                                            <span
-                                                                                class="price">{{ number_format($product->price) }}
-                                                                                VNĐ</span>
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--== End Product Item ==-->
+                                                        <x-product-card 
+                                                            :product="$product" 
+                                                            :aos-delay="$loop->index * 100" />
                                                     </div>
                                                 @endforeach
                                             @else
@@ -562,86 +345,10 @@
                     @if ($featuredProducts->count() > 0)
                         @foreach ($featuredProducts->take(8) as $product)
                             <div class="col-sm-6 col-lg-3">
-                                <!--== Start Product Item ==-->
-                                <div class="product-item">
-                                    <div class="inner-content">
-                                        <div class="product-thumb">
-                                            <a href="{{ route('product.show', $product->id) }}">
-                                                @if ($product->getMedia('product-images')->count() > 0)
-                                                    <img src="{{ $product->getFirstMediaUrl('product-images') }}"
-                                                        width="270" height="274" alt="{{ $product->name }}">
-                                                @else
-                                                    <img src="{{ asset('img/shop/' . (($loop->index % 8) + 1) . '.webp') }}"
-                                                        width="270" height="274" alt="{{ $product->name }}">
-                                                @endif
-                                            </a>
-                                            @if ($product->old_price && $product->old_price > $product->price)
-                                                <div class="product-flag">
-                                                    <ul>
-                                                        <li class="discount">
-                                                            -{{ round((($product->old_price - $product->price) / $product->old_price) * 100) }}%
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            @endif
-                                            @if ($product->featured)
-                                                <div class="product-flag">
-                                                    <ul>
-                                                        <li class="hot">Nổi bật</li>
-                                                    </ul>
-                                                </div>
-                                            @endif
-                                            <div class="product-action">
-                                                <x-wishlist-button :product="$product" class="btn-product-wishlist" />
-                                                <a class="btn-product-cart" href="{{ route('cart') }}"
-                                                    title="{{ __('home.add_to_cart') }}"><i
-                                                        class="fa fa-shopping-cart"></i></a>
-                                                <button type="button" class="btn-product-quick-view-open"
-                                                    title="{{ __('home.quick_view') }}">
-                                                    <i class="fa fa-arrows"></i>
-                                                </button>
-                                                <a class="btn-product-compare" href="{{ route('compare') }}"
-                                                    title="{{ __('home.compare') }}"><i class="fa fa-random"></i></a>
-                                            </div>
-                                            <a class="banner-link-overlay"
-                                                href="{{ route('product.show', $product->id) }}"></a>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="category">
-                                                <ul>
-                                                    @if ($product->categories->count() > 0)
-                                                        @foreach ($product->categories->take(2) as $category)
-                                                            <li><a
-                                                                    href="{{ route('shop') }}?category={{ $category->id }}">{{ $category->name }}</a>
-                                                            </li>
-                                                            @if (!$loop->last)
-                                                                <li class="sep">/</li>
-                                                            @endif
-                                                        @endforeach
-                                                    @else
-                                                        <li><a
-                                                                href="{{ route('shop') }}">{{ $product->brand->name ?? 'Sản phẩm' }}</a>
-                                                        </li>
-                                                    @endif
-                                                </ul>
-                                            </div>
-                                            <h4 class="title"><a
-                                                    href="{{ route('product.show', $product->id) }}">{{ $product->name }}</a>
-                                            </h4>
-                                            <div class="prices">
-                                                @if ($product->old_price && $product->old_price > $product->price)
-                                                    <span class="price-old">{{ number_format($product->old_price) }}
-                                                        VNĐ</span>
-                                                    <span class="sep">-</span>
-                                                    <span class="price">{{ number_format($product->price) }} VNĐ</span>
-                                                @else
-                                                    <span class="price">{{ number_format($product->price) }} VNĐ</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--== End Product Item ==-->
+                                <x-product-card 
+                                    :product="$product" 
+                                    :show-actions="false"
+                                    :aos-animation="'none'" />
                             </div>
                         @endforeach
                     @else
@@ -682,13 +389,13 @@
 @endsection
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/wishlist-shared.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/wishlist-shared.css') }}">
 @endpush
 
 @push('scripts')
-<script src="{{ asset('js/wishlist.js') }}"></script>
+    <script src="{{ asset('js/wishlist.js') }}"></script>
 @endpush
 
 @push('scripts')
-<script src="{{ asset('js/shop.js') }}"></script>
+    <script src="{{ asset('js/shop.js') }}"></script>
 @endpush
