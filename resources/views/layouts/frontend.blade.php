@@ -41,6 +41,10 @@
     <link href="{{ asset('css/product-detail.css') }}" rel="stylesheet" />
     <!--== Wishlist CSS ==-->
     <link href="{{ asset('css/wishlist.css') }}" rel="stylesheet" />
+    <!--== Improved Sidebar CSS ==-->
+    <link href="{{ asset('css/improved-sidebar.css') }}" rel="stylesheet" />
+    <!--== Product Action Fix CSS ==-->
+    <link href="{{ asset('css/product-action-fix.css') }}" rel="stylesheet" />
 
     @stack('styles')
 

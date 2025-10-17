@@ -1,0 +1,160 @@
+/* Product Quick Action Alignment Fix */
+
+.product-quick-action {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    flex-wrap: wrap !important;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.product-quick-action .qty-wrap {
+    flex-shrink: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.product-quick-action .qty-wrap > div {
+    display: flex !important;
+    align-items: center !important;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.product-quick-action .qtybtn {
+    background: #f8f9fa !important;
+    border: none !important;
+    color: #495057 !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    font-size: 14px !important;
+}
+
+.product-quick-action .qtybtn:hover {
+    background: #eb3e32 !important;
+    color: white !important;
+}
+
+.product-quick-action .quantity-input {
+    border: none !important;
+    outline: none !important;
+    width: 60px !important;
+    height: 40px !important;
+    text-align: center !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    background: #fff !important;
+    color: #333 !important;
+    padding: 0 !important;
+}
+
+.product-quick-action .quantity-input:focus {
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.product-quick-action .add-to-cart {
+    flex: 1 !important;
+    min-width: 200px !important;
+    height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    padding: 0 1.5rem !important;
+    background: linear-gradient(135deg, #eb3e32 0%, #d63384 100%) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    color: white !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 12px rgba(235, 62, 50, 0.3) !important;
+    cursor: pointer !important;
+}
+
+.product-quick-action .add-to-cart:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(235, 62, 50, 0.4) !important;
+    background: linear-gradient(135deg, #d63384 0%, #eb3e32 100%) !important;
+}
+
+.product-quick-action .add-to-cart:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 8px rgba(235, 62, 50, 0.3) !important;
+}
+
+.product-quick-action .add-to-cart:disabled {
+    opacity: 0.7 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+/* Responsive Design */
+@media (max-width: 767.98px) {
+    .product-quick-action {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 1rem !important;
+    }
+    
+    .product-quick-action .qty-wrap {
+        align-self: center !important;
+    }
+    
+    .product-quick-action .add-to-cart {
+        min-width: 100% !important;
+        flex: none !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .product-quick-action {
+        flex-direction: row !important;
+        gap: 0.75rem !important;
+    }
+    
+    .product-quick-action .add-to-cart {
+        min-width: 160px !important;
+    }
+}
+
+/* Enhanced Visual Effects */
+.product-quick-action .qty-wrap > div:hover {
+    border-color: #eb3e32 !important;
+    box-shadow: 0 2px 8px rgba(235, 62, 50, 0.15) !important;
+}
+
+.product-quick-action .qtybtn:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+}
+
+/* Smooth transitions for all elements */
+.product-quick-action * {
+    transition: all 0.3s ease !important;
+}
+
+/* Loading state for add to cart button */
+.product-quick-action .add-to-cart.loading {
+    pointer-events: none !important;
+}
+
+.product-quick-action .add-to-cart .fa-spinner {
+    animation: spin 1s linear infinite !important;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
