@@ -41,8 +41,8 @@
     <link href="{{ asset('css/product-detail.css') }}" rel="stylesheet" />
     <!--== Wishlist CSS ==-->
     <link href="{{ asset('css/wishlist.css') }}" rel="stylesheet" />
-    <!--== Improved Sidebar CSS ==-->
-    <link href="{{ asset('css/improved-sidebar.css') }}" rel="stylesheet" />
+    <!--== Improved Sidebar CSS (File not found - disabled) ==-->
+    <!-- <link href="{{ asset('css/improved-sidebar.css') }}" rel="stylesheet" /> -->
     <!--== Product Action Fix CSS ==-->
     <link href="{{ asset('css/product-action-fix.css') }}" rel="stylesheet" />
 
@@ -127,6 +127,8 @@
 
 <!--== Cart Sidebar Scripts ==-->
 <script src="{{ asset('js/cart-sidebar.js') }}"></script>
+<!--== Shop Filter Logic Scripts ==-->
+<script src="{{ asset('js/shop-filter-logic.js') }}"></script>
 
 <!--== Cart Animations CSS ==-->
 <link rel="stylesheet" href="{{ asset('css/cart-animations.css') }}">
