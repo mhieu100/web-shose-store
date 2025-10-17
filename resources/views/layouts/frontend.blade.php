@@ -85,6 +85,9 @@
 <!--== Start Quick View Menu ==-->
 @include('partials.frontend.quick-view')
 
+<!--== Start Product Options Modal ==-->
+@include('components.product-options-modal')
+
 <!--== Javascript Files ==-->
 <!--== Modernizr js ==-->
 <script src="{{ asset('js/modernizr.js') }}"></script>
@@ -115,6 +118,17 @@
 <script src="{{ asset('js/custom.js') }}"></script>
 <!--== Custom Tabs Scripts ==-->
 <script src="{{ asset('js/custom-tabs.js') }}"></script>
+<!--== Product Options Scripts ==-->
+<script src="{{ asset('js/product-options.js') }}"></script>
+
+<!--== Cart Sidebar Scripts ==-->
+<script src="{{ asset('js/cart-sidebar.js') }}"></script>
+
+<!--== Cart Animations CSS ==-->
+<link rel="stylesheet" href="{{ asset('css/cart-animations.css') }}">
+
+<!--== Cart Variants CSS ==-->
+<link rel="stylesheet" href="{{ asset('css/cart-variants.css') }}">
 
 @stack('scripts')
 

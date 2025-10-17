@@ -154,28 +154,70 @@
                                         </div>
                                     @endif
 
+                                    @if($product->colors && count($product->colors) > 0)
                                     <div class="product-color">
                                         <h6 class="title">Màu sắc</h6>
                                         <ul class="color-list">
-                                            <li data-bg-color="#586882"></li>
-                                            <li class="active" data-bg-color="#505050"></li>
-                                            <li data-bg-color="#73707a"></li>
-                                            <li data-bg-color="#c7bb9b"></li>
+                                            @foreach($product->colors as $index => $color)
+                                                @php
+                                                    // Handle both string format and object format
+                                                    if (is_array($color)) {
+                                                        $colorName = $color['name'] ?? $color['color'] ?? 'Unknown';
+                                                        $colorCode = $color['color_code'] ?? $color['code'] ?? $color['hex'] ?? '#000000';
+                                                    } else {
+                                                        $colorName = $color;
+                                                        // Simple color mapping for Vietnamese color names
+                                                        $colorCode = match(strtolower($color)) {
+                                                            'đỏ', 'red' => '#FF0000',
+                                                            'xanh', 'blue' => '#0000FF',
+                                                            'vàng', 'yellow' => '#FFFF00',
+                                                            'xanh lá', 'green' => '#008000',
+                                                            'đen', 'black' => '#000000',
+                                                            'trắng', 'white' => '#FFFFFF',
+                                                            'nâu', 'brown' => '#A52A2A',
+                                                            'hồng', 'pink' => '#FFC0CB',
+                                                            'cam', 'orange' => '#FFA500',
+                                                            'tím', 'purple' => '#800080',
+                                                            'xám', 'gray', 'grey' => '#808080',
+                                                            'be', 'beige' => '#F5F5DC',
+                                                            default => '#' . substr(md5($color), 0, 6)
+                                                        };
+                                                    }
+                                                @endphp
+                                                <li class="{{ $index === 0 ? 'active' : '' }}" 
+                                                    data-bg-color="{{ $colorCode }}"
+                                                    data-color-name="{{ $colorName }}"
+                                                    title="{{ $colorName }}"
+                                                    style="background-color: {{ $colorCode }}; border: 2px solid #ddd;"></li>
+                                            @endforeach
                                         </ul>
                                     </div>
+                                    @endif
 
+                                    @if($product->sizes && count($product->sizes) > 0)
                                     <div class="product-size">
                                         <h6 class="title">Kích thước</h6>
                                         <ul class="size-list">
-                                            <li>38</li>
-                                            <li class="active">39</li>
-                                            <li>40</li>
-                                            <li>41</li>
-                                            <li>42</li>
-                                            <li>43</li>
+                                            @foreach($product->sizes as $index => $size)
+                                                @php
+                                                    // Handle both string/numeric format and object format
+                                                    if (is_array($size)) {
+                                                        $sizeValue = $size['value'] ?? $size['size'] ?? $size['label'] ?? 'Unknown';
+                                                        $sizeLabel = $size['label'] ?? "Size {$sizeValue}";
+                                                    } else {
+                                                        $sizeValue = $size;
+                                                        $sizeLabel = "Size {$size}";
+                                                    }
+                                                @endphp
+                                                <li class="{{ $index === 0 ? 'active' : '' }}"
+                                                    data-size="{{ $sizeValue }}"
+                                                    title="{{ $sizeLabel }}">
+                                                    {{ $sizeValue }}
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </div>
-
+                                    @endif
 
                                     <div class="product-quick-action">
                                         <div class="qty-wrap">
@@ -221,7 +263,6 @@
                                 <!--== End Product Info Area ==-->
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -592,6 +633,39 @@
         $(document).ready(function() {
             console.log('🚀 Document ready - Product page initialized');
 
+            // Color selection functionality
+            $('.color-list li').on('click', function() {
+                // Remove active class from all color items
+                $('.color-list li').removeClass('active');
+                // Add active class to clicked item
+                $(this).addClass('active');
+                
+                // Get selected color info
+                const colorCode = $(this).data('bg-color');
+                const colorName = $(this).data('color-name');
+                
+                console.log('Selected color:', colorName, colorCode);
+                
+                // You can add logic here to update product images based on color
+                // or show selected color information
+            });
+
+            // Size selection functionality
+            $('.size-list li').on('click', function() {
+                // Remove active class from all size items
+                $('.size-list li').removeClass('active');
+                // Add active class to clicked item
+                $(this).addClass('active');
+                
+                // Get selected size info
+                const selectedSize = $(this).data('size') || $(this).text();
+                
+                console.log('Selected size:', selectedSize);
+                
+                // You can add logic here to check stock availability for selected size
+                // or update pricing based on size
+            });
+
             // Quantity increase/decrease buttons
             $('.qtybtn').on('click', function() {
                 var $input = $(this).siblings('.quantity-input');
@@ -620,7 +694,7 @@
                 if (val < min) $(this).val(min);
             });
 
-            // Add to cart with quantity
+            // Add to cart with quantity, color, and size
             $('.product-quick-action .add-to-cart').on('click', function(e) {
                 e.preventDefault();
 
@@ -629,6 +703,22 @@
                 const productName = button.data('product-name');
                 const productPrice = button.data('product-price');
                 const quantity = parseInt($('#product-quantity').val()) || 1;
+
+                // Get selected color and size
+                const selectedColor = $('.color-list li.active').data('color-name') || null;
+                const selectedColorCode = $('.color-list li.active').data('bg-color') || null;
+                const selectedSize = $('.size-list li.active').data('size') || $('.size-list li.active').text() || null;
+
+                // Validate selection if colors/sizes are available
+                if ($('.color-list').length > 0 && !selectedColor) {
+                    showNotification('error', 'Vui lòng chọn màu sắc');
+                    return;
+                }
+
+                if ($('.size-list').length > 0 && !selectedSize) {
+                    showNotification('error', 'Vui lòng chọn kích thước');
+                    return;
+                }
 
                 // Disable button and show loading
                 button.prop('disabled', true);
@@ -642,6 +732,9 @@
                     data: {
                         product_id: productId,
                         quantity: quantity,
+                        color: selectedColor,
+                        color_code: selectedColorCode,
+                        size: selectedSize,
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(response) {

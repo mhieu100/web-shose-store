@@ -92,6 +92,24 @@
                                                     @if($item->product->brand)
                                                         <p class="brand-name mb-1">{{ $item->product->brand->name }}</p>
                                                     @endif
+                                                    
+                                                    @if($item->color || $item->size)
+                                                        <div class="product-variants mb-2">
+                                                            @if($item->color)
+                                                                <span class="variant-item">
+                                                                    <i class="fas fa-circle" style="color: {{ $item->color_code ?? '#666' }};"></i>
+                                                                    <small class="text-muted">{{ $item->color }}</small>
+                                                                </span>
+                                                            @endif
+                                                            @if($item->size)
+                                                                <span class="variant-item {{ $item->color ? 'ms-3' : '' }}">
+                                                                    <i class="fas fa-ruler text-muted"></i>
+                                                                    <small class="text-muted">Size {{ $item->size }}</small>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                    @endif
+                                                    
                                                     <div class="product-meta">
                                                         <small class="added-date text-muted">
                                                             Added: {{ $item->created_at->format('M d, Y') }}
@@ -177,6 +195,23 @@
 
                                                 @if($item->product->brand)
                                                     <p class="brand-small mb-2">{{ $item->product->brand->name }}</p>
+                                                @endif
+
+                                                @if($item->color || $item->size)
+                                                    <div class="product-variants-mobile mb-2">
+                                                        @if($item->color)
+                                                            <span class="variant-item-mobile">
+                                                                <i class="fas fa-circle" style="color: {{ $item->color_code ?? '#666' }}; font-size: 10px;"></i>
+                                                                <small class="text-muted">{{ $item->color }}</small>
+                                                            </span>
+                                                        @endif
+                                                        @if($item->size)
+                                                            <span class="variant-item-mobile {{ $item->color ? 'ms-2' : '' }}">
+                                                                <i class="fas fa-ruler text-muted" style="font-size: 10px;"></i>
+                                                                <small class="text-muted">{{ $item->size }}</small>
+                                                            </span>
+                                                        @endif
+                                                    </div>
                                                 @endif
 
                                                 <div class="price-mobile mb-2">

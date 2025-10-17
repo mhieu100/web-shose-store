@@ -51,34 +51,63 @@ class CartController extends Controller
 
         $request->validate([
             'product_id' => 'required|exists:shop_products,id',
-            'quantity' => 'sometimes|integer|min:1|max:100'
+            'quantity' => 'sometimes|integer|min:1|max:100',
+            'color' => 'sometimes|string|max:255',
+            'color_code' => 'sometimes|string|max:7',
+            'size' => 'sometimes|string|max:50'
         ]);
 
         $productId = $request->input('product_id');
         $quantity = $request->input('quantity', 1);
+        $color = $request->input('color');
+        $colorCode = $request->input('color_code');
+        $size = $request->input('size');
         $user = Auth::user();
 
         $product = Product::findOrFail($productId);
+        
+        // Validate that color and size are provided if product has them
+        $productColors = $product->colors ?? [];
+        $productSizes = $product->sizes ?? [];
+        
+        if (!empty($productColors) && !$color) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Vui lòng chọn màu sắc cho sản phẩm này.'
+            ], 422);
+        }
+        
+        if (!empty($productSizes) && !$size) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Vui lòng chọn kích thước cho sản phẩm này.'
+            ], 422);
+        }
 
-        // Check if product already exists in cart
+        // Check if product already exists in cart with same color/size combination
         $cartItem = Cart::where('user_id', $user->id)
                        ->where('shop_product_id', $productId)
+                       ->where('color', $color)
+                       ->where('size', $size)
                        ->first();
 
         if ($cartItem) {
-            // Update quantity if item already exists
+            // Update quantity if exact same item (including color/size) already exists
             $cartItem->quantity += $quantity;
             $cartItem->save();
-            $message = 'Cart quantity updated successfully';
+            $message = 'Đã cập nhật số lượng sản phẩm trong giỏ hàng';
         } else {
-            // Add new item to cart
+            // Add new item to cart with color and size
             Cart::create([
                 'user_id' => $user->id,
                 'shop_product_id' => $productId,
                 'quantity' => $quantity,
-                'price' => $product->sale_price ?? $product->price
+                'price' => $product->sale_price ?? $product->price,
+                'color' => $color,
+                'color_code' => $colorCode,
+                'size' => $size
             ]);
-            $message = 'Product added to cart successfully';
+            $message = 'Đã thêm sản phẩm vào giỏ hàng thành công';
         }
 
         $cartCount = $user->carts()->sum('quantity');
@@ -216,6 +245,38 @@ class CartController extends Controller
             'success' => true,
             'count' => $count,
             'total' => $total
+        ]);
+    }
+
+    /**
+     * Get cart sidebar content for AJAX updates
+     */
+    public function getSidebarContent(): JsonResponse
+    {
+        $cartItems = [];
+        $cartTotal = 0;
+        $cartCount = 0;
+        
+        if (Auth::check()) {
+            $cartItems = Auth::user()->carts()
+                ->with(['product.media'])
+                ->latest()
+                ->get();
+            
+            $cartTotal = $cartItems->sum(function($item) {
+                return $item->quantity * $item->price;
+            });
+            
+            $cartCount = $cartItems->sum('quantity');
+        }
+
+        $html = view('partials.frontend.cart-sidebar-content', compact('cartItems', 'cartTotal', 'cartCount'))->render();
+
+        return response()->json([
+            'success' => true,
+            'html' => $html,
+            'count' => $cartCount,
+            'total' => $cartTotal
         ]);
     }
 }

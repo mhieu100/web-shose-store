@@ -53,7 +53,9 @@ class ProductsTable
                 TextColumn::make('price')
                     ->label('Giá')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->formatStateUsing(fn ($state) => $state ? number_format($state, 0, ',', '.') . ' VNĐ' : 'Chưa có giá')
+                    ->color(fn ($state) => $state > 0 ? 'success' : 'gray'),
 
                 TextColumn::make('sku')
                     ->label('Mã SKU')

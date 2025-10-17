@@ -74,7 +74,15 @@
                                     <button class="shopping-cart-btn" type="button" data-bs-toggle="offcanvas"
                                         data-bs-target="#AsideOffcanvasCart" aria-controls="offcanvasRightLabel">
                                         <i class="pe-7s-shopbag icon"></i>
-                                        <sup class="shop-count">0</sup>
+                                        <sup class="shop-count" id="cart-count">
+                                            @php
+                                                $cartCount = 0;
+                                                if (auth()->check()) {
+                                                    $cartCount = \App\Models\Shop\Cart::where('user_id', auth()->id())->sum('quantity') ?? 0;
+                                                }
+                                            @endphp
+                                            {{ $cartCount }}
+                                        </sup>
                                     </button>
                                 </div>
                                 <button class="btn-menu" type="button" data-bs-toggle="offcanvas"

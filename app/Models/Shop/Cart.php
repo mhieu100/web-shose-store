@@ -21,6 +21,9 @@ class Cart extends Model
         'shop_product_id',
         'quantity',
         'price',
+        'color',
+        'color_code',
+        'size',
     ];
 
     /**

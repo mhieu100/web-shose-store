@@ -161,16 +161,18 @@
                                                                             data-product-id="{{ $product->id }}"
                                                                             data-product-name="{{ $product->name }}"
                                                                             data-product-price="{{ $product->sale_price ?? $product->price }}"
-                                                                            title="Add to Cart">
-                                                                        <i class="fa fa-shopping-cart"></i>
+                                                                            data-product-colors="{{ $product->colors ? json_encode($product->colors) : '[]' }}"
+                                                                            data-product-sizes="{{ $product->sizes ? json_encode($product->sizes) : '[]' }}"
+                                                                            title="Thêm vào giỏ hàng">
+                                                                        <i class="fas fa-shopping-cart"></i>
                                                                     </button>
                                                                     <button type="button"
                                                                         class="btn-product-quick-view-open">
-                                                                        <i class="fa fa-arrows"></i>
+                                                                        <i class="fas fa-expand-arrows-alt"></i>
                                                                     </button>
                                                                     <a class="btn-product-compare"
                                                                         href="{{ route('compare') }}"><i
-                                                                            class="fa fa-random"></i></a>
+                                                                            class="fas fa-random"></i></a>
                                                                 </div>
                                                                 <a class="banner-link-overlay"
                                                                     href="{{ route('product.show', $product->id) }}"></a>
@@ -272,7 +274,9 @@
                                                                             data-product-id="{{ $product->id }}"
                                                                             data-product-name="{{ $product->name }}"
                                                                             data-product-price="{{ $product->sale_price ?? $product->price }}"
-                                                                            title="Add to Cart">Thêm vào giỏ</button>
+                                                                            data-product-colors="{{ $product->colors ? json_encode($product->colors) : '[]' }}"
+                                                                            data-product-sizes="{{ $product->sizes ? json_encode($product->sizes) : '[]' }}"
+                                                                            title="Thêm vào giỏ hàng">Thêm vào giỏ</button>
                                                                     <x-wishlist-button :product="$product" class="btn-product-wishlist" />
                                                                 </div>
                                                             </div>
@@ -618,7 +622,7 @@
                                 <div class="filter-section size-section" data-filter-type="size">
                                     <div class="filter-section-header collapsible" data-target="size-content">
                                         <h5 class="section-title">
-                                            <i class="fa fa-arrows-h"></i>
+                                            <i class="fas fa-expand-arrows-alt-h"></i>
                                             Kích cỡ
                                         </h5>
                                         <i class="fa fa-chevron-down toggle-icon"></i>

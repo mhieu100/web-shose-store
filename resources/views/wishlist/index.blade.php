@@ -53,8 +53,8 @@
                                             <td class="product-thumb">
                                                 <a href="{{ route('product.show', $item->product->id) }}" class="product-image-link">
                                                     <div class="product-image-wrapper">
-                                                        @if($item->product->getFirstMediaUrl('default'))
-                                                            <img src="{{ $item->product->getFirstMediaUrl('default') }}" 
+                                                        @if($item->product->getFirstMediaUrl('product-images'))
+                                                            <img src="{{ $item->product->getFirstMediaUrl('product-images', 'thumb') }}" 
                                                                  class="product-image" 
                                                                  alt="{{ $item->product->name }}"
                                                                  loading="lazy">
