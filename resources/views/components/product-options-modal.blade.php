@@ -1,5 +1,5 @@
 <!-- Product Options Modal -->
-<div class="modal fade" id="productOptionsModal" tabindex="-1" aria-labelledby="productOptionsModalLabel" aria-hidden="true">
+<div class="modal fade" id="productOptionsModal" tabindex="-1" aria-labelledby="productOptionsModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -52,7 +52,7 @@
                         <button type="button" class="btn btn-outline-secondary btn-sm qty-decrease">
                             <i class="fas fa-minus"></i>
                         </button>
-                        <input type="number" id="modal-quantity" class="form-control form-control-sm text-center mx-2" 
+                        <input type="number" id="modal-quantity" class="form-control form-control-sm text-center mx-2"
                                value="1" min="1" style="width: 80px; display: inline-block;">
                         <button type="button" class="btn btn-outline-secondary btn-sm qty-increase">
                             <i class="fas fa-plus"></i>
@@ -68,10 +68,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    <i class="fas fa-times me-2"></i>Hủy
+                  Hủy
                 </button>
                 <button type="button" class="btn btn-primary" id="confirm-add-to-cart">
-                    <i class="fas fa-shopping-cart me-2"></i>Thêm vào giỏ hàng
+                    Thêm vào giỏ hàng
                 </button>
             </div>
         </div>
@@ -79,6 +79,31 @@
 </div>
 
 <style>
+/* Product Options Modal Styles */
+#productOptionsModal .modal-dialog {
+    max-width: 500px;
+}
+
+#productOptionsModal .modal-content {
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+#productOptionsModal .modal-header {
+    border-bottom: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
+}
+
+#productOptionsModal .modal-body {
+    padding: 1.5rem;
+}
+
+#productOptionsModal .modal-footer {
+    border-top: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
+}
+
 .product-option-section {
     margin-bottom: 1.5rem;
 }
@@ -190,5 +215,39 @@
 
 .summary-item strong {
     color: #007bff;
+}
+
+.selection-required {
+    margin-top: 0.5rem;
+}
+
+/* Make sure modal appears above everything */
+#productOptionsModal {
+    z-index: 1060;
+}
+
+#productOptionsModal .modal-backdrop {
+    z-index: 1050;
+}
+
+/* Fix focus management for accessibility */
+#productOptionsModal:focus {
+    outline: none;
+}
+
+#productOptionsModal .btn-close:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    outline: none;
+}
+
+/* Ensure modal content is properly focusable */
+#productOptionsModal .modal-content {
+    position: relative;
+}
+
+/* Hide modal properly when closed */
+#productOptionsModal.fade:not(.show) {
+    opacity: 0;
+    pointer-events: none;
 }
 </style>

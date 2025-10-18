@@ -21,7 +21,9 @@ class OrderItem extends Model
      */
     protected $fillable = [
         'shop_order_id',
-        'shop_product_id', 
+        'shop_product_id',
+        'size',
+        'color',
         'qty',
         'unit_price',
         'sort',
@@ -44,7 +46,7 @@ class OrderItem extends Model
     }
 
     /**
-     * Get the order relationship  
+     * Get the order relationship
      */
     public function order()
     {

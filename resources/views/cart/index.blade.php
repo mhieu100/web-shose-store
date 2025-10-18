@@ -282,7 +282,7 @@
                                                 <i class="fa fa-arrow-left me-2"></i>
                                                 Continue Shopping
                                             </a>
-                                            <a href="#" class="btn btn-primary btn-checkout">
+                                            <a href="{{ route('checkout') }}" class="btn btn-primary btn-checkout">
                                                 <i class="fa fa-credit-card me-2"></i>
                                                 Proceed to Checkout
                                             </a>

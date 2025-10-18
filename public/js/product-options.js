@@ -23,8 +23,26 @@ $(document).ready(function() {
         const productId = $(this).data('product-id');
         const productName = $(this).data('product-name');
         const productPrice = $(this).data('product-price');
-        const productColors = $(this).data('product-colors') || [];
-        const productSizes = $(this).data('product-sizes') || [];
+        
+        // Safely parse JSON data
+        let productColors = [];
+        let productSizes = [];
+        
+        try {
+            const colorsData = $(this).data('product-colors');
+            productColors = typeof colorsData === 'string' ? JSON.parse(colorsData) : (Array.isArray(colorsData) ? colorsData : []);
+        } catch (e) {
+            console.warn('Invalid colors data:', e);
+            productColors = [];
+        }
+        
+        try {
+            const sizesData = $(this).data('product-sizes');
+            productSizes = typeof sizesData === 'string' ? JSON.parse(sizesData) : (Array.isArray(sizesData) ? sizesData : []);
+        } catch (e) {
+            console.warn('Invalid sizes data:', e);
+            productSizes = [];
+        }
         
         // Store current product data
         currentProduct = {
@@ -94,8 +112,31 @@ $(document).ready(function() {
             $('#confirm-add-to-cart').prop('disabled', true);
         }
 
-        // Show modal
-        $('#productOptionsModal').modal('show');
+        // Show modal using Bootstrap 5
+        const modalElement = document.getElementById('productOptionsModal');
+        const modal = new bootstrap.Modal(modalElement, {
+            backdrop: 'static',
+            keyboard: false,
+            focus: true
+        });
+        
+        // Handle focus management for accessibility
+        modalElement.addEventListener('shown.bs.modal', function() {
+            // Remove aria-hidden when modal is shown
+            modalElement.removeAttribute('aria-hidden');
+            // Focus on the first input or button in modal
+            const firstFocusable = modalElement.querySelector('button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            if (firstFocusable) {
+                firstFocusable.focus();
+            }
+        });
+        
+        modalElement.addEventListener('hidden.bs.modal', function() {
+            // Restore aria-hidden when modal is hidden
+            modalElement.setAttribute('aria-hidden', 'true');
+        });
+        
+        modal.show();
     }
 
     function setupColorOptions() {
@@ -284,8 +325,19 @@ $(document).ready(function() {
             type: 'POST',
             data: cartData,
             success: function(response) {
-                // Hide modal
-                $('#productOptionsModal').modal('hide');
+                // Hide modal using Bootstrap 5
+                const modalElement = document.getElementById('productOptionsModal');
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                if (modal) {
+                    modal.hide();
+                } else {
+                    // Fallback if no instance exists
+                    modalElement.style.display = 'none';
+                    modalElement.classList.remove('show');
+                    document.body.classList.remove('modal-open');
+                    const backdrop = document.querySelector('.modal-backdrop');
+                    if (backdrop) backdrop.remove();
+                }
                 
                 // Show success message
                 showNotification('success', `Đã thêm "${currentProduct.name}" vào giỏ hàng!`);
