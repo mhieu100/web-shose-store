@@ -54,4 +54,16 @@ class CollaboratorApplicationResource extends Resource
             'edit' => EditCollaboratorApplication::route('/{record}/edit'),
         ];
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        // Show number of pending collaborator applications in the sidebar
+        return (string) static::getModel()::where('status', 'pending')->count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        // Use danger color when there are pending items, otherwise primary
+        return static::getModel()::where('status', 'pending')->count() > 0 ? 'danger' : 'primary';
+    }
 }
