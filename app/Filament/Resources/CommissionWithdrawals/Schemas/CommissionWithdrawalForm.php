@@ -36,7 +36,8 @@ class CommissionWithdrawalForm
                             ->required()
                             ->numeric()
                             ->prefix('₫')
-                            ->step(1000)
+                            ->step(1)
+                            ->minValue(0)
                             ->live()
                             ->afterStateUpdated(function ($state, callable $set, callable $get) {
                                 $fee = $get('fee') ?? 0;
@@ -47,7 +48,8 @@ class CommissionWithdrawalForm
                             ->label('Phí giao dịch')
                             ->numeric()
                             ->prefix('₫')
-                            ->step(1000)
+                            ->step(1)
+                            ->minValue(0)
                             ->default(0)
                             ->live()
                             ->afterStateUpdated(function ($state, callable $set, callable $get) {
@@ -59,7 +61,8 @@ class CommissionWithdrawalForm
                             ->label('Số tiền thực nhận')
                             ->numeric()
                             ->prefix('₫')
-                            ->step(1000)
+                            ->step(1)
+                            ->minValue(0)
                             ->disabled()
                             ->dehydrated(),
                     ])
