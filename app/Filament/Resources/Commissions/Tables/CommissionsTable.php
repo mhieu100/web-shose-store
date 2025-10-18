@@ -32,8 +32,35 @@ class CommissionsTable
                     
                 TextColumn::make('product.name')
                     ->label('Sản phẩm')
+                    ->getStateUsing(function ($record) {
+                        // First try to get the direct product
+                        if ($record->product_id && $record->product) {
+                            return $record->product->name;
+                        }
+                        
+                        // Show order items summary if no specific product
+                        if ($record->order && $record->order->items) {
+                            $itemCount = $record->order->items->count();
+                            if ($itemCount === 1) {
+                                $item = $record->order->items->first();
+                                return $item->product ? $item->product->name : 'Sản phẩm không xác định';
+                            } elseif ($itemCount > 1) {
+                                return "Đơn hàng gồm {$itemCount} sản phẩm";
+                            }
+                        }
+                        
+                        return 'Không xác định';
+                    })
                     ->searchable()
-                    ->limit(30),
+                    ->limit(40)
+                    ->tooltip(function ($record) {
+                        if ($record->order && $record->order->items && $record->order->items->count() > 1) {
+                            return $record->order->items->map(function ($item) {
+                                return $item->product ? $item->product->name : 'Sản phẩm không xác định';
+                            })->join(', ');
+                        }
+                        return null;
+                    }),
                     
                 TextColumn::make('order_amount')
                     ->label('Giá trị đơn')

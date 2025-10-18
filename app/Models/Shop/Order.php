@@ -114,6 +114,12 @@ class Order extends Model
         return $this->belongsTo(Coupon::class, 'coupon_code', 'code');
     }
 
+    /** @return HasMany<\App\Models\Commission, $this> */
+    public function commissions(): HasMany
+    {
+        return $this->hasMany(\App\Models\Commission::class, 'order_id');
+    }
+
     /**
      * Check if this order was referred by an affiliate
      */
@@ -131,7 +137,28 @@ class Order extends Model
             return 0;
         }
 
-        return $this->total_price * ($this->affiliateUser->commission_rate / 100);
+        $commissionBase = $this->total_price;
+        
+        // If there's a specific affiliate link, calculate commission only for that product
+        if ($this->affiliate_link_code) {
+            $affiliateLink = \App\Models\AffiliateLink::where('link_code', $this->affiliate_link_code)
+                                                     ->where('user_id', $this->affiliate_user_id)
+                                                     ->first();
+            
+            if ($affiliateLink && $affiliateLink->shop_product_id) {
+                // Find the order item(s) for the specific affiliated product
+                $affiliatedItems = $this->items()->where('shop_product_id', $affiliateLink->shop_product_id)->get();
+                
+                if ($affiliatedItems->isNotEmpty()) {
+                    // Calculate commission only for the affiliated product items
+                    $commissionBase = $affiliatedItems->sum(function ($item) {
+                        return $item->price * $item->qty;
+                    });
+                }
+            }
+        }
+
+        return $commissionBase * ($this->affiliateUser->commission_rate / 100);
     }
 
     /**

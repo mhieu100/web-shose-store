@@ -40,11 +40,27 @@ class CommissionService
             return null;
         }
 
+        // Determine product_id based on affiliate link
+        $productId = null;
+        if ($order->affiliate_link_code) {
+            $affiliateLink = AffiliateLink::where('link_code', $order->affiliate_link_code)
+                                         ->where('user_id', $affiliateUser->id)
+                                         ->first();
+            if ($affiliateLink) {
+                $productId = $affiliateLink->shop_product_id;
+            }
+        }
+        
+        // Fallback to first item if no specific affiliate link
+        if (!$productId) {
+            $productId = $order->items->first()?->shop_product_id;
+        }
+
         // Create commission record
         $commission = Commission::create([
             'user_id' => $affiliateUser->id,
             'order_id' => $order->id,
-            'product_id' => $order->items->first()?->shop_product_id, // Main product
+            'product_id' => $productId,
             'order_amount' => $order->total_price,
             'commission_rate' => $affiliateUser->commission_rate,
             'commission_amount' => $commissionAmount,
