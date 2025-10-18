@@ -4,7 +4,7 @@
 
 @section('content')
 <!--== Start Page Header Area Wrapper ==-->
-<div class="page-header-area" data-bg-img="{{ asset('img/photos/bg3.webp') }}">
+<div class="page-header-area" data-bg-img="{{ config('app.page_header_image') }}">
     <div class="container pt--0 pb--0">
         <div class="row">
             <div class="col-12">
@@ -67,7 +67,7 @@
                             <div class="customer-info mb-3">
                                 <div class="d-flex align-items-center">
                                     <div class="customer-avatar me-3">
-                                        <div class="avatar-circle bg-primary text-white d-flex align-items-center justify-content-center" 
+                                        <div class="avatar-circle bg-primary text-white d-flex align-items-center justify-content-center"
                                              style="width: 50px; height: 50px; border-radius: 50%;">
                                             <i class="fa fa-user fa-lg"></i>
                                         </div>
@@ -97,10 +97,10 @@
                                             <i class="fa fa-map-marker me-1"></i>
                                             Địa chỉ <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" 
-                                               class="form-control @error('address_line_1') is-invalid @enderror" 
-                                               id="address_line_1" 
-                                               name="address_line_1" 
+                                        <input type="text"
+                                               class="form-control @error('address_line_1') is-invalid @enderror"
+                                               id="address_line_1"
+                                               name="address_line_1"
                                                value="{{ old('address_line_1') }}"
                                                placeholder="Số nhà, tên đường..."
                                                required>
@@ -115,10 +115,10 @@
                                             <i class="fa fa-map-marker-alt me-1"></i>
                                             Địa chỉ bổ sung (tuỳ chọn)
                                         </label>
-                                        <input type="text" 
-                                               class="form-control" 
-                                               id="address_line_2" 
-                                               name="address_line_2" 
+                                        <input type="text"
+                                               class="form-control"
+                                               id="address_line_2"
+                                               name="address_line_2"
                                                value="{{ old('address_line_2') }}"
                                                placeholder="Căn hộ, tầng, tòa nhà...">
                                     </div>
@@ -129,10 +129,10 @@
                                             <i class="fa fa-building me-1"></i>
                                             Thành phố <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" 
-                                               class="form-control @error('city') is-invalid @enderror" 
-                                               id="city" 
-                                               name="city" 
+                                        <input type="text"
+                                               class="form-control @error('city') is-invalid @enderror"
+                                               id="city"
+                                               name="city"
                                                value="{{ old('city') }}"
                                                placeholder="Hồ Chí Minh, Hà Nội..."
                                                required>
@@ -147,9 +147,9 @@
                                             <i class="fa fa-map me-1"></i>
                                             Tỉnh/Thành <span class="text-danger">*</span>
                                         </label>
-                                        <select class="form-control @error('state') is-invalid @enderror" 
-                                                id="state" 
-                                                name="state" 
+                                        <select class="form-control @error('state') is-invalid @enderror"
+                                                id="state"
+                                                name="state"
                                                 required>
                                             <option value="">Chọn Tỉnh/Thành</option>
                                             <option value="Ho Chi Minh" {{ old('state') == 'Ho Chi Minh' ? 'selected' : '' }}>Hồ Chí Minh</option>
@@ -172,10 +172,10 @@
                                             <i class="fa fa-envelope me-1"></i>
                                             Mã bưu chính <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" 
-                                               class="form-control @error('postal_code') is-invalid @enderror" 
-                                               id="postal_code" 
-                                               name="postal_code" 
+                                        <input type="text"
+                                               class="form-control @error('postal_code') is-invalid @enderror"
+                                               id="postal_code"
+                                               name="postal_code"
                                                value="{{ old('postal_code') }}"
                                                placeholder="700000, 100000..."
                                                required>
@@ -190,9 +190,9 @@
                                             <i class="fa fa-flag me-1"></i>
                                             Quốc gia <span class="text-danger">*</span>
                                         </label>
-                                        <select class="form-control @error('country') is-invalid @enderror" 
-                                                id="country" 
-                                                name="country" 
+                                        <select class="form-control @error('country') is-invalid @enderror"
+                                                id="country"
+                                                name="country"
                                                 required>
                                             <option value="Vietnam" {{ old('country', 'Vietnam') == 'Vietnam' ? 'selected' : '' }}>Việt Nam</option>
                                         </select>
@@ -207,10 +207,10 @@
                                             <i class="fa fa-phone me-1"></i>
                                             Số điện thoại <span class="text-danger">*</span>
                                         </label>
-                                        <input type="tel" 
-                                               class="form-control @error('phone') is-invalid @enderror" 
-                                               id="phone" 
-                                               name="phone" 
+                                        <input type="tel"
+                                               class="form-control @error('phone') is-invalid @enderror"
+                                               id="phone"
+                                               name="phone"
                                                value="{{ old('phone') }}"
                                                placeholder="0909 123 456"
                                                required>
@@ -235,11 +235,11 @@
                             <div class="payment-methods">
                                 <!-- COD Payment Method -->
                                 <div class="form-check payment-option mb-3" data-payment="cod">
-                                    <input class="form-check-input" 
-                                           type="radio" 
-                                           name="payment_method" 
-                                           id="cod" 
-                                           value="cod" 
+                                    <input class="form-check-input"
+                                           type="radio"
+                                           name="payment_method"
+                                           id="cod"
+                                           value="cod"
                                            {{ old('payment_method', 'cod') == 'cod' ? 'checked' : '' }}
                                            required>
                                     <label class="form-check-label d-flex align-items-center w-100" for="cod">
@@ -259,13 +259,13 @@
                                         </div>
                                     </label>
                                 </div>
-                                
+
                                 <!-- Bank Transfer Payment Method -->
                                 <div class="form-check payment-option mb-3" data-payment="bank_transfer">
-                                    <input class="form-check-input" 
-                                           type="radio" 
-                                           name="payment_method" 
-                                           id="bank_transfer" 
+                                    <input class="form-check-input"
+                                           type="radio"
+                                           name="payment_method"
+                                           id="bank_transfer"
                                            value="bank_transfer"
                                            {{ old('payment_method') == 'bank_transfer' ? 'checked' : '' }}>
                                     <label class="form-check-label d-flex align-items-center w-100" for="bank_transfer">
@@ -288,13 +288,13 @@
                                         </div>
                                     </label>
                                 </div>
-                                
+
                                 <!-- PayPal Payment Method -->
                                 <div class="form-check payment-option" data-payment="paypal">
-                                    <input class="form-check-input" 
-                                           type="radio" 
-                                           name="payment_method" 
-                                           id="paypal" 
+                                    <input class="form-check-input"
+                                           type="radio"
+                                           name="payment_method"
+                                           id="paypal"
                                            value="paypal"
                                            {{ old('payment_method') == 'paypal' ? 'checked' : '' }}>
                                     <label class="form-check-label d-flex align-items-center w-100" for="paypal">
@@ -314,7 +314,7 @@
                                         </div>
                                     </label>
                                 </div>
-                                
+
                                 <!-- Payment Method Error -->
                                 @error('payment_method')
                                     <div class="alert alert-danger mt-2">
@@ -340,9 +340,9 @@
                                     <i class="fa fa-comment me-1"></i>
                                     Ghi chú cho đơn hàng
                                 </label>
-                                <textarea class="form-control" 
-                                          id="notes" 
-                                          name="notes" 
+                                <textarea class="form-control"
+                                          id="notes"
+                                          name="notes"
                                           rows="3"
                                           placeholder="Ghi chú về đơn hàng của bạn, ví dụ: ghi chú đặc biệt cho việc giao hàng...">{{ old('notes') }}</textarea>
                             </div>
@@ -367,13 +367,13 @@
                                     <div class="cart-item d-flex align-items-center p-3 border-bottom">
                                         <div class="item-image me-3">
                                             @if($item->product->getFirstMediaUrl('gallery'))
-                                                <img src="{{ $item->product->getFirstMediaUrl('gallery') }}" 
-                                                     alt="{{ $item->product->name }}" 
+                                                <img src="{{ $item->product->getFirstMediaUrl('gallery') }}"
+                                                     alt="{{ $item->product->name }}"
                                                      class="rounded"
                                                      style="width: 60px; height: 60px; object-fit: cover;">
                                             @else
-                                                <img src="{{ asset('img/shop/placeholder.webp') }}" 
-                                                     alt="Product" 
+                                                <img src="{{ asset('img/shop/placeholder.webp') }}"
+                                                     alt="Product"
                                                      class="rounded"
                                                      style="width: 60px; height: 60px; object-fit: cover;">
                                             @endif
@@ -428,8 +428,8 @@
                                     <!-- Coupon Input Form -->
                                     <div class="coupon-form">
                                         <div class="input-group">
-                                            <input type="text" 
-                                                   class="form-control coupon-input" 
+                                            <input type="text"
+                                                   class="form-control coupon-input"
                                                    id="coupon_code"
                                                    placeholder="Nhập mã giảm giá..."
                                                    style="text-transform: uppercase;">
@@ -444,7 +444,7 @@
                                         </small>
                                     </div>
                                 @endif
-                                
+
                                 <!-- Coupon Messages -->
                                 <div class="coupon-messages mt-3" style="display: none;">
                                     <div class="alert mb-0"></div>
@@ -466,7 +466,7 @@
                                         <span>Tổng phụ:</span>
                                         <span class="fw-bold subtotal-amount">${{ number_format($subtotal, 2) }}</span>
                                     </div>
-                                    
+
                                     @if($appliedCoupon && $couponDiscount > 0)
                                     <div class="summary-row d-flex justify-content-between mb-2 text-success">
                                         <span>
@@ -476,7 +476,7 @@
                                         <span class="fw-bold discount-amount">-${{ number_format($couponDiscount, 2) }}</span>
                                     </div>
                                     @endif
-                                    
+
                                     <div class="summary-row d-flex justify-content-between mb-2">
                                         <span>Phí vận chuyển:</span>
                                         <span class="fw-bold shipping-amount">
@@ -496,7 +496,7 @@
                                         <span class="h5 mb-0">Tổng cộng:</span>
                                         <span class="h5 mb-0 text-primary fw-bold total-amount">${{ number_format($total, 2) }}</span>
                                     </div>
-                                    
+
                                     @if($subtotal >= 100)
                                         <div class="shipping-notice mt-3">
                                             <div class="alert alert-success mb-0">
@@ -665,14 +665,14 @@ $(document).ready(function() {
         // Remove checked state from all options
         $('.payment-option').removeClass('has-checked');
         $('.payment-details').slideUp(200);
-        
+
         // Add checked state to selected option
         const $selectedOption = $(this).closest('.payment-option');
         $selectedOption.addClass('has-checked');
-        
+
         // Show payment details for selected method
         $selectedOption.find('.payment-details').slideDown(300);
-        
+
         // Update order summary if needed based on payment method
         updatePaymentMethodInfo($(this).val());
     });
@@ -688,7 +688,7 @@ $(document).ready(function() {
     function updatePaymentMethodInfo(method) {
         // You can add specific logic here based on payment method
         console.log('Selected payment method:', method);
-        
+
         // Example: Show different messages or update fees
         switch(method) {
             case 'cod':
@@ -719,7 +719,7 @@ $(document).ready(function() {
         // Validate required fields
         let hasErrors = false;
         const requiredFields = ['address_line_1', 'city', 'state', 'postal_code', 'country', 'phone'];
-        
+
         requiredFields.forEach(function(fieldName) {
             const $field = $(`input[name="${fieldName}"]`);
             if (!$field.val().trim()) {
@@ -741,14 +741,14 @@ $(document).ready(function() {
         }
 
         const $submitBtn = $('.place-order-btn');
-        
+
         // Show loading state
         $submitBtn.prop('disabled', true);
         $submitBtn.find('i.fa-lock').removeClass('fa-lock').addClass('fa-spinner fa-spin');
-        
+
         // Prevent multiple submissions
         $submitBtn.html('<i class="fa fa-spinner fa-spin me-2"></i>Đang xử lý...');
-        
+
         // Show payment method confirmation
         const paymentText = selectedPayment.closest('.payment-option').find('strong').first().text();
         console.log('Processing order with payment method:', paymentText);
@@ -778,7 +778,7 @@ $(document).ready(function() {
     // Coupon functionality
     $('.apply-coupon-btn').on('click', function() {
         const couponCode = $('#coupon_code').val().trim().toUpperCase();
-        
+
         if (!couponCode) {
             showCouponMessage('error', 'Vui lòng nhập mã giảm giá.');
             return;
@@ -786,7 +786,7 @@ $(document).ready(function() {
 
         const $btn = $(this);
         const originalText = $btn.html();
-        
+
         // Show loading
         $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin me-1"></i>Đang xử lý...');
 
@@ -869,13 +869,13 @@ $(document).ready(function() {
     function showCouponMessage(type, message) {
         const $messages = $('.coupon-messages');
         const $alert = $messages.find('.alert');
-        
+
         $alert.removeClass('alert-success alert-danger alert-info')
               .addClass(type === 'success' ? 'alert-success' : (type === 'error' ? 'alert-danger' : 'alert-info'))
               .html('<i class="fa fa-' + (type === 'success' ? 'check-circle' : (type === 'error' ? 'exclamation-triangle' : 'info-circle')) + ' me-2"></i>' + message);
-        
+
         $messages.show();
-        
+
         // Auto hide after 5 seconds
         setTimeout(() => {
             $messages.fadeOut();

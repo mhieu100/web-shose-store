@@ -5,7 +5,7 @@
 @section('content')
 <main class="main-content">
     <!--== Start Page Header Area Wrapper ==-->
-    <div class="page-header-area" data-bg-img="{{ asset('img/photos/bg1.webp') }}">
+    <div class="page-header-area" data-bg-img="{{ config('app.page_header_image') }}">
       <div class="container pt--0 pb--0">
         <div class="row">
           <div class="col-12">

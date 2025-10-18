@@ -7,7 +7,7 @@
 @section('content')
     @php use Illuminate\Support\Facades\Storage; @endphp
     <!--== Start Page Header Area Wrapper ==-->
-    <div class="page-header-area" data-bg-img="{{ asset('img/photos/bg3.webp') }}">
+    <div class="page-header-area" data-bg-img="{{ config('app.page_header_image') }}">
         <div class="container pt--0 pb--0">
             <div class="row">
                 <div class="col-12">
@@ -184,7 +184,7 @@
                                                         };
                                                     }
                                                 @endphp
-                                                <li class="{{ $index === 0 ? 'active' : '' }}" 
+                                                <li class="{{ $index === 0 ? 'active' : '' }}"
                                                     data-bg-color="{{ $colorCode }}"
                                                     data-color-name="{{ $colorName }}"
                                                     title="{{ $colorName }}"
@@ -639,13 +639,13 @@
                 $('.color-list li').removeClass('active');
                 // Add active class to clicked item
                 $(this).addClass('active');
-                
+
                 // Get selected color info
                 const colorCode = $(this).data('bg-color');
                 const colorName = $(this).data('color-name');
-                
+
                 console.log('Selected color:', colorName, colorCode);
-                
+
                 // You can add logic here to update product images based on color
                 // or show selected color information
             });
@@ -656,12 +656,12 @@
                 $('.size-list li').removeClass('active');
                 // Add active class to clicked item
                 $(this).addClass('active');
-                
+
                 // Get selected size info
                 const selectedSize = $(this).data('size') || $(this).text();
-                
+
                 console.log('Selected size:', selectedSize);
-                
+
                 // You can add logic here to check stock availability for selected size
                 // or update pricing based on size
             });

@@ -4,7 +4,7 @@
 
 @section('content')
     <!--== Start Page Header Area Wrapper ==-->
-    <div class="page-header-area" data-bg-img="{{ asset('img/photos/bg3.webp') }}">
+    <div class="page-header-area" data-bg-img="{{ config('app.page_header_image') }}">
         <div class="container pt--0 pb--0">
             <div class="row">
                 <div class="col-12">
@@ -56,7 +56,7 @@
                                         <p><strong>Ngày đăng ký:</strong> {{ $existingApplication->created_at->format('d/m/Y H:i') }}</p>
                                     </div>
                                     <div class="col-md-6">
-                                        <p><strong>Trạng thái:</strong> 
+                                        <p><strong>Trạng thái:</strong>
                                             @if($existingApplication->status === 'pending')
                                                 <span class="badge bg-warning">Đang chờ duyệt</span>
                                             @elseif($existingApplication->status === 'approved')
@@ -70,7 +70,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                
+
                                 @if($existingApplication->status === 'approved')
                                     <div class="alert alert-success mt-3">
                                         <h5>🎉 Chúc mừng!</h5>
@@ -94,20 +94,20 @@
                                 @auth
                                     <form action="{{ route('collaborator.store') }}" method="POST">
                                         @csrf
-                                        
+
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
                                                 <label for="full_name" class="form-label">Họ và tên <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control @error('full_name') is-invalid @enderror" 
+                                                <input type="text" class="form-control @error('full_name') is-invalid @enderror"
                                                        id="full_name" name="full_name" value="{{ old('full_name', Auth::user()->name) }}" required>
                                                 @error('full_name')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            
+
                                             <div class="col-md-6 mb-3">
                                                 <label for="phone" class="form-label">Số điện thoại <span class="text-danger">*</span></label>
-                                                <input type="tel" class="form-control @error('phone') is-invalid @enderror" 
+                                                <input type="tel" class="form-control @error('phone') is-invalid @enderror"
                                                        id="phone" name="phone" value="{{ old('phone') }}" required>
                                                 @error('phone')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -117,7 +117,7 @@
 
                                         <div class="mb-3">
                                             <label for="id_card_number" class="form-label">Số CMND/CCCD <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control @error('id_card_number') is-invalid @enderror" 
+                                            <input type="text" class="form-control @error('id_card_number') is-invalid @enderror"
                                                    id="id_card_number" name="id_card_number" value="{{ old('id_card_number') }}" required>
                                             @error('id_card_number')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -126,7 +126,7 @@
 
                                         <div class="mb-3">
                                             <label for="address" class="form-label">Địa chỉ <span class="text-danger">*</span></label>
-                                            <textarea class="form-control @error('address') is-invalid @enderror" 
+                                            <textarea class="form-control @error('address') is-invalid @enderror"
                                                       id="address" name="address" rows="3" required>{{ old('address') }}</textarea>
                                             @error('address')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -136,17 +136,17 @@
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
                                                 <label for="bank_name" class="form-label">Tên ngân hàng <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control @error('bank_name') is-invalid @enderror" 
-                                                       id="bank_name" name="bank_name" value="{{ old('bank_name') }}" 
+                                                <input type="text" class="form-control @error('bank_name') is-invalid @enderror"
+                                                       id="bank_name" name="bank_name" value="{{ old('bank_name') }}"
                                                        placeholder="VD: Vietcombank, VietinBank..." required>
                                                 @error('bank_name')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            
+
                                             <div class="col-md-6 mb-3">
                                                 <label for="bank_account" class="form-label">Số tài khoản <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control @error('bank_account') is-invalid @enderror" 
+                                                <input type="text" class="form-control @error('bank_account') is-invalid @enderror"
                                                        id="bank_account" name="bank_account" value="{{ old('bank_account') }}" required>
                                                 @error('bank_account')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -156,7 +156,7 @@
 
                                         <div class="mb-3">
                                             <label for="bank_account_name" class="form-label">Tên chủ tài khoản <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control @error('bank_account_name') is-invalid @enderror" 
+                                            <input type="text" class="form-control @error('bank_account_name') is-invalid @enderror"
                                                    id="bank_account_name" name="bank_account_name" value="{{ old('bank_account_name') }}" required>
                                             @error('bank_account_name')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -165,8 +165,8 @@
 
                                         <div class="mb-3">
                                             <label for="reason" class="form-label">Lý do muốn làm cộng tác viên</label>
-                                            <textarea class="form-control @error('reason') is-invalid @enderror" 
-                                                      id="reason" name="reason" rows="3" 
+                                            <textarea class="form-control @error('reason') is-invalid @enderror"
+                                                      id="reason" name="reason" rows="3"
                                                       placeholder="Chia sẻ lý do bạn muốn trở thành cộng tác viên của chúng tôi...">{{ old('reason') }}</textarea>
                                             @error('reason')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -175,8 +175,8 @@
 
                                         <div class="mb-3">
                                             <label for="experience" class="form-label">Kinh nghiệm bán hàng/marketing</label>
-                                            <textarea class="form-control @error('experience') is-invalid @enderror" 
-                                                      id="experience" name="experience" rows="3" 
+                                            <textarea class="form-control @error('experience') is-invalid @enderror"
+                                                      id="experience" name="experience" rows="3"
                                                       placeholder="Mô tả kinh nghiệm bán hàng, marketing hoặc các kỹ năng liên quan...">{{ old('experience') }}</textarea>
                                             @error('experience')
                                                 <div class="invalid-feedback">{{ $message }}</div>
