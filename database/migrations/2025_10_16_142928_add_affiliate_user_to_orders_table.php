@@ -12,9 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('shop_orders', function (Blueprint $table) {
-            $table->foreignId('affiliate_user_id')->nullable()->constrained('users')->onDelete('set null')->after('shop_customer_id');
-            $table->string('affiliate_code', 20)->nullable()->after('affiliate_user_id');
-            $table->string('affiliate_link_code', 50)->nullable()->after('affiliate_code');
+            if (!Schema::hasColumn('shop_orders', 'affiliate_user_id')) {
+                $table->foreignId('affiliate_user_id')->nullable()->constrained('users')->onDelete('set null')->after('shop_customer_id');
+            }
+            if (!Schema::hasColumn('shop_orders', 'affiliate_code')) {
+                $table->string('affiliate_code', 20)->nullable()->after('affiliate_user_id');
+            }
+            if (!Schema::hasColumn('shop_orders', 'affiliate_link_code')) {
+                $table->string('affiliate_link_code', 50)->nullable()->after('affiliate_code');
+            }
         });
     }
 
