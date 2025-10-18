@@ -215,6 +215,8 @@ class CheckoutController extends Controller
                     'shop_product_id' => $item->product->id,
                     'qty' => $item->quantity,
                     'unit_price' => $item->price, // Use price from cart (already calculated)
+                    'size' => $item->size,
+                    'color' => $item->color,
                 ]);
 
                 // Update product quantity

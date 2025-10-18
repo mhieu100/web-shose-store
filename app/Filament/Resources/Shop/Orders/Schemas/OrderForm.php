@@ -23,6 +23,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
+use Illuminate\Support\HtmlString;
 use Squire\Models\Currency;
 
 class OrderForm
@@ -33,8 +34,63 @@ class OrderForm
             ->components([
                 Group::make()
                     ->schema([
-                        Section::make()
-                            ->schema(static::getDetailsComponents())
+                        Section::make('Thông tin đơn hàng')
+                            ->description('Tổng quan về đơn hàng')
+                            ->icon('heroicon-o-document-text')
+                            ->schema([
+                                Placeholder::make('order_summary')
+                                    ->label('')
+                                    ->content(function (?Order $record): HtmlString {
+                                        if (!$record) {
+                                            return new HtmlString('<div style="color: #6b7280; font-style: italic; text-align: center; padding: 1rem 0;">Đang tạo đơn hàng mới</div>');
+                                        }
+
+                                        $html = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">';
+
+                                        // Order Number Card
+                                        $html .= '<div style="background: linear-gradient(to bottom right, #eff6ff, #dbeafe); border-radius: 0.75rem; padding: 1rem; border: 1px solid #bfdbfe;">';
+                                        $html .= '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">';
+                                        $html .= '<svg style="width: 1rem; height: 1rem; color: #2563eb;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/></svg>';
+                                        $html .= '<span style="font-size: 0.75rem; font-weight: 600; color: #1d4ed8; text-transform: uppercase;">Mã đơn hàng</span>';
+                                        $html .= '</div>';
+                                        $html .= '<div style="font-size: 1rem; font-weight: 700; color: #1e3a8a;">' . ($record->order_number ?? 'N/A') . '</div>';
+                                        $html .= '</div>';
+
+                                        // Customer Info Card
+                                        $customerName = $record->user ? $record->user->name : 'Khách vãng lai';
+                                        $html .= '<div style="background: linear-gradient(to bottom right, #faf5ff, #f3e8ff); border-radius: 0.75rem; padding: 1rem; border: 1px solid #e9d5ff;">';
+                                        $html .= '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">';
+                                        $html .= '<svg style="width: 1rem; height: 1rem; color: #9333ea;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>';
+                                        $html .= '<span style="font-size: 0.75rem; font-weight: 600; color: #7e22ce; text-transform: uppercase;">Khách hàng</span>';
+                                        $html .= '</div>';
+                                        $html .= '<div style="font-size: 1rem; font-weight: 700; color: #581c87;">' . htmlspecialchars($customerName) . '</div>';
+                                        if ($record->user && $record->user->email) {
+                                            $html .= '<div style="font-size: 0.75rem; color: #7e22ce; margin-top: 0.25rem;">' . htmlspecialchars($record->user->email) . '</div>';
+                                        }
+                                        $html .= '</div>';
+
+                                        // Total Amount Card
+                                        $html .= '<div style="background: linear-gradient(to bottom right, #f0fdf4, #dcfce7); border-radius: 0.75rem; padding: 1rem; border: 1px solid #bbf7d0;">';
+                                        $html .= '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">';
+                                        $html .= '<svg style="width: 1rem; height: 1rem; color: #16a34a;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+                                        $html .= '<span style="font-size: 0.75rem; font-weight: 600; color: #15803d; text-transform: uppercase;">Tổng tiền</span>';
+                                        $html .= '</div>';
+                                        $html .= '<div style="font-size: 1.125rem; font-weight: 700; color: #14532d;">' . number_format($record->total_amount ?? 0, 0, ',', '.') . ' ₫</div>';
+                                        $html .= '</div>';
+
+                                        $html .= '</div>';
+
+                                        return new HtmlString($html);
+                                    })
+                                    ->columnSpanFull()
+                                    ->hidden(fn (?Order $record) => $record === null),
+
+                                ToggleButtons::make('status')
+                                    ->label('Trạng thái')
+                                    ->inline()
+                                    ->options(OrderStatus::class)
+                                    ->required(),
+                            ])
                             ->columns(2),
 
                         Section::make('Mặt hàng đặt')
@@ -225,16 +281,29 @@ class OrderForm
                     ->required()
                     ->reactive()
                     ->afterStateUpdated(fn ($state, Set $set) => $set('unit_price', Product::find($state)->price ?? 0))
-                    ->distinct()
-                    ->disableOptionsWhenSelectedInSiblingRepeaterItems()
                     ->searchable()
-                    ->columnSpan(2),
+                    ->columnSpanFull(),
+
+                TextInput::make('size')
+                    ->label('Size')
+                    ->placeholder('VD: 39, 40, 41...')
+                    ->maxLength(50)
+                    ->dehydrated()
+                    ->columnSpan(1),
+
+                TextInput::make('color')
+                    ->label('Màu sắc')
+                    ->placeholder('VD: Đen, Trắng, Xanh...')
+                    ->maxLength(50)
+                    ->dehydrated()
+                    ->columnSpan(1),
 
                 TextInput::make('qty')
                     ->label('Số lượng')
                     ->numeric()
                     ->default(1)
-                    ->required(),
+                    ->required()
+                    ->columnSpan(1),
 
                 TextInput::make('unit_price')
                     ->label('Đơn giá')
@@ -242,7 +311,8 @@ class OrderForm
                     ->dehydrated()
                     ->numeric()
                     ->prefix('$')
-                    ->required(),
+                    ->required()
+                    ->columnSpan(1),
             ])
             ->columns(4)
             ->extraItemActions([
