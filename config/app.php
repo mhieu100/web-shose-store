@@ -122,6 +122,10 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    // Global page header background image (1930x390)
+    // You can override via .env: PAGE_HEADER_IMAGE=/img/headers/hero-1930x390.jpg
+    'page_header_image' => env('PAGE_HEADER_IMAGE', '/img/headers/hero-1930x390.jpg'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

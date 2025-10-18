@@ -5,7 +5,7 @@
 @section('content')
 <main class="main-content">
     <!--== Start Page Header Area Wrapper ==-->
-    <div class="page-header-area" data-bg-img="{{ asset('img/photos/bg3.webp') }}">
+  <div class="page-header-area" data-bg-img="{{ config('app.page_header_image') }}">
       <div class="container pt--0 pb--0">
         <div class="row">
           <div class="col-12">
@@ -116,7 +116,7 @@
                             <li><a class="active" href="{{ route('shop.right-sidebar') }}">1</a></li>
                             <li><a href="{{ route('shop.four-columns') }}">2</a></li>
                             <li><a href="{{ route('shop.three-columns') }}">3</a></li>
-                          </ul>                    
+                          </ul>
                         </div>
                       </div>
                     </div>
@@ -179,7 +179,7 @@
                             <li><a class="active" href="{{ route('shop.right-sidebar') }}">1</a></li>
                             <li><a href="{{ route('shop.four-columns') }}">2</a></li>
                             <li><a href="{{ route('shop.three-columns') }}">3</a></li>
-                          </ul>                    
+                          </ul>
                         </div>
                       </div>
                     </div>
@@ -206,7 +206,7 @@
 
               <div class="shop-sidebar-price-range">
                 <h4 class="sidebar-title">Lọc theo giá</h4>
-                <div class="sidebar-price-range">   
+                <div class="sidebar-price-range">
                   <div id="price-range"></div>
                 </div>
               </div>

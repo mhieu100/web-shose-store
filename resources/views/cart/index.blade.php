@@ -4,7 +4,7 @@
 
 @section('content')
     <!--== Start Page Header Area Wrapper ==-->
-    <div class="page-header-area" data-bg-img="{{ asset('img/photos/bg3.webp') }}">
+    <div class="page-header-area" data-bg-img="{{ config('app.page_header_image') }}">
         <div class="container pt--0 pb--0">
             <div class="row">
                 <div class="col-12">
@@ -92,7 +92,7 @@
                                                     @if($item->product->brand)
                                                         <p class="brand-name mb-1">{{ $item->product->brand->name }}</p>
                                                     @endif
-                                                    
+
                                                     @if($item->color || $item->size)
                                                         <div class="product-variants mb-2">
                                                             @if($item->color)
@@ -109,7 +109,7 @@
                                                             @endif
                                                         </div>
                                                     @endif
-                                                    
+
                                                     <div class="product-meta">
                                                         <small class="added-date text-muted">
                                                             Added: {{ $item->created_at->format('M d, Y') }}
