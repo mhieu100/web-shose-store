@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('shop_order_items', function (Blueprint $table) {
-            $table->string('size')->nullable()->after('shop_product_id');
-            $table->string('color')->nullable()->after('size');
+            if (!Schema::hasColumn('shop_order_items', 'size')) {
+                $table->string('size')->nullable()->after('shop_product_id');
+            }
+            if (!Schema::hasColumn('shop_order_items', 'color')) {
+                $table->string('color')->nullable()->after('size');
+            }
         });
     }
 
