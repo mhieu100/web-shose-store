@@ -11,7 +11,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Shop routes
 Route::get('/shop', [App\Http\Controllers\ShopController::class, 'index'])->name('shop');
-Route::get('/shop/search', function() { return view('shop.search'); })->name('shop.search');
+Route::get('/shop/search', [App\Http\Controllers\ShopController::class, 'search'])->name('shop.search');
 Route::get('/shop/three-columns', function() { return view('shop.three-columns'); })->name('shop.three-columns');
 Route::get('/shop/four-columns', function() { return view('shop.four-columns'); })->name('shop.four-columns');
 Route::get('/shop/right-sidebar', function() { return view('shop.right-sidebar'); })->name('shop.right-sidebar');
