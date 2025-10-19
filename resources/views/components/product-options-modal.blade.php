@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="productOptionsModalLabel">
-                    <i class="fas fa-cog me-2"></i>Chọn tùy chọn sản phẩm
+                    <i class="fa fa-cog me-2"></i>Chọn tùy chọn sản phẩm
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -26,7 +26,7 @@
                 <!-- Color Selection -->
                 <div id="color-selection" class="product-option-section" style="display: none;">
                     <h6 class="option-title">
-                        <i class="fas fa-palette me-2"></i>Chọn màu sắc
+                        <i class="fa fa-paint-brush me-2"></i>Chọn màu sắc
                     </h6>
                     <div class="color-options" id="color-options">
                         <!-- Colors will be populated here -->
@@ -36,7 +36,7 @@
                 <!-- Size Selection -->
                 <div id="size-selection" class="product-option-section" style="display: none;">
                     <h6 class="option-title">
-                        <i class="fas fa-ruler me-2"></i>Chọn kích thước
+                        <i class="fa fa-ruler me-2"></i>Chọn kích thước
                     </h6>
                     <div class="size-options" id="size-options">
                         <!-- Sizes will be populated here -->
@@ -46,23 +46,23 @@
                 <!-- Quantity Selection -->
                 <div class="product-option-section">
                     <h6 class="option-title">
-                        <i class="fas fa-sort-numeric-up me-2"></i>Số lượng
+                        <i class="fa fa-sort-numeric-asc me-2"></i>Số lượng
                     </h6>
                     <div class="quantity-selector">
                         <button type="button" class="btn btn-outline-secondary btn-sm qty-decrease">
-                            <i class="fas fa-minus"></i>
+                            <i class="fa fa-minus"></i>
                         </button>
                         <input type="number" id="modal-quantity" class="form-control form-control-sm text-center mx-2"
                                value="1" min="1" style="width: 80px; display: inline-block;">
                         <button type="button" class="btn btn-outline-secondary btn-sm qty-increase">
-                            <i class="fas fa-plus"></i>
+                            <i class="fa fa-plus"></i>
                         </button>
                     </div>
                 </div>
 
                 <!-- Selected Options Summary -->
                 <div id="selected-options" class="alert alert-light mt-3" style="display: none;">
-                    <h6 class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Lựa chọn của bạn:</h6>
+                    <h6 class="mb-2"><i class="fa fa-check-circle text-success me-2"></i>Lựa chọn của bạn:</h6>
                     <div id="selected-summary"></div>
                 </div>
             </div>

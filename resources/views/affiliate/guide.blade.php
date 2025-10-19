@@ -11,34 +11,34 @@
             <!-- Quick Start Guide -->
             <div class="card mb-4">
                 <div class="card-header bg-primary text-white">
-                    <h5><i class="fas fa-rocket"></i> Bắt Đầu Nhanh</h5>
+                    <h5><i class="fa fa-rocket"></i> Bắt Đầu Nhanh</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-3 text-center mb-3">
                             <div class="bg-light p-3 rounded">
-                                <i class="fas fa-user-plus fa-2x text-primary mb-2"></i>
+                                <i class="fa fa-user-plus fa-2x text-primary mb-2"></i>
                                 <h6>1. Đăng Ký</h6>
                                 <p class="small">Đăng ký làm CTV và chờ admin duyệt</p>
                             </div>
                         </div>
                         <div class="col-md-3 text-center mb-3">
                             <div class="bg-light p-3 rounded">
-                                <i class="fas fa-link fa-2x text-success mb-2"></i>
+                                <i class="fa fa-link fa-2x text-success mb-2"></i>
                                 <h6>2. Tạo Link</h6>
                                 <p class="small">Chọn sản phẩm và tạo link affiliate</p>
                             </div>
                         </div>
                         <div class="col-md-3 text-center mb-3">
                             <div class="bg-light p-3 rounded">
-                                <i class="fas fa-share-alt fa-2x text-info mb-2"></i>
+                                <i class="fa fa-share-alt fa-2x text-info mb-2"></i>
                                 <h6>3. Chia Sẻ</h6>
                                 <p class="small">Share link cho bạn bè, khách hàng</p>
                             </div>
                         </div>
                         <div class="col-md-3 text-center mb-3">
                             <div class="bg-light p-3 rounded">
-                                <i class="fas fa-money-bill-wave fa-2x text-warning mb-2"></i>
+                                <i class="fa fa-money fa-2x text-warning mb-2"></i>
                                 <h6>4. Nhận Hoa Hồng</h6>
                                 <p class="small">Kiếm hoa hồng {{ Auth::user()->commission_rate ?? 5 }}% khi có người mua</p>
                             </div>
@@ -52,7 +52,7 @@
                 <div class="col-md-6">
                     <div class="card mb-4">
                         <div class="card-header">
-                            <h5><i class="fas fa-tachometer-alt"></i> Dashboard CTV</h5>
+                            <h5><i class="fa fa-tachometer"></i> Dashboard CTV</h5>
                         </div>
                         <div class="card-body">
                             <p><strong>Tại đây bạn có thể:</strong></p>
@@ -63,7 +63,7 @@
                                 <li>📋 Copy mã CTV của bạn</li>
                             </ul>
                             <a href="{{ route('affiliate.dashboard') }}" class="btn btn-primary">
-                                <i class="fas fa-arrow-right"></i> Vào Dashboard
+                                <i class="fa fa-arrow-right"></i> Vào Dashboard
                             </a>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                 <div class="col-md-6">
                     <div class="card mb-4">
                         <div class="card-header">
-                            <h5><i class="fas fa-shopping-bag"></i> Tạo Link Sản Phẩm</h5>
+                            <h5><i class="fa fa-shopping-bag"></i> Tạo Link Sản Phẩm</h5>
                         </div>
                         <div class="card-body">
                             <p><strong>Cách tạo link affiliate:</strong></p>
@@ -83,7 +83,7 @@
                                 <li>Link sẽ có dạng: <code>domain.com/product/123?ref=CTV123456</code></li>
                             </ol>
                             <a href="{{ route('affiliate.products') }}" class="btn btn-success">
-                                <i class="fas fa-plus"></i> Tạo Link Ngay
+                                <i class="fa fa-plus"></i> Tạo Link Ngay
                             </a>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
             <!-- Sharing Tips -->
             <div class="card mb-4">
                 <div class="card-header">
-                    <h5><i class="fas fa-lightbulb"></i> Mẹo Chia Sẻ Hiệu Quả</h5>
+                    <h5><i class="fa fa-lightbulb-o"></i> Mẹo Chia Sẻ Hiệu Quả</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -114,7 +114,7 @@
                             </ul>
                         </div>
                         <div class="col-md-4">
-                            <h6><i class="fas fa-users text-success"></i> Offline</h6>
+                            <h6><i class="fa fa-users text-success"></i> Offline</h6>
                             <ul class="small">
                                 <li>Giới thiệu trực tiếp cho khách hàng</li>
                                 <li>In card có QR code link affiliate</li>
@@ -128,7 +128,7 @@
             <!-- Commission Info -->
             <div class="card mb-4">
                 <div class="card-header">
-                    <h5><i class="fas fa-info-circle"></i> Về Hoa Hồng</h5>
+                    <h5><i class="fa fa-info-circle"></i> Về Hoa Hồng</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -159,17 +159,17 @@
             <!-- Contact Support -->
             <div class="card">
                 <div class="card-header">
-                    <h5><i class="fas fa-headset"></i> Hỗ Trợ</h5>
+                    <h5><i class="fa fa-headphones"></i> Hỗ Trợ</h5>
                 </div>
                 <div class="card-body">
                     <p>Cần hỗ trợ? Liên hệ với chúng tôi:</p>
                     <div class="row">
                         <div class="col-md-4">
-                            <i class="fas fa-phone text-success"></i> 
+                            <i class="fa fa-phone text-success"></i> 
                             <strong>Hotline:</strong> 0123.456.789
                         </div>
                         <div class="col-md-4">
-                            <i class="fas fa-envelope text-primary"></i> 
+                            <i class="fa fa-envelope text-primary"></i> 
                             <strong>Email:</strong> support@domain.com
                         </div>
                         <div class="col-md-4">

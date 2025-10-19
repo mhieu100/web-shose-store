@@ -4,7 +4,7 @@
     @if(Auth::user()->isActiveAffiliate())
         <div class="affiliate-share-section mt-3">
             <button type="button" class="btn btn-outline-success btn-sm" onclick="shareProduct({{ $product->id }})">
-                <i class="fas fa-share-alt"></i> Share & Kiếm Hoa Hồng
+                <i class="fa fa-share-alt"></i> Share & Kiếm Hoa Hồng
             </button>
             
             <!-- Hidden input to store affiliate link -->

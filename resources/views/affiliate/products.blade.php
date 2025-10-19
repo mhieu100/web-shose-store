@@ -10,22 +10,22 @@
             <ul class="nav nav-pills nav-fill mb-4">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('affiliate.dashboard') }}">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                        <i class="fa fa-tachometer"></i> Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="{{ route('affiliate.products') }}">
-                        <i class="fas fa-shopping-bag"></i> Tạo Link SP
+                        <i class="fa fa-shopping-bag"></i> Tạo Link SP
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('affiliate.guide') }}">
-                        <i class="fas fa-book"></i> Hướng Dẫn
+                        <i class="fa fa-book"></i> Hướng Dẫn
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('collaborator.status') }}">
-                        <i class="fas fa-user-check"></i> Thông Tin CTV
+                        <i class="fa fa-user"></i> Thông Tin CTV
                     </a>
                 </li>
             </ul>
@@ -33,7 +33,7 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>🛍️ Chọn Sản Phẩm Tạo Link Affiliate</h2>
                 <div class="text-muted">
-                    <i class="fas fa-percentage"></i> Hoa hồng: {{ Auth::user()->commission_rate }}%
+                    <i class="fa fa-percent"></i> Hoa hồng: {{ Auth::user()->commission_rate }}%
                 </div>
             </div>
 
@@ -84,7 +84,7 @@
                                 @if(isset($existingLinks[$product->id]))
                                     <div class="mt-auto">
                                         <p class="text-success small mb-2">
-                                            <i class="fas fa-check"></i> Đã có link affiliate
+                                            <i class="fa fa-check"></i> Đã có link affiliate
                                         </p>
                                         <div class="btn-group w-100">
                                             <button class="btn btn-outline-primary btn-sm" onclick="copyExistingLink({{ $product->id }})">

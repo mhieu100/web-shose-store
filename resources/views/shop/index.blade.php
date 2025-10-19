@@ -164,15 +164,15 @@
                                                                             data-product-colors="{{ $product->colors ? json_encode($product->colors) : '[]' }}"
                                                                             data-product-sizes="{{ $product->sizes ? json_encode($product->sizes) : '[]' }}"
                                                                             title="Thêm vào giỏ hàng">
-                                                                        <i class="fas fa-shopping-cart"></i>
+                                                                        <i class="fa fa-shopping-cart"></i>
                                                                     </button>
                                                                     <button type="button"
                                                                         class="btn-product-quick-view-open">
-                                                                        <i class="fas fa-expand-arrows-alt"></i>
+                                                                        <i class="fa fa-expand"></i>
                                                                     </button>
                                                                     <a class="btn-product-compare"
                                                                         href="{{ route('compare') }}"><i
-                                                                            class="fas fa-random"></i></a>
+                                                                            class="fa fa-random"></i></a>
                                                                 </div>
                                                                 <a class="banner-link-overlay"
                                                                     href="{{ route('product.show', $product->id) }}"></a>
@@ -622,7 +622,7 @@
                                 <div class="filter-section size-section" data-filter-type="size">
                                     <div class="filter-section-header collapsible" data-target="size-content">
                                         <h5 class="section-title">
-                                            <i class="fas fa-expand-arrows-alt-h"></i>
+                                            <i class="fa fa-expand-h"></i>
                                             Kích cỡ
                                         </h5>
                                         <i class="fa fa-chevron-down toggle-icon"></i>
