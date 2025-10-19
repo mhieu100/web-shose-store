@@ -34,33 +34,47 @@
               <div class="row">
                 <div class="col-12">
                   <div class="section-title text-center">
-                    <h3 class="title">Kết quả tìm kiếm cho "{{ request('q') }}"</h3>
+                    <h3 class="title">Kết quả tìm kiếm cho "{{ $searchTerm ?? request('q') }}"</h3>
                     <div class="desc">
-                      <p>Tìm thấy {{ rand(8, 20) }} sản phẩm phù hợp</p>
+                      <p>Tìm thấy {{ $products->total() }} sản phẩm phù hợp</p>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="row">
-                @for($i = 1; $i <= 8; $i++)
+                @forelse($products as $product)
                 <div class="col-sm-6 col-lg-3">
                   <div class="product-item">
                     <div class="inner-content">
                       <div class="product-thumb">
-                        <a href="{{ route('product.show', $i) }}">
-                          <img src="{{ asset('img/shop/' . $i . '.webp') }}" width="270" height="274" alt="Sản phẩm {{ $i }}">
+                        <a href="{{ route('product.show', $product->id) }}">
+                          @if($product->getFirstMediaUrl('product-images'))
+                            <img src="{{ $product->getFirstMediaUrl('product-images') }}" width="270" height="274" alt="{{ $product->name }}">
+                          @else
+                            <img src="{{ asset('img/shop/placeholder.webp') }}" width="270" height="274" alt="{{ $product->name }}">
+                          @endif
                         </a>
-                        @if($i % 3 == 0)
+                        @if($product->old_price && $product->old_price > $product->price)
                         <div class="product-flag">
                           <ul>
-                            <li class="discount">-{{ rand(5, 25) }}%</li>
+                            <li class="discount">-{{ round((($product->old_price - $product->price) / $product->old_price) * 100) }}%</li>
                           </ul>
                         </div>
                         @endif
                         <div class="product-action">
-                          <a class="btn-product-wishlist" href="{{ route('wishlist') }}"><i class="fa fa-heart"></i></a>
-                          <a class="btn-product-cart" href="{{ route('cart') }}"><i class="fa fa-shopping-cart"></i></a>
-                          <button type="button" class="btn-product-quick-view-open">
+                          <button class="add-to-wishlist btn-product-wishlist" data-product-id="{{ $product->id }}" title="Thêm vào danh sách yêu thích">
+                            <i class="fa fa-heart-o"></i>
+                          </button>
+                          <button type="button" class="btn-product-cart add-to-cart"
+                                  data-product-id="{{ $product->id }}"
+                                  data-product-name="{{ $product->name }}"
+                                  data-product-price="{{ $product->price }}"
+                                  data-product-colors="{{ $product->colors ? json_encode($product->colors) : '[]' }}"
+                                  data-product-sizes="{{ $product->sizes ? json_encode($product->sizes) : '[]' }}"
+                                  title="Thêm vào giỏ hàng">
+                            <i class="fa fa-shopping-cart"></i>
+                          </button>
+                          <button type="button" class="btn-product-quick-view-open" title="Xem nhanh">
                             <i class="fa fa-expand"></i>
                           </button>
                           <a class="btn-product-compare" href="{{ route('compare') }}"><i class="fa fa-random"></i></a>
@@ -69,25 +83,45 @@
                       <div class="product-info">
                         <div class="category">
                           <ul>
-                            <li><a href="{{ route('shop') }}">{{ $i % 2 == 0 ? 'Nam' : 'Nữ' }}</a></li>
-                            <li class="sep">/</li>
-                            <li><a href="{{ route('shop') }}">{{ $i % 3 == 0 ? 'Thể thao' : 'Thời trang' }}</a></li>
+                            @foreach($product->categories as $index => $category)
+                              <li><a href="{{ route('shop', ['category' => $category->slug]) }}">{{ $category->name }}</a></li>
+                              @if($index < count($product->categories) - 1)
+                                <li class="sep">/</li>
+                              @endif
+                            @endforeach
                           </ul>
                         </div>
-                        <h4 class="title"><a href="{{ route('product.show', $i) }}">Kết quả tìm kiếm {{ $i }}</a></h4>
+                        <h4 class="title"><a href="{{ route('product.show', $product->id) }}">{{ $product->name }}</a></h4>
                         <div class="prices">
-                          @if($i % 3 == 0)
-                            <span class="price-old">{{ number_format(rand(2500000, 3500000)) }} VNĐ</span>
+                          @if($product->old_price && $product->old_price > $product->price)
+                            <span class="price-old">{{ number_format($product->old_price, 0, ',', '.') }} VNĐ</span>
                             <span class="sep">-</span>
                           @endif
-                          <span class="price">{{ number_format(rand(1500000, 2400000)) }} VNĐ</span>
+                          <span class="price">{{ number_format($product->price, 0, ',', '.') }} VNĐ</span>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                @endfor
+                @empty
+                <div class="col-12">
+                  <div class="text-center p-5">
+                    <h4>Không tìm thấy sản phẩm nào phù hợp với từ khóa "{{ $searchTerm ?? request('q') }}"</h4>
+                    <p>Hãy thử tìm kiếm với từ khóa khác hoặc <a href="{{ route('shop') }}">xem tất cả sản phẩm</a></p>
+                  </div>
+                </div>
+                @endforelse
               </div>
+              
+              @if($products->hasPages())
+              <div class="row">
+                <div class="col-12">
+                  <div class="pagination-area text-center">
+                    {{ $products->links() }}
+                  </div>
+                </div>
+              </div>
+              @endif
             </div>
           </div>
         </div>

@@ -349,4 +349,75 @@ class ShopController extends Controller
         
         return $html;
     }
+
+    public function search(Request $request)
+    {
+        $query = Product::query()
+            ->with(['brand', 'categories', 'media'])
+            ->where('is_visible', true);
+
+        // Search by keyword (using 'q' parameter like in the URL)
+        $searchTerm = $request->get('q', $request->get('search', ''));
+        if (!empty(trim($searchTerm))) {
+            $search = trim($searchTerm);
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('sku', 'like', "%{$search}%")
+                  ->orWhereHas('brand', function ($brandQuery) use ($search) {
+                      $brandQuery->where('name', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('categories', function ($categoryQuery) use ($search) {
+                      $categoryQuery->where('name', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        // Sorting
+        $sort = $request->get('sort', 'created_at');
+        $order = $request->get('order', 'desc');
+
+        switch ($sort) {
+            case 'price_low_to_high':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'price_high_to_low':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'name':
+                $query->orderBy('name', 'asc');
+                break;
+            case 'popularity':
+                $query->withCount('orderItems')
+                      ->orderBy('order_items_count', 'desc');
+                break;
+            default:
+                $query->orderBy('created_at', 'desc');
+        }
+
+        // Pagination
+        $perPage = $request->get('per_page', 12);
+        $perPage = in_array($perPage, [12, 24, 36, 48]) ? $perPage : 12;
+        $products = $query->paginate($perPage)->withQueryString();
+
+        // Get filter data for sidebar
+        $brands = Brand::where('is_visible', true)
+            ->withCount('products')
+            ->having('products_count', '>', 0)
+            ->orderBy('name')
+            ->get();
+
+        $categories = Category::where('is_visible', true)
+            ->withCount('products')
+            ->having('products_count', '>', 0)
+            ->orderBy('name')
+            ->get();
+
+        return view('shop.search', compact(
+            'products',
+            'brands',
+            'categories',
+            'searchTerm'
+        ));
+    }
 }
