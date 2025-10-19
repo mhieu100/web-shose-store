@@ -20,7 +20,7 @@
                                         <li class="account">
                                             <i class="fa fa-user"></i>
                                             @auth
-                                                <a href="{{ route('account') }}">{{ auth()->user()->name }}</a>
+                                                <a href="{{ route('account.index') }}">{{ auth()->user()->name }}</a>
                                             @else
                                                 <a href="{{ route('login') }}">Tài khoản</a>
                                             @endauth
@@ -107,7 +107,7 @@
                                 <li><a href="{{ route('about') }}"><span>Giới thiệu</span></a></li>
                                 <li class="has-submenu"><a href="#/"><span>Trang</span></a>
                                     <ul class="submenu-nav">
-                                        <li><a href="{{ route('account') }}"><span>Tài khoản</span></a></li>
+                                        <li><a href="{{ route('account.index') }}"><span>Tài khoản</span></a></li>
                                         <li><a href="{{ route('login') }}"><span>Đăng nhập</span></a></li>
                                         <li><a href="{{ route('register') }}"><span>Đăng ký</span></a></li>
                                         <li><a href="{{ route('collaborator.register') }}"><span>Đăng ký cộng tác viên</span></a></li>

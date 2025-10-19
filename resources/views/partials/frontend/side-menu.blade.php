@@ -23,7 +23,7 @@
                 <li><a href="{{ route('about') }}">About</a></li>
                 <li><a href="#">Pages</a>
                     <ul class="sub-menu">
-                        <li><a href="{{ route('account') }}">Account</a></li>
+                        <li><a href="{{ route('account.index') }}">Account</a></li>
                         <li><a href="{{ route('login') }}">Login</a></li>
                         <li><a href="{{ route('register') }}">Register</a></li>
                         <li><a href="{{ route('404') }}">Page Not Found</a></li>

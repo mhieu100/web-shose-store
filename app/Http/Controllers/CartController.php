@@ -59,39 +59,35 @@ class CartController extends Controller
 
         $productId = $request->input('product_id');
         $quantity = $request->input('quantity', 1);
-        $color = $request->input('color');
-        $colorCode = $request->input('color_code');
-        $size = $request->input('size');
+        $color = $request->input('color', '');
+        $colorCode = $request->input('color_code', '');
+        $size = $request->input('size', '');
         $user = Auth::user();
 
         $product = Product::findOrFail($productId);
-        
+
         // Validate that color and size are provided if product has them
         $productColors = $product->colors ?? [];
         $productSizes = $product->sizes ?? [];
-        
-        if (!empty($productColors) && !$color) {
+
+        if (!empty($productColors) && empty($color)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Vui lòng chọn màu sắc cho sản phẩm này.'
             ], 422);
         }
-        
-        if (!empty($productSizes) && !$size) {
+
+        if (!empty($productSizes) && empty($size)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Vui lòng chọn kích thước cho sản phẩm này.'
             ], 422);
-        }
-
-        // Check if product already exists in cart with same color/size combination
+        }        // Check if product already exists in cart with same color/size combination
         $cartItem = Cart::where('user_id', $user->id)
                        ->where('shop_product_id', $productId)
                        ->where('color', $color)
                        ->where('size', $size)
-                       ->first();
-
-        if ($cartItem) {
+                       ->first();        if ($cartItem) {
             // Update quantity if exact same item (including color/size) already exists
             $cartItem->quantity += $quantity;
             $cartItem->save();
@@ -256,17 +252,17 @@ class CartController extends Controller
         $cartItems = [];
         $cartTotal = 0;
         $cartCount = 0;
-        
+
         if (Auth::check()) {
             $cartItems = Auth::user()->carts()
                 ->with(['product.media'])
                 ->latest()
                 ->get();
-            
+
             $cartTotal = $cartItems->sum(function($item) {
                 return $item->quantity * $item->price;
             });
-            
+
             $cartCount = $cartItems->sum('quantity');
         }
 

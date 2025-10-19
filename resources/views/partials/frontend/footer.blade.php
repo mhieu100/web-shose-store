@@ -53,7 +53,7 @@
                 <div class="collapse-body">
                   <div class="widget-menu-wrap">
                     <ul class="nav-menu">
-                      <li><a href="{{ route('account') }}">Tài khoản của tôi</a></li>
+                      <li><a href="{{ route('account.index') }}">Tài khoản của tôi</a></li>
                       <li><a href="{{ route('contact') }}">Liên hệ</a></li>
                       <li><a href="{{ route('cart') }}">Giỏ hàng</a></li>
                       <li><a href="{{ route('shop') }}">Cửa hàng</a></li>
@@ -99,7 +99,7 @@
           </div>
           <div class="col-md-5 col-lg-6">
             <div class="payment">
-              <a href="{{ route('account') }}"><img src="{{ asset('img/photos/payment-card.webp') }}" width="192" height="21" alt="Payment Logo"></a>
+              <a href="{{ route('account.index') }}"><img src="{{ asset('img/photos/payment-card.webp') }}" width="192" height="21" alt="Payment Logo"></a>
             </div>
           </div>
         </div>

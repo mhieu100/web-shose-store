@@ -8,6 +8,7 @@ use App\Models\Shop\OrderItem;
 use App\Models\Shop\Product;
 use App\Models\Shop\Coupon;
 use App\Models\Address;
+use App\Services\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -18,6 +19,13 @@ use Illuminate\Support\Facades\Schema;
 
 class CheckoutController extends Controller
 {
+    protected WalletService $walletService;
+
+    public function __construct(WalletService $walletService)
+    {
+        $this->walletService = $walletService;
+    }
+
     /**
      * Display checkout page with cart items
      */
@@ -61,6 +69,9 @@ class CheckoutController extends Controller
         $tax = $this->calculateTax($subtotalAfterDiscount);
         $total = $subtotalAfterDiscount + $shipping + $tax;
 
+        // Get user's wallet balance
+        $walletBalance = $this->walletService->getBalance($user);
+
         // For now, we'll handle addresses directly in the form
         // In future, you can implement proper address management
         $addresses = collect(); // Empty collection for now
@@ -75,7 +86,8 @@ class CheckoutController extends Controller
             'couponDiscount',
             'subtotalAfterDiscount',
             'addresses',
-            'user'
+            'user',
+            'walletBalance'
         ));
     }
 
@@ -97,7 +109,7 @@ class CheckoutController extends Controller
         Log::info('Starting validation', ['request_data' => $request->all()]);
 
         $validated = $request->validate([
-            'payment_method' => 'required|string|in:cod,bank_transfer,paypal',
+            'payment_method' => 'required|string|in:cod,bank_transfer,paypal,wallet',
             'notes' => 'nullable|string|max:500',
             // Address fields
             'address_line_1' => 'required|string|max:255',
@@ -228,19 +240,80 @@ class CheckoutController extends Controller
                 $appliedCoupon->incrementUsage();
             }
 
-            // Clear cart and coupon session
-            Cart::where('user_id', $user->id)->delete();
-            session()->forget('applied_coupon_code');
+            // Process wallet payment BEFORE committing and clearing cart
+            if ($validated['payment_method'] === 'wallet') {
+                Log::info('Processing wallet payment', ['order_id' => $order->id, 'total' => $total]);
+
+                $walletBalance = $this->walletService->getBalance($user);
+                Log::info('Wallet balance checked', ['balance' => $walletBalance, 'required' => $total]);
+
+                if ($walletBalance < $total) {
+                    DB::rollBack();
+                    Log::warning('Insufficient wallet balance', ['balance' => $walletBalance, 'required' => $total]);
+                    return redirect()->back()
+                        ->with('error', 'Số dư ví không đủ. Vui lòng chọn phương thức thanh toán khác.')
+                        ->withInput();
+                }
+
+                // Deduct from wallet
+                $wallet = $this->walletService->getOrCreateWallet($user);
+                Log::info('Deducting from wallet', ['amount' => $total]);
+
+                $wallet->deductFunds(
+                    $total,
+                    'payment',
+                    "Thanh toán đơn hàng #{$order->order_number}",
+                    $order->id
+                );
+
+                Log::info('Wallet deducted successfully');
+
+                // Update order payment status
+                $order->update([
+                    'payment_status' => 'completed',
+                    'paid_at' => now(),
+                ]);
+
+                Log::info('Order payment status updated');
+
+                // Create payment record
+                $order->payments()->create([
+                    'amount' => $total,
+                    'provider' => 'wallet',
+                    'method' => 'wallet',
+                    'currency' => 'VND',
+                    'status' => 'completed',
+                    'reference' => 'WALLET-' . $order->order_number,
+                    'metadata' => json_encode(['wallet_payment' => true]),
+                ]);
+
+                Log::info('Payment record created successfully');
+            }
+
+            // Only clear cart and coupon session for non-PayPal payments
+            if ($validated['payment_method'] !== 'paypal') {
+                Cart::where('user_id', $user->id)->delete();
+                session()->forget('applied_coupon_code');
+            }
 
             DB::commit();
 
             // Redirect based on payment method
             switch ($validated['payment_method']) {
+                case 'wallet':
+                    return redirect()->route('order.confirmation', $order->id)
+                        ->with('success', 'Đơn hàng đã được thanh toán thành công bằng ví!');
+
                 case 'paypal':
-                    return redirect()->route('payment.paypal', $order->id);
+                    // DON'T clear cart here - will be cleared after successful PayPal payment
+                    // Cart::where('user_id', $user->id)->delete(); // Remove this line
+                    Log::info('Redirecting to PayPal payment', ['order_id' => $order->id]);
+                    return redirect()->route('paypal.payment', $order->id);
+
                 case 'bank_transfer':
                     return redirect()->route('order.confirmation', $order->id)
                         ->with('success', 'Order created successfully! Please complete the bank transfer to process your order.');
+
                 case 'cod':
                 default:
                     return redirect()->route('order.confirmation', $order->id)
