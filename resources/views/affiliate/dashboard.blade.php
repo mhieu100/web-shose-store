@@ -49,22 +49,22 @@
             <ul class="nav nav-pills nav-fill mb-4">
                 <li class="nav-item">
                     <a class="nav-link active" href="{{ route('affiliate.dashboard') }}">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                        <i class="fa fa-tachometer"></i> Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('affiliate.products') }}">
-                        <i class="fas fa-shopping-bag"></i> Tạo Link SP
+                        <i class="fa fa-shopping-bag"></i> Tạo Link SP
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('affiliate.guide') }}">
-                        <i class="fas fa-book"></i> Hướng Dẫn
+                        <i class="fa fa-book"></i> Hướng Dẫn
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('collaborator.status') }}">
-                        <i class="fas fa-user-check"></i> Thông Tin CTV
+                        <i class="fa fa-user"></i> Thông Tin CTV
                     </a>
                 </li>
             </ul>
@@ -81,29 +81,29 @@
                             <div class="row">
                                 <div class="col-md-3 mb-2">
                                     <a href="{{ route('affiliate.products') }}" class="btn btn-primary w-100">
-                                        <i class="fas fa-plus"></i> Tạo Link Mới
+                                        <i class="fa fa-plus"></i> Tạo Link Mới
                                     </a>
                                 </div>
                                 <div class="col-md-3 mb-2">
                                     <button class="btn btn-info w-100" onclick="copyAffiliateCode()">
-                                        <i class="fas fa-copy"></i> Copy Mã CTV
+                                        <i class="fa fa-copy"></i> Copy Mã CTV
                                     </button>
                                 </div>
                                 <div class="col-md-3 mb-2">
                                     <a href="{{ route('affiliate.guide') }}" class="btn btn-warning w-100">
-                                        <i class="fas fa-book"></i> Xem Hướng Dẫn
+                                        <i class="fa fa-book"></i> Xem Hướng Dẫn
                                     </a>
                                 </div>
                                 <div class="col-md-3 mb-2">
                                     <button class="btn btn-success w-100" onclick="showQuickShare()">
-                                        <i class="fas fa-share"></i> Share Nhanh
+                                        <i class="fa fa-share"></i> Share Nhanh
                                     </button>
                                 </div>
                             </div>
                             
                             <!-- My Affiliate Code Info -->
                             <div class="alert alert-info mt-3">
-                                <h6><i class="fas fa-info-circle"></i> Thông Tin Của Bạn:</h6>
+                                <h6><i class="fa fa-info-circle"></i> Thông Tin Của Bạn:</h6>
                                 <div class="row">
                                     <div class="col-md-3">
                                         <strong>Mã CTV:</strong> {{ Auth::user()->affiliate_code }}
@@ -282,7 +282,7 @@ function showQuickShare() {
                         <textarea class="form-control mb-3" rows="6" id="shareText">${shareText}</textarea>
                         <div class="d-grid gap-2">
                             <button class="btn btn-primary" onclick="copyText('shareText')">
-                                <i class="fas fa-copy"></i> Copy Text
+                                <i class="fa fa-copy"></i> Copy Text
                             </button>
                         </div>
                     </div>

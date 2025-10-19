@@ -45,12 +45,12 @@
                   </div>
                   @endif
                   <div class="product-action">
-                    <a class="btn-product-wishlist" href="{{ route('wishlist') }}"><i class="fas fa-heart"></i></a>
-                    <a class="btn-product-cart" href="{{ route('cart') }}"><i class="fas fa-shopping-cart"></i></a>
+                    <a class="btn-product-wishlist" href="{{ route('wishlist') }}"><i class="fa fa-heart"></i></a>
+                    <a class="btn-product-cart" href="{{ route('cart') }}"><i class="fa fa-shopping-cart"></i></a>
                     <button type="button" class="btn-product-quick-view-open">
-                      <i class="fas fa-expand-arrows-alt"></i>
+                      <i class="fa fa-expand"></i>
                     </button>
-                    <a class="btn-product-compare" href="{{ route('compare') }}"><i class="fas fa-random"></i></a>
+                    <a class="btn-product-compare" href="{{ route('compare') }}"><i class="fa fa-random"></i></a>
                   </div>
                 </div>
                 <div class="product-info">

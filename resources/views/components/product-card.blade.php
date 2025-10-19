@@ -52,16 +52,16 @@
                             data-product-colors="{{ $product->colors ? json_encode($product->colors) : '[]' }}"
                             data-product-sizes="{{ $product->sizes ? json_encode($product->sizes) : '[]' }}"
                             title="{{ __('home.add_to_cart') }}">
-                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fa fa-shopping-cart"></i>
                     </button>
                     <button type="button" class="btn-product-quick-view-open"
                             title="{{ __('home.quick_view') }}">
-                        <i class="fas fa-expand-arrows-alt"></i>
+                        <i class="fa fa-expand"></i>
                     </button>
                     <a class="btn-product-compare"
                        href="{{ route('compare') }}"
                        title="{{ __('home.compare') }}">
-                        <i class="fas fa-random"></i>
+                        <i class="fa fa-random"></i>
                     </a>
                 </div>
             @endif
