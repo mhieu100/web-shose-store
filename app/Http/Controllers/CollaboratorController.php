@@ -10,8 +10,13 @@ use Illuminate\Http\RedirectResponse;
 
 class CollaboratorController extends Controller
 {
-    public function showForm(): View
+    public function showForm()
     {
+        // Kiểm tra xem user đã là CTV chưa
+        if (Auth::check() && Auth::user()->isActiveAffiliate()) {
+            return redirect()->route('affiliate.dashboard')->with('info', 'Bạn đã là cộng tác viên. Truy cập dashboard của bạn.');
+        }
+
         // Kiểm tra xem user đã đăng ký chưa
         $existingApplication = null;
         if (Auth::check()) {
@@ -25,6 +30,11 @@ class CollaboratorController extends Controller
     {
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để đăng ký cộng tác viên.');
+        }
+
+        // Kiểm tra xem user đã là CTV chưa
+        if (Auth::user()->isActiveAffiliate()) {
+            return redirect()->route('affiliate.dashboard')->with('info', 'Bạn đã là cộng tác viên rồi.');
         }
 
         // Kiểm tra xem user đã đăng ký chưa
