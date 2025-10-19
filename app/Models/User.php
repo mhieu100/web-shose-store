@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
@@ -298,5 +299,37 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
     public function getTotalPaidCommissions(): float
     {
         return $this->commissions()->where('status', 'paid')->sum('commission_amount');
+    }
+
+    /**
+     * Get the user's orders
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(\App\Models\Shop\Order::class);
+    }
+
+    /**
+     * Get the user's wallet
+     */
+    public function wallet()
+    {
+        return $this->hasOne(\App\Models\Shop\UserWallet::class);
+    }
+
+    /**
+     * Get the user's wallet transactions
+     */
+    public function walletTransactions(): HasMany
+    {
+        return $this->hasMany(\App\Models\Shop\WalletTransaction::class);
+    }
+
+    /**
+     * Get the user's addresses
+     */
+    public function addresses(): MorphToMany
+    {
+        return $this->morphToMany(\App\Models\Address::class, 'addressable');
     }
 }

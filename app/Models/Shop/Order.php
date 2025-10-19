@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -55,6 +56,7 @@ class Order extends Model
         'shipped_at',
         'delivered_at',
         'cancelled_at',
+        'paid_at',
     ];
 
     protected $casts = [
@@ -70,6 +72,7 @@ class Order extends Model
         'shipped_at' => 'datetime',
         'delivered_at' => 'datetime',
         'cancelled_at' => 'datetime',
+        'paid_at' => 'datetime',
     ];
 
     /** @return BelongsTo<User, $this> */
@@ -100,6 +103,15 @@ class Order extends Model
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Get the first payment record for this order
+     * @return Payment|null
+     */
+    public function payment()
+    {
+        return $this->hasOne(Payment::class)->latestOfMany();
     }
 
     /** @return BelongsTo<\App\Models\User, $this> */
@@ -188,6 +200,24 @@ class Order extends Model
     {
         return in_array($this->status, [OrderStatus::New, OrderStatus::Processing]) &&
                !$this->cancelled_at;
+    }
+
+    /**
+     * Check if order can be confirmed as delivered by user
+     */
+    public function canBeConfirmedAsDelivered(): bool
+    {
+        return $this->status === OrderStatus::Shipped &&
+               !$this->delivered_at &&
+               !in_array($this->payment_status, ['completed', 'refunded']);
+    }
+
+    /**
+     * Check if order is awaiting delivery confirmation
+     */
+    public function isAwaitingDeliveryConfirmation(): bool
+    {
+        return $this->status === OrderStatus::Shipped && !$this->delivered_at;
     }
 
     /**

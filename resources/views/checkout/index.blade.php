@@ -233,6 +233,38 @@
                         </div>
                         <div class="card-body">
                             <div class="payment-methods">
+                                <!-- Wallet Payment Method -->
+                                <div class="form-check payment-option mb-3" data-payment="wallet">
+                                    <input class="form-check-input"
+                                           type="radio"
+                                           name="payment_method"
+                                           id="wallet"
+                                           value="wallet"
+                                           {{ old('payment_method') == 'wallet' ? 'checked' : '' }}
+                                           {{ ($walletBalance ?? 0) < $total ? 'disabled' : '' }}>
+                                    <label class="form-check-label d-flex align-items-center w-100" for="wallet">
+                                        <div class="payment-icon me-3">
+                                            <i class="fa fa-wallet fa-2x text-warning"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <strong>Thanh toán bằng ví</strong>
+                                            <br>
+                                            <small class="text-muted">
+                                                Số dư hiện tại: <strong>{{ number_format($walletBalance ?? 0) }}₫</strong>
+                                                @if(($walletBalance ?? 0) < $total)
+                                                    <span class="text-danger">(Không đủ số dư)</span>
+                                                @endif
+                                            </small>
+                                            <div class="payment-details mt-2" style="display: none;">
+                                                <div class="alert alert-success mb-0">
+                                                    <i class="fa fa-info-circle me-2"></i>
+                                                    <strong>Thanh toán nhanh chóng!</strong> Số tiền sẽ được trừ trực tiếp từ ví của bạn.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+
                                 <!-- COD Payment Method -->
                                 <div class="form-check payment-option mb-3" data-payment="cod">
                                     <input class="form-check-input"
@@ -240,7 +272,7 @@
                                            name="payment_method"
                                            id="cod"
                                            value="cod"
-                                           {{ old('payment_method', 'cod') == 'cod' ? 'checked' : '' }}
+                                           {{ old('payment_method', ($walletBalance ?? 0) >= $total ? '' : 'cod') == 'cod' ? 'checked' : '' }}
                                            required>
                                     <label class="form-check-label d-flex align-items-center w-100" for="cod">
                                         <div class="payment-icon me-3">
@@ -752,6 +784,11 @@ $(document).ready(function() {
         // Show payment method confirmation
         const paymentText = selectedPayment.closest('.payment-option').find('strong').first().text();
         console.log('Processing order with payment method:', paymentText);
+
+        // Special handling for PayPal - don't prevent form submission
+        if (selectedPayment.val() === 'paypal') {
+            $submitBtn.html('<i class="fab fa-paypal me-2"></i>Chuyển đến PayPal...');
+        }
     });
 
     // Phone number formatting

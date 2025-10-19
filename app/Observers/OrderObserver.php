@@ -35,5 +35,21 @@ class OrderObserver
                 $this->commissionService->autoApproveCommission($commission);
             }
         }
+
+        // If order status changed to delivered, process affiliate commission
+        if ($order->isDirty('status') && $order->status === \App\Enums\OrderStatus::Delivered) {
+            $this->processDeliveryConfirmation($order);
+        }
+    }
+
+    /**
+     * Process delivery confirmation and affiliate commission
+     */
+    private function processDeliveryConfirmation(Order $order): void
+    {
+        // Process affiliate commission if applicable
+        if ($order->hasAffiliate() && !$order->commissions()->exists()) {
+            $this->commissionService->createCommissionForOrder($order);
+        }
     }
 }

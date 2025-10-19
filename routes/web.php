@@ -38,7 +38,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout/apply-coupon', [App\Http\Controllers\CheckoutController::class, 'applyCoupon'])->name('checkout.apply_coupon');
     Route::delete('/checkout/remove-coupon', [App\Http\Controllers\CheckoutController::class, 'removeCoupon'])->name('checkout.remove_coupon');
     Route::get('/order/confirmation/{order}', [App\Http\Controllers\CheckoutController::class, 'confirmation'])->name('order.confirmation');
+
+    // PayPal payment routes
+    // Accept both GET (from redirects) and POST (from forms) for createPayment to avoid method mismatch
+    Route::post('/paypal/payment/{order}', [App\Http\Controllers\PayPalController::class, 'createPayment'])->name('paypal.payment');
+    Route::get('/paypal/payment/{order}', [App\Http\Controllers\PayPalController::class, 'createPayment']);
+    Route::get('/paypal/success', [App\Http\Controllers\PayPalController::class, 'success'])->name('paypal.success');
+    Route::get('/paypal/cancel', [App\Http\Controllers\PayPalController::class, 'cancel'])->name('paypal.cancel');
 });
+
+// PayPal webhook (no auth required)
+Route::post('/paypal/webhook', [App\Http\Controllers\PayPalController::class, 'webhook'])->name('paypal.webhook');
 Route::get('/compare', function() { return view('compare.index'); })->name('compare');
 
 // Wishlist routes
@@ -50,8 +60,8 @@ Route::delete('/wishlist/clear', [App\Http\Controllers\WishlistController::class
 Route::get('/wishlist/count', [App\Http\Controllers\WishlistController::class, 'count'])->name('wishlist.count');
 
 // Test route for wishlist modal
-Route::get('/test-wishlist-modal', function() { 
-    return view('test-wishlist-modal'); 
+Route::get('/test-wishlist-modal', function() {
+    return view('test-wishlist-modal');
 })->name('test.wishlist.modal');
 
 // Blog routes
@@ -65,7 +75,30 @@ Route::get('/blog/details-right/{slug?}', [App\Http\Controllers\BlogController::
 // Other pages
 Route::get('/about', function() { return view('pages.about'); })->name('about');
 Route::get('/contact', function() { return view('pages.contact'); })->name('contact');
-Route::get('/account', function() { return view('account.index'); })->name('account');
+// Account routes - require authentication
+Route::middleware('auth')->prefix('account')->name('account.')->group(function () {
+    Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('index');
+    Route::put('/profile', [App\Http\Controllers\AccountController::class, 'updateProfile'])->name('update-profile');
+    Route::put('/password', [App\Http\Controllers\AccountController::class, 'updatePassword'])->name('update-password');
+    Route::get('/orders', [App\Http\Controllers\AccountController::class, 'getOrders'])->name('orders');
+    Route::get('/order/{order}', [App\Http\Controllers\AccountController::class, 'showOrder'])->name('order.show');
+    Route::post('/order/{order}/cancel', [App\Http\Controllers\AccountController::class, 'cancelOrder'])->name('order.cancel');
+    Route::post('/order/{order}/confirm-delivery', [App\Http\Controllers\AccountController::class, 'confirmDelivery'])->name('order.confirm-delivery');
+
+    // Wallet deposit routes
+    Route::get('/wallet/deposit', [App\Http\Controllers\AccountController::class, 'showDepositForm'])->name('wallet.deposit');
+    Route::post('/wallet/deposit', [App\Http\Controllers\AccountController::class, 'processDeposit'])->name('wallet.deposit.process');
+    Route::get('/wallet/deposit/bank-transfer/{deposit}', [App\Http\Controllers\AccountController::class, 'showBankTransferInstructions'])->name('wallet.deposit.bank-transfer');
+    Route::post('/wallet/deposit/bank-transfer/{deposit}/confirm', [App\Http\Controllers\AccountController::class, 'confirmBankTransfer'])->name('wallet.deposit.bank-transfer.confirm');
+});
+
+// Wallet deposit PayPal routes
+Route::middleware('auth')->prefix('wallet/deposit')->name('wallet.deposit.')->group(function () {
+    Route::get('/paypal/{deposit}', [App\Http\Controllers\WalletDepositController::class, 'createPayPalPayment'])->name('paypal');
+    Route::get('/paypal/{deposit}/success', [App\Http\Controllers\WalletDepositController::class, 'handlePayPalSuccess'])->name('paypal.success');
+    Route::get('/paypal/{deposit}/cancel', [App\Http\Controllers\WalletDepositController::class, 'handlePayPalCancel'])->name('paypal.cancel');
+});
+
 Route::get('/404', function() { return view('errors.404'); })->name('404');
 
 // Admin routes - chỉ admin mới được truy cập

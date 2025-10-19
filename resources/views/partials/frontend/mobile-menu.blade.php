@@ -19,7 +19,7 @@
         <li class="menu-item-has-children">
           <a href="#/">Trang</a>
           <ul class="sub-menu">
-            <li><a href="{{ route('account') }}">Tài khoản</a></li>
+            <li><a href="{{ route('account.index') }}">Tài khoản</a></li>
             <li><a href="{{ route('login') }}">Đăng nhập</a></li>
             <li><a href="{{ route('register') }}">Đăng ký</a></li>
             <li><a href="{{ route('404') }}">404</a></li>
