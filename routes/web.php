@@ -74,7 +74,13 @@ Route::get('/blog/details-right/{slug?}', [App\Http\Controllers\BlogController::
 
 // Other pages
 Route::get('/about', [App\Http\Controllers\AboutController::class, 'index'])->name('about');
-Route::get('/contact', function() { return view('pages.contact'); })->name('contact');
+Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');
+Route::post('/contact/send', [App\Http\Controllers\ContactController::class, 'store'])->name('contact.send');
+
+// CSRF token refresh route
+Route::get('/csrf-token', function() {
+    return response()->json(['token' => csrf_token()]);
+});
 // Account routes - require authentication
 Route::middleware('auth')->prefix('account')->name('account.')->group(function () {
     Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('index');

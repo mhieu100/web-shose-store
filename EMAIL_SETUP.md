@@ -143,3 +143,136 @@ Mail::to(config('mail.admin_email'))->send(new OrderNotificationMail($order));
 - Cấu hình retry mechanism cho failed emails
 - Monitor email delivery rates
 - Sử dụng dedicated SMTP service (SendGrid, Mailgun, SES)
+
+---
+
+# Hướng dẫn cấu hình Form Liên hệ
+
+## Tổng quan
+Form liên hệ tại `http://127.0.0.1:8000/contact` đã được cấu hình để gửi email thông báo khi khách hàng gửi tin nhắn.
+
+## Cách thức hoạt động
+1. Khách hàng điền form liên hệ và gửi
+2. `ContactController` xử lý validation và gửi email
+3. Email được gửi đến admin email đã cấu hình
+4. Hiển thị thông báo thành công/lỗi cho người dùng
+
+## Cấu hình cho Form Liên hệ
+
+### 1. Cấu hình Gmail SMTP (Khuyến nghị)
+
+#### Bước 1: Tạo App Password cho Gmail
+1. Đăng nhập vào Gmail
+2. Vào **Google Account Settings** → **Security**
+3. Bật **2-Step Verification** (nếu chưa có)
+4. Vào **App passwords** 
+5. Chọn **Mail** và **Other (custom name)**, đặt tên "Website Contact Form"
+6. Copy App Password 16 ký tự được tạo
+
+#### Bước 2: Cấu hình file .env
+```env
+# Email Configuration for Contact Form
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-gmail@gmail.com
+MAIL_PASSWORD=your-16-digit-app-password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=your-gmail@gmail.com
+MAIL_FROM_NAME="Cửa hàng giày"
+
+# Email nhận thông báo liên hệ từ khách hàng
+MAIL_ADMIN_EMAIL=admin@yourdomain.com
+```
+
+### 2. Cập nhật cấu hình admin email
+
+Thêm vào file `config/mail.php` (trước dòng return):
+```php
+/*
+|--------------------------------------------------------------------------
+| Admin Email Address
+|--------------------------------------------------------------------------
+|
+| This is the email address where contact form submissions will be sent.
+|
+*/
+'admin_email' => env('MAIL_ADMIN_EMAIL', 'admin@example.com'),
+```
+
+### 3. Test Form Liên hệ
+
+#### Test cơ bản:
+```bash
+php artisan tinker
+```
+
+Trong tinker:
+```php
+// Test contact email
+$contactData = [
+    'name' => 'Nguyễn Văn A',
+    'email' => 'test@example.com',
+    'subject' => 'Test liên hệ',
+    'message' => 'Đây là tin nhắn test',
+    'sent_at' => now()->format('d/m/Y H:i:s')
+];
+
+Mail::to('your-admin@gmail.com')->send(new App\Mail\ContactMail($contactData));
+```
+
+#### Test thực tế:
+1. Truy cập `http://127.0.0.1:8000/contact`
+2. Điền đầy đủ thông tin form
+3. Nhấn "Gửi tin nhắn"
+4. Kiểm tra email admin có nhận được không
+
+## Files liên quan đến Form Liên hệ
+- `app/Http/Controllers/ContactController.php` - Controller xử lý form
+- `app/Mail/ContactMail.php` - Mail class cho liên hệ
+- `resources/views/emails/contact.blade.php` - Template email liên hệ
+- `resources/views/pages/contact.blade.php` - Trang form liên hệ
+- `routes/web.php` - Routes cho contact
+
+## Tính năng Form Liên hệ
+- ✅ Validation tiếng Việt
+- ✅ AJAX submission (không reload trang)
+- ✅ Loading state khi gửi
+- ✅ Thông báo thành công/lỗi
+- ✅ Email template đẹp có styling
+- ✅ Reply-to tự động đến email khách hàng
+- ✅ Auto scroll đến thông báo
+
+## Troubleshooting Form Liên hệ
+
+### Lỗi thường gặp:
+
+1. **Email không được gửi:**
+```bash
+# Kiểm tra log
+tail -f storage/logs/laravel.log
+
+# Kiểm tra cấu hình mail
+php artisan config:cache
+```
+
+2. **SMTP Authentication failed:**
+- Kiểm tra App Password Gmail
+- Đảm bảo 2-Step Verification đã bật
+- Kiểm tra MAIL_USERNAME và MAIL_PASSWORD trong .env
+
+3. **Form không submit:**
+- Kiểm tra JavaScript console có lỗi không
+- Đảm bảo jQuery đã load
+- Kiểm tra route `contact.send` có hoạt động không
+
+### Debug commands:
+```bash
+# Clear caches
+php artisan config:clear
+php artisan cache:clear
+php artisan route:clear
+
+# Check routes
+php artisan route:list | grep contact
+```

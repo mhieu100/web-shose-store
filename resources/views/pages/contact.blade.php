@@ -35,32 +35,35 @@
               </div>
               <!--== Start Contact Form ==-->
               <div class="contact-form">
-                <form id="contact-form" action="#" method="POST">
+                <form id="contact-form" action="{{ route('contact.send') }}" method="POST">
                   @csrf
                   <div class="row row-gutter-20">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input class="form-control" type="text" name="con_name" placeholder="Họ và tên *">
+                        <input class="form-control" type="text" name="con_name" placeholder="Họ và tên *" required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input class="form-control" type="email" name="con_email" placeholder="Email *">
+                        <input class="form-control" type="email" name="con_email" placeholder="Email *" required>
                       </div>
                     </div>
                     <div class="col-12">
                       <div class="form-group">
-                        <input class="form-control" type="text" placeholder="Tiêu đề (Tùy chọn)">
+                        <input class="form-control" type="text" name="con_subject" placeholder="Tiêu đề (Tùy chọn)">
                       </div>
                     </div>
                     <div class="col-12">
                       <div class="form-group mb--0">
-                        <textarea class="form-control" name="con_message" placeholder="Nội dung tin nhắn"></textarea>
+                        <textarea class="form-control" name="con_message" placeholder="Nội dung tin nhắn" rows="5" required></textarea>
                       </div>
                     </div>
                     <div class="col-12">
                       <div class="form-group mb--0">
-                        <button class="btn-theme" type="submit">Gửi tin nhắn</button>
+                        <button class="btn-theme" type="submit" id="submit-btn">
+                          <span class="btn-text">Gửi tin nhắn</span>
+                          <span class="btn-loading" style="display: none;">Đang gửi...</span>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -130,3 +133,98 @@
     </section>
     <!--== End Contact Area Wrapper ==-->
 @endsection
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    let isSubmitting = false; // Flag để prevent double submit
+    
+    $('#contact-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        // Prevent double submit
+        if (isSubmitting) {
+            console.log('Form is already submitting, ignoring...');
+            return false;
+        }
+        
+        isSubmitting = true;
+        
+        const form = $(this);
+        const submitBtn = $('#submit-btn');
+        const btnText = submitBtn.find('.btn-text');
+        const btnLoading = submitBtn.find('.btn-loading');
+        const messageContainer = $('.form-message');
+        
+        // Disable button and show loading
+        submitBtn.prop('disabled', true);
+        btnText.hide();
+        btnLoading.show();
+        
+        // Clear previous messages
+        messageContainer.removeClass('success error').html('');
+        
+        $.ajax({
+            url: form.attr('action'),
+            method: 'POST',
+            data: form.serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    // Show success message
+                    messageContainer
+                        .addClass('success')
+                        .html('<div class="alert alert-success" style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-top: 20px;"><strong>Thành công!</strong> ' + response.message + '</div>')
+                        .show();
+                    
+                    // Reset form
+                    form[0].reset();
+                    
+                    // Refresh CSRF token
+                    $.get('/csrf-token', function(data) {
+                        $('input[name="_token"]').val(data.token);
+                    });
+                    
+                    // Scroll to message
+                    $('html, body').animate({
+                        scrollTop: messageContainer.offset().top - 100
+                    }, 500);
+                }
+            },
+            error: function(xhr) {
+                let errorMessage = 'Có lỗi xảy ra khi gửi tin nhắn. Vui lòng thử lại sau.';
+                
+                if (xhr.status === 422) {
+                    // Validation errors
+                    const errors = xhr.responseJSON.errors;
+                    const errorList = Object.values(errors).flat();
+                    errorMessage = errorList.join('<br>');
+                } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+                
+                messageContainer
+                    .addClass('error')
+                    .html('<div class="alert alert-danger" style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-top: 20px;"><strong>Lỗi!</strong> ' + errorMessage + '</div>')
+                    .show();
+                
+                // Scroll to message
+                $('html, body').animate({
+                    scrollTop: messageContainer.offset().top - 100
+                }, 500);
+            },
+            complete: function() {
+                // Re-enable button and hide loading
+                submitBtn.prop('disabled', false);
+                btnText.show();
+                btnLoading.hide();
+                
+                // Reset submitting flag
+                isSubmitting = false;
+                console.log('Form submission completed, ready for next submit');
+            }
+        });
+    });
+});
+</script>
+@endpush
