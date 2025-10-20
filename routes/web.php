@@ -73,7 +73,7 @@ Route::get('/blog/details-left/{slug?}', [App\Http\Controllers\BlogController::c
 Route::get('/blog/details-right/{slug?}', [App\Http\Controllers\BlogController::class, 'detailsRight'])->name('blog.details-right');
 
 // Other pages
-Route::get('/about', function() { return view('pages.about'); })->name('about');
+Route::get('/about', [App\Http\Controllers\AboutController::class, 'index'])->name('about');
 Route::get('/contact', function() { return view('pages.contact'); })->name('contact');
 // Account routes - require authentication
 Route::middleware('auth')->prefix('account')->name('account.')->group(function () {
