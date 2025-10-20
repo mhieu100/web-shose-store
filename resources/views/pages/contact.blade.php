@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Contact Us - Shoe Store')
+@section('title', 'Liên hệ - Cửa hàng giày')
 
 @section('content')
     <!--== Start Page Header Area Wrapper ==-->
@@ -9,12 +9,12 @@
         <div class="row">
           <div class="col-12">
             <div class="page-header-content">
-              <h2 class="title" data-aos="fade-down" data-aos-duration="1000">Contact Us</h2>
+              <h2 class="title" data-aos="fade-down" data-aos-duration="1000">Liên hệ</h2>
               <nav class="breadcrumb-area" data-aos="fade-down" data-aos-duration="1200">
                 <ul class="breadcrumb">
-                  <li><a href="{{ route('home') }}">Home</a></li>
+                  <li><a href="{{ route('home') }}">Trang chủ</a></li>
                   <li class="breadcrumb-sep">//</li>
-                  <li>Contact Us</li>
+                  <li>Liên hệ</li>
                 </ul>
               </nav>
             </div>
@@ -31,7 +31,7 @@
           <div class="col-xl-9">
             <div class="contact-form-wrap" data-aos="fade-right">
               <div class="contact-form-title">
-                <h2 class="title">We Are Here! <br>Please Send A Quest</h2>
+                <h2 class="title">Chúng tôi luôn sẵn sàng lắng nghe! <br>Hãy gửi câu hỏi cho chúng tôi</h2>
               </div>
               <!--== Start Contact Form ==-->
               <div class="contact-form">
@@ -40,7 +40,7 @@
                   <div class="row row-gutter-20">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input class="form-control" type="text" name="con_name" placeholder="Name *">
+                        <input class="form-control" type="text" name="con_name" placeholder="Họ và tên *">
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -50,17 +50,17 @@
                     </div>
                     <div class="col-12">
                       <div class="form-group">
-                        <input class="form-control" type="text" placeholder="Subject (Optinal)">
+                        <input class="form-control" type="text" placeholder="Tiêu đề (Tùy chọn)">
                       </div>
                     </div>
                     <div class="col-12">
                       <div class="form-group mb--0">
-                        <textarea class="form-control" name="con_message" placeholder="Message"></textarea>
+                        <textarea class="form-control" name="con_message" placeholder="Nội dung tin nhắn"></textarea>
                       </div>
                     </div>
                     <div class="col-12">
                       <div class="form-group mb--0">
-                        <button class="btn-theme" type="submit">Send Message</button>
+                        <button class="btn-theme" type="submit">Gửi tin nhắn</button>
                       </div>
                     </div>
                   </div>
@@ -88,8 +88,8 @@
                         <img src="{{ asset('img/icons/c1.webp') }}" width="69" height="65" alt="Image-HasTech">
                       </div>
                       <div class="info">
-                        <h5 class="title">Address</h5>
-                        <p>Your address goes here. 123 Your Location</p>
+                        <h5 class="title">Địa chỉ</h5>
+                        <p>Địa chỉ cửa hàng của bạn. 123 Vị trí của bạn</p>
                       </div>
                     </div>
                   </div>
@@ -99,7 +99,7 @@
                         <img src="{{ asset('img/icons/c2.webp') }}" width="65" height="65" alt="Image-HasTech">
                       </div>
                       <div class="info">
-                        <h5 class="title">Phone No</h5>
+                        <h5 class="title">Số điện thoại</h5>
                         <p>
                           <a href="tel://+00123456789">+00123456789</a><br>
                           <a href="tel://+00123456789">+00123456789</a>
@@ -113,7 +113,7 @@
                         <img src="{{ asset('img/icons/c3.webp') }}" width="65" height="65" alt="Image-HasTech">
                       </div>
                       <div class="info">
-                        <h5 class="title">Email / Web</h5>
+                        <h5 class="title">Email / Website</h5>
                         <p>
                           <a href="mailto://demo@example.com">demo@example.com</a><br>
                           <a href="mailto://www.example.com">www.example.com</a>
