@@ -116,7 +116,7 @@
                                                 <li><a href="{{ route('affiliate.dashboard') }}"><span>Dashboard CTV</span></a></li>
                                             @endif
                                         @endauth
-                                        <li><a href="{{ route('404') }}"><span>Không tìm thấy</span></a></li>
+                                    
                                     </ul>
                                 </li>
                                 <li class="has-submenu position-static"><a href="#/"><span>Cửa hàng</span></a>
