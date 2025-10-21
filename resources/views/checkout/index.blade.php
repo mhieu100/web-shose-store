@@ -10,14 +10,15 @@
             <div class="col-12">
                 <div class="page-header-content">
                     <h2 class="title" data-aos="fade-down" data-aos-duration="1000">
-                        <i class="fa fa-credit-card me-2"></i>
+                        <i class="bx bx-credit-card me-2"></i>
                         Thanh Toán Đơn Hàng
                     </h2>
                     <nav class="breadcrumb-area" data-aos="fade-down" data-aos-duration="1200">
                         <ul class="breadcrumb">
                             <li><a href="{{ route('home') }}">Trang Chủ</a></li>
+                            <li class="breadcrumb-sep">›</li>
                             <li><a href="{{ route('cart') }}">Giỏ Hàng</a></li>
-                            <li class="breadcrumb-sep">//</li>
+                            <li class="breadcrumb-sep">›</li>
                             <li>Thanh Toán</li>
                         </ul>
                     </nav>
@@ -33,7 +34,7 @@
     <div class="container">
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <h6><i class="fa fa-exclamation-triangle me-2"></i>Có lỗi xảy ra:</h6>
+                <h6><i class="bx bx-error me-2"></i>Có lỗi xảy ra:</h6>
                 <ul class="mb-0">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -45,7 +46,7 @@
 
         @if(session('error'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="fa fa-exclamation-triangle me-2"></i>{{ session('error') }}
+                <i class="bx bx-error me-2"></i>{{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
@@ -59,7 +60,7 @@
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-primary text-white">
                             <h5 class="mb-0">
-                                <i class="fa fa-user me-2"></i>
+                                <i class="bx bx-user me-2"></i>
                                 Thông Tin Khách Hàng
                             </h5>
                         </div>
@@ -69,7 +70,7 @@
                                     <div class="customer-avatar me-3">
                                         <div class="avatar-circle bg-primary text-white d-flex align-items-center justify-content-center"
                                              style="width: 50px; height: 50px; border-radius: 50%;">
-                                            <i class="fa fa-user fa-lg"></i>
+                                            <i class="bx bx-user bx-md"></i>
                                         </div>
                                     </div>
                                     <div>
@@ -85,7 +86,7 @@
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-info text-white">
                             <h5 class="mb-0">
-                                <i class="fa fa-truck me-2"></i>
+                                <i class="bx bx-truck me-2"></i>
                                 Thông Tin Giao Hàng
                             </h5>
                         </div>
@@ -94,7 +95,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group mb-3">
                                         <label for="address_line_1" class="form-label">
-                                            <i class="fa fa-map-marker me-1"></i>
+                                            <i class="bx bx-map me-1"></i>
                                             Địa chỉ <span class="text-danger">*</span>
                                         </label>
                                         <input type="text"
@@ -112,7 +113,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group mb-3">
                                         <label for="address_line_2" class="form-label">
-                                            <i class="fa fa-map-marker-alt me-1"></i>
+                                            <i class="bx bx-map-pin me-1"></i>
                                             Địa chỉ bổ sung (tuỳ chọn)
                                         </label>
                                         <input type="text"
@@ -126,7 +127,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="city" class="form-label">
-                                            <i class="fa fa-building me-1"></i>
+                                            <i class="bx bx-buildings me-1"></i>
                                             Thành phố <span class="text-danger">*</span>
                                         </label>
                                         <input type="text"
@@ -144,7 +145,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="state" class="form-label">
-                                            <i class="fa fa-map me-1"></i>
+                                            <i class="bx bx-world me-1"></i>
                                             Tỉnh/Thành <span class="text-danger">*</span>
                                         </label>
                                         <select class="form-control @error('state') is-invalid @enderror"
@@ -169,7 +170,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="postal_code" class="form-label">
-                                            <i class="fa fa-envelope me-1"></i>
+                                            <i class="bx bx-envelope me-1"></i>
                                             Mã bưu chính <span class="text-danger">*</span>
                                         </label>
                                         <input type="text"
@@ -187,7 +188,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="country" class="form-label">
-                                            <i class="fa fa-flag me-1"></i>
+                                            <i class="bx bx-flag me-1"></i>
                                             Quốc gia <span class="text-danger">*</span>
                                         </label>
                                         <select class="form-control @error('country') is-invalid @enderror"
@@ -204,7 +205,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group mb-3">
                                         <label for="phone" class="form-label">
-                                            <i class="fa fa-phone me-1"></i>
+                                            <i class="bx bx-phone me-1"></i>
                                             Số điện thoại <span class="text-danger">*</span>
                                         </label>
                                         <input type="tel"
@@ -227,7 +228,7 @@
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-success text-white">
                             <h5 class="mb-0">
-                                <i class="fa fa-credit-card me-2"></i>
+                                <i class="bx bx-credit-card me-2"></i>
                                 Phương Thức Thanh Toán
                             </h5>
                         </div>
@@ -244,7 +245,7 @@
                                            {{ ($walletBalance ?? 0) < $total ? 'disabled' : '' }}>
                                     <label class="form-check-label d-flex align-items-center w-100" for="wallet">
                                         <div class="payment-icon me-3">
-                                            <i class="fa fa-wallet fa-2x text-warning"></i>
+                                            <i class="bx bx-wallet bx-lg text-warning"></i>
                                         </div>
                                         <div class="flex-grow-1">
                                             <strong>Thanh toán bằng ví</strong>
@@ -257,7 +258,7 @@
                                             </small>
                                             <div class="payment-details mt-2" style="display: none;">
                                                 <div class="alert alert-success mb-0">
-                                                    <i class="fa fa-info-circle me-2"></i>
+                                                    <i class="bx bx-info-circle me-2"></i>
                                                     <strong>Thanh toán nhanh chóng!</strong> Số tiền sẽ được trừ trực tiếp từ ví của bạn.
                                                 </div>
                                             </div>
@@ -276,7 +277,7 @@
                                            required>
                                     <label class="form-check-label d-flex align-items-center w-100" for="cod">
                                         <div class="payment-icon me-3">
-                                            <i class="fa fa-money fa-2x text-success"></i>
+                                            <i class="bx bx-money bx-lg text-success"></i>
                                         </div>
                                         <div class="flex-grow-1">
                                             <strong>Thanh toán khi nhận hàng (COD)</strong>
@@ -284,7 +285,7 @@
                                             <small class="text-muted">Thanh toán bằng tiền mặt khi nhận được sản phẩm</small>
                                             <div class="payment-details mt-2" style="display: none;">
                                                 <div class="alert alert-info mb-0">
-                                                    <i class="fa fa-info-circle me-2"></i>
+                                                    <i class="bx bx-info-circle me-2"></i>
                                                     <strong>Lưu ý:</strong> Bạn sẽ thanh toán cho shipper khi nhận hàng
                                                 </div>
                                             </div>
@@ -302,7 +303,7 @@
                                            {{ old('payment_method') == 'bank_transfer' ? 'checked' : '' }}>
                                     <label class="form-check-label d-flex align-items-center w-100" for="bank_transfer">
                                         <div class="payment-icon me-3">
-                                            <i class="fa fa-bank fa-2x text-primary"></i>
+                                            <i class="bx bx-building bx-lg text-primary"></i>
                                         </div>
                                         <div class="flex-grow-1">
                                             <strong>Chuyển khoản ngân hàng</strong>
@@ -331,7 +332,7 @@
                                            {{ old('payment_method') == 'paypal' ? 'checked' : '' }}>
                                     <label class="form-check-label d-flex align-items-center w-100" for="paypal">
                                         <div class="payment-icon me-3">
-                                            <i class="fab fa-paypal fa-2x text-info"></i>
+                                            <i class="bx bxl-paypal bx-lg text-info"></i>
                                         </div>
                                         <div class="flex-grow-1">
                                             <strong>PayPal</strong>
@@ -339,7 +340,7 @@
                                             <small class="text-muted">Thanh toán an toàn qua PayPal</small>
                                             <div class="payment-details mt-2" style="display: none;">
                                                 <div class="alert alert-info mb-0">
-                                                    <i class="fab fa-paypal me-2"></i>
+                                                    <i class="bx bxl-paypal me-2"></i>
                                                     Bạn sẽ được chuyển đến PayPal để hoàn tất thanh toán
                                                 </div>
                                             </div>
@@ -350,7 +351,7 @@
                                 <!-- Payment Method Error -->
                                 @error('payment_method')
                                     <div class="alert alert-danger mt-2">
-                                        <i class="fa fa-exclamation-triangle me-2"></i>
+                                        <i class="bx bx-error me-2"></i>
                                         {{ $message }}
                                     </div>
                                 @enderror
@@ -362,14 +363,14 @@
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-secondary text-white">
                             <h5 class="mb-0">
-                                <i class="fa fa-sticky-note me-2"></i>
+                                <i class="bx bx-note me-2"></i>
                                 Ghi Chú Đơn Hàng (Tuỳ chọn)
                             </h5>
                         </div>
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="notes" class="form-label">
-                                    <i class="fa fa-comment me-1"></i>
+                                    <i class="bx bx-comment me-1"></i>
                                     Ghi chú cho đơn hàng
                                 </label>
                                 <textarea class="form-control"
@@ -389,7 +390,7 @@
                         <div class="card border-0 shadow-sm mb-4">
                             <div class="card-header bg-dark text-white">
                                 <h5 class="mb-0">
-                                    <i class="fa fa-shopping-bag me-2"></i>
+                                    <i class="bx bx-shopping-bag me-2"></i>
                                     Đơn Hàng Của Bạn ({{ $cartItems->count() }} sản phẩm)
                                 </h5>
                             </div>
@@ -435,7 +436,7 @@
                         <div class="card border-0 shadow-sm mb-4">
                             <div class="card-header bg-success text-white">
                                 <h5 class="mb-0">
-                                    <i class="fa fa-ticket me-2"></i>
+                                    <i class="bx bx-purchase-tag me-2"></i>
                                     Mã Giảm Giá
                                 </h5>
                             </div>
@@ -444,7 +445,7 @@
                                     <!-- Applied Coupon Display -->
                                     <div class="applied-coupon alert alert-success d-flex justify-content-between align-items-center mb-0">
                                         <div>
-                                            <strong><i class="fa fa-check-circle me-2"></i>{{ $appliedCoupon->code }}</strong>
+                                            <strong><i class="bx bx-check-circle me-2"></i>{{ $appliedCoupon->code }}</strong>
                                             <br>
                                             <small>{{ $appliedCoupon->name }}</small>
                                             <br>
@@ -453,7 +454,7 @@
                                             </span>
                                         </div>
                                         <button type="button" class="btn btn-outline-danger btn-sm remove-coupon-btn">
-                                            <i class="fa fa-times"></i>
+                                            <i class="bx bx-x"></i>
                                         </button>
                                     </div>
                                 @else
@@ -466,12 +467,12 @@
                                                    placeholder="Nhập mã giảm giá..."
                                                    style="text-transform: uppercase;">
                                             <button type="button" class="btn btn-primary apply-coupon-btn">
-                                                <i class="fa fa-check me-1"></i>
+                                                <i class="bx bx-check me-1"></i>
                                                 Áp dụng
                                             </button>
                                         </div>
                                         <small class="text-muted mt-2 d-block">
-                                            <i class="fa fa-info-circle me-1"></i>
+                                            <i class="bx bx-info-circle me-1"></i>
                                             Nhập mã giảm giá để được ưu đãi thêm
                                         </small>
                                     </div>
@@ -488,7 +489,7 @@
                         <div class="card border-0 shadow-sm mb-4">
                             <div class="card-header bg-warning text-dark">
                                 <h5 class="mb-0">
-                                    <i class="fa fa-calculator me-2"></i>
+                                    <i class="bx bx-calculator me-2"></i>
                                     Tổng Kết Đơn Hàng
                                 </h5>
                             </div>
@@ -502,7 +503,7 @@
                                     @if($appliedCoupon && $couponDiscount > 0)
                                     <div class="summary-row d-flex justify-content-between mb-2 text-success">
                                         <span>
-                                            <i class="fa fa-ticket me-1"></i>
+                                            <i class="bx bx-purchase-tag me-1"></i>
                                             Giảm giá ({{ $appliedCoupon->code }}):
                                         </span>
                                         <span class="fw-bold discount-amount">-${{ number_format($couponDiscount, 2) }}</span>
@@ -532,14 +533,14 @@
                                     @if($subtotal >= 100)
                                         <div class="shipping-notice mt-3">
                                             <div class="alert alert-success mb-0">
-                                                <i class="fa fa-truck me-2"></i>
+                                                <i class="bx bx-truck me-2"></i>
                                                 <small>Bạn được miễn phí vận chuyển!</small>
                                             </div>
                                         </div>
                                     @else
                                         <div class="shipping-notice mt-3">
                                             <div class="alert alert-info mb-0">
-                                                <i class="fa fa-info-circle me-2"></i>
+                                                <i class="bx bx-info-circle me-2"></i>
                                                 <small>Mua thêm ${{ number_format(100 - $subtotal, 2) }} để được miễn phí vận chuyển!</small>
                                             </div>
                                         </div>
@@ -552,14 +553,14 @@
                         <div class="card border-0 shadow-sm">
                             <div class="card-body text-center">
                                 <button type="submit" class="btn btn-primary btn-lg w-100 place-order-btn">
-                                    <i class="fa fa-lock me-2"></i>
+                                    <i class="bx bx-lock me-2"></i>
                                     Đặt Hàng Ngay
                                     <div class="loading-spinner d-none ms-2">
-                                        <i class="fa fa-spinner fa-spin"></i>
+                                        <i class="bx bx-loader-alt bx-spin"></i>
                                     </div>
                                 </button>
                                 <small class="text-muted d-block mt-2">
-                                    <i class="fa fa-shield me-1"></i>
+                                    <i class="bx bx-shield me-1"></i>
                                     Thông tin của bạn được bảo mật tuyệt đối
                                 </small>
                             </div>
@@ -574,119 +575,7 @@
 @endsection
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/checkout.css') }}">
-<style>
-/* Checkout Page Styles */
-.checkout-sidebar {
-    position: sticky;
-    top: 20px;
-}
-
-.cart-item {
-    transition: background-color 0.3s ease;
-}
-
-.cart-item:hover {
-    background-color: #f8f9fa;
-}
-
-.payment-option {
-    border: 2px solid #e9ecef;
-    border-radius: 8px;
-    padding: 15px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.payment-option:hover {
-    border-color: #007bff;
-    background-color: #f8f9fa;
-}
-
-.payment-option .form-check-input:checked ~ .form-check-label {
-    color: #007bff;
-}
-
-.payment-option .form-check-input:checked {
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-.payment-option.has-checked {
-    border-color: #007bff;
-    background-color: #e7f3ff;
-}
-
-.order-summary .summary-row {
-    font-size: 16px;
-}
-
-.total-row {
-    font-size: 18px !important;
-    padding-top: 10px;
-}
-
-.place-order-btn {
-    background: linear-gradient(45deg, #007bff, #0056b3);
-    border: none;
-    padding: 15px 20px;
-    font-size: 16px;
-    font-weight: 600;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-.place-order-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
-}
-
-.place-order-btn:disabled {
-    background: #6c757d;
-    transform: none;
-}
-
-.form-control:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-
-.card {
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.card-header {
-    border-bottom: none;
-    font-weight: 600;
-}
-
-.shipping-notice .alert {
-    border-radius: 6px;
-    font-size: 14px;
-}
-
-.customer-avatar .avatar-circle {
-    font-size: 18px;
-}
-
-@media (max-width: 991px) {
-    .checkout-sidebar {
-        position: static;
-        margin-top: 30px;
-    }
-}
-
-/* Loading Animation */
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.loading-spinner .fa-spin {
-    animation: spin 1s linear infinite;
-}
-</style>
+<link rel="stylesheet" href="{{ asset('css/checkout-custom.css') }}">
 @endpush
 
 @push('scripts')
@@ -776,10 +665,10 @@ $(document).ready(function() {
 
         // Show loading state
         $submitBtn.prop('disabled', true);
-        $submitBtn.find('i.fa-lock').removeClass('fa-lock').addClass('fa-spinner fa-spin');
+        $submitBtn.find('i.bx-lock').removeClass('bx-lock').addClass('bx-loader-alt bx-spin');
 
         // Prevent multiple submissions
-        $submitBtn.html('<i class="fa fa-spinner fa-spin me-2"></i>Đang xử lý...');
+        $submitBtn.html('<i class="bx bx-loader-alt bx-spin me-2"></i>Đang xử lý...');
 
         // Show payment method confirmation
         const paymentText = selectedPayment.closest('.payment-option').find('strong').first().text();
@@ -787,7 +676,7 @@ $(document).ready(function() {
 
         // Special handling for PayPal - don't prevent form submission
         if (selectedPayment.val() === 'paypal') {
-            $submitBtn.html('<i class="fab fa-paypal me-2"></i>Chuyển đến PayPal...');
+            $submitBtn.html('<i class="bx bxl-paypal me-2"></i>Chuyển đến PayPal...');
         }
     });
 
@@ -825,7 +714,7 @@ $(document).ready(function() {
         const originalText = $btn.html();
 
         // Show loading
-        $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin me-1"></i>Đang xử lý...');
+        $btn.prop('disabled', true).html('<i class="bx bx-loader-alt bx-spin me-1"></i>Đang xử lý...');
 
         $.ajax({
             url: '{{ route("checkout.apply_coupon") }}',
@@ -862,7 +751,7 @@ $(document).ready(function() {
         }
 
         const $btn = $(this);
-        $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i>');
+        $btn.prop('disabled', true).html('<i class="bx bx-loader-alt bx-spin"></i>');
 
         $.ajax({
             url: '{{ route("checkout.remove_coupon") }}',
@@ -879,12 +768,12 @@ $(document).ready(function() {
                     }, 1500);
                 } else {
                     showCouponMessage('error', response.message);
-                    $btn.prop('disabled', false).html('<i class="fa fa-times"></i>');
+                    $btn.prop('disabled', false).html('<i class="bx bx-x"></i>');
                 }
             },
             error: function(xhr) {
                 showCouponMessage('error', 'Có lỗi xảy ra khi xóa mã giảm giá.');
-                $btn.prop('disabled', false).html('<i class="fa fa-times"></i>');
+                $btn.prop('disabled', false).html('<i class="bx bx-x"></i>');
             }
         });
     });
@@ -909,7 +798,7 @@ $(document).ready(function() {
 
         $alert.removeClass('alert-success alert-danger alert-info')
               .addClass(type === 'success' ? 'alert-success' : (type === 'error' ? 'alert-danger' : 'alert-info'))
-              .html('<i class="fa fa-' + (type === 'success' ? 'check-circle' : (type === 'error' ? 'exclamation-triangle' : 'info-circle')) + ' me-2"></i>' + message);
+              .html('<i class="bx bx-' + (type === 'success' ? 'check-circle' : (type === 'error' ? 'error' : 'info-circle')) + ' me-2"></i>' + message);
 
         $messages.show();
 

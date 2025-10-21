@@ -40,8 +40,8 @@
                     <div class="shop-top-center">
                       <nav class="product-nav">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                          <button class="nav-link active" id="nav-grid-tab" data-bs-toggle="tab" data-bs-target="#nav-grid" type="button" role="tab" aria-controls="nav-grid" aria-selected="true"><i class="fa fa-th"></i></button>
-                          <button class="nav-link" id="nav-list-tab" data-bs-toggle="tab" data-bs-target="#nav-list" type="button" role="tab" aria-controls="nav-list" aria-selected="false"><i class="fa fa-list"></i></button>
+                          <button class="nav-link active" id="nav-grid-tab" data-bs-toggle="tab" data-bs-target="#nav-grid" type="button" role="tab" aria-controls="nav-grid" aria-selected="true"><i class="bx bx-grid-alt"></i></button>
+                          <button class="nav-link" id="nav-list-tab" data-bs-toggle="tab" data-bs-target="#nav-list" type="button" role="tab" aria-controls="nav-list" aria-selected="false"><i class="bx bx-list-ul"></i></button>
                         </div>
                       </nav>
                     </div>
@@ -89,12 +89,12 @@
                         </div>
                         @endif
                         <div class="product-action">
-                          <a class="btn-product-wishlist" href="{{ route('wishlist') }}"><i class="fa fa-heart"></i></a>
-                          <a class="btn-product-cart" href="{{ route('cart') }}"><i class="fa fa-shopping-cart"></i></a>
+                          <a class="btn-product-wishlist" href="{{ route('wishlist') }}"><i class="bx bx-heart"></i></a>
+                          <a class="btn-product-cart" href="{{ route('cart') }}"><i class="bx bx-cart"></i></a>
                           <button type="button" class="btn-product-quick-view-open">
-                            <i class="fa fa-expand"></i>
+                            <i class="bx bx-expand-alt"></i>
                           </button>
-                          <a class="btn-product-compare" href="{{ route('compare') }}"><i class="fa fa-random"></i></a>
+                          <a class="btn-product-compare" href="{{ route('compare') }}"><i class="bx bx-git-compare"></i></a>
                         </div>
                         <a class="banner-link-overlay" href="{{ route('product.show', $i) }}"></a>
                       </div>
@@ -124,7 +124,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <!--== Start Pagination ==-->
               <div class="row">
                 <div class="col-12">
@@ -145,7 +145,7 @@
           <div class="col-xl-3">
             <!--== Start Sidebar Area ==-->
             <div class="sidebar-area shop-sidebar-area">
-              
+
               <!--== Start Sidebar Item ==-->
               <div class="sidebar-item">
                 <h4 class="sidebar-title">Danh mục</h4>

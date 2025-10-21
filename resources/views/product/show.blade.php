@@ -160,29 +160,8 @@
                                         <ul class="color-list">
                                             @foreach($product->colors as $index => $color)
                                                 @php
-                                                    // Handle both string format and object format
-                                                    if (is_array($color)) {
-                                                        $colorName = $color['name'] ?? $color['color'] ?? 'Unknown';
-                                                        $colorCode = $color['color_code'] ?? $color['code'] ?? $color['hex'] ?? '#000000';
-                                                    } else {
-                                                        $colorName = $color;
-                                                        // Simple color mapping for Vietnamese color names
-                                                        $colorCode = match(strtolower($color)) {
-                                                            'đỏ', 'red' => '#FF0000',
-                                                            'xanh', 'blue' => '#0000FF',
-                                                            'vàng', 'yellow' => '#FFFF00',
-                                                            'xanh lá', 'green' => '#008000',
-                                                            'đen', 'black' => '#000000',
-                                                            'trắng', 'white' => '#FFFFFF',
-                                                            'nâu', 'brown' => '#A52A2A',
-                                                            'hồng', 'pink' => '#FFC0CB',
-                                                            'cam', 'orange' => '#FFA500',
-                                                            'tím', 'purple' => '#800080',
-                                                            'xám', 'gray', 'grey' => '#808080',
-                                                            'be', 'beige' => '#F5F5DC',
-                                                            default => '#' . substr(md5($color), 0, 6)
-                                                        };
-                                                    }
+                                                    $colorName = is_array($color) ? ($color['name'] ?? $color) : $color;
+                                                    $colorCode = get_color_code($colorName) ?? '#666666';
                                                 @endphp
                                                 <li class="{{ $index === 0 ? 'active' : '' }}"
                                                     data-bg-color="{{ $colorCode }}"
@@ -233,10 +212,13 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <button type="button" class="btn-theme add-to-cart"
+                                        <button type="button" class="btn-theme btn-add-to-cart-detail"
                                             data-product-id="{{ $product->id }}"
                                             data-product-name="{{ $product->name }}"
                                             data-product-price="{{ $product->price }}">
+                                            data-product-price="{{ $product->price }}"
+                                            data-product-colors="{{ $product->colors ? json_encode($product->colors) : '[]' }}"
+                                            data-product-sizes="{{ $product->sizes ? json_encode($product->sizes) : '[]' }}">
                                             <i class="fa fa-shopping-cart me-2"></i>
                                             Thêm vào giỏ
                                         </button>
@@ -695,7 +677,7 @@
             });
 
             // Add to cart with quantity, color, and size
-            $('.product-quick-action .add-to-cart').on('click', function(e) {
+            $('.product-quick-action .btn-add-to-cart-detail').on('click', function(e) {
                 e.preventDefault();
 
                 const button = $(this);
@@ -743,17 +725,30 @@
                             showNotification('success',
                                 `${productName} (x${quantity}) đã được thêm vào giỏ hàng!`);
 
-                            // Update cart count in header if exists
+                            // Update cart count in header
                             if (response.cart_count) {
-                                $('.cart-count, .header-cart-count').text(response.cart_count);
+                                $('#cart-count, .cart-count, .header-cart-count, .shop-count').text(response.cart_count);
                             }
 
-                            // Reset to 1 after adding
+                            // Update cart sidebar if it exists
+                            if (typeof updateCartSidebar === 'function') {
+                                updateCartSidebar();
+                            }
+
+                            // Reset selections
                             $('#product-quantity').val(1);
+                            $('.color-list li').removeClass('active');
+                            $('.size-list li').removeClass('active');
 
                             // Show success state
                             button.html('<i class="fa fa-check me-2"></i>Đã thêm!');
                             button.addClass('btn-success');
+
+                            // Animate cart icon
+                            $('#cart-count').addClass('animate-bounce');
+                            setTimeout(() => {
+                                $('#cart-count').removeClass('animate-bounce');
+                            }, 500);
 
                             // Reset button after 2 seconds
                             setTimeout(() => {
@@ -796,20 +791,27 @@
                 const notification = $(`
             <div class="product-notification alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show" role="alert">
                 <i class="fa fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'} me-2"></i>
-                ${message}
+                <strong>${message}</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         `);
 
-                // Insert at top of product info
-                $('.product-single-info').prepend(notification);
+                // Append to body for fixed positioning
+                $('body').append(notification);
 
-                // Auto hide after 5 seconds
+                // Auto hide after 4 seconds
                 setTimeout(() => {
-                    notification.fadeOut(() => {
-                        notification.remove();
+                    notification.fadeOut(300, function() {
+                        $(this).remove();
                     });
-                }, 5000);
+                }, 4000);
+
+                // Close button handler
+                notification.find('.btn-close').on('click', function() {
+                    notification.fadeOut(300, function() {
+                        $(this).remove();
+                    });
+                });
             }
 
             // Enhanced Image Zoom with Fancybox
@@ -1272,6 +1274,48 @@
             .add-to-cart {
                 width: 100%;
             }
+        }
+
+        /* Notification styling */
+        .product-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            min-width: 300px;
+            animation: slideInRight 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Cart icon animation */
+        .animate-bounce {
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        /* Loading state */
+        .add-to-cart:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
     </style>
 @endpush

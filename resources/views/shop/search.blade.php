@@ -63,7 +63,7 @@
                         @endif
                         <div class="product-action">
                           <button class="add-to-wishlist btn-product-wishlist" data-product-id="{{ $product->id }}" title="Thêm vào danh sách yêu thích">
-                            <i class="fa fa-heart-o"></i>
+                            <i class="bx bx-heart"></i>
                           </button>
                           <button type="button" class="btn-product-cart add-to-cart"
                                   data-product-id="{{ $product->id }}"
@@ -72,12 +72,12 @@
                                   data-product-colors="{{ $product->colors ? json_encode($product->colors) : '[]' }}"
                                   data-product-sizes="{{ $product->sizes ? json_encode($product->sizes) : '[]' }}"
                                   title="Thêm vào giỏ hàng">
-                            <i class="fa fa-shopping-cart"></i>
+                            <i class="bx bx-cart"></i>
                           </button>
                           <button type="button" class="btn-product-quick-view-open" title="Xem nhanh">
-                            <i class="fa fa-expand"></i>
+                            <i class="bx bx-expand-alt"></i>
                           </button>
-                          <a class="btn-product-compare" href="{{ route('compare') }}"><i class="fa fa-random"></i></a>
+                          <a class="btn-product-compare" href="{{ route('compare') }}"><i class="bx bx-git-compare"></i></a>
                         </div>
                       </div>
                       <div class="product-info">
@@ -112,7 +112,7 @@
                 </div>
                 @endforelse
               </div>
-              
+
               @if($products->hasPages())
               <div class="row">
                 <div class="col-12">

@@ -40,7 +40,7 @@ class ShopController extends Controller
                 $query->where('price', '>=', $minPrice);
             }
         }
-        
+
         $maxPrice = $request->get('max_price');
         if (!empty($maxPrice) && is_numeric($maxPrice)) {
             $maxPrice = (float) $maxPrice;
@@ -140,7 +140,14 @@ class ShopController extends Controller
 
         // Handle AJAX requests
         if ($request->ajax() || $request->has('ajax')) {
-            return $this->handleAjaxRequest($request, $products, $currentBrand, $currentCategory);
+            // Return full HTML view for simple parsing
+            return view('shop.index', compact(
+                'products',
+                'brands',
+                'categories',
+                'currentBrand',
+                'currentCategory'
+            ));
         }
 
         return view('shop.index', compact(
@@ -159,7 +166,7 @@ class ShopController extends Controller
             $gridViewHtml = '';
             $listViewHtml = '';
             $paginationHtml = '';
-            
+
             // Try to render grid view
             try {
                 $gridViewHtml = view('shop.partials.products-grid', compact('products'))->render();
@@ -167,7 +174,7 @@ class ShopController extends Controller
                 // Fallback: generate simple grid HTML
                 $gridViewHtml = $this->generateSimpleProductGrid($products);
             }
-            
+
             // Try to render list view
             try {
                 $listViewHtml = view('shop.partials.products-list', compact('products'))->render();
@@ -175,7 +182,7 @@ class ShopController extends Controller
                 // Fallback: generate simple list HTML
                 $listViewHtml = $this->generateSimpleProductList($products);
             }
-            
+
             // Try to render pagination
             try {
                 if ($products->hasPages()) {
@@ -184,7 +191,7 @@ class ShopController extends Controller
             } catch (\Exception $e) {
                 $paginationHtml = '<div class="text-center">Pagination Error: ' . $e->getMessage() . '</div>';
             }
-            
+
             // Build page title
             $pageTitle = 'Cửa hàng';
             if ($currentBrand) {
@@ -193,7 +200,7 @@ class ShopController extends Controller
             if ($currentCategory) {
                 $pageTitle .= ' - ' . $currentCategory->name;
             }
-            
+
             return response()->json([
                 'success' => true,
                 'products_grid_html' => $gridViewHtml,
@@ -207,13 +214,13 @@ class ShopController extends Controller
                 'from' => $products->firstItem(),
                 'to' => $products->lastItem(),
             ]);
-            
+
         } catch (\Exception $e) {
             \Log::error('AJAX Shop Error: ' . $e->getMessage(), [
                 'trace' => $e->getTraceAsString(),
                 'request' => $request->all()
             ]);
-            
+
             return response()->json([
                 'success' => false,
                 'error' => 'Có lỗi xảy ra khi tải dữ liệu',
@@ -222,7 +229,7 @@ class ShopController extends Controller
             ], 500);
         }
     }
-    
+
     private function generateSimpleProductGrid($products)
     {
         $html = '';
@@ -231,14 +238,14 @@ class ShopController extends Controller
             $productUrl = route('product.show', $product->id);
             $price = number_format($product->price, 0, ',', '.');
             $oldPrice = $product->old_price ? number_format($product->old_price, 0, ',', '.') : null;
-            
+
             // Calculate discount percentage
             $discount = '';
             if ($product->old_price && $product->old_price > $product->price) {
                 $discountPercent = round((($product->old_price - $product->price) / $product->old_price) * 100);
                 $discount = "<span class=\"flag-new sale\">-{$discountPercent}%</span>";
             }
-            
+
             // Categories
             $categories = '';
             foreach ($product->categories as $index => $category) {
@@ -247,7 +254,7 @@ class ShopController extends Controller
                     $categories .= '<span>/</span>';
                 }
             }
-            
+
             $html .= "
                 <div class=\"col-lg-4 col-md-4 col-sm-6 col-6\">
                     <div class=\"product-item\" style=\"opacity: 1; transform: translateY(0px); transition: 0.5s;\">
@@ -290,14 +297,14 @@ class ShopController extends Controller
                 </div>
             ";
         }
-        
+
         if (empty($html)) {
             $html = '<div class="col-12 text-center p-5"><h4>Không tìm thấy sản phẩm nào</h4></div>';
         }
-        
+
         return $html;
     }
-    
+
     private function generateSimpleProductList($products)
     {
         $html = '';
@@ -307,7 +314,7 @@ class ShopController extends Controller
             $price = number_format($product->price, 0, ',', '.');
             $oldPrice = $product->old_price ? number_format($product->old_price, 0, ',', '.') : null;
             $description = \Str::limit($product->description, 100);
-            
+
             $html .= "
                 <div class=\"col-12\">
                     <div class=\"product-item product-item-list\" style=\"opacity: 1; transform: translateY(0px); transition: 0.5s;\">
@@ -342,11 +349,11 @@ class ShopController extends Controller
                 </div>
             ";
         }
-        
+
         if (empty($html)) {
             $html = '<div class="col-12 text-center p-5"><h4>Không tìm thấy sản phẩm nào</h4></div>';
         }
-        
+
         return $html;
     }
 

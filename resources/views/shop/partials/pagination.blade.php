@@ -29,20 +29,20 @@
         <div class="pagination-container">
             @if ($products->onFirstPage())
                 <span class="page-link disabled first-last-btn">
-                    <i class="fa fa-angle-double-left"></i>
+                    <i class="bx bx-chevrons-left"></i>
                     <span class="btn-text">Đầu</span>
                 </span>
                 <span class="page-link disabled">
-                    <i class="fa fa-angle-left"></i>
+                    <i class="bx bx-chevron-left"></i>
                     <span class="btn-text">Trước</span>
                 </span>
             @else
                 <a href="{{ $products->url(1) }}" class="page-link first-last-btn">
-                    <i class="fa fa-angle-double-left"></i>
+                    <i class="bx bx-chevrons-left"></i>
                     <span class="btn-text">Đầu</span>
                 </a>
                 <a href="{{ $products->previousPageUrl() }}" class="page-link">
-                    <i class="fa fa-angle-left"></i>
+                    <i class="bx bx-chevron-left"></i>
                     <span class="btn-text">Trước</span>
                 </a>
             @endif
@@ -79,20 +79,20 @@
             @if ($products->hasMorePages())
                 <a href="{{ $products->nextPageUrl() }}" class="page-link">
                     <span class="btn-text">Tiếp</span>
-                    <i class="fa fa-angle-right"></i>
+                    <i class="bx bx-chevron-right"></i>
                 </a>
                 <a href="{{ $products->url($products->lastPage()) }}" class="page-link first-last-btn">
                     <span class="btn-text">Cuối</span>
-                    <i class="fa fa-angle-double-right"></i>
+                    <i class="bx bx-chevrons-right"></i>
                 </a>
             @else
                 <span class="page-link disabled">
                     <span class="btn-text">Tiếp</span>
-                    <i class="fa fa-angle-right"></i>
+                    <i class="bx bx-chevron-right"></i>
                 </span>
                 <span class="page-link disabled first-last-btn">
                     <span class="btn-text">Cuối</span>
-                    <i class="fa fa-angle-double-right"></i>
+                    <i class="bx bx-chevrons-right"></i>
                 </span>
             @endif
         </div>
@@ -106,7 +106,7 @@
                min="1" max="{{ $products->lastPage() }}"
                placeholder="{{ $products->currentPage() }}">
         <button type="button" class="btn btn-primary jump-btn" onclick="jumpToPage()">
-            <i class="fa fa-arrow-right"></i>
+            <i class="bx bx-right-arrow-alt"></i>
         </button>
     </div>
 </div>

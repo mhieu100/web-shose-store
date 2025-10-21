@@ -1,0 +1,1088 @@
+# DESIGN SYSTEM - WEB SHOE STORE
+
+## 1. COLORS
+
+### Primary Colors
+```css
+--primary-red: #DC3E37;      /* Main brand color - buttons, links, accents */
+--secondary-orange: #F2965B;  /* Hover states, secondary actions */
+--dark-text: #322A2A;         /* Primary text color */
+--light-bg: #EFEBEA;          /* Background, cards */
+```
+
+### Neutral Colors
+```css
+--white: #FFFFFF;
+--black: #000000;
+--gray-100: #F8F9FA;
+--gray-200: #E9ECEF;
+--gray-300: #DEE2E6;
+--gray-400: #CED4DA;
+--gray-500: #ADB5BD;
+--gray-600: #6C757D;
+--gray-700: #495057;
+--gray-800: #343A40;
+--gray-900: #212529;
+```
+
+### Semantic Colors
+```css
+--success: #28A745;
+--warning: #FFC107;
+--danger: #DC3545;
+--info: #17A2B8;
+```
+
+### Usage Guidelines
+- **Primary Red (#DC3E37)**: Use for primary CTAs, active states, important links
+- **Secondary Orange (#F2965B)**: Use for hover states, secondary buttons, highlights
+- **Dark Text (#322A2A)**: Use for all body text, headings
+- **Light BG (#EFEBEA)**: Use for card backgrounds, section backgrounds, disabled states
+
+---
+
+## 2. TYPOGRAPHY
+
+### Font Family
+```css
+font-family: 'Poppins', sans-serif;
+```
+
+### Font Weights Available
+- Thin: 100
+- Extra Light: 200
+- Light: 300
+- Regular: 400
+- Medium: 500
+- Semi Bold: 600
+- Bold: 700
+
+### Font Sizes & Line Heights
+```css
+/* Headings */
+h1: font-size: 2.5rem (40px), line-height: 1.2, font-weight: 700
+h2: font-size: 2rem (32px), line-height: 1.3, font-weight: 600
+h3: font-size: 1.75rem (28px), line-height: 1.3, font-weight: 600
+h4: font-size: 1.5rem (24px), line-height: 1.4, font-weight: 600
+h5: font-size: 1.25rem (20px), line-height: 1.4, font-weight: 500
+h6: font-size: 1rem (16px), line-height: 1.5, font-weight: 500
+
+/* Body Text */
+body: font-size: 1rem (16px), line-height: 1.6, font-weight: 400
+small: font-size: 0.875rem (14px), line-height: 1.5
+tiny: font-size: 0.75rem (12px), line-height: 1.4
+```
+
+### Text Styles
+```css
+/* Product Titles */
+.product-title {
+    font-size: 1.125rem; /* 18px */
+    font-weight: 500;
+    color: var(--dark-text);
+    line-height: 1.4;
+}
+
+/* Product Prices */
+.product-price {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 600;
+    color: var(--primary-red);
+}
+
+/* Filter Labels */
+.filter-label {
+    font-size: 0.9rem; /* 14.4px */
+    font-weight: 500;
+    color: var(--dark-text);
+}
+
+/* Compact Text */
+.compact-text {
+    font-size: 0.8rem; /* 12.8px */
+    font-weight: 400;
+}
+```
+
+---
+
+## 3. SPACING SYSTEM
+
+### Base Unit: 4px
+
+```css
+/* Spacing Scale */
+--space-1: 4px;
+--space-2: 8px;
+--space-3: 12px;
+--space-4: 16px;
+--space-5: 20px;
+--space-6: 24px;
+--space-8: 32px;
+--space-10: 40px;
+--space-12: 48px;
+--space-16: 64px;
+```
+
+### Component Spacing
+
+#### Compact Filter Items
+```css
+padding: 5px 8px;  /* Vertical: 5px, Horizontal: 8px */
+margin-bottom: 6px;
+gap: 6px;
+```
+
+#### Filter Sections
+```css
+margin-bottom: 12px;
+padding: 12px;
+```
+
+#### Buttons
+```css
+/* Small */
+padding: 5px 10px;
+
+/* Medium */
+padding: 8px 16px;
+
+/* Large */
+padding: 12px 24px;
+```
+
+#### Cards
+```css
+padding: 16px;
+margin-bottom: 20px;
+```
+
+---
+
+## 4. BORDERS & RADIUS
+
+### Border Widths
+```css
+--border-thin: 1px;
+--border-medium: 2px;
+--border-thick: 3px;
+```
+
+### Border Radius (Thin, Minimal Style)
+```css
+--radius-sm: 6px;   /* Small elements: badges, tags */
+--radius-md: 8px;   /* Medium elements: buttons, inputs */
+--radius-lg: 12px;  /* Large elements: cards, modals */
+--radius-xl: 16px;  /* Extra large: hero sections */
+--radius-full: 50%; /* Circular: color swatches, avatars */
+```
+
+### Border Styles
+```css
+/* Solid Borders */
+border: 1px solid var(--gray-300);
+
+/* Dashed Borders (Show More buttons) */
+border: 1px dashed var(--gray-400);
+
+/* Colored Borders (Active State) */
+border: 1px solid var(--primary-red);
+```
+
+---
+
+## 5. SHADOWS
+
+### Shadow Levels (Subtle, Light Shadows)
+```css
+/* Minimal Shadow */
+--shadow-xs: 0 1px 2px rgba(50, 42, 42, 0.05);
+
+/* Small Shadow */
+--shadow-sm: 0 2px 4px rgba(50, 42, 42, 0.08);
+
+/* Medium Shadow */
+--shadow-md: 0 4px 6px rgba(50, 42, 42, 0.1);
+
+/* Large Shadow */
+--shadow-lg: 0 8px 16px rgba(50, 42, 42, 0.12);
+
+/* Hover Shadow */
+--shadow-hover: 0 6px 12px rgba(220, 62, 55, 0.15);
+```
+
+### Usage
+```css
+/* Cards */
+box-shadow: var(--shadow-sm);
+
+/* Cards on Hover */
+box-shadow: var(--shadow-hover);
+
+/* Modals */
+box-shadow: var(--shadow-lg);
+
+/* Dropdowns */
+box-shadow: var(--shadow-md);
+```
+
+---
+
+## 6. TRANSITIONS & ANIMATIONS
+
+### Standard Transitions
+```css
+/* Fast (Hover effects) */
+transition: all 0.2s ease;
+
+/* Medium (State changes) */
+transition: all 0.3s ease;
+
+/* Slow (Slide, expand) */
+transition: all 0.4s ease;
+```
+
+### Specific Transitions
+```css
+/* Color Changes */
+transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+
+/* Transform (Scale, Rotate) */
+transition: transform 0.2s ease;
+
+/* Opacity */
+transition: opacity 0.3s ease;
+
+/* Height (Collapsible) */
+transition: max-height 0.4s ease;
+```
+
+### Animation Examples
+```css
+/* Icon Rotation (Show More) */
+.icon-rotate {
+    transition: transform 0.3s ease;
+}
+.icon-rotate.rotated {
+    transform: rotate(180deg);
+}
+
+/* Scale on Hover */
+.scale-hover:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+```
+
+---
+
+## 7. BUTTONS
+
+### Primary Button
+```css
+.btn-primary {
+    background-color: var(--primary-red);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-orange);
+    box-shadow: var(--shadow-hover);
+}
+```
+
+### Secondary Button
+```css
+.btn-secondary {
+    background-color: transparent;
+    color: var(--primary-red);
+    border: 1px solid var(--primary-red);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary-red);
+    color: white;
+}
+```
+
+### Compact Button (Filters)
+```css
+.btn-compact {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    border: 1px solid var(--gray-300);
+    background-color: white;
+    color: var(--dark-text);
+    transition: all 0.2s ease;
+}
+
+.btn-compact:hover {
+    border-color: var(--primary-red);
+    color: var(--primary-red);
+}
+
+.btn-compact.active {
+    background-color: var(--primary-red);
+    color: white;
+    border-color: var(--primary-red);
+}
+```
+
+### Show More Button
+```css
+.btn-show-more {
+    width: 100%;
+    padding: 6px 0;
+    background-color: transparent;
+    border: 1px dashed var(--gray-400);
+    border-radius: 6px;
+    color: var(--gray-600);
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+}
+
+.btn-show-more:hover {
+    border-color: var(--primary-red);
+    color: var(--primary-red);
+}
+
+.btn-show-more .fa {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+```
+
+---
+
+## 8. CARDS
+
+### Product Card
+```css
+.product-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-4px);
+}
+
+.product-card img {
+    border-radius: 8px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.product-card-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--dark-text);
+    margin-top: 12px;
+    line-height: 1.4;
+}
+
+.product-card-price {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-red);
+    margin-top: 8px;
+}
+```
+
+### Filter Card
+```css
+.filter-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 16px;
+}
+
+.filter-section {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.filter-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+```
+
+---
+
+## 9. FORMS & INPUTS
+
+### Text Input
+```css
+.form-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--gray-300);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--dark-text);
+    transition: all 0.2s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 3px rgba(220, 62, 55, 0.1);
+}
+
+.form-input::placeholder {
+    color: var(--gray-500);
+}
+```
+
+### Select Dropdown
+```css
+.form-select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--gray-300);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--dark-text);
+    background-color: white;
+    appearance: none;
+    background-image: url("data:image/svg+xml,..."); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 3px rgba(220, 62, 55, 0.1);
+}
+```
+
+### Checkbox & Radio (Solid Toggle Style)
+```css
+/* Size Checkbox */
+.size-btn {
+    padding: 6px 4px;
+    min-width: 40px;
+    text-align: center;
+    border: 1px solid var(--gray-300);
+    border-radius: 6px;
+    background-color: white;
+    color: var(--dark-text);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.size-btn.active {
+    background-color: var(--primary-red);
+    color: white;
+    border-color: var(--primary-red);
+}
+
+/* Color Checkbox */
+.color-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.color-btn.active {
+    border-color: var(--primary-red);
+}
+
+.color-btn.active::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+```
+
+---
+
+## 10. BADGES & TAGS
+
+### Product Badge
+```css
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.badge-new {
+    background-color: var(--success);
+    color: white;
+}
+
+.badge-sale {
+    background-color: var(--primary-red);
+    color: white;
+}
+
+.badge-out-of-stock {
+    background-color: var(--gray-400);
+    color: white;
+}
+```
+
+### Category Tag
+```css
+.category-tag {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid var(--gray-300);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: var(--dark-text);
+    background-color: white;
+    transition: all 0.2s ease;
+}
+
+.category-tag:hover {
+    border-color: var(--primary-red);
+    color: var(--primary-red);
+}
+
+.category-tag.active {
+    background-color: var(--primary-red);
+    color: white;
+    border-color: var(--primary-red);
+}
+```
+
+---
+
+## 11. ICONS
+
+### Font Awesome Usage
+```html
+<!-- Use Font Awesome 5 or 6 -->
+<i class="fas fa-heart"></i>        <!-- Solid -->
+<i class="far fa-heart"></i>        <!-- Regular -->
+<i class="fal fa-heart"></i>        <!-- Light -->
+```
+
+### Icon Sizes
+```css
+.icon-xs { font-size: 0.75rem; }  /* 12px */
+.icon-sm { font-size: 0.875rem; } /* 14px */
+.icon-md { font-size: 1rem; }     /* 16px */
+.icon-lg { font-size: 1.25rem; }  /* 20px */
+.icon-xl { font-size: 1.5rem; }   /* 24px */
+```
+
+### Icon Colors
+```css
+.icon-primary { color: var(--primary-red); }
+.icon-secondary { color: var(--secondary-orange); }
+.icon-muted { color: var(--gray-500); }
+.icon-dark { color: var(--dark-text); }
+```
+
+---
+
+## 12. RESPONSIVE BREAKPOINTS
+
+```css
+/* Mobile First Approach */
+
+/* Extra Small (< 576px) - Default */
+/* Small (≥ 576px) */
+@media (min-width: 576px) { }
+
+/* Medium (≥ 768px) */
+@media (min-width: 768px) { }
+
+/* Large (≥ 992px) */
+@media (min-width: 992px) { }
+
+/* Extra Large (≥ 1200px) */
+@media (min-width: 1200px) { }
+
+/* XXL (≥ 1400px) */
+@media (min-width: 1400px) { }
+```
+
+### Responsive Typography
+```css
+/* Mobile */
+h1 { font-size: 1.75rem; } /* 28px */
+h2 { font-size: 1.5rem; }  /* 24px */
+body { font-size: 0.9rem; } /* 14.4px */
+
+/* Tablet and Up */
+@media (min-width: 768px) {
+    h1 { font-size: 2.5rem; }  /* 40px */
+    h2 { font-size: 2rem; }    /* 32px */
+    body { font-size: 1rem; }  /* 16px */
+}
+```
+
+### Responsive Spacing
+```css
+/* Mobile */
+.container { padding: 12px; }
+.section { margin-bottom: 24px; }
+
+/* Tablet and Up */
+@media (min-width: 768px) {
+    .container { padding: 16px; }
+    .section { margin-bottom: 40px; }
+}
+
+/* Desktop */
+@media (min-width: 1200px) {
+    .container { padding: 24px; }
+    .section { margin-bottom: 60px; }
+}
+```
+
+---
+
+## 13. LAYOUT PATTERNS
+
+### Grid System
+```css
+/* Product Grid */
+.product-grid {
+    display: grid;
+    gap: 20px;
+}
+
+/* Mobile: 1 column */
+.product-grid {
+    grid-template-columns: 1fr;
+}
+
+/* Tablet: 2 columns */
+@media (min-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop: 3 columns */
+@media (min-width: 992px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Large Desktop: 4 columns */
+@media (min-width: 1200px) {
+    .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+```
+
+### Flexbox Patterns
+```css
+/* Centered Content */
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Space Between */
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Vertical Stack */
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Horizontal Stack */
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+}
+```
+
+### Filter Sidebar Layout
+```css
+/* Desktop: Sidebar + Content */
+.shop-layout {
+    display: grid;
+    gap: 24px;
+}
+
+@media (min-width: 992px) {
+    .shop-layout {
+        grid-template-columns: 280px 1fr;
+    }
+}
+
+@media (min-width: 1200px) {
+    .shop-layout {
+        grid-template-columns: 300px 1fr;
+    }
+}
+```
+
+---
+
+## 14. LOADING & SKELETON STATES
+
+### Loading Spinner
+```css
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--gray-200);
+    border-top-color: var(--primary-red);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+```
+
+### Skeleton Loading
+```css
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--gray-200) 25%,
+        var(--gray-300) 50%,
+        var(--gray-200) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skeleton-text {
+    height: 16px;
+    margin-bottom: 8px;
+}
+
+.skeleton-title {
+    height: 24px;
+    margin-bottom: 12px;
+}
+
+.skeleton-image {
+    width: 100%;
+    padding-bottom: 100%; /* 1:1 aspect ratio */
+}
+```
+
+---
+
+## 15. INTERACTIVE STATES
+
+### Hover States
+```css
+/* Link Hover */
+a:hover {
+    color: var(--secondary-orange);
+    transition: color 0.2s ease;
+}
+
+/* Button Hover */
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    transition: all 0.2s ease;
+}
+
+/* Card Hover */
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    transition: all 0.3s ease;
+}
+```
+
+### Active States
+```css
+/* Button Active */
+.btn:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Toggle Active */
+.toggle.active {
+    background-color: var(--primary-red);
+    color: white;
+    border-color: var(--primary-red);
+}
+```
+
+### Focus States
+```css
+/* Input Focus */
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 3px rgba(220, 62, 55, 0.1);
+}
+
+/* Button Focus */
+.btn:focus {
+    outline: 2px solid var(--primary-red);
+    outline-offset: 2px;
+}
+```
+
+### Disabled States
+```css
+/* Button Disabled */
+.btn:disabled,
+.btn.disabled {
+    background-color: var(--gray-300);
+    color: var(--gray-500);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Input Disabled */
+input:disabled {
+    background-color: var(--light-bg);
+    color: var(--gray-500);
+    cursor: not-allowed;
+}
+```
+
+---
+
+## 16. ACCESSIBILITY
+
+### Focus Indicators
+```css
+/* Visible focus for keyboard navigation */
+*:focus-visible {
+    outline: 2px solid var(--primary-red);
+    outline-offset: 2px;
+}
+```
+
+### Color Contrast
+- **Text on White**: Use --dark-text (#322A2A) for 4.5:1 contrast ratio
+- **White Text on Primary Red**: Meets WCAG AA standard
+- **Links**: Minimum 3:1 contrast with surrounding text
+
+### Screen Reader Support
+```html
+<!-- Use semantic HTML -->
+<button aria-label="Close">
+    <i class="fas fa-times"></i>
+</button>
+
+<!-- Use ARIA when needed -->
+<div role="button" tabindex="0" aria-pressed="false">
+    Toggle
+</div>
+```
+
+### Skip Links
+```html
+<a href="#main-content" class="skip-link">
+    Skip to main content
+</a>
+```
+
+```css
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary-red);
+    color: white;
+    padding: 8px;
+    z-index: 100;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+```
+
+---
+
+## USAGE CHECKLIST
+
+When creating or updating a page, ensure:
+
+### Colors
+- [ ] Use CSS variables from color palette
+- [ ] Primary red (#DC3E37) for CTAs and links
+- [ ] Secondary orange (#F2965B) for hover states
+- [ ] Dark text (#322A2A) for all body text
+- [ ] Light bg (#EFEBEA) for cards and sections
+
+### Typography
+- [ ] Poppins font family loaded
+- [ ] Font sizes match the scale (0.75rem to 2.5rem)
+- [ ] Line heights are appropriate (1.2-1.6)
+- [ ] Font weights match purpose (400 for body, 500-600 for headings, 700 for emphasis)
+
+### Spacing
+- [ ] Use 4px base unit (multiples of 4)
+- [ ] Consistent padding in components
+- [ ] Appropriate margins between sections
+- [ ] Compact spacing for dense UI (filters, badges)
+
+### Borders & Radius
+- [ ] Thin borders (1px) for minimal look
+- [ ] Border radius: 6px (small), 8px (medium), 12px (large)
+- [ ] Dashed borders for secondary actions (Show More)
+
+### Shadows
+- [ ] Subtle shadows (opacity 0.05-0.12)
+- [ ] Hover shadows use primary red tint
+- [ ] Cards have shadow-sm by default
+- [ ] Dropdowns and modals have shadow-md or shadow-lg
+
+### Transitions
+- [ ] All interactive elements have transitions
+- [ ] 0.2s for fast (hover, color changes)
+- [ ] 0.3s for medium (state changes)
+- [ ] 0.4s for slow (expand, collapse)
+
+### Buttons
+- [ ] Primary buttons: red background, white text
+- [ ] Secondary buttons: white background, red border
+- [ ] Compact buttons for filters
+- [ ] Hover states change color and add shadow
+- [ ] Active states have solid background
+
+### Cards
+- [ ] White background
+- [ ] 12px border radius
+- [ ] 16px padding
+- [ ] shadow-sm by default
+- [ ] Hover effect: shadow-hover + translateY(-4px)
+
+### Forms
+- [ ] 1px border, gray-300 color
+- [ ] 8px border radius
+- [ ] Focus state: red border + shadow ring
+- [ ] Placeholder text is gray-500
+- [ ] Disabled state: light-bg background
+
+### Responsive
+- [ ] Mobile-first approach
+- [ ] Test on 576px, 768px, 992px, 1200px breakpoints
+- [ ] Typography scales appropriately
+- [ ] Grid columns adjust (1→2→3→4)
+- [ ] Spacing increases on larger screens
+
+### Accessibility
+- [ ] Focus indicators visible
+- [ ] Color contrast meets WCAG AA
+- [ ] ARIA labels on icon-only buttons
+- [ ] Semantic HTML (button, nav, main, etc.)
+- [ ] Keyboard navigation works
+
+---
+
+## PROMPT TEMPLATE FOR NEW PAGES
+
+When asking AI to create/update a page using this design system:
+
+```
+Create a [page name] using the following design system:
+
+**Colors**:
+- Primary: #DC3E37 (red for CTAs, links)
+- Secondary: #F2965B (orange for hover)
+- Dark text: #322A2A
+- Light bg: #EFEBEA
+
+**Typography**:
+- Font: Poppins (weights 100-700)
+- Body: 1rem/400
+- Headings: 500-700 weight
+- Compact text: 0.75-0.8rem
+
+**Spacing**:
+- Base unit: 4px
+- Compact padding: 5-8px
+- Standard padding: 12-16px
+- Section margins: 20-40px
+
+**Style**:
+- Thin borders (1px)
+- Minimal border radius (6-12px)
+- Subtle shadows (opacity 0.08-0.12)
+- Smooth transitions (0.2-0.4s)
+
+**Components**:
+- Buttons: 8px radius, solid when active, hover adds shadow
+- Cards: 12px radius, 16px padding, shadow-sm, hover effect
+- Forms: 8px radius, red focus ring, gray borders
+- Badges: 6px radius, compact padding
+
+**Responsive**:
+- Mobile-first
+- Breakpoints: 576px, 768px, 992px, 1200px
+- Grid: 1→2→3→4 columns
+
+Please ensure all interactive elements have hover/focus states and follow the accessibility guidelines.
+```
+
+---
+
+## COMPLETE!
+
+This design system document covers all aspects of the UI design for the web shoe store. Reference this when building or updating any page to maintain consistency across the entire website.

@@ -28,11 +28,11 @@
                                     data-product-colors="{{ $product->colors ? json_encode($product->colors) : '[]' }}"
                                     data-product-sizes="{{ $product->sizes ? json_encode($product->sizes) : '[]' }}"
                                     title="Thêm vào giỏ hàng">
-                                <i class="fa fa-shopping-cart"></i>
+                                <i class="bx bx-cart"></i>
                             </button>
                             <x-wishlist-button :product="$product" class="btn-product-wishlist" />
                             <button type="button" class="btn-product-quick-view-open" title="Xem nhanh">
-                                <i class="fa fa-arrows-alt"></i>
+                                <i class="bx bx-expand-alt"></i>
                             </button>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
     @empty
         <div class="col-12">
             <div class="no-products-message">
-                <i class="fa fa-search"></i>
+                <i class="bx bx-search"></i>
                 <h3>Không tìm thấy sản phẩm nào</h3>
                 <p>
                     @if (request('search') || request('brand') || request('category') || request('min_price') || request('max_price'))
@@ -73,7 +73,7 @@
                 </p>
                 @if (request('search') || request('brand') || request('category') || request('min_price') || request('max_price'))
                     <a href="{{ route('shop') }}" class="btn-clear-filters">
-                        <i class="fa fa-refresh"></i> Xóa tất cả bộ lọc
+                        <i class="bx bx-refresh"></i> Xóa tất cả bộ lọc
                     </a>
                 @endif
             </div>

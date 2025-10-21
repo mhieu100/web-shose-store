@@ -22,7 +22,9 @@
 
     <!--== Bootstrap CSS ==-->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
-    <!--== Font Awesome Min Icon CSS ==-->
+    <!--== Boxicons CSS ==-->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <!--== Font Awesome Min Icon CSS (Fallback) ==-->
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" />
     <!--== Pe7 Stroke Icon CSS ==-->
     <link href="{{ asset('css/pe-icon-7-stroke.css') }}" rel="stylesheet" />

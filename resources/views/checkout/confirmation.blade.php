@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Order Confirmation')
+@section('title', 'Xác Nhận Đơn Hàng')
 
 @section('content')
 <!--== Start Page Header Area Wrapper ==-->
@@ -9,14 +9,14 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="page-header-content text-center">
-                    <h2 class="title">Order Confirmation</h2>
+                    <h2 class="title">Xác Nhận Đơn Hàng</h2>
                     <nav class="breadcrumb-area">
                         <ul class="breadcrumb">
-                            <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="{{ route('cart') }}">Cart</a></li>
-                            <li><a href="{{ route('checkout') }}">Checkout</a></li>
+                            <li><a href="{{ route('home') }}">Trang chủ</a></li>
+                            <li><a href="{{ route('cart') }}">Giỏ hàng</a></li>
+                            <li><a href="{{ route('checkout') }}">Thanh toán</a></li>
                             <li class="breadcrumb-sep">//</li>
-                            <li>Confirmation</li>
+                            <li>Xác nhận</li>
                         </ul>
                     </nav>
                 </div>
@@ -36,9 +36,9 @@
                     <div class="success-icon mb-4">
                         <i class="fa fa-check-circle text-success" style="font-size: 4rem;"></i>
                     </div>
-                    <h2 class="text-success mb-3">Order Placed Successfully!</h2>
+                    <h2 class="text-success mb-3">Đặt Hàng Thành Công!</h2>
                     <p class="text-muted mb-4">
-                        Thank you for your order. We've received your order and will process it shortly.
+                        Cảm ơn bạn đã đặt hàng. Chúng tôi đã nhận được đơn hàng và sẽ xử lý trong thời gian sớm nhất.
                     </p>
 
                     @if(session('success'))
@@ -55,33 +55,36 @@
                     <div class="card-header bg-primary text-white">
                         <h5 class="mb-0">
                             <i class="fa fa-file-text-o me-2"></i>
-                            Order Details
+                            Chi Tiết Đơn Hàng
                         </h5>
                     </div>
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <strong>Order Number:</strong>
+                                <strong>Mã Đơn Hàng:</strong>
                                 <span class="text-primary">{{ $order->order_number }}</span>
                             </div>
                             <div class="col-md-6">
-                                <strong>Order Date:</strong>
-                                {{ $order->created_at->format('M d, Y \a\t H:i A') }}
+                                <strong>Ngày Đặt:</strong>
+                                {{ $order->created_at->format('d/m/Y \l\ú\c H:i') }}
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <strong>Payment Method:</strong>
+                                <strong>Phương Thức Thanh Toán:</strong>
                                 <span class="badge bg-info">
                                     @switch($order->payment_method)
                                         @case('cod')
-                                            Cash on Delivery
+                                            Thanh toán khi nhận hàng
                                             @break
                                         @case('bank_transfer')
-                                            Bank Transfer
+                                            Chuyển khoản ngân hàng
                                             @break
                                         @case('paypal')
                                             PayPal
+                                            @break
+                                        @case('wallet')
+                                            Ví điện tử
                                             @break
                                         @default
                                             {{ ucfirst($order->payment_method) }}
@@ -89,14 +92,20 @@
                                 </span>
                             </div>
                             <div class="col-md-6">
-                                <strong>Status:</strong>
-                                <span class="badge bg-warning">{{ ucfirst($order->status->value ?? $order->status) }}</span>
+                                <strong>Trạng Thái:</strong>
+                                <span class="badge bg-warning">
+                                    @if(is_object($order->status))
+                                        {{ $order->status->value }}
+                                    @else
+                                        {{ $order->status }}
+                                    @endif
+                                </span>
                             </div>
                         </div>
                         @if($order->notes)
                         <div class="row">
                             <div class="col-12">
-                                <strong>Order Notes:</strong>
+                                <strong>Ghi Chú:</strong>
                                 <p class="text-muted mt-1">{{ $order->notes }}</p>
                             </div>
                         </div>
@@ -109,7 +118,7 @@
                     <div class="card-header bg-secondary text-white">
                         <h5 class="mb-0">
                             <i class="fa fa-shopping-bag me-2"></i>
-                            Order Items
+                            Sản Phẩm Đã Đặt
                         </h5>
                     </div>
                     <div class="card-body p-0">
@@ -117,10 +126,10 @@
                             <table class="table table-borderless mb-0">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th>Product</th>
-                                        <th class="text-center">Quantity</th>
-                                        <th class="text-end">Price</th>
-                                        <th class="text-end">Total</th>
+                                        <th>Sản phẩm</th>
+                                        <th class="text-center">Số lượng</th>
+                                        <th class="text-end">Đơn giá</th>
+                                        <th class="text-end">Tổng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -142,7 +151,7 @@
                                                 <div>
                                                     <h6 class="mb-1">{{ $item->product_snapshot['name'] ?? $item->product->name }}</h6>
                                                     @if(isset($item->product_snapshot['color']) && $item->product_snapshot['color'])
-                                                        <small class="text-muted">Color: {{ $item->product_snapshot['color'] }}</small><br>
+                                                        <small class="text-muted">Màu: {{ $item->product_snapshot['color'] }}</small><br>
                                                     @endif
                                                     @if(isset($item->product_snapshot['size']) && $item->product_snapshot['size'])
                                                         <small class="text-muted">Size: {{ $item->product_snapshot['size'] }}</small>
@@ -154,10 +163,10 @@
                                             <span class="badge bg-light text-dark">{{ $item->quantity }}</span>
                                         </td>
                                         <td class="text-end align-middle">
-                                            ${{ number_format($item->price, 2) }}
+                                            {{ number_format($item->price) }}₫
                                         </td>
                                         <td class="text-end align-middle">
-                                            <strong>${{ number_format($item->total, 2) }}</strong>
+                                            <strong>{{ number_format($item->total) }}₫</strong>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -172,27 +181,33 @@
                     <div class="card-header bg-success text-white">
                         <h5 class="mb-0">
                             <i class="fa fa-calculator me-2"></i>
-                            Order Summary
+                            Tổng Quan Đơn Hàng
                         </h5>
                     </div>
                     <div class="card-body">
                         <div class="order-summary">
                             <div class="d-flex justify-content-between mb-2">
-                                <span>Subtotal:</span>
-                                <span>${{ number_format($order->subtotal, 2) }}</span>
+                                <span>Tạm tính:</span>
+                                <span>{{ number_format($order->subtotal) }}₫</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
-                                <span>Shipping:</span>
-                                <span>${{ number_format($order->shipping_amount, 2) }}</span>
+                                <span>Phí vận chuyển:</span>
+                                <span>{{ number_format($order->shipping_amount) }}₫</span>
                             </div>
                             <div class="d-flex justify-content-between mb-3">
-                                <span>Tax:</span>
-                                <span>${{ number_format($order->tax_amount, 2) }}</span>
+                                <span>Thuế VAT:</span>
+                                <span>{{ number_format($order->tax_amount) }}₫</span>
                             </div>
+                            @if($order->discount_amount > 0)
+                            <div class="d-flex justify-content-between mb-2 text-success">
+                                <span>Giảm giá:</span>
+                                <span>-{{ number_format($order->discount_amount) }}₫</span>
+                            </div>
+                            @endif
                             <hr>
                             <div class="d-flex justify-content-between">
-                                <strong>Total:</strong>
-                                <strong class="text-primary">${{ number_format($order->total_amount, 2) }}</strong>
+                                <strong>Tổng cộng:</strong>
+                                <strong class="text-primary">{{ number_format($order->total_amount) }}₫</strong>
                             </div>
                         </div>
                     </div>
@@ -204,7 +219,7 @@
                     <div class="card-header bg-info text-white">
                         <h5 class="mb-0">
                             <i class="fa fa-truck me-2"></i>
-                            Shipping Address
+                            Địa Chỉ Giao Hàng
                         </h5>
                     </div>
                     <div class="card-body">
@@ -216,7 +231,7 @@
                             {{ $order->shipping_address['city'] }}, {{ $order->shipping_address['state'] }} {{ $order->shipping_address['postal_code'] }}<br>
                             {{ $order->shipping_address['country'] }}<br>
                             @if($order->shipping_address['phone'])
-                                <strong>Phone:</strong> {{ $order->shipping_address['phone'] }}
+                                <strong>Số điện thoại:</strong> {{ $order->shipping_address['phone'] }}
                             @endif
                         </address>
                     </div>
@@ -227,11 +242,15 @@
                 <div class="text-center">
                     <a href="{{ route('home') }}" class="btn btn-outline-primary me-3">
                         <i class="fa fa-home me-2"></i>
-                        Continue Shopping
+                        Tiếp Tục Mua Sắm
+                    </a>
+                    <a href="{{ route('account.index') }}" class="btn btn-info me-3">
+                        <i class="fa fa-user me-2"></i>
+                        Xem Đơn Hàng
                     </a>
                     <a href="#" class="btn btn-secondary" onclick="window.print()">
                         <i class="fa fa-print me-2"></i>
-                        Print Order
+                        In Đơn Hàng
                     </a>
                 </div>
             </div>

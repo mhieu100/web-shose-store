@@ -43,7 +43,7 @@
     @empty
         <div class="col-12">
             <div class="no-products-message">
-                <i class="fa fa-search"></i>
+                <i class="bx bx-search"></i>
                 <h3>Không tìm thấy sản phẩm nào</h3>
                 <p>
                     @if (request('search') || request('brand') || request('category') || request('min_price') || request('max_price'))
@@ -55,7 +55,7 @@
                 </p>
                 @if (request('search') || request('brand') || request('category') || request('min_price') || request('max_price'))
                     <a href="{{ route('shop') }}" class="btn-clear-filters">
-                        <i class="fa fa-refresh"></i> Xóa tất cả bộ lọc
+                        <i class="bx bx-refresh"></i> Xóa tất cả bộ lọc
                     </a>
                 @endif
             </div>

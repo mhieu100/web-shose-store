@@ -2,6 +2,7 @@
 
 namespace App\Filament\Clusters\Products\Resources\Products\Schemas;
 
+use App\Enums\ProductAttributesEnum;
 use App\Filament\Clusters\Products\Resources\Brands\RelationManagers\ProductsRelationManager;
 use App\Models\Shop\Product;
 use Filament\Forms\Components\Checkbox;
@@ -50,15 +51,21 @@ class ProductForm
                                 RichEditor::make('description')
                                     ->columnSpan('full'),
 
-                                TagsInput::make('sizes')
+                                Select::make('sizes')
                                     ->label('Kích cỡ')
-                                    ->helperText('Nhập các kích cỡ có sẵn (ví dụ: S, M, L, XL hoặc 39, 40, 41, 42)')
-                                    ->placeholder('Nhập kích cỡ và nhấn Enter'),
+                                    ->multiple()
+                                    ->searchable()
+                                    ->options(ProductAttributesEnum::getSizes())
+                                    ->helperText('Chọn các kích cỡ có sẵn cho sản phẩm này')
+                                    ->placeholder('Chọn kích cỡ'),
 
-                                TagsInput::make('colors')
+                                Select::make('colors')
                                     ->label('Màu sắc')
-                                    ->helperText('Nhập các màu sắc có sẵn (ví dụ: Đỏ, Xanh, Vàng, Đen)')
-                                    ->placeholder('Nhập màu sắc và nhấn Enter'),
+                                    ->multiple()
+                                    ->searchable()
+                                    ->options(ProductAttributesEnum::getColorNames())
+                                    ->helperText('Chọn các màu sắc có sẵn cho sản phẩm này')
+                                    ->placeholder('Chọn màu sắc'),
                             ])
                             ->columns(2),
 

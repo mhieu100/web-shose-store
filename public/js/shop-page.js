@@ -490,17 +490,18 @@ function initFilterInteractions() {
     });
 }
 
-// Auto-submit on radio changes
+// Auto-submit on radio changes (DISABLED for AJAX filtering)
 function initAutoSubmit() {
-    const radioInputs = document.querySelectorAll('.unified-filter-form input[type="radio"]');
-    radioInputs.forEach(radio => {
-        radio.addEventListener('change', function() {
-            // Auto-submit form after a short delay
-            setTimeout(() => {
-                document.getElementById('filter-form').submit();
-            }, 300);
-        });
-    });
+    // Disabled - now handled by AJAX filter
+    // const radioInputs = document.querySelectorAll('.unified-filter-form input[type="radio"]');
+    // radioInputs.forEach(radio => {
+    //     radio.addEventListener('change', function() {
+    //         // Auto-submit form after a short delay
+    //         setTimeout(() => {
+    //             document.getElementById('filter-form').submit();
+    //         }, 300);
+    //     });
+    // });
 }
 
 // Search input enhancements
@@ -557,36 +558,51 @@ function selectPriceRange(min, max) {
     // Update button states
     const rangeBtns = document.querySelectorAll('.price-range-btn');
     rangeBtns.forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
+
+    // Trigger filter immediately via AJAX
+    if (window.shopAjaxFilter && typeof window.shopAjaxFilter.applyFilters === 'function') {
+        setTimeout(() => {
+            window.shopAjaxFilter.applyFilters();
+        }, 200);
+    }
 }
 
 // Remove individual filter
 function removeFilter(filterType) {
     const form = document.getElementById('filter-form');
-    const formData = new FormData(form);
-    const url = new URL(window.location.href);
 
-    // Clear specific filter parameters
+    // Clear specific filter inputs
     switch(filterType) {
         case 'search':
-            url.searchParams.delete('search');
+            const searchInput = document.querySelector('input[name="search"]');
+            if (searchInput) searchInput.value = '';
             break;
         case 'category':
-            url.searchParams.delete('category');
+            const allCategoryRadio = document.querySelector('input[name="category"][value=""]');
+            if (allCategoryRadio) allCategoryRadio.checked = true;
             break;
         case 'brand':
-            url.searchParams.delete('brand');
+            const allBrandRadio = document.querySelector('input[name="brand"][value=""]');
+            if (allBrandRadio) allBrandRadio.checked = true;
             break;
         case 'price':
-            url.searchParams.delete('min_price');
-            url.searchParams.delete('max_price');
+            const minPriceInput = document.querySelector('input[name="min_price"]');
+            const maxPriceInput = document.querySelector('input[name="max_price"]');
+            if (minPriceInput) minPriceInput.value = '';
+            if (maxPriceInput) maxPriceInput.value = '';
             break;
     }
 
-    // Reset to first page
-    url.searchParams.delete('page');
-
-    window.location.href = url.toString();
+    // Apply filters via AJAX
+    if (window.shopAjaxFilter && typeof window.shopAjaxFilter.applyFilters === 'function') {
+        window.shopAjaxFilter.applyFilters();
+    } else {
+        // Fallback to page reload if AJAX not available
+        form.submit();
+    }
 }
 
 // Update selected sizes for multi-select
@@ -732,15 +748,82 @@ function clearAllSelections() {
 
 // Reset all filters
 function resetAllFilters() {
-    const url = new URL(window.location.origin + window.location.pathname);
+    const form = document.getElementById('filter-form');
+    if (!form) return;
 
-    // Keep only sort and per_page if they exist
-    if (new URL(window.location.href).searchParams.get('sort')) {
-        url.searchParams.set('sort', new URL(window.location.href).searchParams.get('sort'));
-    }
-    if (new URL(window.location.href).searchParams.get('per_page')) {
-        url.searchParams.set('per_page', new URL(window.location.href).searchParams.get('per_page'));
-    }
+    // Reset search
+    const searchInput = document.querySelector('input[name="search"]');
+    if (searchInput) searchInput.value = '';
 
-    window.location.href = url.toString();
+    // Reset category
+    const allCategoryRadio = document.querySelector('input[name="category"][value=""]');
+    if (allCategoryRadio) allCategoryRadio.checked = true;
+
+    // Reset brand
+    const allBrandRadio = document.querySelector('input[name="brand"][value=""]');
+    if (allBrandRadio) allBrandRadio.checked = true;
+
+    // Reset price
+    const minPriceInput = document.querySelector('input[name="min_price"]');
+    const maxPriceInput = document.querySelector('input[name="max_price"]');
+    if (minPriceInput) minPriceInput.value = '';
+    if (maxPriceInput) maxPriceInput.value = '';
+
+    // Reset sizes and colors
+    document.querySelectorAll('.solid-toggle.active').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    const sizesInput = document.querySelector('input[name="sizes"]');
+    const colorsInput = document.querySelector('input[name="colors"]');
+    if (sizesInput) sizesInput.value = '';
+    if (colorsInput) colorsInput.value = '';
+
+    // Apply filters via AJAX
+    if (window.shopAjaxFilter && typeof window.shopAjaxFilter.applyFilters === 'function') {
+        window.shopAjaxFilter.applyFilters();
+    } else {
+        // Fallback - redirect to clean URL
+        const url = new URL(window.location.origin + window.location.pathname);
+        const currentUrl = new URL(window.location.href);
+
+        // Keep only sort and per_page if they exist
+        if (currentUrl.searchParams.get('sort')) {
+            url.searchParams.set('sort', currentUrl.searchParams.get('sort'));
+        }
+        if (currentUrl.searchParams.get('per_page')) {
+            url.searchParams.set('per_page', currentUrl.searchParams.get('per_page'));
+        }
+
+        window.location.href = url.toString();
+    }
 }
+
+/**
+ * Toggle Show More / Show Less for collapsible filter items
+ */
+function toggleShowMore(button) {
+    const filterContent = button.closest('.filter-content');
+    const collapsibleItems = filterContent.querySelector('.collapsible-items');
+    const icon = button.querySelector('i');
+    const text = button.querySelector('.show-more-text');
+
+    if (!collapsibleItems) return;
+
+    // Toggle expanded class
+    const isExpanded = collapsibleItems.classList.contains('expanded');
+
+    if (isExpanded) {
+        // Collapse
+        collapsibleItems.classList.remove('expanded');
+        button.classList.remove('expanded');
+        text.textContent = 'Xem thêm';
+        icon.style.transform = 'rotate(0deg)';
+    } else {
+        // Expand
+        collapsibleItems.classList.add('expanded');
+        button.classList.add('expanded');
+        text.textContent = 'Thu gọn';
+        icon.style.transform = 'rotate(180deg)';
+    }
+}
+

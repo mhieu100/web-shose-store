@@ -116,72 +116,44 @@
                                                 <li><a href="{{ route('affiliate.dashboard') }}"><span>Dashboard CTV</span></a></li>
                                             @endif
                                         @endauth
-                                    
+
                                     </ul>
                                 </li>
-                                <li class="has-submenu position-static"><a href="#/"><span>Cửa hàng</span></a>
-                                    <ul class="submenu-nav submenu-nav-mega column-3">
-                                        <li class="mega-menu-item"><a href="#/" class="mega-title"><span>Bố cục
-                                                    cửa hàng</span></a>
+                                <li class="has-submenu position-static"><a href="{{ route('shop') }}"><span>Cửa hàng</span></a>
+                                    <ul class="submenu-nav submenu-nav-mega column-2">
+                                        <li class="mega-menu-item"><a href="{{ route('shop') }}" class="mega-title"><span>Danh mục</span></a>
                                             <ul>
-                                                <li><a href="{{ route('shop.three-columns') }}"><span>Shop 3
-                                                            cột</span></a></li>
-                                                <li><a href="{{ route('shop.four-columns') }}"><span>Shop 4
-                                                            cột</span></a></li>
-                                                <li><a href="{{ route('shop') }}"><span>Shop thanh bên trái</span></a>
-                                                </li>
-                                                <li><a href="{{ route('shop.right-sidebar') }}"><span>Shop thanh bên
-                                                            phải</span></a></li>
+                                                @forelse($headerCategories ?? [] as $category)
+                                                    <li>
+                                                        <a href="{{ route('shop', ['category' => $category->slug]) }}">
+                                                            <span>{{ $category->name }}</span>
+                                                            <span style="opacity: 0.6; font-size: 0.9em;">({{ $category->products_count }})</span>
+                                                        </a>
+                                                    </li>
+                                                @empty
+                                                    <li><a href="{{ route('shop') }}"><span>Tất cả sản phẩm</span></a></li>
+                                                @endforelse
+                                                <li><a href="{{ route('shop') }}" style="color: #DC3E37; font-weight: 500;"><span>Xem tất cả danh mục →</span></a></li>
                                             </ul>
                                         </li>
-                                        <li class="mega-menu-item"><a href="#/" class="mega-title"><span>Chi tiết
-                                                    sản phẩm</span></a>
+                                        <li class="mega-menu-item"><a href="{{ route('shop') }}" class="mega-title"><span>Thương hiệu</span></a>
                                             <ul>
-                                                <li><a href="{{ route('product.normal') }}"><span>Sản phẩm
-                                                            thường</span></a></li>
-                                                <li><a href="{{ route('product.variable') }}"><span>Sản phẩm
-                                                            biến thể</span></a></li>
-                                                <li><a href="{{ route('product.group') }}"><span>Sản phẩm
-                                                            nhóm</span></a></li>
-                                                <li><a href="{{ route('product.affiliate') }}"><span>Sản phẩm
-                                                            liên kết</span></a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="mega-menu-item"><a href="#/" class="mega-title"><span>Trang
-                                                    khác</span></a>
-                                            <ul>
-                                                <li><a href="{{ route('cart') }}"><span>Giỏ hàng</span></a></li>
-                                                <li><a href="{{ route('checkout') }}"><span>Thanh toán</span></a></li>
-                                                <li><a href="{{ route('wishlist') }}"><span>Yêu thích</span></a></li>
-                                                <li><a href="{{ route('compare') }}"><span>So sánh</span></a></li>
+                                                @forelse($headerBrands ?? [] as $brand)
+                                                    <li>
+                                                        <a href="{{ route('shop', ['brand' => $brand->slug]) }}">
+                                                            <span>{{ $brand->name }}</span>
+                                                            <span style="opacity: 0.6; font-size: 0.9em;">({{ $brand->products_count }})</span>
+                                                        </a>
+                                                    </li>
+                                                @empty
+                                                    <li><a href="{{ route('shop') }}"><span>Tất cả sản phẩm</span></a></li>
+                                                @endforelse
+                                                <li><a href="{{ route('shop') }}" style="color: #DC3E37; font-weight: 500;"><span>Xem tất cả thương hiệu →</span></a></li>
                                             </ul>
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="has-submenu"><a href="#/"><span>Tin tức</span></a>
-                                    <ul class="submenu-nav submenu-nav-mega">
-                                        <li class="mega-menu-item"><a href="#/" class="mega-title">Bố cục
-                                                tin tức</a>
-                                            <ul>
-                                                <li><a href="{{ route('blog') }}">Tin tức lưới</a></li>
-                                                <li><a href="{{ route('blog.left-sidebar') }}">Tin tức thanh bên trái</a>
-                                                </li>
-                                                <li><a href="{{ route('blog.right-sidebar') }}">Tin tức thanh bên phải</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="mega-menu-item"><a href="#/" class="mega-title">Chi tiết
-                                                tin tức</a>
-                                            <ul>
-                                                <li><a href="{{ route('blog.details') }}">Chi tiết tin tức</a></li>
-                                                <li><a href="{{ route('blog.details-left') }}">Chi tiết thanh bên
-                                                        trái</a></li>
-                                                <li><a href="{{ route('blog.details-right') }}">Chi tiết thanh bên
-                                                        phải</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
+                                <li><a href="{{ route('blog') }}"><span>Tin tức</span></a></li>
                                 <li><a href="{{ route('contact') }}"><span>Liên hệ</span></a></li>
                             </ul>
                         </div>
