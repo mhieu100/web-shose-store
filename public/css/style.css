@@ -3363,9 +3363,9 @@ table p {
   border-color: #eb3e32;
   color: #fff;
 }
-.product-item .inner-content .product-thumb + .product-info {
+/* .product-item .inner-content .product-thumb + .product-info {
   margin-top: 13px;
-}
+} */
 .product-item .inner-content .product-info .category {
   margin-bottom: 4px;
 }

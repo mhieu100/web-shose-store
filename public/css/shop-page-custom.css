@@ -269,36 +269,59 @@ body {
 .product-action button,
 .product-action a {
     flex: 1;
-    background: var(--white);
-    color: var(--dark-text);
-    border: none;
-    padding: 10px;
-    border-radius: 6px;
-    font-weight: 400;
-    font-size: 0.9rem;
+    min-width: 44px;
+    max-width: 44px;
+    height: 44px;
+    background: var(--white) !important;
+    color: var(--dark-text) !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 6px !important;
+    font-weight: 400 !important;
+    font-size: 1.2rem !important;
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: center;
     text-decoration: none;
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
+    opacity: 1 !important;
+    visibility: visible !important;
+    line-height: 1 !important;
 }
 
 .product-action button:hover,
 .product-action a:hover {
-    background: var(--primary-red);
-    color: var(--white);
+    background: var(--primary-red) !important;
+    color: var(--white) !important;
     transform: scale(1.05);
 }
 
+.product-action button i,
+.product-action a i {
+    font-size: 1.3rem !important;
+    line-height: 1 !important;
+    display: block !important;
+}
+
+.product-action .btn-product-wishlist,
+.product-action .btn-product-cart,
+.product-action .btn-product-quick-view-open,
+.product-action .btn-product-compare {
+    min-width: 44px !important;
+    max-width: 44px !important;
+    height: 44px !important;
+}
+
 .btn-product-cart:hover {
-    background: var(--secondary-orange);
+    background: var(--secondary-orange) !important;
 }
 
 /* Product Info */
 .product-info {
-    padding: 20px;
+    padding: 10px 20px;
 }
 
 .product-info .category {
@@ -448,13 +471,12 @@ body {
 .product-item {
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 
 .product-item .inner-content {
     display: flex;
     flex-direction: column;
-    height: 100%;
+
 }
 
 .product-item .product-thumb {
@@ -776,8 +798,8 @@ body {
 
 .btn-clear-all-filters {
     background: transparent;
-    color: var(--primary-red);
-    border: 1px solid var(--primary-red);
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
     padding: 5px 10px;
     border-radius: 6px;
     font-weight: 400;

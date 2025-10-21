@@ -64,10 +64,7 @@
                             title="{{ __('home.add_to_cart') }}">
                         <i class="bx bx-cart"></i>
                     </button>
-                    <button type="button" class="btn-product-quick-view-open"
-                            title="{{ __('home.quick_view') }}">
-                        <i class="bx bx-expand-alt"></i>
-                    </button>
+
                     <a class="btn-product-compare"
                        href="{{ route('compare') }}"
                        title="{{ __('home.compare') }}">
