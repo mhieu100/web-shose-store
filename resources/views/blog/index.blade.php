@@ -2,98 +2,179 @@
 
 @section('title', 'Blog - Shoe Store')
 
-@section('content')
-<main class="main-content">
-    <!--== Start Page Header Area Wrapper ==-->
-    <div class="page-header-area" data-bg-img="{{ config('app.page_header_image') }}">
-      <div class="container pt--0 pb--0">
-        <div class="row">
-          <div class="col-12">
-            <div class="page-header-content">
-              <h2 class="title" data-aos="fade-down" data-aos-duration="1000">Blog</h2>
-              <nav class="breadcrumb-area" data-aos="fade-down" data-aos-duration="1200">
-                <ul class="breadcrumb">
-                  <li><a href="{{ route('home') }}">Trang chủ</a></li>
-                  <li class="breadcrumb-sep">//</li>
-                  <li>Blog</li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--== End Page Header Area Wrapper ==-->
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/blog-modern.css') }}">
+@endpush
 
-    <!--== Start Blog Area ==-->
-    <section class="blog-area blog-inner-area">
-      <div class="container">
-        <div class="row">
-          @for($i = 1; $i <= 9; $i++)
-          <div class="col-md-6 col-lg-4">
-            <!--== Start Blog Item ==-->
-            <div class="post-item" data-aos="fade-up" data-aos-duration="{{ 1000 + ($i * 100) }}">
-              <div class="inner-content">
-                <div class="thumb">
-                  <a href="{{ route('blog.details') }}">
-                    <img src="{{ asset('img/blog/' . (($i - 1) % 6 + 1) . '.webp') }}" width="370" height="260" alt="Blog {{ $i }}">
-                  </a>
-                </div>
-                <div class="content">
-                  <div class="meta-post">
-                    <ul>
-                      <li class="post-date"><i class="fa fa-calendar"></i><a href="{{ route('blog') }}">{{ now()->subDays($i * 2)->format('d/m/Y') }}</a></li>
-                      <li class="author-info"><i class="fa fa-user"></i><a href="{{ route('blog') }}">{{ ['Admin', 'Biên tập viên', 'Chuyên gia'][($i - 1) % 3] }}</a></li>
-                    </ul>
-                  </div>
-                  <h4 class="title"><a href="{{ route('blog.details') }}">{{ [
-                    'Xu hướng giày thể thao 2024 - Những mẫu hot nhất',
-                    'Cách chọn giày phù hợp với từng dáng chân',
-                    'Bí quyết bảo quản giày da luôn bền đẹp',
-                    'Top 10 thương hiệu giày được yêu thích nhất',
-                    'Giày cao gót - Từ cổ điển đến hiện đại',
-                    'Phong cách street style với giày sneaker',
-                    'Giày boot mùa đông - Ấm áp và thời trang',
-                    'Cách phối giày với trang phục công sở',
-                    'Giày thể thao cho người chạy bộ'
-                  ][$i - 1] }}</a></h4>
-                  <p>{{ [
-                    'Khám phá những xu hướng giày thể thao mới nhất và hot nhất trong năm 2024...',
-                    'Hướng dẫn chi tiết cách chọn giày phù hợp với dáng chân của bạn...',
-                    'Những mẹo hay để bảo quản giày da luôn bền đẹp và sáng bóng...',
-                    'Điểm danh những thương hiệu giày được khách hàng yêu thích nhất...',
-                    'Lịch sử và xu hướng phát triển của giày cao gót qua các thời kỳ...',
-                    'Cách mix & match giày sneaker với phong cách street style...',
-                    'Lựa chọn giày boot phù hợp cho mùa đông ấm áp và thời trang...',
-                    'Hướng dẫn phối giày với trang phục công sở chuyên nghiệp...',
-                    'Những tiêu chí quan trọng khi chọn giày thể thao cho runner...'
-                  ][$i - 1] }}</p>
-                  <a class="post-btn" href="{{ route('blog.details') }}">Đọc thêm</a>
-                </div>
+@section('content')
+<div class="blog-modern">
+  <div class="blog-container">
+    
+    <!-- Blog Header -->
+    <div class="blog-header">
+      <h1>Blog Giày Dép</h1>
+      <p>Khám phá xu hướng thời trang và bí quyết chọn giày phù hợp</p>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="blog-search">
+      <form action="{{ route('blog') }}" method="GET">
+        <input type="search" 
+               name="search" 
+               placeholder="Tìm kiếm bài viết..." 
+               value="{{ request('search') }}">
+        <button type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="blog-grid">
+      
+      <!-- Posts Section -->
+      <div class="posts-section">
+        <div class="posts-grid">
+          @forelse($posts as $index => $post)
+          <article class="blog-card">
+            <div class="blog-card-image">
+              <a href="{{ route('blog.details', $post->slug) }}">
+                @if($post->getFirstMediaUrl('post-images'))
+                  <img src="{{ $post->getFirstMediaUrl('post-images') }}" alt="{{ $post->title }}">
+                @else
+                  <img src="{{ asset('img/blog/' . (($index % 8) + 1) . '.webp') }}" alt="{{ $post->title }}">
+                @endif
+              </a>
+            </div>
+            
+            <div class="blog-card-content">
+              <div class="blog-card-meta">
+                <span>
+                  <i class="fas fa-calendar-alt"></i>
+                  {{ $post->published_at ? $post->published_at->format('d/m/Y') : $post->created_at->format('d/m/Y') }}
+                </span>
+                <span>
+                  <i class="fas fa-user"></i>
+                  {{ $post->author ? $post->author->name : 'Admin' }}
+                </span>
+              </div>
+              
+              <h2 class="blog-card-title">
+                <a href="{{ route('blog.details', $post->slug) }}">{{ $post->title }}</a>
+              </h2>
+              
+              <p class="blog-card-excerpt">{{ Str::limit(strip_tags($post->content), 120) }}</p>
+              
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                @if($post->category)
+                <a href="{{ route('blog', ['category' => $post->category->id]) }}" class="blog-card-category">
+                  {{ $post->category->name }}
+                </a>
+                @endif
+                
+                <a href="{{ route('blog.details', $post->slug) }}" class="blog-read-more">
+                  Đọc thêm <i class="fas fa-arrow-right"></i>
+                </a>
               </div>
             </div>
-            <!--== End Blog Item ==-->
+          </article>
+          @empty
+          <div class="blog-empty">
+            <h3>Chưa có bài viết nào</h3>
+            <p>Hãy quay lại sau để xem các bài viết mới nhất từ chúng tôi.</p>
           </div>
-          @endfor
+          @endforelse
         </div>
 
-        <!--== Start Pagination ==-->
-        <div class="row">
-          <div class="col-12">
-            <nav class="pagination-area">
-              <ul class="page-numbers">
-                <li><a class="page-number prev" href="#">Trước</a></li>
-                <li><a class="page-number active" href="#">1</a></li>
-                <li><a class="page-number" href="#">2</a></li>
-                <li><a class="page-number" href="#">3</a></li>
-                <li><a class="page-number next" href="#">Sau</a></li>
-              </ul>
-            </nav>
-          </div>
+        <!-- Pagination -->
+        @if($posts->hasPages())
+        <div class="blog-pagination">
+          <nav class="pagination-nav">
+            {{-- Previous Page Link --}}
+            @if ($posts->onFirstPage())
+                <span class="page-number disabled">
+                  <i class="fas fa-chevron-left"></i> Trước
+                </span>
+            @else
+                <a class="page-number" href="{{ $posts->previousPageUrl() }}">
+                  <i class="fas fa-chevron-left"></i> Trước
+                </a>
+            @endif
+
+            {{-- Pagination Elements --}}
+            @foreach ($posts->getUrlRange(1, $posts->lastPage()) as $page => $url)
+                @if ($page == $posts->currentPage())
+                    <span class="page-number active">{{ $page }}</span>
+                @else
+                    <a class="page-number" href="{{ $url }}">{{ $page }}</a>
+                @endif
+            @endforeach
+
+            {{-- Next Page Link --}}
+            @if ($posts->hasMorePages())
+                <a class="page-number" href="{{ $posts->nextPageUrl() }}">
+                  Sau <i class="fas fa-chevron-right"></i>
+                </a>
+            @else
+                <span class="page-number disabled">
+                  Sau <i class="fas fa-chevron-right"></i>
+                </span>
+            @endif
+          </nav>
         </div>
-        <!--== End Pagination ==-->
+        @endif
       </div>
-    </section>
-    <!--== End Blog Area -->
-</main>
+
+      <!-- Sidebar -->
+      <aside class="blog-sidebar">
+        
+        <!-- Recent Posts Widget -->
+        <div class="sidebar-widget">
+          <h3 class="sidebar-widget-title">Bài viết gần đây</h3>
+          @foreach($recentPosts as $recent)
+          <div class="recent-post-item">
+            <div class="recent-post-thumb">
+              <a href="{{ route('blog.details', $recent->slug) }}">
+                @if($recent->getFirstMediaUrl('post-images'))
+                  <img src="{{ $recent->getFirstMediaUrl('post-images') }}" alt="{{ $recent->title }}">
+                @else
+                  <img src="{{ asset('img/blog/s1.webp') }}" alt="{{ $recent->title }}">
+                @endif
+              </a>
+            </div>
+            <div class="recent-post-content">
+              <h4 class="recent-post-title">
+                <a href="{{ route('blog.details', $recent->slug) }}">{{ Str::limit($recent->title, 50) }}</a>
+              </h4>
+              <p class="recent-post-date">{{ $recent->published_at ? $recent->published_at->format('d/m/Y') : $recent->created_at->format('d/m/Y') }}</p>
+            </div>
+          </div>
+          @endforeach
+        </div>
+
+        <!-- Categories Widget -->
+        <div class="sidebar-widget">
+          <h3 class="sidebar-widget-title">Danh mục</h3>
+          <ul class="categories-list">
+            <li>
+              <a href="{{ route('blog') }}">
+                Tất cả
+                <span class="category-count">{{ $posts->total() }}</span>
+              </a>
+            </li>
+            @foreach($categories as $category)
+            <li>
+              <a href="{{ route('blog', ['category' => $category->id]) }}">
+                {{ $category->name }}
+                <span class="category-count">{{ $category->posts_count }}</span>
+              </a>
+            </li>
+            @endforeach
+          </ul>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+</div>
 @endsection
