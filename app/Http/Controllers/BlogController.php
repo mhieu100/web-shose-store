@@ -146,8 +146,8 @@ class BlogController extends Controller
     {
         // Get a sample post for demo if no slug provided
         $post = $slug ?
-            Post::with(['author', 'category', 'media'])->where('slug', $slug)->firstOrFail() :
-            Post::with(['author', 'category', 'media'])->whereNotNull('published_at')->first();
+            Post::with(['author', 'category', 'media', 'tags'])->where('slug', $slug)->firstOrFail() :
+            Post::with(['author', 'category', 'media', 'tags'])->whereNotNull('published_at')->first();
 
         // Get related posts
         $relatedPosts = Post::with(['author', 'media'])
@@ -171,7 +171,25 @@ class BlogController extends Controller
             ->limit(4)
             ->get();
 
-        return view('blog.details', compact('post', 'relatedPosts', 'categories', 'recentPosts'));
+        // Get total posts count
+        $totalPosts = Post::whereNotNull('published_at')
+            ->where('published_at', '<=', now())
+            ->count();
+
+        // Get popular tags for sidebar (if tags relationship exists)
+        $popularTags = collect(); // Initialize as empty collection
+        try {
+            if (class_exists('\Spatie\Tags\Tag')) {
+                $popularTags = \Spatie\Tags\Tag::withCount('posts')
+                    ->orderBy('posts_count', 'desc')
+                    ->limit(10)
+                    ->get();
+            }
+        } catch (\Exception $e) {
+            // Tags not available, continue with empty collection
+        }
+
+        return view('blog.details', compact('post', 'relatedPosts', 'categories', 'recentPosts', 'totalPosts', 'popularTags'));
     }
 
     /**
