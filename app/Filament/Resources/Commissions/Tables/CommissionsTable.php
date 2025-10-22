@@ -167,13 +167,26 @@ class CommissionsTable
                     ->visible(fn ($record) => $record->status === 'approved')
                     ->requiresConfirmation()
                     ->action(function ($record) {
+                        // Update commission status
                         $record->update([
                             'status' => 'paid',
                             'paid_at' => now(),
                         ]);
                         
+                        // Add funds to user's wallet
+                        $walletService = app(\App\Services\WalletService::class);
+                        $wallet = $walletService->getOrCreateWallet($record->user);
+                        
+                        $wallet->addFunds(
+                            $record->commission_amount,
+                            'commission',
+                            "Hoa hồng từ đơn hàng #{$record->order_id} - Mã CTV: {$record->user->affiliate_code}",
+                            $record->order_id,
+                            ['commission_id' => $record->id]
+                        );
+                        
                         \Filament\Notifications\Notification::make()
-                            ->title('Đã thanh toán hoa hồng')
+                            ->title('Đã thanh toán hoa hồng và cộng vào ví')
                             ->success()
                             ->send();
                     }),

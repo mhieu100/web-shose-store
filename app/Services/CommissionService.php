@@ -182,4 +182,95 @@ class CommissionService
             $this->processOrderCommission($order);
         }
     }
+
+    /**
+     * Process payment for a commission and add to wallet
+     */
+    public function processCommissionPayment(Commission $commission): bool
+    {
+        if ($commission->status !== 'approved') {
+            return false;
+        }
+
+        try {
+            // Update commission status
+            $commission->update([
+                'status' => 'paid',
+                'paid_at' => now(),
+            ]);
+
+            // Add funds to user's wallet
+            $walletService = app(\App\Services\WalletService::class);
+            $wallet = $walletService->getOrCreateWallet($commission->user);
+            
+            $wallet->addFunds(
+                $commission->commission_amount,
+                'commission',
+                "Hoa hồng từ đơn hàng #{$commission->order_id} - Mã CTV: {$commission->user->affiliate_code}",
+                $commission->order_id,
+                ['commission_id' => $commission->id]
+            );
+
+            return true;
+
+        } catch (\Exception $e) {
+            \Log::error('Commission payment failed', [
+                'commission_id' => $commission->id,
+                'error' => $e->getMessage(),
+            ]);
+            return false;
+        }
+    }
+
+    /**
+     * Fix existing paid commissions that weren't added to wallets
+     */
+    public function fixExistingPaidCommissions(): array
+    {
+        $results = ['processed' => 0, 'failed' => 0, 'errors' => []];
+        
+        // Get paid commissions that don't have corresponding wallet transactions
+        $paidCommissions = Commission::where('status', 'paid')
+            ->whereNotNull('paid_at')
+            ->with('user')
+            ->get();
+
+        $walletService = app(\App\Services\WalletService::class);
+
+        foreach ($paidCommissions as $commission) {
+            try {
+                // Check if wallet transaction already exists for this commission
+                $existingTransaction = \App\Models\Shop\WalletTransaction::where('user_id', $commission->user_id)
+                    ->where('type', 'commission')
+                    ->where('order_id', $commission->order_id)
+                    ->where('amount', $commission->commission_amount)
+                    ->first();
+
+                if (!$existingTransaction) {
+                    // Add funds to wallet
+                    $wallet = $walletService->getOrCreateWallet($commission->user);
+                    
+                    $wallet->addFunds(
+                        $commission->commission_amount,
+                        'commission',
+                        "Hoa hồng từ đơn hàng #{$commission->order_id} - Mã CTV: {$commission->user->affiliate_code} (Bổ sung)",
+                        $commission->order_id,
+                        ['commission_id' => $commission->id, 'retroactive' => true]
+                    );
+
+                    $results['processed']++;
+                }
+
+            } catch (\Exception $e) {
+                $results['failed']++;
+                $results['errors'][] = "Commission ID {$commission->id}: " . $e->getMessage();
+                \Log::error('Failed to fix commission payment', [
+                    'commission_id' => $commission->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        return $results;
+    }
 }
