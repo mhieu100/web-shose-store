@@ -55,9 +55,8 @@
                             </div>
                         @endforeach
                     @else
-                        <!-- Default banners if no banners in database -->
-                        <div class="swiper-slide">
-                            <div class="slider-content-area" data-bg-img="{{ asset('img/slider/slider-02.webp') }}">
+                         <div class="swiper-slide">
+                            <div class="slider-content-area" data-bg-img="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=1920&q=80">
                                 <div class="container">
                                     <div class="slider-container">
                                         <div class="row justify-content-center align-items-center">
@@ -65,7 +64,7 @@
                                                 <div class="slider-content text-center">
                                                     <div class="content">
                                                         <div class="title-box">
-                                                            <h2 class="title">Bộ sưu tập mới 2024</h2>
+                                                            <h2 class="title">Bộ sưu tập mới 2025</h2>
                                                         </div>
                                                         <div class="desc-box">
                                                             <p class="desc">Khám phá những mẫu giày thời trang mới nhất
@@ -84,7 +83,7 @@
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <div class="slider-content-area" data-bg-img="{{ asset('img/slider/slider-04.webp') }}">
+                            <div class="slider-content-area" data-bg-img="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1920&q=80">
                                 <div class="container">
                                     <div class="slider-container">
                                         <div class="row justify-content-center align-items-center">
@@ -92,7 +91,7 @@
                                                 <div class="slider-content text-center">
                                                     <div class="content">
                                                         <div class="title-box">
-                                                            <h2 class="title">Giày cao cấp chính hãng</h2>
+                                                            <h2 class="title">Giày thể thao cao cấp</h2>
                                                         </div>
                                                         <div class="desc-box">
                                                             <p class="desc">Cam kết 100% sản phẩm chính hãng từ các thương
@@ -101,6 +100,32 @@
                                                         <div class="btn-box">
                                                             <a class="btn-slider"
                                                                 href="{{ route('shop') }}">{{ __('home.shop_now') }}</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slider-content-area" data-bg-img="https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=1920&q=80">
+                                <div class="container">
+                                    <div class="slider-container">
+                                        <div class="row justify-content-center align-items-center">
+                                            <div class="col-sm-8 col-md-7">
+                                                <div class="slider-content text-center">
+                                                    <div class="content">
+                                                        <div class="title-box">
+                                                            <h2 class="title">Phong cách đường phố</h2>
+                                                        </div>
+                                                        <div class="desc-box">
+                                                            <p class="desc">Nâng tầm phong cách của bạn với những đôi giày
+                                                                độc đáo và cá tính</p>
+                                                        </div>
+                                                        <div class="btn-box">
+                                                            <a class="btn-slider" href="{{ route('shop') }}">Mua ngay</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -136,7 +161,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="section-title text-center">
-                                <h3 class="title">{{ __('home.popular_brands') }}</h3>
+                                <h3 class="title text-uppercase">{{ __('home.popular_brands') }}</h3>
                                 <div class="desc">
                                     <p>Khám phá những thương hiệu giày nổi tiếng và được yêu thích nhất</p>
                                 </div>
@@ -185,7 +210,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="section-title text-center">
-                            <h3 class="title">Sản phẩm mới</h3>
+                            <h3 class="title text-uppercase">Sản phẩm mới</h3>
                             <div class="desc">
                                 <p>Những mẫu giày mới nhất vừa được cập nhật tại cửa hàng</p>
                             </div>
@@ -240,8 +265,8 @@
                                     @if ($latestProducts->count() > 0)
                                         @foreach ($latestProducts as $product)
                                             <div class="col-sm-6 col-lg-3">
-                                                <x-product-card 
-                                                    :product="$product" 
+                                                <x-product-card
+                                                    :product="$product"
                                                     :aos-delay="$loop->index * 100" />
                                             </div>
                                         @endforeach
@@ -262,8 +287,8 @@
                                             @if (isset($categoryProducts[$category->id]) && $categoryProducts[$category->id]->count() > 0)
                                                 @foreach ($categoryProducts[$category->id] as $product)
                                                     <div class="col-sm-6 col-lg-3">
-                                                        <x-product-card 
-                                                            :product="$product" 
+                                                        <x-product-card
+                                                            :product="$product"
                                                             :aos-delay="$loop->index * 100" />
                                                     </div>
                                                 @endforeach
@@ -328,39 +353,60 @@
         <!--== End Banner Area ==-->
 
 
-        <!--== Start Product Area Wrapper ==-->
-        <section class="product-area product-default-area">
+        <!--== Start Featured Products Carousel ==-->
+        <section class="product-area product-default-area featured-products-section">
             <div class="container pt--0">
                 <div class="row">
                     <div class="col-12">
                         <div class="section-title text-center">
-                            <h3 class="title">{{ __('home.featured_products') }}</h3>
+                            <h3 class="title text-uppercase">{{ __('home.featured_products') }}</h3>
                             <div class="desc">
                                 <p>Những sản phẩm được đánh giá cao và bán chạy nhất tại cửa hàng</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    @if ($featuredProducts->count() > 0)
-                        @foreach ($featuredProducts->take(8) as $product)
-                            <div class="col-sm-6 col-lg-3">
-                                <x-product-card 
-                                    :product="$product" 
-                                    :show-actions="false"
-                                    :aos-animation="'none'" />
+
+                @if ($featuredProducts->count() > 0)
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="swiper-container featured-products-slider">
+                                <div class="swiper-wrapper">
+                                    @foreach ($featuredProducts as $product)
+                                        <div class="swiper-slide">
+                                            <x-product-card
+                                                :product="$product"
+                                                :show-actions="true"
+                                                :aos-animation="'none'" />
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <!-- Add Navigation -->
+                                <div class="swiper-btn-wrap">
+                                    <div class="swiper-btn-prev featured-prev">
+                                        <i class="pe-7s-angle-left"></i>
+                                    </div>
+                                    <div class="swiper-btn-next featured-next">
+                                        <i class="pe-7s-angle-right"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Add Pagination -->
+                                <div class="swiper-pagination featured-pagination"></div>
                             </div>
-                        @endforeach
-                    @else
+                        </div>
+                    </div>
+                @else
+                    <div class="row">
                         <div class="col-12">
                             <p class="text-center">{{ __('home.no_featured_products') }}</p>
                         </div>
-                    @endif
-
-                </div>
+                    </div>
+                @endif
             </div>
         </section>
-        <!--== End Product Area Wrapper ==-->
+        <!--== End Featured Products Carousel ==-->
 
         <!--== Start Divider Area Wrapper ==-->
         <section class="bg-color-f2 position-relative z-index-1">
@@ -390,6 +436,214 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/wishlist-shared.css') }}">
+    <style>
+        /* Hero Slider Height Enhancement */
+        .home-slider-area .slider-content-area {
+            min-height: 600px;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        .home-slider-area .slider-content-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .home-slider-area .slider-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .home-slider-area .slider-content {
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .home-slider-area .title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .home-slider-area .desc {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #ffffff;
+        }
+
+        .home-slider-area .btn-slider {
+            background: #ffffff;
+            color: #000000;
+            padding: 12px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .home-slider-area .btn-slider:hover {
+            background: #ff0000;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .home-slider-area .slider-content-area {
+                min-height: 500px;
+                height: 70vh;
+            }
+
+            .home-slider-area .title {
+                font-size: 36px;
+            }
+
+            .home-slider-area .desc {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .home-slider-area .slider-content-area {
+                min-height: 400px;
+                height: 60vh;
+            }
+
+            .home-slider-area .title {
+                font-size: 28px;
+            }
+
+            .home-slider-area .desc {
+                font-size: 14px;
+            }
+
+            .home-slider-area .btn-slider {
+                padding: 10px 30px;
+                font-size: 14px;
+            }
+        }
+
+        /* Featured Products Carousel Styles */
+        .featured-products-slider {
+            position: relative;
+            padding: 0 50px;
+            margin: 0 -15px;
+        }
+
+        .featured-products-slider .swiper-slide {
+            padding: 0 15px;
+        }
+
+        .featured-products-slider .swiper-btn-wrap {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .featured-products-slider .swiper-btn-prev,
+        .featured-products-slider .swiper-btn-next {
+            position: absolute;
+            top: -50%;
+            width: 40px;
+            height: 40px;
+            background: #ffffff;
+            border: 1px solid #e9ecef;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .featured-products-slider .swiper-btn-prev {
+            left: 0;
+        }
+
+        .featured-products-slider .swiper-btn-next {
+            right: 0;
+        }
+
+        .featured-products-slider .swiper-btn-prev:hover,
+        .featured-products-slider .swiper-btn-next:hover {
+            background: #007bff;
+            color: #ffffff;
+            border-color: #007bff;
+        }
+
+        .featured-products-slider .swiper-btn-prev i,
+        .featured-products-slider .swiper-btn-next i {
+            font-size: 16px;
+        }
+
+        .featured-products-slider .swiper-pagination {
+            position: static;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .featured-products-slider .swiper-pagination-bullet {
+            width: 12px;
+            height: 12px;
+            background: #dee2e6;
+            opacity: 1;
+            margin: 0 4px;
+        }
+
+        .featured-products-slider .swiper-pagination-bullet-active {
+            background: #007bff;
+        }
+
+        /* Featured Products Section Spacing */
+        .featured-products-section {
+            margin-top: 50px;
+        }
+
+        @media (min-width: 992px) {
+            .featured-products-section {
+                margin-top: 80px;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 767px) {
+            .featured-products-slider {
+                padding: 0 30px;
+            }
+
+            .featured-products-slider .swiper-btn-prev,
+            .featured-products-slider .swiper-btn-next {
+                width: 35px;
+                height: 35px;
+            }
+
+            .featured-products-slider .swiper-btn-prev i,
+            .featured-products-slider .swiper-btn-next i {
+                font-size: 14px;
+            }
+        }
+    </style>
 @endpush
 
 @push('scripts')
@@ -398,4 +652,40 @@
 
 @push('scripts')
     <script src="{{ asset('js/shop.js') }}"></script>
+    <script>
+        // Initialize Featured Products Carousel
+        document.addEventListener('DOMContentLoaded', function() {
+            const featuredProductsSlider = new Swiper('.featured-products-slider', {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                navigation: {
+                    nextEl: '.featured-next',
+                    prevEl: '.featured-prev',
+                },
+                pagination: {
+                    el: '.featured-pagination',
+                    clickable: true,
+                },
+                breakpoints: {
+                    576: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                    },
+                    992: {
+                        slidesPerView: 4,
+                        spaceBetween: 30,
+                    }
+                }
+            });
+        });
+    </script>
 @endpush

@@ -9,6 +9,7 @@
     <meta name="keywords" content="@yield('keywords', 'giày dép, giày thể thao, giày cao gót, giày nam, giày nữ, cửa hàng giày, mua giày online, giày chính hãng')"/>
     <meta name="author" content="codecarnival"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="user-authenticated" content="{{ auth()->check() ? 'true' : 'false' }}">
 
     <title>@yield('title', config('app.name', 'Shoe Store'))</title>
 
@@ -43,12 +44,16 @@
     <link href="{{ asset('css/custom-tabs.css') }}" rel="stylesheet" />
     <!--== Product Detail CSS ==-->
     <link href="{{ asset('css/product-detail.css') }}" rel="stylesheet" />
+    <!--== Cart CSS ==-->
+    <link href="{{ asset('css/cart.css') }}" rel="stylesheet" />
     <!--== Wishlist CSS ==-->
     <link href="{{ asset('css/wishlist.css') }}" rel="stylesheet" />
     <!--== Improved Sidebar CSS (File not found - disabled) ==-->
     <!-- <link href="{{ asset('css/improved-sidebar.css') }}" rel="stylesheet" /> -->
     <!--== Product Action Fix CSS ==-->
     <link href="{{ asset('css/product-action-fix.css') }}" rel="stylesheet" />
+    <!--== Breadcrumb Component CSS ==-->
+    <link href="{{ asset('css/breadcrumb-component.css') }}" rel="stylesheet" />
 
     @stack('styles')
 
@@ -96,6 +101,9 @@
 <!--== Start Product Options Modal ==-->
 @include('components.product-options-modal')
 
+<!--== AI Chat Bubble ==-->
+@include('components.chat-bubble')
+
 <!--== Javascript Files ==-->
 <!--== Modernizr js ==-->
 <script src="{{ asset('js/modernizr.js') }}"></script>
@@ -140,7 +148,36 @@
 <!--== Cart Variants CSS ==-->
 <link rel="stylesheet" href="{{ asset('css/cart-variants.css') }}">
 
+<!--== AI Chat Widget Scripts ==-->
+<script src="{{ asset('js/ai-chat.js') }}"></script>
+<!--== Product Chat Integration Scripts ==-->
+<script src="{{ asset('js/product-chat-integration.js') }}"></script>
+
 @stack('scripts')
 
+    <!-- Include Toast Message Component -->
+    @include('components.toast-message')
+
+    <!-- Toast Handler for Laravel Session Messages -->
+    <script src="{{ asset('js/toast-handler.js') }}"></script>
+
+    <!-- Session Messages for Toast -->
+    @if(session('success') || session('error') || session('warning') || session('info') || session('message'))
+        @if(session('success'))
+            <input type="hidden" id="session-success" value="{{ session('success') }}">
+        @endif
+        @if(session('error'))
+            <input type="hidden" id="session-error" value="{{ session('error') }}">
+        @endif
+        @if(session('warning'))
+            <input type="hidden" id="session-warning" value="{{ session('warning') }}">
+        @endif
+        @if(session('info'))
+            <input type="hidden" id="session-info" value="{{ session('info') }}">
+        @endif
+        @if(session('message') && !session('success') && !session('error') && !session('warning') && !session('info'))
+            <input type="hidden" id="session-message" value="{{ session('message') }}">
+        @endif
+    @endif
 </body>
 </html>

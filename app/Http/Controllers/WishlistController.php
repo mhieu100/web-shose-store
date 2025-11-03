@@ -37,7 +37,7 @@ class WishlistController extends Controller
         if (!Auth::check()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Please login to add items to wishlist',
+                'message' => 'Vui lòng đăng nhập để thêm sản phẩm vào danh sách yêu thích',
                 'redirect' => route('login')
             ], 401);
         }
@@ -53,7 +53,7 @@ class WishlistController extends Controller
         if ($user->hasInWishlist($productId)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Product is already in your wishlist'
+                'message' => 'Sản phẩm đã có trong danh sách yêu thích của bạn'
             ], 400);
         }
 
@@ -67,7 +67,7 @@ class WishlistController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Product added to wishlist successfully',
+            'message' => 'Đã thêm sản phẩm vào danh sách yêu thích thành công',
             'wishlist_count' => $wishlistCount
         ]);
     }
@@ -80,7 +80,7 @@ class WishlistController extends Controller
         if (!Auth::check()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorized'
+                'message' => 'Không có quyền truy cập'
             ], 401);
         }
 
@@ -98,7 +98,7 @@ class WishlistController extends Controller
         if (!$wishlistItem) {
             return response()->json([
                 'success' => false,
-                'message' => 'Product not found in wishlist'
+                'message' => 'Không tìm thấy sản phẩm trong danh sách yêu thích'
             ], 404);
         }
 
@@ -107,7 +107,7 @@ class WishlistController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Product removed from wishlist successfully',
+            'message' => 'Đã xóa sản phẩm khỏi danh sách yêu thích thành công',
             'wishlist_count' => $wishlistCount
         ]);
     }
@@ -120,7 +120,7 @@ class WishlistController extends Controller
         if (!Auth::check()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Please login to manage wishlist',
+                'message' => 'Vui lòng đăng nhập để quản lý danh sách yêu thích',
                 'redirect' => route('login')
             ], 401);
         }
@@ -140,7 +140,7 @@ class WishlistController extends Controller
             // Remove from wishlist
             $wishlistItem->delete();
             $inWishlist = false;
-            $message = 'Product removed from wishlist';
+            $message = 'Đã xóa sản phẩm khỏi danh sách yêu thích';
         } else {
             // Add to wishlist
             Wishlist::create([
@@ -148,7 +148,7 @@ class WishlistController extends Controller
                 'shop_product_id' => $productId
             ]);
             $inWishlist = true;
-            $message = 'Product added to wishlist';
+            $message = 'Đã thêm sản phẩm vào danh sách yêu thích';
         }
 
         $wishlistCount = $user->wishlists()->count();
@@ -169,7 +169,7 @@ class WishlistController extends Controller
         if (!Auth::check()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorized'
+                'message' => 'Không có quyền truy cập'
             ], 401);
         }
 
@@ -177,7 +177,7 @@ class WishlistController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Wishlist cleared successfully',
+            'message' => 'Đã xóa toàn bộ danh sách yêu thích thành công',
             'wishlist_count' => 0
         ]);
     }

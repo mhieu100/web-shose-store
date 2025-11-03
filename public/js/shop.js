@@ -53,7 +53,7 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.success) {
                     // Show success message
-                    showShopNotification('success', `"${productName}" has been added to your cart!`);
+                    showSuccess(`"${productName}" đã được thêm vào giỏ hàng!`);
 
                     // Update cart count and sidebar (functions from product-options.js or cart-sidebar.js)
                     if (typeof updateCartCount === 'function') updateCartCount();
@@ -71,17 +71,17 @@ $(document).ready(function() {
                     }, 2000);
 
                 } else {
-                    showNotification('error', response.message || 'Failed to add product to cart');
+                    showError(response.message || 'Không thể thêm sản phẩm vào giỏ hàng');
                     button.html(originalHtml);
                     button.prop('disabled', false);
                 }
             },
             error: function(xhr) {
                 console.error('Cart Error:', xhr);
-                let message = 'Could not add product to cart.';
+                let message = 'Không thể thêm sản phẩm vào giỏ hàng.';
 
                 if (xhr.status === 401) {
-                    message = 'Please login to add items to cart';
+                    message = 'Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng';
                     // Redirect to login if needed
                     window.location.href = '/login';
                     return;
@@ -91,7 +91,7 @@ $(document).ready(function() {
                     message = xhr.responseJSON.message;
                 }
 
-                showNotification('error', message);
+                showError(message);
                 button.html(originalHtml);
                 button.prop('disabled', false);
             }
@@ -115,25 +115,5 @@ $(document).ready(function() {
         });
     };
 
-    // Show notification function
-    function showShopNotification(type, message) {
-        // Remove existing notifications
-        $('.shop-notification').remove();
-
-        // Create notification element
-        const notification = $(`
-            <div class="shop-notification alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999; min-width: 300px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-radius: 8px;">
-                <i class="fa fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'} me-2"></i>
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        `);
-
-        $('body').append(notification);
-
-        // Auto hide after 5 seconds
-        setTimeout(() => {
-            notification.alert('close');
-        }, 5000);
-    }
+    // Toast messages are now handled by the global toast system
 });

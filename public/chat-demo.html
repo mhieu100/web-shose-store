@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Bubble Demo - 3 Dots Loading</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/chat-bubble.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .demo-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+        .demo-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .demo-header h1 {
+            color: #2d3436;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .demo-header p {
+            color: #636e72;
+            font-size: 16px;
+        }
+        .demo-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .demo-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .demo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+        .demo-btn:active {
+            transform: translateY(-1px);
+        }
+        .demo-btn.secondary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        .demo-btn.danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6e 100%);
+        }
+        .demo-info {
+            background: #f8f9fb;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+        .demo-info h3 {
+            color: #2d3436;
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .demo-info ul {
+            color: #636e72;
+            font-size: 14px;
+            line-height: 1.8;
+            padding-left: 20px;
+        }
+        .demo-info code {
+            background: #e8ecf0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #667eea;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🤖 Chat Bubble Demo</h1>
+            <p>Test hiệu ứng 3 chấm loading khi AI đang suy nghĩ</p>
+        </div>
+
+        <div class="demo-buttons">
+            <button class="demo-btn" onclick="testTextMessage()">
+                <i class="fas fa-comment"></i>
+                Gửi Text Message
+            </button>
+
+            <button class="demo-btn" onclick="testThinkingIndicator()">
+                <i class="fas fa-brain"></i>
+                Test 3 Chấm Loading
+            </button>
+
+            <button class="demo-btn secondary" onclick="testBotResponse()">
+                <i class="fas fa-robot"></i>
+                Bot Response (Auto)
+            </button>
+
+            <button class="demo-btn" onclick="testImageMessage()">
+                <i class="fas fa-image"></i>
+                Gửi Image
+            </button>
+
+            <button class="demo-btn" onclick="testFileMessage()">
+                <i class="fas fa-file"></i>
+                Gửi File
+            </button>
+
+            <button class="demo-btn secondary" onclick="testLongConversation()">
+                <i class="fas fa-comments"></i>
+                Test Cuộc Hội Thoại
+            </button>
+
+            <button class="demo-btn" onclick="testProductRecommendations()">
+                <i class="fas fa-shopping-bag"></i>
+                Sản Phẩm Gợi Ý
+            </button>
+
+            <button class="demo-btn danger" onclick="clearChat()">
+                <i class="fas fa-trash"></i>
+                Xóa Chat
+            </button>
+
+            <button class="demo-btn" onclick="toggleChat()">
+                <i class="fas fa-eye"></i>
+                Toggle Chat
+            </button>
+        </div>
+
+        <div class="demo-info">
+            <h3>
+                <i class="fas fa-info-circle" style="color: #667eea;"></i>
+                Hướng dẫn sử dụng
+            </h3>
+            <ul>
+                <li><strong>3 Chấm Loading:</strong> Hiển thị khi AI đang xử lý request</li>
+                <li><strong>Auto Scroll:</strong> Tự động cuộn xuống khi có tin nhắn mới</li>
+                <li><strong>Smooth Animation:</strong> Hiệu ứng bounce mượt mà</li>
+                <li><strong>API Integration:</strong> Dùng <code>showTypingIndicator()</code> và <code>hideTypingIndicator()</code></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Chat Widget -->
+    <div id="ai-chat-widget" class="ai-chat-widget">
+        <div id="chat-toggle" class="chat-toggle">
+            <i class="fas fa-comments"></i>
+            <span class="chat-notification" id="chat-notification">1</span>
+        </div>
+
+        <div id="chat-window" class="chat-window show">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <div class="chat-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="chat-title">
+                        <h4>Trợ lý AI Demo</h4>
+                        <span class="chat-status">Đang trực tuyến</span>
+                    </div>
+                </div>
+                <div class="chat-header-actions">
+                    <button id="chat-minimize" class="chat-minimize">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="chat-messages" class="chat-messages">
+                <div class="message bot-message" data-message-id="welcome">
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-text">
+                            <strong>👋 Chào mừng đến với Demo!</strong><br><br>
+                            Click các nút bên trái để test các tính năng:<br>
+                            • Gửi tin nhắn<br>
+                            • Test 3 chấm loading<br>
+                            • Bot response tự động<br><br>
+                            Thử ngay nhé! 😊
+                        </div>
+                        <div class="message-time">Bây giờ</div>
+                    </div>
+                </div>
+
+                <!-- AI Thinking Indicator -->
+                <div class="message ai-thinking-message" id="ai-thinking-message">
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="ai-thinking-bubble">
+                        <div class="thinking-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="scroll-to-bottom" id="scroll-to-bottom">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+
+            <!-- Product Recommendations Icon -->
+            <button class="product-recommendations-toggle" id="product-recommendations-toggle" style="display: none;">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="recommendations-badge" id="recommendations-badge">0</span>
+            </button>
+
+            <!-- Product Recommendations Panel -->
+            <div id="product-recommendations-panel" class="product-recommendations-panel">
+                <div class="recommendations-panel-header">
+                    <div class="recommendations-panel-title">
+                        <i class="fas fa-sparkles"></i>
+                        <span>Sản phẩm gợi ý</span>
+                    </div>
+                    <button class="recommendations-panel-close" id="recommendations-panel-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="recommendations-panel-content" id="recommendations-list">
+                    <div class="recommendations-empty">
+                        <i class="fas fa-box-open"></i>
+                        <p>Chưa có sản phẩm gợi ý</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <form id="chat-form" class="chat-form">
+                    <div class="input-group">
+                        <input type="text" id="chat-input" class="chat-input" placeholder="Nhập tin nhắn..." autocomplete="off">
+                        <button type="submit" class="chat-send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/chat-message-handler.js"></script>
+    <script>
+        // Demo Functions
+        function testTextMessage() {
+            ChatMessageHandler.sendTextMessage('Đây là tin nhắn test từ user!', 'user');
+        }
+
+        function testThinkingIndicator() {
+            ChatMessageHandler.showTypingIndicator();
+            setTimeout(() => {
+                ChatMessageHandler.hideTypingIndicator();
+                alert('3 chấm đã ẩn sau 3 giây!');
+            }, 3000);
+        }
+
+        async function testBotResponse() {
+            ChatMessageHandler.sendTextMessage('Xin chào bot!', 'user');
+            await ChatMessageHandler.sendBotResponse('Chào bạn! Tôi là AI trợ lý 😊', 2000);
+        }
+
+        function testImageMessage() {
+            ChatMessageHandler.sendImageMessage(
+                'https://via.placeholder.com/400x300/667eea/ffffff?text=Demo+Image',
+                'Đây là hình ảnh demo',
+                'user'
+            );
+        }
+
+        function testFileMessage() {
+            ChatMessageHandler.sendFileMessage({
+                name: 'demo-document.pdf',
+                url: '#',
+                size: 1024000
+            }, 'user');
+        }
+
+        async function testLongConversation() {
+            ChatMessageHandler.sendTextMessage('Tôi muốn test cuộc hội thoại dài', 'user');
+
+            await ChatMessageHandler.sendBotResponse('Được rồi, để tôi gửi vài tin nhắn...', 1500);
+
+            await ChatMessageHandler.sendBotResponse('Tin nhắn thứ nhất 📝', 1000);
+
+            await ChatMessageHandler.sendBotResponse('Tin nhắn thứ hai 📋', 1000);
+
+            await ChatMessageHandler.sendBotResponse('Tin nhắn cuối cùng ✅', 1000);
+        }
+
+        async function testProductRecommendations() {
+            ChatMessageHandler.sendTextMessage('Gợi ý giày cho tôi với!', 'user');
+
+            await ChatMessageHandler.sendBotResponse('Để tôi tìm những sản phẩm phù hợp nhất cho bạn...', 1500);
+
+            // Hiển thị sản phẩm gợi ý
+            const products = [
+                {
+                    name: 'Nike Air Max 270',
+                    price: '3.500.000đ',
+                    originalPrice: '4.500.000đ',
+                    image: 'https://via.placeholder.com/200x200/667eea/ffffff?text=Nike+Air',
+                    url: '#product-1'
+                },
+                {
+                    name: 'Adidas Ultraboost 21',
+                    price: '4.200.000đ',
+                    originalPrice: '5.000.000đ',
+                    image: 'https://via.placeholder.com/200x200/ff6b6b/ffffff?text=Adidas',
+                    url: '#product-2'
+                },
+                {
+                    name: 'Puma RS-X',
+                    price: '2.800.000đ',
+                    originalPrice: '3.500.000đ',
+                    image: 'https://via.placeholder.com/200x200/00b894/ffffff?text=Puma',
+                    url: '#product-3'
+                },
+                {
+                    name: 'New Balance 574',
+                    price: '2.200.000đ',
+                    image: 'https://via.placeholder.com/200x200/fdcb6e/ffffff?text=New+Balance',
+                    url: '#product-4'
+                },
+                {
+                    name: 'Converse Chuck 70',
+                    price: '1.800.000đ',
+                    originalPrice: '2.200.000đ',
+                    image: 'https://via.placeholder.com/200x200/6c5ce7/ffffff?text=Converse',
+                    url: '#product-5'
+                }
+            ];
+
+            ChatMessageHandler.addProductRecommendations(products);
+
+            await ChatMessageHandler.sendBotResponse('Tôi đã tìm được 5 sản phẩm phù hợp! Click vào icon giỏ hàng 🛍️ để xem chi tiết.', 800);
+        }
+
+        function clearChat() {
+            if (confirm('Xóa toàn bộ tin nhắn?')) {
+                ChatMessageHandler.clearAllMessages();
+            }
+        }
+
+        function toggleChat() {
+            const chatWindow = document.getElementById('chat-window');
+            chatWindow.classList.toggle('show');
+        }
+
+        // Chat toggle
+        document.getElementById('chat-toggle').addEventListener('click', toggleChat);
+        document.getElementById('chat-minimize').addEventListener('click', toggleChat);
+
+        // Chat form submit
+        document.getElementById('chat-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+
+            if (message) {
+                ChatMessageHandler.sendTextMessage(message, 'user');
+                input.value = '';
+
+                // Simulate bot response
+                await ChatMessageHandler.sendBotResponse(
+                    `Bạn vừa nói: "${message}". Đây là response từ bot! 🤖`,
+                    1500
+                );
+            }
+        });
+
+        // Initialize scroll button
+        const chatMessages = document.getElementById('chat-messages');
+        const scrollBtn = document.getElementById('scroll-to-bottom');
+
+        function updateScrollButton() {
+            const isNearBottom = chatMessages.scrollHeight - chatMessages.scrollTop - chatMessages.clientHeight < 100;
+            scrollBtn.classList.toggle('show', !isNearBottom);
+        }
+
+        chatMessages.addEventListener('scroll', updateScrollButton);
+        scrollBtn.addEventListener('click', () => {
+            chatMessages.scrollTo({ top: chatMessages.scrollHeight, behavior: 'smooth' });
+        });
+
+        console.log('✅ Chat Demo loaded! Try the buttons to test features.');
+        console.log('📚 Use ChatMessageHandler methods in console to test manually.');
+    </script>
+</body>
+</html>

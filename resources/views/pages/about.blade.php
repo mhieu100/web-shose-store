@@ -3,6 +3,12 @@
 @section('title', 'Giới thiệu - Cửa hàng giày')
 
 @section('content')
+    <!-- Breadcrumb -->
+    <x-breadcrumb :items="[
+        ['label' => 'Trang chủ', 'url' => route('home'), 'icon' => 'home'],
+        ['label' => 'Giới thiệu', 'icon' => 'info-circle', 'active' => true]
+    ]" />
+
     <!--== Start Page Header Area Wrapper ==-->
     <div class="page-header-area" data-bg-img="{{ config('app.page_header_image') }}">
       <div class="container pt--0 pb--0">
@@ -10,13 +16,6 @@
           <div class="col-12">
             <div class="page-header-content">
               <h2 class="title" data-aos="fade-down" data-aos-duration="1000">Giới thiệu</h2>
-              <nav class="breadcrumb-area" data-aos="fade-down" data-aos-duration="1200">
-                <ul class="breadcrumb">
-                  <li><a href="{{ route('home') }}">Trang chủ</a></li>
-                  <li class="breadcrumb-sep">//</li>
-                  <li>Giới thiệu</li>
-                </ul>
-              </nav>
             </div>
           </div>
         </div>
@@ -33,7 +32,7 @@
               <div class="about-thumb">
                 <div class="shape-one scene">
                   <span class="scene-layer" data-depth=".2">
-                    <img src="{{ asset('img/about/1.webp') }}" width="570" height="368" alt="Image-HasTech">
+                    <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" width="570" height="368" alt="Premium Sneakers Collection">
                   </span>
                 </div>
               </div>
@@ -67,7 +66,7 @@
         </div>
       </div>
       <div class="bg-layer-wrap">
-        <div class="bg-layer-style z-index--1 parallax" data-speed="1.05" data-bg-img="{{ asset('img/photos/bg1.webp') }}"></div>
+        <div class="bg-layer-style z-index--1 parallax" data-speed="1.05" data-bg-img="https://images.unsplash.com/photo-1552346154-21d32810aba3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"></div>
       </div>
     </section>
     <!--== End Divider Area Wrapper ==-->
@@ -97,7 +96,13 @@
                       @if($member->photo)
                         <img src="{{ asset('storage/' . $member->photo) }}" width="270" height="270" alt="{{ $member->name }}">
                       @else
-                        <img src="{{ asset('img/team/' . ($index + 1) . '.webp') }}" width="270" height="270" alt="{{ $member->name }}">
+                        @php
+                          $teamImages = [
+                            'https://imgs.search.brave.com/ZWAQZlqGXbyX4ch2jiiGiEB0UXy6jVhtcsCOoEnun-E/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1wc2QvM2Qt/cmVuZGVyLWF2YXRh/ci1jaGFyYWN0ZXJf/MjMtMjE1MDYxMTcy/OC5qcGc_c2VtdD1h/aXNfaHlicmlkJnc9/NzQwJnE9ODA',
+                             'https://imgs.search.brave.com/ZWAQZlqGXbyX4ch2jiiGiEB0UXy6jVhtcsCOoEnun-E/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1wc2QvM2Qt/cmVuZGVyLWF2YXRh/ci1jaGFyYWN0ZXJf/MjMtMjE1MDYxMTcy/OC5qcGc_c2VtdD1h/aXNfaHlicmlkJnc9/NzQwJnE9ODA', 'https://imgs.search.brave.com/ZWAQZlqGXbyX4ch2jiiGiEB0UXy6jVhtcsCOoEnun-E/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1wc2QvM2Qt/cmVuZGVyLWF2YXRh/ci1jaGFyYWN0ZXJf/MjMtMjE1MDYxMTcy/OC5qcGc_c2VtdD1h/aXNfaHlicmlkJnc9/NzQwJnE9ODA', 'https://imgs.search.brave.com/ZWAQZlqGXbyX4ch2jiiGiEB0UXy6jVhtcsCOoEnun-E/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1wc2QvM2Qt/cmVuZGVyLWF2YXRh/ci1jaGFyYWN0ZXJf/MjMtMjE1MDYxMTcy/OC5qcGc_c2VtdD1h/aXNfaHlicmlkJnc9/NzQwJnE9ODA',
+                          ];
+                        @endphp
+                        <img src="{{ $teamImages[$index % count($teamImages)] }}" width="270" height="270" alt="{{ $member->name }}">
                       @endif
                     </a>
                     <div class="member-icons">
@@ -121,7 +126,7 @@
               <div class="team-item">
                 <div class="inner-content">
                   <div class="thumb">
-                    <a href="{{ route('about') }}"><img src="{{ asset('img/team/1.webp') }}" width="270" height="270" alt="Nguyễn Văn A"></a>
+                    <a href="{{ route('about') }}"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" width="270" height="270" alt="Nguyễn Văn A"></a>
                     <div class="member-icons">
                       <a href="https://www.facebook.com/" target="_blank" rel="noopener"><i class="fa fa-facebook"></i></a>
                       <a href="https://dribbble.com/" target="_blank" rel="noopener"><i class="fa fa-dribbble"></i></a>
@@ -139,7 +144,7 @@
               <div class="team-item">
                 <div class="inner-content">
                   <div class="thumb">
-                    <a href="{{ route('about') }}"><img src="{{ asset('img/team/2.webp') }}" width="270" height="270" alt="Trần Thị B"></a>
+                    <a href="{{ route('about') }}"><img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" width="270" height="270" alt="Trần Thị B"></a>
                     <div class="member-icons">
                       <a href="https://www.facebook.com/" target="_blank" rel="noopener"><i class="fa fa-facebook"></i></a>
                       <a href="https://dribbble.com/" target="_blank" rel="noopener"><i class="fa fa-dribbble"></i></a>
@@ -157,7 +162,7 @@
               <div class="team-item">
                 <div class="inner-content">
                   <div class="thumb">
-                    <a href="{{ route('about') }}"><img src="{{ asset('img/team/3.webp') }}" width="270" height="270" alt="Lê Văn C"></a>
+                    <a href="{{ route('about') }}"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" width="270" height="270" alt="Lê Văn C"></a>
                     <div class="member-icons">
                       <a href="https://www.facebook.com/" target="_blank" rel="noopener"><i class="fa fa-facebook"></i></a>
                       <a href="https://dribbble.com/" target="_blank" rel="noopener"><i class="fa fa-dribbble"></i></a>
@@ -175,7 +180,7 @@
               <div class="team-item">
                 <div class="inner-content">
                   <div class="thumb">
-                    <a href="{{ route('about') }}"><img src="{{ asset('img/team/4.webp') }}" width="270" height="270" alt="Phạm Thị D"></a>
+                    <a href="{{ route('about') }}"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" width="270" height="270" alt="Phạm Thị D"></a>
                     <div class="member-icons">
                       <a href="https://www.facebook.com/" target="_blank" rel="noopener"><i class="fa fa-facebook"></i></a>
                       <a href="https://dribbble.com/" target="_blank" rel="noopener"><i class="fa fa-dribbble"></i></a>
@@ -299,7 +304,7 @@
               <div class="post-item">
                 <div class="inner-content">
                   <div class="thumb">
-                    <a href="{{ route('blog.details') }}"><img src="{{ asset('img/blog/1.webp') }}" width="370" height="260" alt="Xu hướng giày thể thao 2024"></a>
+                    <a href="{{ route('blog.details') }}"><img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" width="370" height="260" alt="Xu hướng giày thể thao 2024"></a>
                   </div>
                   <div class="content">
                     <div class="meta-post">
@@ -318,7 +323,7 @@
               <div class="post-item">
                 <div class="inner-content">
                   <div class="thumb">
-                    <a href="{{ route('blog.details') }}"><img src="{{ asset('img/blog/2.webp') }}" width="370" height="260" alt="Cách chăm sóc giày da"></a>
+                    <a href="{{ route('blog.details') }}"><img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" width="370" height="260" alt="Cách chăm sóc giày da"></a>
                   </div>
                   <div class="content">
                     <div class="meta-post">
@@ -337,7 +342,7 @@
               <div class="post-item">
                 <div class="inner-content">
                   <div class="thumb">
-                    <a href="{{ route('blog.details') }}"><img src="{{ asset('img/blog/3.webp') }}" width="370" height="260" alt="Chọn size giày phù hợp"></a>
+                    <a href="{{ route('blog.details') }}"><img src="https://images.unsplash.com/photo-1460353581641-37baddab0fa2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" width="370" height="260" alt="Chọn size giày phù hợp"></a>
                   </div>
                   <div class="content">
                     <div class="meta-post">

@@ -74,7 +74,19 @@ function removeFromWishlist(productId, row) {
         },
         error: function(xhr) {
             row.removeClass('removing');
-            showToast('error', 'An error occurred while removing the item');
+            
+            const response = xhr.responseJSON;
+            if (response && response.redirect) {
+                window.location.href = response.redirect;
+                return;
+            }
+            
+            let errorMessage = 'An error occurred while removing the item';
+            if (response && response.message) {
+                errorMessage = response.message;
+            }
+            
+            showToast('error', errorMessage);
         }
     });
 }
@@ -120,9 +132,15 @@ function addToCartFromWishlist(productId, productName, productPrice, button) {
             button.prop('disabled', false);
             button.html('<i class="fa fa-shopping-cart"></i> Add to Cart');
             
+            const response = xhr.responseJSON;
+            if (response && response.redirect) {
+                window.location.href = response.redirect;
+                return;
+            }
+            
             let errorMessage = 'An error occurred while adding to cart';
-            if (xhr.responseJSON && xhr.responseJSON.message) {
-                errorMessage = xhr.responseJSON.message;
+            if (response && response.message) {
+                errorMessage = response.message;
             }
             
             showToast('error', errorMessage);
@@ -225,6 +243,14 @@ $(document).ready(function() {
     $(document).on('click', '.add-to-wishlist', function(e) {
         e.preventDefault();
 
+        // Check if user is authenticated before proceeding
+        const isAuthenticated = $('meta[name="user-authenticated"]').attr('content') === 'true';
+        if (!isAuthenticated) {
+            // Redirect to login immediately
+            window.location.href = '/login';
+            return;
+        }
+
         const productId = $(this).data('product-id');
         const button = $(this);
 
@@ -251,9 +277,9 @@ $(document).ready(function() {
                     updateWishlistCount(response.wishlist_count);
 
                     // Show success message
-                    showNotification('Đã thêm vào danh sách yêu thích! ❤️', 'success');
+                    showSuccess('Đã thêm vào danh sách yêu thích! ❤️');
                 } else {
-                    showNotification(response.message, 'error');
+                    showError(response.message);
                 }
             },
             error: function(xhr) {
@@ -261,7 +287,7 @@ $(document).ready(function() {
                 if (response && response.redirect) {
                     window.location.href = response.redirect;
                 } else {
-                    showNotification(response ? response.message : 'An error occurred', 'error');
+                    showError(response ? response.message : 'Có lỗi xảy ra');
                 }
             },
             complete: function() {
@@ -321,15 +347,15 @@ $(document).ready(function() {
                     updateWishlistCount(response.wishlist_count);
 
                     // Show success message
-                    showNotification('Product removed from wishlist', 'success');
+                    showSuccess('Đã xóa sản phẩm khỏi danh sách yêu thích');
                 } else {
                     console.log('Remove failed:', response.message); // Debug log
-                    showNotification(response.message, 'error');
+                    showError(response.message);
                 }
             },
             error: function(xhr) {
                 const response = xhr.responseJSON;
-                showNotification(response ? response.message : 'An error occurred', 'error');
+                showError(response ? response.message : 'Có lỗi xảy ra');
             },
             complete: function() {
                 button.prop('disabled', false);
@@ -340,6 +366,14 @@ $(document).ready(function() {
     // Toggle wishlist (add/remove)
     $(document).on('click', '.toggle-wishlist', function(e) {
         e.preventDefault();
+
+        // Check if user is authenticated before proceeding
+        const isAuthenticated = $('meta[name="user-authenticated"]').attr('content') === 'true';
+        if (!isAuthenticated) {
+            // Redirect to login immediately
+            window.location.href = '/login';
+            return;
+        }
 
         const productId = $(this).data('product-id');
         const button = $(this);
@@ -371,9 +405,9 @@ $(document).ready(function() {
                     updateWishlistCount(response.wishlist_count);
 
                     // Show success message
-                    showNotification(response.message, 'success');
+                    showSuccess(response.message);
                 } else {
-                    showNotification(response.message, 'error');
+                    showError(response.message);
                 }
             },
             error: function(xhr) {
@@ -381,7 +415,7 @@ $(document).ready(function() {
                 if (response && response.redirect) {
                     window.location.href = response.redirect;
                 } else {
-                    showNotification(response ? response.message : 'An error occurred', 'error');
+                    showError(response ? response.message : 'Có lỗi xảy ra');
                 }
             },
             complete: function() {
@@ -430,14 +464,14 @@ $(document).ready(function() {
                     updateWishlistCount(0);
 
                     // Show success message
-                    showNotification('Wishlist cleared successfully', 'success');
+                    showSuccess('Đã xóa toàn bộ danh sách yêu thích');
                 } else {
-                    showNotification(response.message, 'error');
+                    showError(response.message);
                 }
             },
             error: function(xhr) {
                 const response = xhr.responseJSON;
-                showNotification(response ? response.message : 'An error occurred', 'error');
+                showError(response ? response.message : 'Có lỗi xảy ra');
             },
             complete: function() {
                 button.prop('disabled', false);
@@ -502,56 +536,7 @@ $(document).ready(function() {
                 }
             }, 300);
         }
-    }    // Show notification với theme màu đỏ
-    function showNotification(message, type = 'info') {
-        // Create notification element với style phù hợp theme
-        const notificationClass = type === 'success' ? 'alert-success' : 'alert-warning';
-        const iconClass = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle';
-
-        const notification = $(`
-            <div class="alert ${notificationClass} alert-dismissible fade show wishlist-notification" role="alert" style="
-                background: linear-gradient(135deg, ${type === 'success' ? '#eb3e32' : '#f8d7da'} 0%, ${type === 'success' ? '#d63384' : '#f5c6cb'} 100%);
-                border: none;
-                border-radius: 6px;
-                box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-                color: ${type === 'success' ? '#ffffff' : '#721c24'};
-                font-weight: 300;
-                font-size: 13px;
-                padding: 10px 15px;
-                margin-bottom: 8px;
-            ">
-                <i class="fa ${iconClass}" style="margin-right: 6px; font-size: 12px;"></i>
-                ${message}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="
-                    color: inherit;
-                    opacity: 0.8;
-                    font-size: 16px;
-                    padding: 0;
-                    margin-left: 8px;
-                    font-weight: 300;
-                ">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        `);
-
-        // Add to page
-        if ($('.wishlist-notifications').length === 0) {
-            $('body').prepend('<div class="wishlist-notifications" style="position: fixed; top: 20px; right: 20px; z-index: 9999; max-width: 400px;"></div>');
-        }
-
-        $('.wishlist-notifications').append(notification);
-
-        // Add entrance animation
-        notification.hide().slideDown(300);
-
-        // Auto hide after 4 seconds
-        setTimeout(function() {
-            notification.slideUp(300, function() {
-                $(this).remove();
-            });
-        }, 4000);
-    }
+    }    // Toast notifications are now handled by the global toast system
 
     // Load wishlist count on page load
     function loadWishlistCount() {

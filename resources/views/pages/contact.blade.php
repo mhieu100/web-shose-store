@@ -3,6 +3,12 @@
 @section('title', 'Liên hệ - Cửa hàng giày')
 
 @section('content')
+    <!-- Breadcrumb -->
+    <x-breadcrumb :items="[
+        ['label' => 'Trang chủ', 'url' => route('home'), 'icon' => 'home'],
+        ['label' => 'Liên hệ', 'icon' => 'envelope', 'active' => true]
+    ]" />
+
     <!--== Start Page Header Area Wrapper ==-->
     <div class="page-header-area" data-bg-img="{{ config('app.page_header_image') }}">
       <div class="container pt--0 pb--0">
@@ -10,13 +16,6 @@
           <div class="col-12">
             <div class="page-header-content">
               <h2 class="title" data-aos="fade-down" data-aos-duration="1000">Liên hệ</h2>
-              <nav class="breadcrumb-area" data-aos="fade-down" data-aos-duration="1200">
-                <ul class="breadcrumb">
-                  <li><a href="{{ route('home') }}">Trang chủ</a></li>
-                  <li class="breadcrumb-sep">//</li>
-                  <li>Liên hệ</li>
-                </ul>
-              </nav>
             </div>
           </div>
         </div>
@@ -138,32 +137,32 @@
 <script>
 $(document).ready(function() {
     let isSubmitting = false; // Flag để prevent double submit
-    
+
     $('#contact-form').on('submit', function(e) {
         e.preventDefault();
-        
+
         // Prevent double submit
         if (isSubmitting) {
             console.log('Form is already submitting, ignoring...');
             return false;
         }
-        
+
         isSubmitting = true;
-        
+
         const form = $(this);
         const submitBtn = $('#submit-btn');
         const btnText = submitBtn.find('.btn-text');
         const btnLoading = submitBtn.find('.btn-loading');
         const messageContainer = $('.form-message');
-        
+
         // Disable button and show loading
         submitBtn.prop('disabled', true);
         btnText.hide();
         btnLoading.show();
-        
+
         // Clear previous messages
         messageContainer.removeClass('success error').html('');
-        
+
         $.ajax({
             url: form.attr('action'),
             method: 'POST',
@@ -176,15 +175,15 @@ $(document).ready(function() {
                         .addClass('success')
                         .html('<div class="alert alert-success" style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-top: 20px;"><strong>Thành công!</strong> ' + response.message + '</div>')
                         .show();
-                    
+
                     // Reset form
                     form[0].reset();
-                    
+
                     // Refresh CSRF token
                     $.get('/csrf-token', function(data) {
                         $('input[name="_token"]').val(data.token);
                     });
-                    
+
                     // Scroll to message
                     $('html, body').animate({
                         scrollTop: messageContainer.offset().top - 100
@@ -193,7 +192,7 @@ $(document).ready(function() {
             },
             error: function(xhr) {
                 let errorMessage = 'Có lỗi xảy ra khi gửi tin nhắn. Vui lòng thử lại sau.';
-                
+
                 if (xhr.status === 422) {
                     // Validation errors
                     const errors = xhr.responseJSON.errors;
@@ -202,12 +201,12 @@ $(document).ready(function() {
                 } else if (xhr.responseJSON && xhr.responseJSON.message) {
                     errorMessage = xhr.responseJSON.message;
                 }
-                
+
                 messageContainer
                     .addClass('error')
                     .html('<div class="alert alert-danger" style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-top: 20px;"><strong>Lỗi!</strong> ' + errorMessage + '</div>')
                     .show();
-                
+
                 // Scroll to message
                 $('html, body').animate({
                     scrollTop: messageContainer.offset().top - 100
@@ -218,7 +217,7 @@ $(document).ready(function() {
                 submitBtn.prop('disabled', false);
                 btnText.show();
                 btnLoading.hide();
-                
+
                 // Reset submitting flag
                 isSubmitting = false;
                 console.log('Form submission completed, ready for next submit');

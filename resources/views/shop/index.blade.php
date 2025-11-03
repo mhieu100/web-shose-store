@@ -5,6 +5,27 @@
 
 @section('content')
     <main class="main-content">
+        <!-- Breadcrumb -->
+        @php
+            $breadcrumbItems = [
+                ['label' => 'Trang chủ', 'url' => route('home'), 'icon' => 'home'],
+                ['label' => 'Cửa hàng', 'url' => route('shop'), 'icon' => 'store']
+            ];
+
+            if ($currentBrand) {
+                $breadcrumbItems[] = ['label' => $currentBrand->name, 'icon' => 'tag', 'active' => !$currentCategory];
+            }
+
+            if ($currentCategory) {
+                $breadcrumbItems[] = ['label' => $currentCategory->name, 'icon' => 'list', 'active' => true];
+            }
+
+            if (!$currentBrand && !$currentCategory) {
+                $breadcrumbItems[count($breadcrumbItems) - 1]['active'] = true;
+            }
+        @endphp
+        <x-breadcrumb :items="$breadcrumbItems" />
+
         <!--== Start Page Header Area Wrapper ==-->
         <div class="page-header-area" data-bg-img="{{ config('app.page_header_image') }}">
             <div class="container pt--0 pb--0">
@@ -20,21 +41,6 @@
                                     - {{ $currentCategory->name }}
                                 @endif
                             </h2>
-                            <nav class="breadcrumb-area" data-aos="fade-down" data-aos-duration="1200">
-                                <ul class="breadcrumb">
-                                    <li><a href="{{ route('home') }}">Trang chủ</a></li>
-                                    <li class="breadcrumb-sep">›</li>
-                                    <li><a href="{{ route('shop') }}">Cửa hàng</a></li>
-                                    @if ($currentBrand)
-                                        <li class="breadcrumb-sep">›</li>
-                                        <li>{{ $currentBrand->name }}</li>
-                                    @endif
-                                    @if ($currentCategory)
-                                        <li class="breadcrumb-sep">›</li>
-                                        <li>{{ $currentCategory->name }}</li>
-                                    @endif
-                                </ul>
-                            </nav>
                         </div>
                     </div>
                 </div>
@@ -48,22 +54,23 @@
                 <div class="row flex-xl-row-reverse justify-content-between">
                     <div class="col-xl-9">
                         <div class="row">
+
                             <div class="col-12">
-                                <div class="shop-top-bar">
-                                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
-                                        <!-- Product Count - Left side -->
-                                        <div class="shop-top-left">
-                                            <p class="pagination-line mb-0">
-                                                <strong>{{ $products->total() }}</strong> sản phẩm
+                                <div class="shop-top-bar-test" style="background: #f8f9fa; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <!-- Left: Product Count -->
+                                        <div style="flex: 0 0 auto;">
+                                            <p class="mb-0" style="font-size: 0.9rem;">
+                                                <strong style="color: #DC3E37;">{{ $products->total() }}</strong> sản phẩm
                                             </p>
                                         </div>
 
-                                        <!-- Sort Dropdown - Right side -->
-                                        <div class="shop-top-right">
-                                            <div class="shop-sort d-flex align-items-center gap-2">
-                                                <span class="d-none d-lg-inline text-nowrap">Sắp xếp:</span>
-                                                <select class="form-select form-select-sm" style="min-width: 180px;"
-                                                    aria-label="Sort select" onchange="updateSort(this.value)">
+                                        <!-- Right: Sort Dropdown -->
+                                        <div style="flex: 0 0 auto; margin-left: auto;">
+                                            <div style="display: flex; align-items: center; gap: 8px;">
+                                                <span style="font-size: 0.9rem;">Sắp xếp:</span>
+                                                <select class="form-select form-select-sm" style="min-width: 150px; width: auto;"
+                                                    aria-label="Sort select test" onchange="updateSort(this.value)">
                                                     <option value="created_at"
                                                         {{ request('sort') == 'created_at' ? 'selected' : '' }}>Mới nhất
                                                     </option>
@@ -185,11 +192,6 @@
                                                                 Hiện tại không có sản phẩm nào trong cửa hàng.
                                                             @endif
                                                         </p>
-                                                        @if (request('search') || request('brand') || request('category') || request('min_price') || request('max_price'))
-                                                            <a href="{{ route('shop') }}" class="btn-clear-filters">
-                                                                <i class="bx bx-refresh"></i> Xóa tất cả bộ lọc
-                                                            </a>
-                                                        @endif
                                                     </div>
                                                 </div>
                                             @endforelse
@@ -228,154 +230,63 @@
                                 </div>
                             </div>
 
-                            <!-- Enhanced Pagination -->
+                            <!-- Simple Pagination -->
                             @if ($products->hasPages())
                                 <div class="col-12">
-                                    <div class="pagination-wrapper">
-                                        <div class="pagination-info">
-                                            <div class="pagination-summary">
-                                                <span class="showing-text">Hiển thị</span>
-                                                <strong>{{ $products->firstItem() ?? 0 }}</strong>
-                                                <span>đến</span>
-                                                <strong>{{ $products->lastItem() ?? 0 }}</strong>
-                                                <span>trong tổng số</span>
-                                                <strong>{{ $products->total() }}</strong>
-                                                <span>sản phẩm</span>
-                                                @if (request()->hasAny(['search', 'category', 'brand', 'min_price', 'max_price']))
-                                                    <span class="filtered-text">(đã lọc)</span>
+                                    <div class="simple-pagination-wrapper">
+                                        <nav aria-label="Page navigation">
+                                            <ul class="pagination justify-content-center mb-0">
+                                                {{-- Previous Button --}}
+                                                @if ($products->onFirstPage())
+                                                    <li class="page-item disabled">
+                                                        <span class="page-link">&laquo;</span>
+                                                    </li>
+                                                @else
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="{{ $products->previousPageUrl() }}">&laquo;</a>
+                                                    </li>
                                                 @endif
-                                            </div>
 
-                                            <div class="per-page-selector">
-                                                <label for="per-page">Hiển thị:</label>
-                                                <select id="per-page" class="form-select per-page-select"
-                                                    onchange="changePerPage(this.value)">
-                                                    <option value="12"
-                                                        {{ request('per_page', 12) == 12 ? 'selected' : '' }}>12 sản phẩm
-                                                    </option>
-                                                    <option value="24"
-                                                        {{ request('per_page') == 24 ? 'selected' : '' }}>24 sản phẩm
-                                                    </option>
-                                                    <option value="36"
-                                                        {{ request('per_page') == 36 ? 'selected' : '' }}>36 sản phẩm
-                                                    </option>
-                                                    <option value="48"
-                                                        {{ request('per_page') == 48 ? 'selected' : '' }}>48 sản phẩm
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                                {{-- Page Numbers --}}
+                                                @php
+                                                    $start = max(1, $products->currentPage() - 2);
+                                                    $end = min($products->lastPage(), $products->currentPage() + 2);
+                                                @endphp
 
-                                        <div class="pagination-area">
-                                            <nav aria-label="Page navigation" class="d-flex justify-content-center">
-                                                <div class="pagination-container">
-                                                    @if ($products->onFirstPage())
-                                                        <span class="page-link disabled first-last-btn">
-                                                            <i class="bx bx-chevrons-left"></i>
-                                                            <span class="btn-text">Đầu</span>
-                                                        </span>
-                                                        <span class="page-link disabled">
-                                                            <i class="bx bx-chevron-left"></i>
-                                                            <span class="btn-text">Trước</span>
-                                                        </span>
+                                                @for ($i = $start; $i <= $end; $i++)
+                                                    @if ($i == $products->currentPage())
+                                                        <li class="page-item active">
+                                                            <span class="page-link">{{ $i }}</span>
+                                                        </li>
                                                     @else
-                                                        <a href="{{ $products->url(1) }}"
-                                                            class="page-link first-last-btn">
-                                                            <i class="bx bx-chevrons-left"></i>
-                                                            <span class="btn-text">Đầu</span>
-                                                        </a>
-                                                        <a href="{{ $products->previousPageUrl() }}" class="page-link">
-                                                            <i class="bx bx-chevron-left"></i>
-                                                            <span class="btn-text">Trước</span>
-                                                        </a>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="{{ $products->url($i) }}">{{ $i }}</a>
+                                                        </li>
                                                     @endif
+                                                @endfor
 
-                                                    <div class="page-numbers">
-                                                        @php
-                                                            $start = max(1, $products->currentPage() - 2);
-                                                            $end = min(
-                                                                $products->lastPage(),
-                                                                $products->currentPage() + 2,
-                                                            );
-                                                        @endphp
-
-                                                        @if ($start > 1)
-                                                            <a href="{{ $products->url(1) }}" class="page-link">1</a>
-                                                            @if ($start > 2)
-                                                                <span class="page-link dots">...</span>
-                                                            @endif
-                                                        @endif
-
-                                                        @for ($i = $start; $i <= $end; $i++)
-                                                            @if ($i == $products->currentPage())
-                                                                <span class="page-link active">{{ $i }}</span>
-                                                            @else
-                                                                <a href="{{ $products->url($i) }}"
-                                                                    class="page-link">{{ $i }}</a>
-                                                            @endif
-                                                        @endfor
-
-                                                        @if ($end < $products->lastPage())
-                                                            @if ($end < $products->lastPage() - 1)
-                                                                <span class="page-link dots">...</span>
-                                                            @endif
-                                                            <a href="{{ $products->url($products->lastPage()) }}"
-                                                                class="page-link">{{ $products->lastPage() }}</a>
-                                                        @endif
-                                                    </div>
-
-                                                    @if ($products->hasMorePages())
-                                                        <a href="{{ $products->nextPageUrl() }}" class="page-link">
-                                                            <span class="btn-text">Tiếp</span>
-                                                            <i class="bx bx-chevron-right"></i>
-                                                        </a>
-                                                        <a href="{{ $products->url($products->lastPage()) }}"
-                                                            class="page-link first-last-btn">
-                                                            <span class="btn-text">Cuối</span>
-                                                            <i class="bx bx-chevrons-right"></i>
-                                                        </a>
-                                                    @else
-                                                        <span class="page-link disabled">
-                                                            <span class="btn-text">Tiếp</span>
-                                                            <i class="bx bx-chevron-right"></i>
-                                                        </span>
-                                                        <span class="page-link disabled first-last-btn">
-                                                            <span class="btn-text">Cuối</span>
-                                                            <i class="bx bx-chevrons-right"></i>
-                                                        </span>
-                                                    @endif
-                                                </div>
-                                            </nav>
-                                        </div>
-
-                                        <div class="pagination-jump">
-                                            <div class="jump-to-page">
-                                                <label for="jump-page">Đi đến trang:</label>
-                                                <input type="number" id="jump-page" class="form-control jump-input"
-                                                    min="1" max="{{ $products->lastPage() }}"
-                                                    placeholder="{{ $products->currentPage() }}">
-                                                <button type="button" class="btn btn-primary jump-btn"
-                                                    onclick="jumpToPage()">
-                                                    <i class="bx bx-right-arrow-alt"></i>
-                                                </button>
-                                            </div>
-                                        </div>
+                                                {{-- Next Button --}}
+                                                @if ($products->hasMorePages())
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="{{ $products->nextPageUrl() }}">&raquo;</a>
+                                                    </li>
+                                                @else
+                                                    <li class="page-item disabled">
+                                                        <span class="page-link">&raquo;</span>
+                                                    </li>
+                                                @endif
+                                            </ul>
+                                        </nav>
                                     </div>
                                 </div>
                             @else
                                 <div class="col-12">
-                                    <div class="pagination-wrapper no-pagination">
-                                        <div class="pagination-info">
-                                            <div class="pagination-summary">
-                                                @if ($products->count() > 0)
-                                                    <span>Hiển thị tất cả</span>
-                                                    <strong>{{ $products->count() }}</strong>
-                                                    <span>sản phẩm</span>
-                                                @else
-                                                    <span class="no-results">Không có sản phẩm nào</span>
-                                                @endif
-                                            </div>
-                                        </div>
+                                    <div class="text-center py-3">
+                                        @if ($products->count() > 0)
+                                            <span>Hiển thị tất cả <strong>{{ $products->count() }}</strong> sản phẩm</span>
+                                        @else
+                                            <span class="text-muted">Không có sản phẩm nào</span>
+                                        @endif
                                     </div>
                                 </div>
                             @endif

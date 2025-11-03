@@ -20,6 +20,14 @@ $(document).ready(function() {
             return;
         }
         
+        // Check if user is authenticated before proceeding
+        const isAuthenticated = $('meta[name="user-authenticated"]').attr('content') === 'true';
+        if (!isAuthenticated) {
+            // Redirect to login immediately
+            window.location.href = '/login';
+            return;
+        }
+        
         const productId = $(this).data('product-id');
         const productName = $(this).data('product-name');
         const productPrice = $(this).data('product-price');
@@ -67,7 +75,7 @@ $(document).ready(function() {
             showProductOptionsModal();
         } else {
             // Show notification that this product doesn't have variants
-            showNotification('info', `"${currentProduct.name}" không có tùy chọn màu sắc hoặc kích thước.`);
+            showInfo(`"${currentProduct.name}" không có tùy chọn màu sắc hoặc kích thước.`);
             // Still add to cart for products without variants
             addToCartDirectly();
         }
@@ -340,7 +348,7 @@ $(document).ready(function() {
                 }
                 
                 // Show success message
-                showNotification('success', `Đã thêm "${currentProduct.name}" vào giỏ hàng!`);
+                showSuccess(`Đã thêm "${currentProduct.name}" vào giỏ hàng!`);
                 
                 // Update cart count and sidebar immediately
                 console.log('🛒 Starting cart updates...');
@@ -360,7 +368,19 @@ $(document).ready(function() {
             },
             error: function(xhr, status, error) {
                 console.error('Add to cart error:', error);
-                showNotification('error', 'Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng');
+                
+                const response = xhr.responseJSON;
+                if (response && response.redirect) {
+                    window.location.href = response.redirect;
+                    return;
+                }
+                
+                let errorMessage = 'Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng';
+                if (response && response.message) {
+                    errorMessage = response.message;
+                }
+                
+                showError(errorMessage);
             },
             complete: function() {
                 // Restore button
@@ -386,7 +406,7 @@ $(document).ready(function() {
             type: 'POST',
             data: cartData,
             success: function(response) {
-                showNotification('success', `Đã thêm "${currentProduct.name}" vào giỏ hàng!`);
+                showSuccess(`Đã thêm "${currentProduct.name}" vào giỏ hàng!`);
                 
                 // Update cart count and sidebar immediately
                 console.log('🛒 Starting cart updates (direct)...');
@@ -405,7 +425,19 @@ $(document).ready(function() {
             },
             error: function(xhr, status, error) {
                 console.error('Add to cart error:', error);
-                showNotification('error', 'Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng');
+                
+                const response = xhr.responseJSON;
+                if (response && response.redirect) {
+                    window.location.href = response.redirect;
+                    return;
+                }
+                
+                let errorMessage = 'Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng';
+                if (response && response.message) {
+                    errorMessage = response.message;
+                }
+                
+                showError(errorMessage);
             },
             complete: function() {
                 // Reset processing flag
@@ -451,45 +483,7 @@ $(document).ready(function() {
         return new Intl.NumberFormat('vi-VN').format(price);
     }
 
-    function showNotification(type, message) {
-        // Enhanced notification with multiple types
-        let alertClass = 'alert-secondary';
-        let icon = 'info-circle';
-        
-        switch(type) {
-            case 'success':
-                alertClass = 'alert-success';
-                icon = 'check-circle';
-                break;
-            case 'error':
-                alertClass = 'alert-danger';
-                icon = 'exclamation-triangle';
-                break;
-            case 'warning':
-                alertClass = 'alert-warning';
-                icon = 'exclamation-circle';
-                break;
-            case 'info':
-                alertClass = 'alert-info';
-                icon = 'info-circle';
-                break;
-        }
-        
-        const notification = $(`
-            <div class="alert ${alertClass} alert-dismissible fade show position-fixed" 
-                 style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;">
-                <i class="fas fa-${icon} me-2"></i>${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        `);
-        
-        $('body').append(notification);
-        
-        // Auto remove after 5 seconds
-        setTimeout(() => {
-            notification.alert('close');
-        }, 5000);
-    }
+    // Toast messages are now handled by the global toast system
 
     // Update cart count in header
     function updateCartCount() {

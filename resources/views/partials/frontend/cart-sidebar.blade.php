@@ -29,7 +29,6 @@
             <ul class="aside-cart-product-list" id="sidebar-cart-items">
                 @foreach($cartItems as $item)
                     <li class="product-list-item" data-cart-item-id="{{ $item->id }}">
-                        <a href="#" class="remove" data-product-id="{{ $item->shop_product_id }}" title="Xóa sản phẩm">×</a>
                         <a href="{{ route('product.show', $item->shop_product_id) }}">
                             @if($item->product->getFirstMediaUrl('product-images'))
                                 <img src="{{ $item->product->getFirstMediaUrl('product-images', 'thumb') }}"
@@ -60,11 +59,13 @@
                 <span class="amount" id="sidebar-cart-total">{{ number_format($cartTotal, 0, ',', '.') }} VNĐ</span>
             </p>
 
-            <a class="btn-theme" data-margin-bottom="10" href="{{ route('cart') }}">Xem giỏ hàng</a>
-            <a class="btn-theme" href="{{ route('checkout') }}">Thanh toán</a>
-            <a class="d-block text-end lh-1" href="{{ route('checkout') }}">
-                <img src="{{ asset('img/photos/paypal.webp') }}" width="133" height="26" alt="PayPal">
-            </a>
+            <div class="cart-buttons-wrapper">
+                <a class="btn-theme btn-block" href="{{ route('cart') }}">XEM GIỎ HÀNG</a>
+                <a class="btn-theme btn-block btn-checkout" href="{{ route('checkout') }}">THANH TOÁN</a>
+                <a class="d-block text-center mt-2" href="{{ route('checkout') }}">
+                    <img src="{{ asset('img/photos/paypal.webp') }}" width="133" height="26" alt="PayPal">
+                </a>
+            </div>
         @else
             <div class="empty-cart-message" id="empty-cart-message">
                 <div class="text-center py-4">

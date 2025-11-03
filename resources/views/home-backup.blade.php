@@ -160,8 +160,8 @@
       <div class="container pt--0">
         <div class="row">
           <div class="col-12">
-            <div class="section-title text-center" style="text-tranform: uppercase">
-              <h3 class="title">Sản phẩm nổi bật</h3>
+            <div class="section-title text-center" style="text-transform: uppercase">
+              <h3 class="title" style="font-weight: bold">Sản phẩm nổi bật</h3>
               <div class="desc">
                 <p>Những đôi giày được yêu thích nhất tại cửa hàng của chúng tôi</p>
               </div>

@@ -94,11 +94,18 @@ class CheckoutController extends Controller
     /**
      * Process checkout and create order
      */
-    public function processCheckout(Request $request): RedirectResponse
+    public function processCheckout(Request $request)
     {
         Log::info('Checkout process started', ['user_id' => Auth::id()]);
 
         if (!Auth::check()) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please login to complete your order.',
+                    'redirect_url' => route('login')
+                ], 401);
+            }
             return redirect()->route('login')->with('message', 'Please login to complete your order.');
         }
 
@@ -109,16 +116,16 @@ class CheckoutController extends Controller
         Log::info('Starting validation', ['request_data' => $request->all()]);
 
         $validated = $request->validate([
-            'payment_method' => 'required|string|in:cod,bank_transfer,paypal,wallet',
+            'payment_method' => 'required|string|in:cod,user_wallet,paypal,wallet',
             'notes' => 'nullable|string|max:500',
+            // Contact fields
+            'fullname' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
             // Address fields
             'address_line_1' => 'required|string|max:255',
             'address_line_2' => 'nullable|string|max:255',
-            'city' => 'required|string|max:100',
             'state' => 'required|string|max:100',
-            'postal_code' => 'required|string|max:20',
-            'country' => 'required|string|max:100',
-            'phone' => 'required|string|max:20',
         ]);
 
         Log::info('Validation passed', ['validated_data' => $validated]);
@@ -135,13 +142,27 @@ class CheckoutController extends Controller
 
             if ($cartItems->isEmpty()) {
                 Log::warning('Cart is empty for user', ['user_id' => $user->id]);
+                if ($request->expectsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Your cart is empty.',
+                        'redirect_url' => route('cart')
+                    ], 400);
+                }
                 return redirect()->route('cart')->with('error', 'Your cart is empty.');
             }
 
             // Check product availability
             foreach ($cartItems as $item) {
                 if ($item->product->qty < $item->quantity) {
-                    return redirect()->back()->with('error', "Sorry, {$item->product->name} only has {$item->product->qty} items in stock.");
+                    $errorMessage = "Sorry, {$item->product->name} only has {$item->product->qty} items in stock.";
+                    if ($request->expectsJson()) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => $errorMessage
+                        ], 400);
+                    }
+                    return redirect()->back()->with('error', $errorMessage);
                 }
             }
 
@@ -149,10 +170,10 @@ class CheckoutController extends Controller
             $addressData = [
                 'address_line_1' => $validated['address_line_1'],
                 'address_line_2' => $validated['address_line_2'] ?? null,
-                'city' => $validated['city'],
+                'city' => null, // Not collected
                 'state' => $validated['state'],
-                'postal_code' => $validated['postal_code'],
-                'country' => $validated['country'],
+                'postal_code' => null, // Not collected
+                'country' => 'Việt Nam', // Default country
                 'phone' => $validated['phone'],
             ];
 
@@ -207,6 +228,10 @@ class CheckoutController extends Controller
                 'shipping_address' => $shippingAddress,
                 'coupon_code' => $couponCode,
                 'coupon_discount' => $couponDiscount,
+                // Customer information (will be stored in billing_address for now)
+                // 'customer_name' => $validated['fullname'],
+                // 'customer_email' => $validated['email'], 
+                // 'customer_phone' => $validated['phone'],
             ];
 
             // Add user_id if column exists
@@ -246,10 +271,58 @@ class CheckoutController extends Controller
 
                 $walletBalance = $this->walletService->getBalance($user);
                 Log::info('Wallet balance checked', ['balance' => $walletBalance, 'required' => $total]);
+            }
+
+            // Process user wallet payment
+            if ($validated['payment_method'] === 'user_wallet') {
+                Log::info('Processing user wallet payment', ['order_id' => $order->id, 'total' => $total]);
+
+                $userWallet = $user->userWallet ?? null;
+                if (!$userWallet || $userWallet->balance < $total) {
+                    Log::error('Insufficient user wallet balance', [
+                        'balance' => $userWallet->balance ?? 0,
+                        'required' => $total
+                    ]);
+                    DB::rollBack();
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Số dư ví không đủ để thanh toán đơn hàng này.'
+                    ], 400);
+                }
+
+                // Deduct amount from user wallet
+                $userWallet->decrement('balance', $total);
+                
+                // Create wallet transaction record
+                $user->walletTransactions()->create([
+                    'type' => 'debit',
+                    'amount' => $total,
+                    'description' => "Thanh toán đơn hàng #{$orderNumber}",
+                    'reference_id' => $order->id,
+                    'reference_type' => 'order_payment'
+                ]);
+
+                // Update order payment status
+                $order->update([
+                    'payment_status' => 'completed',
+                    'paid_at' => now()
+                ]);
+
+                Log::info('User wallet payment completed', [
+                    'order_id' => $order->id,
+                    'amount_deducted' => $total,
+                    'remaining_balance' => $userWallet->fresh()->balance
+                ]);
 
                 if ($walletBalance < $total) {
                     DB::rollBack();
                     Log::warning('Insufficient wallet balance', ['balance' => $walletBalance, 'required' => $total]);
+                    if ($request->expectsJson()) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Số dư ví không đủ. Vui lòng chọn phương thức thanh toán khác.'
+                        ], 400);
+                    }
                     return redirect()->back()
                         ->with('error', 'Số dư ví không đủ. Vui lòng chọn phương thức thanh toán khác.')
                         ->withInput();
@@ -298,26 +371,61 @@ class CheckoutController extends Controller
 
             DB::commit();
 
-            // Redirect based on payment method
-            switch ($validated['payment_method']) {
-                case 'wallet':
-                    return redirect()->route('order.confirmation', $order->id)
-                        ->with('success', 'Đơn hàng đã được thanh toán thành công bằng ví!');
+            // Handle response based on request type (AJAX or regular)
+            if ($request->expectsJson()) {
+                // Return JSON response for AJAX requests
+                switch ($validated['payment_method']) {
+                    case 'wallet':
+                    case 'user_wallet':
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Đơn hàng đã được thanh toán thành công bằng ví!',
+                            'redirect_url' => route('order.confirmation', $order->id)
+                        ]);
 
-                case 'paypal':
-                    // DON'T clear cart here - will be cleared after successful PayPal payment
-                    // Cart::where('user_id', $user->id)->delete(); // Remove this line
-                    Log::info('Redirecting to PayPal payment', ['order_id' => $order->id]);
-                    return redirect()->route('paypal.payment', $order->id);
+                    case 'paypal':
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Đang chuyển hướng đến PayPal...',
+                            'redirect_url' => route('paypal.payment', $order->id)
+                        ]);
 
-                case 'bank_transfer':
-                    return redirect()->route('order.confirmation', $order->id)
-                        ->with('success', 'Order created successfully! Please complete the bank transfer to process your order.');
+                    case 'bank_transfer':
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Order created successfully! Please complete the bank transfer to process your order.',
+                            'redirect_url' => route('order.confirmation', $order->id)
+                        ]);
 
-                case 'cod':
-                default:
-                    return redirect()->route('order.confirmation', $order->id)
-                        ->with('success', 'Order created successfully! You will pay on delivery.');
+                    case 'cod':
+                    default:
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Order created successfully! You will pay on delivery.',
+                            'redirect_url' => route('order.confirmation', $order->id)
+                        ]);
+                }
+            } else {
+                // Return redirect response for regular form submissions
+                switch ($validated['payment_method']) {
+                    case 'wallet':
+                    case 'user_wallet':
+                        return redirect()->route('order.confirmation', $order->id)
+                            ->with('success', 'Đơn hàng đã được thanh toán thành công bằng ví!');
+
+                    case 'paypal':
+                        Log::info('Redirecting to PayPal payment', ['order_id' => $order->id]);
+                        return redirect()->route('paypal.payment', $order->id);
+
+                    case 'bank_transfer':
+                        return redirect()->route('order.confirmation', $order->id)
+                            ->with('success', 'Order created successfully! Please complete the bank transfer to process your order.');
+
+                    case 'cod':
+                    default:
+                        return redirect()->route('order.confirmation', $order->id)
+                            ->with('success', 'Order created successfully! You will pay on delivery.');
+                }
             }
 
         } catch (\Exception $e) {
@@ -330,6 +438,13 @@ class CheckoutController extends Controller
                 'user_id' => $user->id ?? null,
                 'request_data' => $request->all()
             ]);
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Something went wrong during checkout. Please try again.'
+                ], 500);
+            }
 
             return redirect()->back()
                 ->with('error', 'Something went wrong during checkout. Please try again.')

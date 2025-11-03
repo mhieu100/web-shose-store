@@ -63,7 +63,7 @@ class HomeController extends Controller
             ->where('featured', true)
             ->with(['brand', 'categories', 'media'])
             ->orderBy('created_at', 'desc')
-            ->limit(8)
+            ->limit(4)
             ->get();
 
         return view('home', compact('banners', 'latestProducts', 'brands', 'categories', 'categoryProducts', 'featuredProducts'));

@@ -123,6 +123,13 @@
             }, 200);
         });
 
+        // Sort dropdown - lọc ngay lập tức
+        $(document).on('change', 'select[onchange*="updateSort"]', function() {
+            const sortValue = $(this).val();
+            console.log('🔄 Sort changed:', sortValue);
+            applyFilters();
+        });
+
         console.log('✅ Filter listeners đã khởi tạo xong');
     }
 
@@ -378,29 +385,35 @@
         }
     }
 
-    // Hiển thị error message
+    // Hiển thị error message - Now using Toast notifications
     function showErrorMessage(message) {
-        const $alert = $(`
-            <div class="alert alert-danger alert-dismissible fade show filter-error-alert"
-                 style="position: fixed; top: 20px; right: 20px; z-index: 10000; max-width: 400px;
-                        background: #DC3E37; color: white; border: none; border-radius: 6px;
-                        box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-family: 'Poppins', sans-serif;">
-                <div class="d-flex align-items-center gap-2">
-                    <i class="fa fa-exclamation-circle fa-lg"></i>
-                    <span>${message}</span>
+        // Use toast notification if available, otherwise fallback to old method
+        if (typeof window.showError !== 'undefined') {
+            window.showError(message);
+        } else {
+            // Fallback to old method
+            const $alert = $(`
+                <div class="alert alert-danger alert-dismissible fade show filter-error-alert"
+                     style="position: fixed; top: 20px; right: 20px; z-index: 10000; max-width: 400px;
+                            background: #DC3E37; color: white; border: none; border-radius: 6px;
+                            box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-family: 'Poppins', sans-serif;">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa fa-exclamation-circle fa-lg"></i>
+                        <span>${message}</span>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
                 </div>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
-            </div>
-        `);
+            `);
 
-        $('body').append($alert);
+            $('body').append($alert);
 
-        // Auto remove sau 5 giây
-        setTimeout(function() {
-            $alert.fadeOut(300, function() {
-                $(this).remove();
-            });
-        }, 5000);
+            // Auto remove sau 5 giây
+            setTimeout(function() {
+                $alert.fadeOut(300, function() {
+                    $(this).remove();
+                });
+            }, 5000);
+        }
     }
 
     // Xử lý nút back/forward của browser

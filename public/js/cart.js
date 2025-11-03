@@ -13,6 +13,14 @@ $(document).ready(function() {
     $(document).on('click', '.add-to-cart', function(e) {
         e.preventDefault();
 
+        // Check if user is authenticated before proceeding
+        const isAuthenticated = $('meta[name="user-authenticated"]').attr('content') === 'true';
+        if (!isAuthenticated) {
+            // Redirect to login immediately
+            window.location.href = '/login';
+            return;
+        }
+
         const productId = $(this).data('product-id');
         const quantity = $(this).data('quantity') || 1;
         const button = $(this);
@@ -33,7 +41,7 @@ $(document).ready(function() {
                     updateCartTotal(response.cart_total);
 
                     // Show success message
-                    showNotification(response.message, 'success');
+                    showSuccess(response.message);
 
                     // Update button text temporarily
                     const originalText = button.html();
@@ -42,7 +50,7 @@ $(document).ready(function() {
                         button.html(originalText);
                     }, 2000);
                 } else {
-                    showNotification(response.message, 'error');
+                    showError(response.message);
                 }
             },
             error: function(xhr) {
@@ -50,7 +58,7 @@ $(document).ready(function() {
                 if (response && response.redirect) {
                     window.location.href = response.redirect;
                 } else {
-                    showNotification(response ? response.message : 'An error occurred', 'error');
+                    showError(response ? response.message : 'Có lỗi xảy ra');
                 }
             },
             complete: function() {
@@ -104,12 +112,12 @@ $(document).ready(function() {
                     // Show success message
                     showNotification('Product removed from cart', 'success');
                 } else {
-                    showNotification(response.message, 'error');
+                    showError(response.message);
                 }
             },
             error: function(xhr) {
                 const response = xhr.responseJSON;
-                showNotification(response ? response.message : 'An error occurred', 'error');
+                showError(response ? response.message : 'Có lỗi xảy ra');
             },
             complete: function() {
                 button.prop('disabled', false);
@@ -196,12 +204,12 @@ $(document).ready(function() {
                     // Show success message
                     showNotification('Cart cleared successfully', 'success');
                 } else {
-                    showNotification(response.message, 'error');
+                    showError(response.message);
                 }
             },
             error: function(xhr) {
                 const response = xhr.responseJSON;
-                showNotification(response ? response.message : 'An error occurred', 'error');
+                showError(response ? response.message : 'Có lỗi xảy ra');
             },
             complete: function() {
                 button.prop('disabled', false);
@@ -233,12 +241,12 @@ $(document).ready(function() {
 
                     showNotification('Cart updated successfully', 'success');
                 } else {
-                    showNotification(response.message, 'error');
+                    showError(response.message);
                 }
             },
             error: function(xhr) {
                 const response = xhr.responseJSON;
-                showNotification(response ? response.message : 'An error occurred', 'error');
+                showError(response ? response.message : 'Có lỗi xảy ra');
             },
             complete: function() {
                 inputElement.prop('disabled', false);
@@ -321,42 +329,5 @@ $(document).ready(function() {
         }
     }
 
-    // Show notification
-    function showNotification(message, type = 'info') {
-        // Create notification element
-        const notification = $(`
-            <div class="toast-notification ${type}">
-                <div class="d-flex align-items-center">
-                    <div class="flex-grow-1">
-                        ${message}
-                    </div>
-                    <button type="button" class="btn-close btn-close-white ms-2" data-bs-dismiss="toast"></button>
-                </div>
-            </div>
-        `);
-
-        // Add to page
-        $('body').append(notification);
-
-        // Show with animation
-        setTimeout(() => {
-            notification.addClass('show');
-        }, 100);
-
-        // Auto hide after 3 seconds
-        setTimeout(() => {
-            notification.removeClass('show');
-            setTimeout(() => {
-                notification.remove();
-            }, 300);
-        }, 3000);
-
-        // Handle close button
-        notification.find('.btn-close').on('click', function() {
-            notification.removeClass('show');
-            setTimeout(() => {
-                notification.remove();
-            }, 300);
-        });
-    }
+    // Toast messages are now handled by the global toast system
 });

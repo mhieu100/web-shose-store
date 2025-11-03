@@ -6,6 +6,22 @@
 
 @section('content')
     @php use Illuminate\Support\Facades\Storage; @endphp
+
+    <!-- Breadcrumb -->
+    @php
+        $breadcrumbItems = [
+            ['label' => 'Trang chủ', 'url' => route('home'), 'icon' => 'home'],
+            ['label' => 'Cửa hàng', 'url' => route('shop'), 'icon' => 'store']
+        ];
+
+        if ($product->categories->count() > 0) {
+            $breadcrumbItems[] = ['label' => $product->categories->first()->name, 'url' => route('shop'), 'icon' => 'list'];
+        }
+
+        $breadcrumbItems[] = ['label' => $product->name, 'icon' => 'box', 'active' => true];
+    @endphp
+    <x-breadcrumb :items="$breadcrumbItems" />
+
     <!--== Start Page Header Area Wrapper ==-->
     <div class="page-header-area" data-bg-img="{{ config('app.page_header_image') }}">
         <div class="container pt--0 pb--0">
@@ -13,19 +29,6 @@
                 <div class="col-12">
                     <div class="page-header-content">
                         <h2 class="title" data-aos="fade-down" data-aos-duration="1000">{{ $product->name }}</h2>
-                        <nav class="breadcrumb-area" data-aos="fade-down" data-aos-duration="1200">
-                            <ul class="breadcrumb">
-                                <li><a href="{{ route('home') }}">Trang chủ</a></li>
-                                <li class="breadcrumb-sep">//</li>
-                                <li><a href="{{ route('shop') }}">Cửa hàng</a></li>
-                                @if ($product->categories->count() > 0)
-                                    <li class="breadcrumb-sep">//</li>
-                                    <li><a href="{{ route('shop') }}">{{ $product->categories->first()->name }}</a></li>
-                                @endif
-                                <li class="breadcrumb-sep">//</li>
-                                <li>{{ $product->name }}</li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -215,13 +218,27 @@
                                         <button type="button" class="btn-theme btn-add-to-cart-detail"
                                             data-product-id="{{ $product->id }}"
                                             data-product-name="{{ $product->name }}"
-                                            data-product-price="{{ $product->price }}">
                                             data-product-price="{{ $product->price }}"
                                             data-product-colors="{{ $product->colors ? json_encode($product->colors) : '[]' }}"
                                             data-product-sizes="{{ $product->sizes ? json_encode($product->sizes) : '[]' }}">
                                             <i class="fa fa-shopping-cart me-2"></i>
                                             Thêm vào giỏ
                                         </button>
+
+                                        <!-- AI Chat Integration Buttons -->
+                                        <div class="ai-chat-actions mt-3">
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="askAboutProduct()">
+                                                    <i class="fas fa-comments"></i> Hỏi về sản phẩm
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="askAboutSize()">
+                                                    <i class="fas fa-ruler"></i> Tư vấn size
+                                                </button>
+                                                <button type="button" class="btn btn-outline-info btn-sm" onclick="askAboutSimilar()">
+                                                    <i class="fas fa-search"></i> Sản phẩm tương tự
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="product-wishlist-compare">

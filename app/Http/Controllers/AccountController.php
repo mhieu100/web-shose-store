@@ -24,7 +24,7 @@ class AccountController extends Controller
     /**
      * Display the user account dashboard
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
 
@@ -34,9 +34,14 @@ class AccountController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
+        // Check if this is an AJAX request for pagination
+        if ($request->ajax() || $request->has('ajax')) {
+            return view('account.partials.orders-table', compact('orders'))->render();
+        }
+
         // Get wallet info
         $walletBalance = $this->walletService->getBalance($user);
-        $recentTransactions = $this->walletService->getTransactions($user, 5);
+        $recentTransactions = $this->walletService->getTransactions($user, 20);
 
         // Get user statistics
         $stats = [
@@ -77,8 +82,24 @@ class AccountController extends Controller
             'address' => $request->address,
         ]);
 
-        return redirect()->route('account')
-            ->with('success', 'Thông tin tài khoản đã được cập nhật thành công!');
+        $message = 'Thông tin tài khoản đã được cập nhật thành công!';
+
+        // Return JSON for AJAX requests
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+                'user' => [
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'address' => $user->address,
+                ]
+            ]);
+        }
+
+        return redirect()->route('account.index')
+            ->with('success', $message);
     }
 
     /**
@@ -97,8 +118,18 @@ class AccountController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('account')
-            ->with('success', 'Mật khẩu đã được thay đổi thành công!');
+        $message = 'Mật khẩu đã được thay đổi thành công!';
+
+        // Return JSON for AJAX requests
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message
+            ]);
+        }
+
+        return redirect()->route('account.index')
+            ->with('success', $message);
     }
 
     /**
@@ -152,7 +183,7 @@ class AccountController extends Controller
     /**
      * Cancel an order
      */
-    public function cancelOrder($orderId)
+    public function cancelOrder(Request $request, $orderId)
     {
         $user = Auth::user();
 
@@ -162,6 +193,12 @@ class AccountController extends Controller
             ->firstOrFail();
 
         if (!$order->canBeCancelled()) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Đơn hàng này không thể hủy được.'
+                ], 400);
+            }
             return redirect()->back()
                 ->with('error', 'Đơn hàng này không thể hủy được.');
         }
@@ -189,12 +226,19 @@ class AccountController extends Controller
             $message = 'Đơn hàng đã được hủy. Hoàn tiền sẽ được xử lý trong vòng 24 giờ.';
         }
 
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message
+            ]);
+        }
+
         return redirect()->back()
             ->with('success', $message);
     }    /**
      * Confirm order delivery - user confirms they received the order
      */
-    public function confirmDelivery($orderId)
+    public function confirmDelivery(Request $request, $orderId)
     {
         $user = Auth::user();
 
@@ -204,6 +248,12 @@ class AccountController extends Controller
 
         // Check if order can be confirmed as delivered
         if (!$order->canBeConfirmedAsDelivered()) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Đơn hàng này không thể xác nhận đã nhận được.'
+                ], 400);
+            }
             return redirect()->back()
                 ->with('error', 'Đơn hàng này không thể xác nhận đã nhận được.');
         }
@@ -220,8 +270,17 @@ class AccountController extends Controller
             $this->processAffiliateCommission($order);
         }
 
+        $message = 'Cảm ơn bạn đã xác nhận nhận hàng! Đơn hàng đã được hoàn thành.';
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message
+            ]);
+        }
+
         return redirect()->back()
-            ->with('success', 'Cảm ơn bạn đã xác nhận nhận hàng! Đơn hàng đã được hoàn thành.');
+            ->with('success', $message);
     }
 
     /**

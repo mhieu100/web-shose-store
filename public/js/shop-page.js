@@ -3,11 +3,34 @@
  * Handles view toggle, price filtering, and other shop functionality
  */
 
-// Sort function
+// Sort function with AJAX
 function updateSort(sortValue) {
-    const url = new URL(window.location.href);
-    url.searchParams.set('sort', sortValue);
-    window.location.href = url.toString();
+    // Update hidden input in filter form
+    let $sortInput = $('#filter-form input[name="sort"]');
+    if ($sortInput.length === 0) {
+        // Create hidden input if not exists
+        $sortInput = $('<input>').attr({
+            type: 'hidden',
+            name: 'sort',
+            value: sortValue
+        });
+        $('#filter-form').append($sortInput);
+    } else {
+        $sortInput.val(sortValue);
+    }
+
+    // Check if AJAX filter is available
+    if (window.shopAjaxFilter && typeof window.shopAjaxFilter.applyFilters === 'function') {
+        console.log('🔄 Applying sort via AJAX:', sortValue);
+        // Apply filters via AJAX
+        window.shopAjaxFilter.applyFilters();
+    } else {
+        // Fallback to page reload
+        console.log('⚠️ AJAX not available, reloading page');
+        const url = new URL(window.location.href);
+        url.searchParams.set('sort', sortValue);
+        window.location.href = url.toString();
+    }
 }
 
 // Change items per page
@@ -174,10 +197,26 @@ function initPriceFilter() {
     });
 }
 
-// Enhanced alert function
+// Enhanced alert function - Now using Toast notifications
 function showAlert(message, type = 'info') {
-    // Try to use a more modern alert if available, otherwise fallback to basic alert
-    if (typeof Swal !== 'undefined') {
+    // Use toast notifications if available
+    if (typeof window.toastHelper !== 'undefined') {
+        switch(type) {
+            case 'success':
+                window.toastHelper.success(message);
+                break;
+            case 'error':
+                window.toastHelper.error(message);
+                break;
+            case 'warning':
+                window.toastHelper.warning(message);
+                break;
+            case 'info':
+            default:
+                window.toastHelper.info(message);
+                break;
+        }
+    } else if (typeof Swal !== 'undefined') {
         Swal.fire({
             text: message,
             icon: type,

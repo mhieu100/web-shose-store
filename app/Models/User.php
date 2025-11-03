@@ -201,13 +201,19 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
 
     /**
      * Get total cart amount
+     * Temporarily disabled to fix stripos error
      */
-    public function getCartTotalAttribute(): float
-    {
-        return $this->carts()->with('product')->get()->sum(function ($cartItem) {
-            return $cartItem->quantity * $cartItem->price;
-        });
-    }
+    // public function getCartTotalAttribute(): float
+    // {
+    //     try {
+    //         return (float) $this->carts()->with('product')->get()->sum(function ($cartItem) {
+    //             return (float) ($cartItem->quantity * $cartItem->price);
+    //         });
+    //     } catch (\Exception $e) {
+    //         \Log::error('Cart total calculation error: ' . $e->getMessage());
+    //         return 0.0;
+    //     }
+    // }
 
     /**
      * Get the user's affiliate links

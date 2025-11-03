@@ -14,10 +14,10 @@
                 </div>
                 <p class="desc">Cửa hàng giày online chất lượng cao, phong cách thời trang hiện đại với dịch vụ tận tâm.</p>
                 <div class="social-icons">
-                  <a href="https://www.facebook.com/" target="_blank" rel="noopener"><i class="fa fa-facebook"></i></a>
-                  <a href="https://dribbble.com/" target="_blank" rel="noopener"><i class="fa fa-dribbble"></i></a>
-                  <a href="https://www.pinterest.com/" target="_blank" rel="noopener"><i class="fa fa-pinterest-p"></i></a>
-                  <a href="https://twitter.com/" target="_blank" rel="noopener"><i class="fa fa-twitter"></i></a>
+                  <a href="https://www.facebook.com/" target="_blank" rel="noopener"><i class="fab fa-facebook"></i></a>
+                  <a href="https://dribbble.com/" target="_blank" rel="noopener"><i class="fab fa-dribbble"></i></a>
+                  <a href="https://www.pinterest.com/" target="_blank" rel="noopener"><i class="fab fa-pinterest-p"></i></a>
+                  <a href="https://twitter.com/" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
                 </div>
               </div>
             </div>
@@ -95,7 +95,7 @@
       <div class="container pt--0 pb--0">
         <div class="row">
           <div class="col-md-7 col-lg-6">
-            <p class="copyright">© {{ date('Y') }} Shoe Store. Made with <i class="fa fa-heart"></i> by <a target="_blank" href="#">Your Company</a></p>
+            <p class="copyright">© {{ date('Y') }} Shoe Store. Made with <i class="fas fa-heart"></i> by <a target="_blank" href="#">Your Company</a></p>
           </div>
           <div class="col-md-5 col-lg-6">
             <div class="payment">

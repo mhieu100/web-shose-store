@@ -25,12 +25,20 @@ Route::get('/product/affiliate', function() { return view('product.affiliate'); 
 
 // Cart & Checkout routes
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
-Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'store'])->name('cart.add');
-Route::put('/cart/update', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
-Route::delete('/cart/remove', [App\Http\Controllers\CartController::class, 'destroy'])->name('cart.remove');
-Route::delete('/cart/clear', [App\Http\Controllers\CartController::class, 'clear'])->name('cart.clear');
 Route::get('/cart/count', [App\Http\Controllers\CartController::class, 'count'])->name('cart.count');
 Route::get('/cart/sidebar-content', [App\Http\Controllers\CartController::class, 'getSidebarContent'])->name('cart.sidebar-content');
+
+// Cart actions requiring authentication
+Route::middleware('auth')->group(function () {
+    Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'store'])->name('cart.add');
+    Route::put('/cart/update', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
+    Route::post('/cart/increment', [App\Http\Controllers\CartController::class, 'increment'])->name('cart.increment');
+    Route::post('/cart/decrement', [App\Http\Controllers\CartController::class, 'decrement'])->name('cart.decrement');
+    Route::delete('/cart/remove', [App\Http\Controllers\CartController::class, 'destroy'])->name('cart.remove');
+    Route::delete('/cart/clear', [App\Http\Controllers\CartController::class, 'clear'])->name('cart.clear');
+    Route::post('/cart/coupon', [App\Http\Controllers\CartController::class, 'applyCoupon'])->name('cart.coupon');
+    Route::delete('/cart/coupon', [App\Http\Controllers\CartController::class, 'removeCoupon'])->name('cart.coupon.remove');
+});
 // Checkout routes
 Route::middleware('auth')->group(function () {
     Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
@@ -53,16 +61,25 @@ Route::get('/compare', function() { return view('compare.index'); })->name('comp
 
 // Wishlist routes
 Route::get('/wishlist', [App\Http\Controllers\WishlistController::class, 'index'])->name('wishlist');
-Route::post('/wishlist/add', [App\Http\Controllers\WishlistController::class, 'store'])->name('wishlist.add');
-Route::delete('/wishlist/remove', [App\Http\Controllers\WishlistController::class, 'destroy'])->name('wishlist.remove');
-Route::post('/wishlist/toggle', [App\Http\Controllers\WishlistController::class, 'toggle'])->name('wishlist.toggle');
-Route::delete('/wishlist/clear', [App\Http\Controllers\WishlistController::class, 'clear'])->name('wishlist.clear');
 Route::get('/wishlist/count', [App\Http\Controllers\WishlistController::class, 'count'])->name('wishlist.count');
+
+// Wishlist actions requiring authentication
+Route::middleware('auth')->group(function () {
+    Route::post('/wishlist/add', [App\Http\Controllers\WishlistController::class, 'store'])->name('wishlist.add');
+    Route::delete('/wishlist/remove', [App\Http\Controllers\WishlistController::class, 'destroy'])->name('wishlist.remove');
+    Route::post('/wishlist/toggle', [App\Http\Controllers\WishlistController::class, 'toggle'])->name('wishlist.toggle');
+    Route::delete('/wishlist/clear', [App\Http\Controllers\WishlistController::class, 'clear'])->name('wishlist.clear');
+});
 
 // Test route for wishlist modal
 Route::get('/test-wishlist-modal', function() {
     return view('test-wishlist-modal');
 })->name('test.wishlist.modal');
+
+// Test route for toast notifications (Toastify JS)
+Route::get('/test-toast', function() {
+    return view('test-toast');
+})->name('test.toast');
 
 // Blog routes
 Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');
@@ -81,6 +98,8 @@ Route::post('/contact/send', [App\Http\Controllers\ContactController::class, 'st
 Route::get('/csrf-token', function() {
     return response()->json(['token' => csrf_token()]);
 });
+
+
 // Account routes - require authentication
 Route::middleware('auth')->prefix('account')->name('account.')->group(function () {
     Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('index');
@@ -118,6 +137,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
     Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
+
+    // Forgot Password Routes
+    Route::get('/forgot-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('/forgot-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('/reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
 });
 
 Route::middleware('auth')->group(function () {
@@ -153,5 +178,12 @@ Route::middleware(['auth'])->prefix('affiliate')->name('affiliate.')->group(func
 Route::middleware(['auth', 'admin.only'])->group(function () {
     Route::get('/invoice/{order}/download', [\App\Http\Controllers\InvoiceController::class, 'downloadInvoice'])->name('invoice.download');
     Route::get('/invoice/{order}/view', [\App\Http\Controllers\InvoiceController::class, 'viewInvoice'])->name('invoice.view');
+});
+
+// AI Chat Routes
+Route::prefix('api/chat')->middleware('web')->group(function () {
+    Route::post('/message', [App\Http\Controllers\ChatController::class, 'sendMessage'])->name('chat.message');
+    Route::get('/suggestions', [App\Http\Controllers\ChatController::class, 'getQuickSuggestions'])->name('chat.suggestions');
+    Route::post('/context', [App\Http\Controllers\ChatController::class, 'getContext'])->name('chat.context');
 });
 

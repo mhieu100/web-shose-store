@@ -4,6 +4,12 @@
 
 @section('content')
 <main class="main-content">
+    <!-- Breadcrumb -->
+    <x-breadcrumb :items="[
+        ['label' => 'Trang chủ', 'url' => route('home'), 'icon' => 'home'],
+        ['label' => 'So sánh sản phẩm', 'icon' => 'balance-scale', 'active' => true]
+    ]" />
+
     <!--== Start Page Header Area Wrapper ==-->
     <div class="page-header-area" data-bg-img="{{ config('app.page_header_image') }}">
       <div class="container pt--0 pb--0">
@@ -11,13 +17,6 @@
           <div class="col-12">
             <div class="page-header-content">
               <h2 class="title" data-aos="fade-down" data-aos-duration="1000">So sánh sản phẩm</h2>
-              <nav class="breadcrumb-area" data-aos="fade-down" data-aos-duration="1200">
-                <ul class="breadcrumb">
-                  <li><a href="{{ route('home') }}">Trang chủ</a></li>
-                  <li class="breadcrumb-sep">//</li>
-                  <li>So sánh</li>
-                </ul>
-              </nav>
             </div>
           </div>
         </div>
