@@ -1,104 +1,63 @@
 <div id="orders-table-container">
-    <div class="orders-table-wrapper">
-        <table class="modern-orders-table">
-            <thead>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-light">
                 <tr>
-                    <th>
-                        <div class="th-content">
-                            <i class="fas fa-hashtag"></i>
-                            <span>Đơn Hàng</span>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="th-content">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>Ngày Đặt</span>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="th-content">
-                            <i class="fas fa-info-circle"></i>
-                            <span>Trạng Thái</span>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="th-content">
-                            <i class="fas fa-money-bill-wave"></i>
-                            <span>Tổng Tiền</span>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="th-content">
-                            <i class="fas fa-cog"></i>
-                            <span>Hành Động</span>
-                        </div>
-                    </th>
+                    <th><i class="fas fa-hashtag me-2"></i>Đơn Hàng</th>
+                    <th><i class="fas fa-calendar-alt me-2"></i>Ngày Đặt</th>
+                    <th><i class="fas fa-info-circle me-2"></i>Trạng Thái</th>
+                    <th><i class="fas fa-money-bill-wave me-2"></i>Tổng Tiền</th>
+                    <th><i class="fas fa-cog me-2"></i>Hành Động</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($orders as $order)
                     <tr>
                         <td>
-                            <div class="order-number">
-                                <i class="fas fa-receipt"></i>
-                                <span>#{{ $order->order_number ?? 'ORD-' . $order->created_at->format('Ymd') . '-' . strtoupper(substr(md5($order->id), 0, 6)) }}</span>
-                            </div>
+                            <strong class="text-primary">#{{ $order->order_number ?? 'ORD-' . $order->created_at->format('Ymd') . '-' . strtoupper(substr(md5($order->id), 0, 6)) }}</strong>
                         </td>
                         <td>
-                            <div class="order-date">
-                                <span class="date-main">{{ $order->created_at->format('d/m/Y') }}</span>
-                                <span class="date-time">{{ $order->created_at->format('H:i') }}</span>
-                            </div>
+                            <div>{{ $order->created_at->format('d/m/Y') }}</div>
+                            <small class="text-muted">{{ $order->created_at->format('H:i') }}</small>
                         </td>
                         <td>
                             @php
                                 $statusLabel = $order->status->getLabel();
-                                $statusClass = 'status-default';
-                                $statusIcon = 'fa-circle';
+                                $badgeClass = 'bg-secondary';
 
                                 if (stripos($statusLabel, 'hoàn thành') !== false || stripos($statusLabel, 'delivered') !== false) {
-                                    $statusClass = 'status-success';
-                                    $statusIcon = 'fa-check-circle';
+                                    $badgeClass = 'bg-success';
                                 } elseif (stripos($statusLabel, 'đang') !== false || stripos($statusLabel, 'processing') !== false) {
-                                    $statusClass = 'status-warning';
-                                    $statusIcon = 'fa-clock';
+                                    $badgeClass = 'bg-warning';
                                 } elseif (stripos($statusLabel, 'hủy') !== false || stripos($statusLabel, 'cancel') !== false) {
-                                    $statusClass = 'status-danger';
-                                    $statusIcon = 'fa-times-circle';
+                                    $badgeClass = 'bg-danger';
+                                } elseif (stripos($statusLabel, 'mới') !== false || stripos($statusLabel, 'new') !== false) {
+                                    $badgeClass = 'bg-info';
                                 }
                             @endphp
-                            <div class="order-status {{ $statusClass }}">
-                                <i class="fas {{ $statusIcon }}"></i>
-                                <span>{{ $statusLabel }}</span>
-                            </div>
+                            <span class="badge {{ $badgeClass }}">{{ $statusLabel }}</span>
                         </td>
                         <td>
-                            <div class="order-price">
-                                <span class="price-amount">{{ number_format($order->total_price, 0, ',', '.') }}</span>
-                                <span class="price-currency">₫</span>
-                            </div>
+                            <strong class="text-success">{{ number_format($order->total_price, 0, ',', '.') }}₫</strong>
                         </td>
                         <td>
-                            <div class="order-actions">
-                                <a href="{{ route('account.order.show', $order->id) }}" class="action-btn action-view" title="Xem chi tiết">
-                                    <i class="fas fa-eye"></i>
-                                    <span>Xem</span>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <a href="{{ route('account.order.show', $order->id) }}" class="btn btn-sm btn-primary" title="Xem chi tiết">
+                                    <i class="fas fa-eye me-1"></i>Xem
                                 </a>
                                 @if ($order->canBeCancelled())
-                                    <form method="POST" action="{{ route('account.order.cancel', $order->id) }}" class="cancel-order-form">
+                                    <form method="POST" action="{{ route('account.order.cancel', $order->id) }}" class="cancel-order-form d-inline">
                                         @csrf
-                                        <button type="submit" class="action-btn action-cancel" title="Hủy đơn hàng">
-                                            <i class="fas fa-ban"></i>
-                                            <span>Hủy</span>
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Hủy đơn hàng">
+                                            <i class="fas fa-ban me-1"></i>Hủy
                                         </button>
                                     </form>
                                 @endif
                                 @if ($order->canBeConfirmedAsDelivered())
-                                    <form method="POST" action="{{ route('account.order.confirm-delivery', $order->id) }}" class="confirm-delivery-form">
+                                    <form method="POST" action="{{ route('account.order.confirm-delivery', $order->id) }}" class="confirm-delivery-form d-inline">
                                         @csrf
-                                        <button type="submit" class="action-btn action-confirm" title="Xác nhận đã nhận hàng">
-                                            <i class="fas fa-check-double"></i>
-                                            <span>Đã nhận</span>
+                                        <button type="submit" class="btn btn-sm btn-success" title="Xác nhận đã nhận hàng">
+                                            <i class="fas fa-check-double me-1"></i>Đã nhận
                                         </button>
                                     </form>
                                 @endif
@@ -106,15 +65,14 @@
                         </td>
                     </tr>
                 @empty
-                    <tr class="empty-state">
-                        <td colspan="5">
-                            <div class="empty-orders">
-                                <i class="fas fa-shopping-bag"></i>
-                                <h4>Chưa có đơn hàng nào</h4>
+                    <tr>
+                        <td colspan="5" class="text-center py-5">
+                            <div class="text-muted">
+                                <i class="fas fa-shopping-bag fa-3x mb-3"></i>
+                                <h5>Chưa có đơn hàng nào</h5>
                                 <p>Bạn chưa thực hiện đơn hàng nào. Hãy bắt đầu mua sắm ngay!</p>
-                                <a href="{{ route('shop') }}" class="btn-shop-now">
-                                    <i class="fas fa-shopping-cart"></i>
-                                    <span>Mua sắm ngay</span>
+                                <a href="{{ route('shop') }}" class="btn btn-primary mt-2">
+                                    <i class="fas fa-shopping-cart me-1"></i>Mua sắm ngay
                                 </a>
                             </div>
                         </td>
@@ -125,44 +83,58 @@
     </div>
 
     @if (isset($orders) && $orders->hasPages())
-        <!-- Modern Pagination -->
-        <div class="modern-pagination" id="orders-pagination">
-            <div class="pagination-info">
-                <i class="fas fa-info-circle"></i>
-                <span>Hiển thị <strong>{{ $orders->firstItem() ?? 0 }}</strong> - <strong>{{ $orders->lastItem() ?? 0 }}</strong> trong tổng số <strong>{{ $orders->total() }}</strong> đơn hàng</span>
+        <!-- Bootstrap Pagination -->
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="text-muted">
+                Hiển thị <strong>{{ $orders->firstItem() ?? 0 }}</strong> - <strong>{{ $orders->lastItem() ?? 0 }}</strong> trong tổng số <strong>{{ $orders->total() }}</strong> đơn hàng
             </div>
-            <div class="pagination-controls">
-                <button
-                    class="pagination-btn pagination-prev {{ $orders->onFirstPage() ? 'disabled' : '' }}"
-                    data-page="{{ $orders->currentPage() - 1 }}"
-                    {{ $orders->onFirstPage() ? 'disabled' : '' }}>
-                    <i class="fas fa-chevron-left"></i>
-                    <span>Trước</span>
-                </button>
+            <nav>
+                <ul class="pagination mb-0">
+                    {{-- Previous Button --}}
+                    @if ($orders->onFirstPage())
+                        <li class="page-item disabled">
+                            <span class="page-link">Trước</span>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <button class="page-link pagination-link" data-page="{{ $orders->currentPage() - 1 }}">Trước</button>
+                        </li>
+                    @endif
 
-                <div class="pagination-numbers">
+                    {{-- Page Numbers --}}
                     @foreach (range(1, min(5, $orders->lastPage())) as $page)
                         @if ($page == $orders->currentPage())
-                            <button class="pagination-number active">{{ $page }}</button>
+                            <li class="page-item active">
+                                <span class="page-link">{{ $page }}</span>
+                            </li>
                         @else
-                            <button class="pagination-number pagination-link" data-page="{{ $page }}">{{ $page }}</button>
+                            <li class="page-item">
+                                <button class="page-link pagination-link" data-page="{{ $page }}">{{ $page }}</button>
+                            </li>
                         @endif
                     @endforeach
 
                     @if ($orders->lastPage() > 5)
-                        <span class="pagination-dots">...</span>
-                        <button class="pagination-number pagination-link" data-page="{{ $orders->lastPage() }}">{{ $orders->lastPage() }}</button>
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                        <li class="page-item">
+                            <button class="page-link pagination-link" data-page="{{ $orders->lastPage() }}">{{ $orders->lastPage() }}</button>
+                        </li>
                     @endif
-                </div>
 
-                <button
-                    class="pagination-btn pagination-next {{ !$orders->hasMorePages() ? 'disabled' : '' }}"
-                    data-page="{{ $orders->currentPage() + 1 }}"
-                    {{ !$orders->hasMorePages() ? 'disabled' : '' }}>
-                    <span>Tiếp</span>
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
+                    {{-- Next Button --}}
+                    @if ($orders->hasMorePages())
+                        <li class="page-item">
+                            <button class="page-link pagination-link" data-page="{{ $orders->currentPage() + 1 }}">Tiếp</button>
+                        </li>
+                    @else
+                        <li class="page-item disabled">
+                            <span class="page-link">Tiếp</span>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
         </div>
     @endif
 </div>

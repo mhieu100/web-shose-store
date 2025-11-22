@@ -310,15 +310,11 @@
                             <table class="table table-hover align-middle">
                               <thead class="table-light">
                                 <tr>
-                                  <th style="width: 10%;">
-                                    <i class="fas fa-hashtag text-muted me-1"></i>
-                                    ID
-                                  </th>
-                                  <th style="width: 20%;">
+                                  <th style="width: 15%;">
                                     <i class="fas fa-exchange-alt text-muted me-1"></i>
                                     Loại giao dịch
                                   </th>
-                                  <th style="width: 25%;">
+                                  <th style="width: 30%;">
                                     <i class="fas fa-align-left text-muted me-1"></i>
                                     Mô tả
                                   </th>
@@ -339,9 +335,6 @@
                               <tbody>
                                 @foreach($recentTransactions as $transaction)
                                   <tr>
-                                    <td class="fw-semibold text-muted">
-                                      #{{ $transaction->id }}
-                                    </td>
                                     <td>
                                       @php
                                         $typeConfig = match($transaction->type) {

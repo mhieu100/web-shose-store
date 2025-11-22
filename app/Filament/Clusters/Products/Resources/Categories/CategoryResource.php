@@ -2,7 +2,6 @@
 
 namespace App\Filament\Clusters\Products\Resources\Categories;
 
-use App\Filament\Clusters\Products\ProductsCluster;
 use App\Filament\Clusters\Products\Resources\Categories\Pages\CreateCategory;
 use App\Filament\Clusters\Products\Resources\Categories\Pages\EditCategory;
 use App\Filament\Clusters\Products\Resources\Categories\Pages\ListCategories;
@@ -14,24 +13,23 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static ?string $cluster = ProductsCluster::class;
-
     protected static ?string $recordTitleAttribute = 'name';
 
     protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $navigationLabel = 'Danh mục';
-    
-    protected static ?string $modelLabel = 'Danh mục';
-    
-    protected static ?string $pluralModelLabel = 'Danh mục';
+    protected static string | UnitEnum | null $navigationGroup = 'Cửa hàng';
 
-    protected static ?string $navigationParentItem = 'Sản phẩm';
+    protected static ?string $navigationLabel = 'Danh mục';
+
+    protected static ?string $modelLabel = 'Danh mục';
+
+    protected static ?string $pluralModelLabel = 'Danh mục';
 
     protected static ?int $navigationSort = 1;
 

@@ -2,7 +2,6 @@
 
 namespace App\Filament\Clusters\Products\Resources\Brands;
 
-use App\Filament\Clusters\Products\ProductsCluster;
 use App\Filament\Clusters\Products\Resources\Brands\Pages\CreateBrand;
 use App\Filament\Clusters\Products\Resources\Brands\Pages\EditBrand;
 use App\Filament\Clusters\Products\Resources\Brands\Pages\ListBrands;
@@ -15,24 +14,23 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class BrandResource extends Resource
 {
     protected static ?string $model = Brand::class;
 
-    protected static ?string $cluster = ProductsCluster::class;
-
     protected static ?string $recordTitleAttribute = 'name';
 
     protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-bookmark-square';
 
-    protected static ?string $navigationLabel = 'Thương hiệu';
-    
-    protected static ?string $modelLabel = 'Thương hiệu';
-    
-    protected static ?string $pluralModelLabel = 'Thương hiệu';
+    protected static string | UnitEnum | null $navigationGroup = 'Cửa hàng';
 
-    protected static ?string $navigationParentItem = 'Sản phẩm';
+    protected static ?string $navigationLabel = 'Thương hiệu';
+
+    protected static ?string $modelLabel = 'Thương hiệu';
+
+    protected static ?string $pluralModelLabel = 'Thương hiệu';
 
     protected static ?int $navigationSort = 2;
 

@@ -417,7 +417,8 @@
     <!--== End Product Single Area Wrapper ==-->
 
     <!--== Start Product Area Wrapper ==-->
-    <section class="product-area product-related-area">
+    <!--== Start Related Products Section ==-->
+    <section class="product-area product-default-area product-related-area">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -429,75 +430,47 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                @forelse($relatedProducts as $relatedProduct)
-                    <div class="col-sm-6 col-lg-3">
-                        <!--== Start Product Item ==-->
-                        <div class="product-item">
-                            <div class="inner-content">
-                                <div class="product-thumb">
-                                    <a href="{{ route('product.show', $relatedProduct->id) }}">
-                                        @if ($relatedProduct->getFirstMediaUrl('product-images'))
-                                            <img src="{{ $relatedProduct->getFirstMediaUrl('product-images') }}"
-                                                width="270" height="274" alt="{{ $relatedProduct->name }}">
-                                        @else
-                                            <img src="{{ asset('img/shop/1.webp') }}" width="270" height="274"
-                                                alt="{{ $relatedProduct->name }}">
-                                        @endif
-                                    </a>
-                                    @if ($relatedProduct->old_price && $relatedProduct->old_price > $relatedProduct->price)
-                                        <div class="product-flag">
-                                            <ul>
-                                                <li class="discount">
-                                                    -{{ round((($relatedProduct->old_price - $relatedProduct->price) / $relatedProduct->old_price) * 100) }}%
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    @endif
-                                    <div class="product-action">
-                                        <x-wishlist-button :product="$relatedProduct" class="btn-product-wishlist" />
-                                        <a class="btn-product-cart" href="{{ route('cart') }}"
-                                            title="{{ __('home.add_to_cart') }}"><i class="fa fa-shopping-cart"></i></a>
-                                        <button type="button" class="btn-product-quick-view-open"
-                                            title="{{ __('home.quick_view') }}">
-                                            <i class="fa fa-arrows"></i>
-                                        </button>
-                                        <a class="btn-product-compare" href="{{ route('compare') }}"
-                                            title="{{ __('home.compare') }}"><i class="fa fa-random"></i></a>
+
+            @if ($relatedProducts->count() > 0)
+                <div class="row">
+                    <div class="col-12">
+                        <div class="swiper-container related-products-slider">
+                            <div class="swiper-wrapper">
+                                @foreach ($relatedProducts as $relatedProduct)
+                                    <div class="swiper-slide">
+                                        <x-product-card
+                                            :product="$relatedProduct"
+                                            :show-actions="true"
+                                            :aos-animation="'none'" />
                                     </div>
+                                @endforeach
+                            </div>
+
+                            <!-- Add Navigation -->
+                            <div class="swiper-btn-wrap">
+                                <div class="swiper-btn-prev related-prev">
+                                    <i class="pe-7s-angle-left"></i>
                                 </div>
-                                <div class="product-info">
-                                    @if ($relatedProduct->categories->count() > 0)
-                                        <div class="category">
-                                            <ul>
-                                                <li><a
-                                                        href="{{ route('shop') }}">{{ $relatedProduct->categories->first()->name }}</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    @endif
-                                    <h4 class="title"><a
-                                            href="{{ route('product.show', $relatedProduct->id) }}">{{ $relatedProduct->name }}</a>
-                                    </h4>
-                                    <div class="prices">
-                                        @if ($relatedProduct->old_price && $relatedProduct->old_price > $relatedProduct->price)
-                                            <span class="price-old">{{ number_format($relatedProduct->old_price) }}
-                                                VNĐ</span>
-                                            <span class="price">{{ number_format($relatedProduct->price) }} VNĐ</span>
-                                        @else
-                                            <span class="price">{{ number_format($relatedProduct->price) }} VNĐ</span>
-                                        @endif
-                                    </div>
+                                <div class="swiper-btn-next related-next">
+                                    <i class="pe-7s-angle-right"></i>
                                 </div>
                             </div>
+
+                            <!-- Add Pagination -->
+                            <div class="swiper-pagination related-pagination"></div>
                         </div>
-                        <!--== End Product Item ==-->
                     </div>
-                @empty
+                </div>
+            @else
+                <div class="row">
                     <div class="col-12">
                         <p class="text-center">Chưa có sản phẩm liên quan nào.</p>
                     </div>
-                @endforelse
+                </div>
+            @endif
+        </div>
+    </section>
+    <!--== End Related Products Section ==-->
             </div>
         </div>
     </section>
@@ -513,6 +486,47 @@
 @push('scripts')
     <script src="{{ asset('js/wishlist.js') }}"></script>
     <script src="{{ asset('js/shop.js') }}"></script>
+
+    <!-- Initialize Related Products Slider -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Related Products Slider
+            if (document.querySelector('.related-products-slider')) {
+                const relatedProductsSlider = new Swiper('.related-products-slider', {
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                    loop: true,
+                    autoplay: {
+                        delay: 3000,
+                        disableOnInteraction: false,
+                    },
+                    navigation: {
+                        nextEl: '.related-next',
+                        prevEl: '.related-prev',
+                    },
+                    pagination: {
+                        el: '.related-pagination',
+                        clickable: true,
+                    },
+                    breakpoints: {
+                        576: {
+                            slidesPerView: 2,
+                            spaceBetween: 20,
+                        },
+                        768: {
+                            slidesPerView: 3,
+                            spaceBetween: 30,
+                        },
+                        992: {
+                            slidesPerView: 4,
+                            spaceBetween: 30,
+                        },
+                    },
+                });
+            }
+        });
+    </script>
+
     <!-- Custom Zoom JavaScript -->
     <script>
         // Define zoom function in global scope so it can be called from anywhere
@@ -1333,6 +1347,102 @@
         .add-to-cart:disabled {
             opacity: 0.7;
             cursor: not-allowed;
+        }
+
+        /* Related Products Slider Styles */
+        .related-products-slider {
+            position: relative;
+            padding: 0 50px;
+        }
+
+        .related-products-slider .swiper-slide {
+            height: auto;
+        }
+
+        .related-products-slider .swiper-btn-wrap {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .related-products-slider .swiper-btn-prev,
+        .related-products-slider .swiper-btn-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45px;
+            height: 45px;
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .related-products-slider .swiper-btn-prev {
+            left: 0;
+        }
+
+        .related-products-slider .swiper-btn-next {
+            right: 0;
+        }
+
+        .related-products-slider .swiper-btn-prev:hover,
+        .related-products-slider .swiper-btn-next:hover {
+            background: #222;
+            border-color: #222;
+            color: #fff;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .related-products-slider .swiper-btn-prev i,
+        .related-products-slider .swiper-btn-next i {
+            font-size: 20px;
+        }
+
+        .related-products-slider .swiper-pagination {
+            position: static;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .related-products-slider .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            background: #d8d8d8;
+            opacity: 1;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+
+        .related-products-slider .swiper-pagination-bullet-active {
+            background: #222;
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        /* Mobile responsive for related products */
+        @media only screen and (max-width: 767px) {
+            .related-products-slider {
+                padding: 0 30px;
+            }
+
+            .related-products-slider .swiper-btn-prev,
+            .related-products-slider .swiper-btn-next {
+                width: 35px;
+                height: 35px;
+            }
+
+            .related-products-slider .swiper-btn-prev i,
+            .related-products-slider .swiper-btn-next i {
+                font-size: 16px;
+            }
         }
     </style>
 @endpush

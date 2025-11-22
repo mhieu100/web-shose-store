@@ -1,0 +1,1961 @@
+mysqldump: [Warning] Using a password on the command line interface can be insecure.
+-- MySQL dump 10.13  Distrib 8.0.43, for Linux (x86_64)
+--
+-- Host: localhost    Database: shosedb
+-- ------------------------------------------------------
+-- Server version	8.0.43-0ubuntu0.24.04.2
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Current Database: `shosedb`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `shosedb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+
+USE `shosedb`;
+
+--
+-- Table structure for table `addressables`
+--
+
+DROP TABLE IF EXISTS `addressables`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `addressables` (
+  `address_id` bigint unsigned NOT NULL,
+  `addressable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `addressable_id` bigint unsigned NOT NULL,
+  KEY `addressables_addressable_type_addressable_id_index` (`addressable_type`,`addressable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `addressables`
+--
+
+LOCK TABLES `addressables` WRITE;
+/*!40000 ALTER TABLE `addressables` DISABLE KEYS */;
+INSERT INTO `addressables` (`address_id`, `addressable_type`, `addressable_id`) VALUES (1,'App\\Models\\Shop\\Brand',1);
+INSERT INTO `addressables` (`address_id`, `addressable_type`, `addressable_id`) VALUES (2,'App\\Models\\Shop\\Brand',2);
+INSERT INTO `addressables` (`address_id`, `addressable_type`, `addressable_id`) VALUES (3,'App\\Models\\Shop\\Brand',3);
+INSERT INTO `addressables` (`address_id`, `addressable_type`, `addressable_id`) VALUES (4,'App\\Models\\Shop\\Brand',4);
+INSERT INTO `addressables` (`address_id`, `addressable_type`, `addressable_id`) VALUES (5,'App\\Models\\Shop\\Brand',5);
+INSERT INTO `addressables` (`address_id`, `addressable_type`, `addressable_id`) VALUES (6,'App\\Models\\Shop\\Customer',1);
+INSERT INTO `addressables` (`address_id`, `addressable_type`, `addressable_id`) VALUES (7,'App\\Models\\Shop\\Customer',2);
+INSERT INTO `addressables` (`address_id`, `addressable_type`, `addressable_id`) VALUES (8,'App\\Models\\Shop\\Customer',3);
+INSERT INTO `addressables` (`address_id`, `addressable_type`, `addressable_id`) VALUES (9,'App\\Models\\Shop\\Customer',4);
+INSERT INTO `addressables` (`address_id`, `addressable_type`, `addressable_id`) VALUES (10,'App\\Models\\Shop\\Customer',5);
+/*!40000 ALTER TABLE `addressables` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `addresses`
+--
+
+DROP TABLE IF EXISTS `addresses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `addresses` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `country` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `street` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `zip` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `full_address` varchar(255) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat(`street`,_utf8mb4', ',`zip`,_utf8mb4' ',`city`)) VIRTUAL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `addresses`
+--
+
+LOCK TABLES `addresses` WRITE;
+/*!40000 ALTER TABLE `addresses` DISABLE KEYS */;
+INSERT INTO `addresses` (`id`, `country`, `street`, `city`, `state`, `zip`, `created_at`, `updated_at`) VALUES (1,'hr','344 McClure Roads','Harrisbury','Delaware','39240-3584','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `addresses` (`id`, `country`, `street`, `city`, `state`, `zip`, `created_at`, `updated_at`) VALUES (2,'tv','2385 Amos Avenue Apt. 102','Swiftshire','Oregon','89784','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `addresses` (`id`, `country`, `street`, `city`, `state`, `zip`, `created_at`, `updated_at`) VALUES (3,'ma','1896 Rodolfo Mews Suite 233','Javonteview','North Dakota','99542-7931','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `addresses` (`id`, `country`, `street`, `city`, `state`, `zip`, `created_at`, `updated_at`) VALUES (4,'ec','99559 Emerson Turnpike Apt. 154','New Kareemtown','New Jersey','13371-8135','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `addresses` (`id`, `country`, `street`, `city`, `state`, `zip`, `created_at`, `updated_at`) VALUES (5,'nu','74826 Grant Shore Suite 586','North Ellie','Georgia','08621-6897','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `addresses` (`id`, `country`, `street`, `city`, `state`, `zip`, `created_at`, `updated_at`) VALUES (6,'nl','735 Cecile Ranch Suite 760','Metzmouth','California','53627','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `addresses` (`id`, `country`, `street`, `city`, `state`, `zip`, `created_at`, `updated_at`) VALUES (7,'tk','2458 Eulalia Centers','Marksmouth','Utah','36068-1400','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `addresses` (`id`, `country`, `street`, `city`, `state`, `zip`, `created_at`, `updated_at`) VALUES (8,'mp','85906 Dolly Isle','New Agnesmouth','Texas','34985-1788','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `addresses` (`id`, `country`, `street`, `city`, `state`, `zip`, `created_at`, `updated_at`) VALUES (9,'gg','931 Damien Island Suite 835','North Cassidy','Washington','44229-5767','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `addresses` (`id`, `country`, `street`, `city`, `state`, `zip`, `created_at`, `updated_at`) VALUES (10,'ms','83964 Terry Corners Suite 763','Demarcusborough','South Carolina','52679-0953','2025-10-20 07:24:34','2025-10-20 07:24:34');
+/*!40000 ALTER TABLE `addresses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `affiliate_links`
+--
+
+DROP TABLE IF EXISTS `affiliate_links`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `affiliate_links` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
+  `shop_product_id` bigint unsigned NOT NULL,
+  `link_code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `original_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `affiliate_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `clicks` int NOT NULL DEFAULT '0',
+  `conversions` int NOT NULL DEFAULT '0',
+  `total_commission` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `last_clicked_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `affiliate_links_link_code_unique` (`link_code`),
+  KEY `affiliate_links_shop_product_id_foreign` (`shop_product_id`),
+  KEY `affiliate_links_user_id_shop_product_id_index` (`user_id`,`shop_product_id`),
+  KEY `affiliate_links_link_code_index` (`link_code`),
+  CONSTRAINT `affiliate_links_shop_product_id_foreign` FOREIGN KEY (`shop_product_id`) REFERENCES `shop_products` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `affiliate_links_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `affiliate_links`
+--
+
+LOCK TABLES `affiliate_links` WRITE;
+/*!40000 ALTER TABLE `affiliate_links` DISABLE KEYS */;
+/*!40000 ALTER TABLE `affiliate_links` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `banners`
+--
+
+DROP TABLE IF EXISTS `banners`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `banners` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `link_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `sort_order` int NOT NULL DEFAULT '0',
+  `start_date` datetime DEFAULT NULL,
+  `end_date` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `banners_is_active_index` (`is_active`),
+  KEY `banners_sort_order_index` (`sort_order`),
+  KEY `banners_start_date_end_date_index` (`start_date`,`end_date`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `banners`
+--
+
+LOCK TABLES `banners` WRITE;
+/*!40000 ALTER TABLE `banners` DISABLE KEYS */;
+INSERT INTO `banners` (`id`, `title`, `description`, `link_url`, `image_path`, `is_active`, `sort_order`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES (11,'Bộ sưu tập mới 2025','Khám phá những mẫu giày thời trang mới nhất\n                                                                với chất lượng cao','http://127.0.0.1:8000/shop','banners/01K8E495FF2G4879HRWG2T0HM1.jpg',1,0,NULL,NULL,'2025-10-25 09:47:28','2025-10-25 09:47:28');
+INSERT INTO `banners` (`id`, `title`, `description`, `link_url`, `image_path`, `is_active`, `sort_order`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES (12,'Phong cách đường phố','Nâng tầm phong cách của bạn với những đôi giày độc đáo và cá tính','http://127.0.0.1:8000/shop','banners/01K8E4BPNYYECFH3F87DJ0GA36.jpg',1,0,NULL,NULL,'2025-10-25 09:48:51','2025-10-25 09:48:51');
+INSERT INTO `banners` (`id`, `title`, `description`, `link_url`, `image_path`, `is_active`, `sort_order`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES (13,'Giày thể thao cao cấp','Cam kết 100% sản phẩm chính hãng từ các thương hiệu nổi tiếng','http://127.0.0.1:8000/shop','banners/01K8E4CDW0SXWCS7SZRZ9AY7HE.jpg',1,0,NULL,NULL,'2025-10-25 09:49:15','2025-10-25 09:49:15');
+/*!40000 ALTER TABLE `banners` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `blog_authors`
+--
+
+DROP TABLE IF EXISTS `blog_authors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `blog_authors` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bio` longtext COLLATE utf8mb4_unicode_ci,
+  `github_handle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `twitter_handle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `blog_authors_email_unique` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `blog_authors`
+--
+
+LOCK TABLES `blog_authors` WRITE;
+/*!40000 ALTER TABLE `blog_authors` DISABLE KEYS */;
+INSERT INTO `blog_authors` (`id`, `name`, `email`, `photo`, `bio`, `github_handle`, `twitter_handle`, `created_at`, `updated_at`) VALUES (1,'Phạm Thị Diệu 21','phạm.thị.diệu.21@techblog.vn',NULL,'Tác giả Phạm Thị Diệu 21 - Chuyên gia về công nghệ và viết lách, có nhiều năm kinh nghiệm trong lĩnh vực truyền thông.','diệu_dev','@diệu_writer','2024-12-18 16:05:20','2025-06-27 08:09:00');
+INSERT INTO `blog_authors` (`id`, `name`, `email`, `photo`, `bio`, `github_handle`, `twitter_handle`, `created_at`, `updated_at`) VALUES (2,'Phạm Thị Diệu 100','phạm.thị.diệu.100@techblog.vn',NULL,'Tác giả Phạm Thị Diệu 100 - Chuyên gia về công nghệ và viết lách, có nhiều năm kinh nghiệm trong lĩnh vực truyền thông.','diệu_dev','@diệu_writer','2025-03-30 07:36:41','2025-06-26 07:49:34');
+INSERT INTO `blog_authors` (`id`, `name`, `email`, `photo`, `bio`, `github_handle`, `twitter_handle`, `created_at`, `updated_at`) VALUES (3,'Nguyễn Văn An 83','nguyễn.văn.an.83@techblog.vn',NULL,'Tác giả Nguyễn Văn An 83 - Chuyên gia về công nghệ và viết lách, có nhiều năm kinh nghiệm trong lĩnh vực truyền thông.','an_dev','@an_writer','2024-12-27 19:57:57','2025-09-11 01:10:58');
+INSERT INTO `blog_authors` (`id`, `name`, `email`, `photo`, `bio`, `github_handle`, `twitter_handle`, `created_at`, `updated_at`) VALUES (4,'Bùi Thị Lan 64','bùi.thị.lan.64@techblog.vn',NULL,'Tác giả Bùi Thị Lan 64 - Chuyên gia về công nghệ và viết lách, có nhiều năm kinh nghiệm trong lĩnh vực truyền thông.','lan_dev','@lan_writer','2025-03-26 08:29:01','2025-09-25 01:07:25');
+INSERT INTO `blog_authors` (`id`, `name`, `email`, `photo`, `bio`, `github_handle`, `twitter_handle`, `created_at`, `updated_at`) VALUES (5,'Nguyễn Văn An 34','nguyễn.văn.an.34@techblog.vn',NULL,'Tác giả Nguyễn Văn An 34 - Chuyên gia về công nghệ và viết lách, có nhiều năm kinh nghiệm trong lĩnh vực truyền thông.','an_dev','@an_writer','2025-01-19 18:11:47','2025-09-01 19:28:41');
+/*!40000 ALTER TABLE `blog_authors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `blog_categories`
+--
+
+DROP TABLE IF EXISTS `blog_categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `blog_categories` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci,
+  `is_visible` tinyint(1) NOT NULL DEFAULT '0',
+  `seo_title` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seo_description` varchar(160) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `blog_categories_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `blog_categories`
+--
+
+LOCK TABLES `blog_categories` WRITE;
+/*!40000 ALTER TABLE `blog_categories` DISABLE KEYS */;
+INSERT INTO `blog_categories` (`id`, `name`, `slug`, `description`, `is_visible`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (1,'Sức khỏe','suc-khoe','Danh mục Sức khỏe với các bài viết chất lượng cao.',1,NULL,NULL,'2024-12-08 03:23:51','2025-06-22 13:59:19');
+INSERT INTO `blog_categories` (`id`, `name`, `slug`, `description`, `is_visible`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (2,'Giáo dục','giao-duc','Danh mục Giáo dục với các bài viết chất lượng cao.',1,NULL,NULL,'2024-11-24 04:14:27','2025-08-12 04:55:20');
+INSERT INTO `blog_categories` (`id`, `name`, `slug`, `description`, `is_visible`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (3,'Ẩm thực','am-thuc','Danh mục Ẩm thực với các bài viết chất lượng cao.',1,NULL,NULL,'2024-12-13 06:20:50','2025-09-12 16:15:42');
+INSERT INTO `blog_categories` (`id`, `name`, `slug`, `description`, `is_visible`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (4,'Công nghệ','cong-nghe','Danh mục Công nghệ với các bài viết chất lượng cao.',1,NULL,NULL,'2024-11-28 22:01:21','2025-09-08 20:44:26');
+INSERT INTO `blog_categories` (`id`, `name`, `slug`, `description`, `is_visible`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (5,'Du lịch','du-lich','Danh mục Du lịch với các bài viết chất lượng cao.',1,NULL,NULL,'2025-04-10 17:10:49','2025-08-10 11:25:27');
+/*!40000 ALTER TABLE `blog_categories` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `blog_links`
+--
+
+DROP TABLE IF EXISTS `blog_links`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `blog_links` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` json NOT NULL,
+  `description` json NOT NULL,
+  `color` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `blog_links`
+--
+
+LOCK TABLES `blog_links` WRITE;
+/*!40000 ALTER TABLE `blog_links` DISABLE KEYS */;
+INSERT INTO `blog_links` (`id`, `url`, `title`, `description`, `color`, `created_at`, `updated_at`) VALUES (1,'https://tiki.vn','{\"en\": \"Tiki - Mua sắm trực tuyến\", \"vi\": \"Tiki - Mua sắm trực tuyến\"}','{\"en\": \"Siêu thị trực tuyến hàng đầu Việt Nam\", \"vi\": \"Siêu thị trực tuyến hàng đầu Việt Nam\"}','#d131fd','2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `blog_links` (`id`, `url`, `title`, `description`, `color`, `created_at`, `updated_at`) VALUES (2,'https://shopee.vn','{\"en\": \"Shopee Vietnam\", \"vi\": \"Shopee Vietnam\"}','{\"en\": \"Nền tảng thương mại điện tử\", \"vi\": \"Nền tảng thương mại điện tử\"}','#05376b','2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `blog_links` (`id`, `url`, `title`, `description`, `color`, `created_at`, `updated_at`) VALUES (3,'https://zalo.me','{\"en\": \"Zalo - Ứng dụng nhắn tin\", \"vi\": \"Zalo - Ứng dụng nhắn tin\"}','{\"en\": \"Ứng dụng nhắn tin phổ biến tại Việt Nam\", \"vi\": \"Ứng dụng nhắn tin phổ biến tại Việt Nam\"}','#b2b60c','2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `blog_links` (`id`, `url`, `title`, `description`, `color`, `created_at`, `updated_at`) VALUES (4,'https://vnexpress.net','{\"en\": \"VnExpress - Báo điện tử hàng đầu Việt Nam\", \"vi\": \"VnExpress - Báo điện tử hàng đầu Việt Nam\"}','{\"en\": \"Tin tức nhanh và chính xác nhất\", \"vi\": \"Tin tức nhanh và chính xác nhất\"}','#808453','2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `blog_links` (`id`, `url`, `title`, `description`, `color`, `created_at`, `updated_at`) VALUES (5,'https://fpt.edu.vn','{\"en\": \"FPT Edu - Giáo dục\", \"vi\": \"FPT Edu - Giáo dục\"}','{\"en\": \"Hệ thống giáo dục FPT\", \"vi\": \"Hệ thống giáo dục FPT\"}','#a8d09e','2025-10-20 07:24:35','2025-10-20 07:24:35');
+/*!40000 ALTER TABLE `blog_links` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `blog_posts`
+--
+
+DROP TABLE IF EXISTS `blog_posts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `blog_posts` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `blog_author_id` bigint unsigned DEFAULT NULL,
+  `blog_category_id` bigint unsigned DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `published_at` date DEFAULT NULL,
+  `seo_title` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seo_description` varchar(160) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `blog_posts_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `blog_posts`
+--
+
+LOCK TABLES `blog_posts` WRITE;
+/*!40000 ALTER TABLE `blog_posts` DISABLE KEYS */;
+INSERT INTO `blog_posts` (`id`, `blog_author_id`, `blog_category_id`, `title`, `slug`, `content`, `published_at`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (1,1,1,'Chế độ ăn uống lành mạnh - 9','che-do-an-uong-lanh-manh-9','Nội dung bài viết về Chế độ ăn uống lành mạnh - 9. Đây là một bài viết chất lượng cao với thông tin hữu ích và cập nhật.','2025-10-07',NULL,NULL,'2025-01-15 02:58:09','2025-07-01 15:23:02');
+INSERT INTO `blog_posts` (`id`, `blog_author_id`, `blog_category_id`, `title`, `slug`, `content`, `published_at`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (2,1,3,'Lịch thi đấu và kết quả thể thao mới nhất - 724','lich-thi-dau-va-ket-qua-the-thao-moi-nhat-724','Nội dung bài viết về Lịch thi đấu và kết quả thể thao mới nhất - 724. Đây là một bài viết chất lượng cao với thông tin hữu ích và cập nhật.','2025-10-26',NULL,NULL,'2024-11-21 21:21:01','2025-09-08 03:26:46');
+INSERT INTO `blog_posts` (`id`, `blog_author_id`, `blog_category_id`, `title`, `slug`, `content`, `published_at`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (3,2,3,'Những bộ phim hay nhất mọi thời đại - 680','nhung-bo-phim-hay-nhat-moi-thoi-dai-680','Nội dung bài viết về Những bộ phim hay nhất mọi thời đại - 680. Đây là một bài viết chất lượng cao với thông tin hữu ích và cập nhật.','2025-11-11',NULL,NULL,'2025-01-22 07:04:43','2025-07-14 19:42:56');
+INSERT INTO `blog_posts` (`id`, `blog_author_id`, `blog_category_id`, `title`, `slug`, `content`, `published_at`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (4,2,4,'Cách học tiếng Anh hiệu quả - 938','cach-hoc-tieng-anh-hieu-qua-938','Nội dung bài viết về Cách học tiếng Anh hiệu quả - 938. Đây là một bài viết chất lượng cao với thông tin hữu ích và cập nhật.','2025-06-15',NULL,NULL,'2025-01-25 03:35:19','2025-07-21 22:33:15');
+INSERT INTO `blog_posts` (`id`, `blog_author_id`, `blog_category_id`, `title`, `slug`, `content`, `published_at`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (5,3,4,'Phương pháp học tập hiệu quả cho sinh viên - 972','phuong-phap-hoc-tap-hieu-qua-cho-sinh-vien-972','Nội dung bài viết về Phương pháp học tập hiệu quả cho sinh viên - 972. Đây là một bài viết chất lượng cao với thông tin hữu ích và cập nhật.','2025-07-31',NULL,NULL,'2025-03-28 21:47:20','2025-06-14 19:38:37');
+INSERT INTO `blog_posts` (`id`, `blog_author_id`, `blog_category_id`, `title`, `slug`, `content`, `published_at`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (6,3,3,'Cách khởi nghiệp thành công tại Việt Nam - 22','cach-khoi-nghiep-thanh-cong-tai-viet-nam-22','Nội dung bài viết về Cách khởi nghiệp thành công tại Việt Nam - 22. Đây là một bài viết chất lượng cao với thông tin hữu ích và cập nhật.','2025-07-27',NULL,NULL,'2024-12-30 09:14:25','2025-10-11 07:19:05');
+INSERT INTO `blog_posts` (`id`, `blog_author_id`, `blog_category_id`, `title`, `slug`, `content`, `published_at`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (7,4,5,'Cách khởi nghiệp thành công tại Việt Nam - 29','cach-khoi-nghiep-thanh-cong-tai-viet-nam-29','Nội dung bài viết về Cách khởi nghiệp thành công tại Việt Nam - 29. Đây là một bài viết chất lượng cao với thông tin hữu ích và cập nhật.','2025-04-28',NULL,NULL,'2025-02-14 13:13:41','2025-07-23 19:40:37');
+INSERT INTO `blog_posts` (`id`, `blog_author_id`, `blog_category_id`, `title`, `slug`, `content`, `published_at`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (8,4,5,'Xu hướng công nghệ mới nhất năm 2024 - 18','xu-huong-cong-nghe-moi-nhat-nam-2024-18','Nội dung bài viết về Xu hướng công nghệ mới nhất năm 2024 - 18. Đây là một bài viết chất lượng cao với thông tin hữu ích và cập nhật.','2025-06-30',NULL,NULL,'2025-01-28 11:27:46','2025-08-07 23:36:02');
+INSERT INTO `blog_posts` (`id`, `blog_author_id`, `blog_category_id`, `title`, `slug`, `content`, `published_at`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (9,5,2,'Văn hóa ẩm thực ba miền - 40','van-hoa-am-thuc-ba-mien-40','Nội dung bài viết về Văn hóa ẩm thực ba miền - 40. Đây là một bài viết chất lượng cao với thông tin hữu ích và cập nhật.','2025-11-10',NULL,NULL,'2024-11-24 16:24:37','2025-08-10 17:31:18');
+INSERT INTO `blog_posts` (`id`, `blog_author_id`, `blog_category_id`, `title`, `slug`, `content`, `published_at`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (10,5,3,'Cách khởi nghiệp thành công tại Việt Nam - 389','cach-khoi-nghiep-thanh-cong-tai-viet-nam-389','Nội dung bài viết về Cách khởi nghiệp thành công tại Việt Nam - 389. Đây là một bài viết chất lượng cao với thông tin hữu ích và cập nhật.','2025-07-15',NULL,NULL,'2024-11-18 21:18:49','2025-07-23 17:58:14');
+/*!40000 ALTER TABLE `blog_posts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `collaborator_applications`
+--
+
+DROP TABLE IF EXISTS `collaborator_applications`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `collaborator_applications` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
+  `full_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_card_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bank_account` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bank_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bank_account_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reason` text COLLATE utf8mb4_unicode_ci,
+  `experience` text COLLATE utf8mb4_unicode_ci,
+  `status` enum('pending','approved','rejected') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `admin_note` text COLLATE utf8mb4_unicode_ci,
+  `approved_at` timestamp NULL DEFAULT NULL,
+  `approved_by` bigint unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `collaborator_applications_user_id_foreign` (`user_id`),
+  KEY `collaborator_applications_approved_by_foreign` (`approved_by`),
+  CONSTRAINT `collaborator_applications_approved_by_foreign` FOREIGN KEY (`approved_by`) REFERENCES `users` (`id`),
+  CONSTRAINT `collaborator_applications_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `collaborator_applications`
+--
+
+LOCK TABLES `collaborator_applications` WRITE;
+/*!40000 ALTER TABLE `collaborator_applications` DISABLE KEYS */;
+INSERT INTO `collaborator_applications` (`id`, `user_id`, `full_name`, `phone`, `id_card_number`, `bank_account`, `bank_name`, `bank_account_name`, `address`, `reason`, `experience`, `status`, `admin_note`, `approved_at`, `approved_by`, `created_at`, `updated_at`) VALUES (1,2,'Nguyễn Văn An','0901234567','123456789011','1234567891','Vietcombank','Nguyễn Văn An','Hà Nội','Tôi có kinh nghiệm bán hàng và muốn trở thành cộng tác viên để phát triển sự nghiệp.','Có 3 năm kinh nghiệm bán hàng online, từng quản lý shop Shopee với 10k+ followers.','approved','Ứng viên có kinh nghiệm tốt và đã được phê duyệt làm CTV.','2025-10-19 07:24:33',1,'2025-10-13 07:24:33','2025-10-20 07:24:33');
+INSERT INTO `collaborator_applications` (`id`, `user_id`, `full_name`, `phone`, `id_card_number`, `bank_account`, `bank_name`, `bank_account_name`, `address`, `reason`, `experience`, `status`, `admin_note`, `approved_at`, `approved_by`, `created_at`, `updated_at`) VALUES (2,3,'Trần Thị Bình','0902345678','123456789012','1234567892','Techcombank','Trần Thị Bình','Hồ Chí Minh','Tôi có kinh nghiệm bán hàng và muốn trở thành cộng tác viên để phát triển sự nghiệp.','Influencer Facebook với 15k followers, chuyên review sản phẩm thời trang.','approved','Ứng viên có kinh nghiệm tốt và đã được phê duyệt làm CTV.','2025-10-18 07:24:33',1,'2025-10-12 07:24:33','2025-10-20 07:24:33');
+/*!40000 ALTER TABLE `collaborator_applications` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `comments`
+--
+
+DROP TABLE IF EXISTS `comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `comments` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `customer_id` bigint unsigned DEFAULT NULL,
+  `commentable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `commentable_id` bigint unsigned NOT NULL,
+  `title` text COLLATE utf8mb4_unicode_ci,
+  `content` text COLLATE utf8mb4_unicode_ci,
+  `is_visible` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `comments_customer_id_foreign` (`customer_id`),
+  KEY `comments_commentable_type_commentable_id_index` (`commentable_type`,`commentable_id`),
+  CONSTRAINT `comments_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `shop_customers` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comments`
+--
+
+LOCK TABLES `comments` WRITE;
+/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (1,1,'App\\Models\\Shop\\Product',1,'Realigned value-added service-desk','Ut nisi expedita modi. Nihil tempore vero velit saepe quia eum. Labore veritatis error aliquid veniam aut praesentium molestiae. Qui itaque neque harum.',0,'2025-03-22 07:21:23','2025-07-20 17:33:34');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (2,3,'App\\Models\\Shop\\Product',1,'Optional tertiary product','Id dolor et fugiat sed deserunt accusantium. Culpa minus maxime dicta dolor. Magnam et iure laudantium voluptatum rerum omnis aspernatur suscipit. Minus laudantium accusamus sint laudantium.',0,'2025-01-01 11:38:26','2025-07-17 23:36:50');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (3,1,'App\\Models\\Shop\\Product',1,'Stand-alone methodical moderator','Ut odit corporis vel ipsam accusamus reiciendis iusto dicta. Aut omnis accusamus consequatur ipsam asperiores eaque vel illo. Ut voluptatem consequatur est adipisci quia aut.',0,'2025-04-14 05:51:45','2025-06-17 06:21:22');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (4,2,'App\\Models\\Shop\\Product',1,'Down-sized logistical instructionset','Ut iure consequatur modi. Excepturi enim unde eligendi dolores. Qui nisi quia nesciunt nisi quae rerum. Ut quibusdam perferendis maiores alias facere dicta doloremque.',1,'2024-11-27 22:32:30','2025-06-30 11:49:26');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (5,4,'App\\Models\\Shop\\Product',2,'Upgradable homogeneous task-force','Sint dolor voluptatum porro quis delectus voluptates voluptates. Qui aperiam nesciunt magni quia provident culpa et quis. Unde velit vitae omnis sed.',0,'2024-12-25 19:55:05','2025-10-12 15:58:50');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (6,3,'App\\Models\\Shop\\Product',2,'Automated multi-tasking processimprovement','Culpa vel reiciendis optio minima. Consequatur molestiae eum cupiditate sed labore omnis qui. Ullam officia ut sit enim pariatur tempore.',1,'2025-01-05 05:54:13','2025-06-10 02:31:36');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (7,4,'App\\Models\\Shop\\Product',2,'Re-contextualized multimedia challenge','In aut est temporibus voluptas. Harum inventore sed earum debitis omnis autem. Nulla et possimus ex itaque et.',0,'2024-12-01 19:48:45','2025-08-15 17:54:36');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (8,3,'App\\Models\\Shop\\Product',2,'Front-line transitional extranet','Ratione quia placeat et eveniet. Saepe tenetur incidunt consectetur totam deserunt veniam labore est. Saepe explicabo et nihil assumenda voluptatem qui. Voluptatibus et harum ut saepe quis.',1,'2024-10-23 17:05:25','2025-10-03 12:47:28');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (9,2,'App\\Models\\Shop\\Product',3,'Expanded contextually-based portal','Magni dolores debitis et voluptate. Libero dolore molestiae optio. Doloremque aliquam totam enim.',0,'2025-01-30 18:53:17','2025-06-19 05:20:47');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (10,3,'App\\Models\\Shop\\Product',3,'Customer-focused bi-directional policy','Optio enim magni ullam libero. Sit soluta cupiditate autem nam quia. Doloremque minus et harum quia dolores molestiae consequatur. Quidem omnis numquam eos soluta est aliquam.',0,'2024-12-31 20:32:16','2025-08-12 12:32:37');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (11,5,'App\\Models\\Shop\\Product',3,'Decentralized radical superstructure','Fugit eum sit aut quidem sit nam sit. Officiis suscipit quibusdam dolores nihil sed voluptatem aut et. Repudiandae libero sit laboriosam voluptatem rerum.',0,'2025-02-18 18:46:25','2025-06-08 15:12:11');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (12,5,'App\\Models\\Shop\\Product',3,'Inverse incremental strategy','Amet sint sapiente aut ex ullam et nisi asperiores. Inventore occaecati natus voluptatem tenetur. Ab cupiditate qui corrupti. Consequatur repellendus sit animi fugit voluptatem nobis et.',1,'2025-01-07 13:11:38','2025-06-02 09:50:25');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (13,1,'App\\Models\\Shop\\Product',4,'Re-engineered non-volatile attitude','Ut dolore explicabo est quos quis qui. Rerum incidunt iste nesciunt voluptate ab esse sit. Assumenda quidem vitae soluta facilis debitis omnis.',1,'2025-01-31 13:13:55','2025-08-10 15:16:46');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (14,5,'App\\Models\\Shop\\Product',4,'Function-based needs-based openarchitecture','Minima exercitationem eius nihil reiciendis perspiciatis eos a. Ut id et et velit cum iure. Facere expedita sit soluta nam voluptas officiis voluptatem.',1,'2025-03-02 10:26:43','2025-07-05 05:17:15');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (15,1,'App\\Models\\Shop\\Product',4,'Distributed client-driven array','Delectus neque quidem officia quaerat voluptas eos quo qui. Quos modi consectetur omnis error quidem. Quo quaerat et sint. Occaecati eos inventore impedit voluptatem totam aut.',1,'2024-12-30 14:42:31','2025-09-14 12:32:38');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (16,5,'App\\Models\\Shop\\Product',4,'Operative exuding paradigm','Maxime sit fuga nihil voluptas. Est omnis laboriosam possimus similique. Rerum et recusandae et aspernatur nostrum.',1,'2025-04-05 09:52:28','2025-07-02 07:13:41');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (17,1,'App\\Models\\Shop\\Product',5,'Profit-focused composite portal','Enim natus et et possimus autem quo. Perferendis aspernatur cum iusto quidem autem quia. Ipsam cumque temporibus a magni veritatis laboriosam dolor.',0,'2025-04-02 07:55:15','2025-05-31 07:14:03');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (18,1,'App\\Models\\Shop\\Product',5,'Seamless even-keeled attitude','Reprehenderit consequuntur sunt velit eos laboriosam. Qui et laborum natus sit voluptatem. Cupiditate laborum sit quae et neque. Qui eos modi ullam voluptas omnis aspernatur fuga amet.',1,'2024-12-01 17:33:05','2025-09-12 22:28:06');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (19,3,'App\\Models\\Shop\\Product',5,'Triple-buffered composite analyzer','Ut qui aut incidunt officiis. Reprehenderit in ea et. Assumenda consequatur ut veritatis reprehenderit quisquam reiciendis voluptatem.',0,'2025-02-07 16:37:59','2025-08-28 15:15:29');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (20,1,'App\\Models\\Shop\\Product',5,'Integrated impactful middleware','Suscipit sint veritatis possimus non minima architecto rerum. Nihil minus laborum non dolores sequi corrupti consequatur error. Et quia ut quo fugiat aut.',1,'2024-11-18 09:33:18','2025-09-27 20:02:39');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (21,1,'App\\Models\\Blog\\Post',1,'Multi-tiered responsive processimprovement','Ullam ullam nemo ipsum assumenda deserunt. Eos eum enim ad quia delectus pariatur.',0,'2025-01-08 17:32:14','2025-08-25 14:27:21');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (22,1,'App\\Models\\Blog\\Post',1,'Extended global leverage','Qui iusto incidunt quia aspernatur ut. Facere inventore corporis perspiciatis. Rem odit et sunt sed ea sed quisquam.',1,'2024-11-14 19:01:36','2025-07-06 03:06:19');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (23,5,'App\\Models\\Blog\\Post',1,'Advanced bifurcated encryption','Corporis id neque odit aut. Sed dolorum illo distinctio autem veritatis nisi.',0,'2025-01-18 09:09:29','2025-08-29 17:59:30');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (24,1,'App\\Models\\Blog\\Post',2,'Ameliorated leadingedge benchmark','Est excepturi adipisci molestiae commodi. Sunt sint quae enim quos repudiandae quisquam. Velit cupiditate velit ut dolores aut totam esse.',0,'2025-03-14 11:55:14','2025-06-19 09:35:16');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (25,2,'App\\Models\\Blog\\Post',2,'Future-proofed object-oriented analyzer','Quasi dolorem officiis dicta voluptas quaerat. Ipsa blanditiis veritatis quasi doloremque perferendis id nobis porro. Id illum illo ut esse. Qui quidem et quidem porro maxime.',1,'2025-01-27 09:22:33','2025-06-05 08:08:08');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (26,5,'App\\Models\\Blog\\Post',2,'Streamlined bottom-line function','Accusamus non laboriosam est ut qui. In fugiat laudantium eos iusto. Aut autem repellendus laudantium ut vero earum inventore.',1,'2024-11-01 12:22:35','2025-06-27 02:01:31');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (27,4,'App\\Models\\Blog\\Post',3,'Public-key maximized GraphicalUserInterface','Esse dolorem cum illum aut aut optio. Dolores suscipit aliquid perferendis et repudiandae quis.',1,'2025-04-18 17:18:50','2025-07-01 20:10:27');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (28,4,'App\\Models\\Blog\\Post',3,'User-friendly homogeneous moderator','Quam et minima eum iusto. Repellat dolorum nihil dolorem nihil et assumenda aspernatur. Voluptatem maiores sed sequi. Nisi debitis quisquam corporis distinctio.',0,'2025-02-21 12:57:58','2025-06-09 12:36:17');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (29,5,'App\\Models\\Blog\\Post',3,'Decentralized bandwidth-monitored challenge','Aut sunt impedit quia et nam nesciunt. Minus cupiditate laboriosam officia consectetur fugit aut ipsum dolor. Autem recusandae eos distinctio iusto quaerat nihil.',1,'2025-01-03 09:59:06','2025-08-14 13:58:01');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (30,4,'App\\Models\\Blog\\Post',4,'Optional optimal paradigm','Et commodi corrupti delectus neque sapiente pariatur dolore. Ut dignissimos sed ipsam.',0,'2025-01-30 03:10:19','2025-06-24 15:56:04');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (31,3,'App\\Models\\Blog\\Post',4,'Down-sized multi-tasking product','Consequatur et eos ea optio. Explicabo veritatis ut ab facilis accusamus.',0,'2025-02-05 01:17:22','2025-07-03 11:35:57');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (32,4,'App\\Models\\Blog\\Post',4,'Innovative actuating forecast','Minus eligendi qui laudantium. Dignissimos ea ut qui quam quo dolor sint necessitatibus. Ipsum dolores et nesciunt aut architecto.',1,'2025-03-09 11:04:39','2025-09-30 08:51:34');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (33,1,'App\\Models\\Blog\\Post',5,'Phased motivating groupware','Dolores cupiditate consectetur ut. Expedita molestias ratione tempore alias. Quasi animi beatae esse possimus ullam.',1,'2024-10-31 03:43:11','2025-07-03 04:00:04');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (34,5,'App\\Models\\Blog\\Post',5,'Proactive 4thgeneration instructionset','Dolorem perspiciatis cum dolorum et dicta illum exercitationem. Repellendus quo fugiat in. Quae dolorem rem ipsa sed et commodi.',0,'2025-02-03 22:51:44','2025-07-17 17:13:05');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (35,2,'App\\Models\\Blog\\Post',5,'Pre-emptive asymmetric array','Quaerat sequi odio consequatur aut. Ipsum eaque eius iure rerum magnam. Doloribus laboriosam cumque repudiandae itaque consequatur aperiam.',0,'2024-12-24 14:35:56','2025-10-06 22:02:51');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (36,5,'App\\Models\\Blog\\Post',6,'Triple-buffered tertiary data-warehouse','Minus illo magnam id cupiditate. Qui consequuntur eius ducimus ipsam eius corporis. Aliquam libero et in est molestiae. Reiciendis totam odit voluptatem dolor est quae quam et.',0,'2025-04-19 13:46:18','2025-07-06 23:09:42');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (37,5,'App\\Models\\Blog\\Post',6,'Visionary background help-desk','Aut sunt sed maxime eaque aspernatur in. Officiis rerum fugiat vero dolorum recusandae. Sapiente corporis amet illo perspiciatis tempora voluptate et.',1,'2025-03-07 06:57:07','2025-06-18 14:15:03');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (38,4,'App\\Models\\Blog\\Post',6,'Open-source hybrid service-desk','Consequatur voluptatem fugiat cum odit. Animi eligendi dicta similique vero culpa sunt exercitationem atque. Labore molestiae perspiciatis ad delectus modi ab.',1,'2025-03-08 13:33:41','2025-08-19 10:22:41');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (39,2,'App\\Models\\Blog\\Post',7,'Total hybrid processimprovement','Et earum et sunt assumenda. Debitis qui unde reiciendis et iure sed. Mollitia quia modi aspernatur aut.',1,'2025-01-17 10:41:11','2025-09-11 14:56:56');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (40,1,'App\\Models\\Blog\\Post',7,'Open-architected discrete intranet','Repellendus dolorem sed consequatur est minima. Nam consequuntur libero et harum. Dicta ut inventore quam perspiciatis est illo.',0,'2025-02-09 08:50:23','2025-06-07 05:06:19');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (41,3,'App\\Models\\Blog\\Post',7,'Adaptive systemic functionalities','Ea harum voluptate sunt maiores quia quo non voluptas. Et ab eos autem minima modi. Deleniti fuga ut et magnam et eius. Aut vitae laborum eos distinctio.',0,'2025-03-18 21:23:24','2025-07-11 13:22:20');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (42,3,'App\\Models\\Blog\\Post',8,'Realigned modular middleware','Porro quasi vitae error sed non sit consequatur. Vitae animi nemo a eum sunt qui. Voluptas hic laboriosam qui praesentium. Maiores sed atque modi. Voluptas et nulla beatae ut id qui alias.',1,'2025-03-22 06:54:29','2025-08-20 00:21:31');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (43,1,'App\\Models\\Blog\\Post',8,'Ameliorated analyzing systemengine','Exercitationem veritatis ut quia dolorem. Ut autem perspiciatis aut qui alias dolores cum quod. Quo est reiciendis repellat. Distinctio culpa ex culpa.',0,'2025-01-21 07:53:46','2025-10-14 21:11:36');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (44,1,'App\\Models\\Blog\\Post',8,'Operative tertiary initiative','Ratione perspiciatis commodi velit officia. Enim rerum laboriosam ipsum voluptates officia. Rerum aperiam et et vel. Unde quidem sunt molestiae deserunt pariatur.',1,'2025-03-09 11:15:13','2025-09-27 21:57:09');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (45,2,'App\\Models\\Blog\\Post',9,'Polarised background GraphicInterface','Qui rem rem autem pariatur. Enim quas et dolor consequatur id praesentium. Adipisci et ea non earum. Enim quia ex id. Neque natus rem dolorem perspiciatis.',0,'2024-11-19 14:12:27','2025-07-31 03:41:26');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (46,2,'App\\Models\\Blog\\Post',9,'Up-sized eco-centric capability','Minima blanditiis fugiat alias. Necessitatibus et tempora aliquam esse nesciunt. Officiis expedita incidunt vitae placeat sed. Vitae totam sit ullam.',0,'2025-01-13 11:00:57','2025-09-27 06:25:38');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (47,3,'App\\Models\\Blog\\Post',9,'Automated 5thgeneration projection','Nulla et ratione aut repudiandae occaecati natus. Ducimus dicta impedit in corporis. Est error eligendi enim iste et. Veritatis similique unde molestiae rerum reiciendis eaque.',0,'2024-11-16 18:10:53','2025-06-24 00:54:15');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (48,4,'App\\Models\\Blog\\Post',10,'Object-based bandwidth-monitored frame','Vero quo suscipit architecto cumque aliquam autem. Eum esse quo sed consequatur quibusdam. Ipsa ut est ut non. Consequatur sed quia nesciunt. Ut quia qui nemo nesciunt.',0,'2025-03-31 01:29:52','2025-08-11 10:26:21');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (49,1,'App\\Models\\Blog\\Post',10,'Horizontal interactive interface','Optio quidem ut voluptatem itaque. Earum sint enim in officia iure earum sed. Voluptate recusandae id ea ea consectetur maxime.',1,'2025-01-16 01:38:51','2025-06-18 01:43:46');
+INSERT INTO `comments` (`id`, `customer_id`, `commentable_type`, `commentable_id`, `title`, `content`, `is_visible`, `created_at`, `updated_at`) VALUES (50,2,'App\\Models\\Blog\\Post',10,'Team-oriented web-enabled superstructure','Quisquam et nihil ipsum at iure nemo dolores. Iste ipsum voluptatibus sequi cum. Assumenda repellendus deserunt voluptas inventore sunt placeat.',1,'2024-12-23 21:17:48','2025-08-20 00:25:40');
+/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `commission_settings`
+--
+
+DROP TABLE IF EXISTS `commission_settings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `commission_settings` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `target_id` bigint unsigned DEFAULT NULL,
+  `target_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `commission_rate` decimal(5,2) NOT NULL,
+  `min_order_amount` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `max_commission` decimal(15,2) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `priority` int NOT NULL DEFAULT '0',
+  `valid_from` timestamp NULL DEFAULT NULL,
+  `valid_until` timestamp NULL DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `commission_settings_type_is_active_index` (`type`,`is_active`),
+  KEY `commission_settings_target_type_target_id_index` (`target_type`,`target_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `commission_settings`
+--
+
+LOCK TABLES `commission_settings` WRITE;
+/*!40000 ALTER TABLE `commission_settings` DISABLE KEYS */;
+INSERT INTO `commission_settings` (`id`, `type`, `target_id`, `target_type`, `commission_rate`, `min_order_amount`, `max_commission`, `is_active`, `priority`, `valid_from`, `valid_until`, `description`, `created_at`, `updated_at`) VALUES (1,'global',NULL,NULL,5.00,100000.00,1000000.00,1,1,NULL,NULL,'Hoa hồng toàn cục 5% cho tất cả CTV','2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `commission_settings` (`id`, `type`, `target_id`, `target_type`, `commission_rate`, `min_order_amount`, `max_commission`, `is_active`, `priority`, `valid_from`, `valid_until`, `description`, `created_at`, `updated_at`) VALUES (2,'user',2,'App\\Models\\User',8.00,200000.00,2000000.00,1,2,NULL,NULL,'Hoa hồng VIP 8% cho Nguyễn Văn An','2025-10-20 07:24:35','2025-10-20 07:24:35');
+/*!40000 ALTER TABLE `commission_settings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `commission_withdrawals`
+--
+
+DROP TABLE IF EXISTS `commission_withdrawals`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `commission_withdrawals` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `withdrawal_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint unsigned NOT NULL,
+  `amount` decimal(15,2) NOT NULL,
+  `fee` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `net_amount` decimal(15,2) NOT NULL,
+  `status` enum('pending','approved','processing','completed','rejected') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `payment_method` enum('bank_transfer','e_wallet','cash') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'bank_transfer',
+  `payment_info` json NOT NULL,
+  `reason` text COLLATE utf8mb4_unicode_ci,
+  `admin_notes` text COLLATE utf8mb4_unicode_ci,
+  `requested_at` timestamp NOT NULL,
+  `approved_at` timestamp NULL DEFAULT NULL,
+  `completed_at` timestamp NULL DEFAULT NULL,
+  `approved_by` bigint unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `commission_withdrawals_withdrawal_code_unique` (`withdrawal_code`),
+  KEY `commission_withdrawals_approved_by_foreign` (`approved_by`),
+  KEY `commission_withdrawals_user_id_status_index` (`user_id`,`status`),
+  KEY `commission_withdrawals_status_requested_at_index` (`status`,`requested_at`),
+  CONSTRAINT `commission_withdrawals_approved_by_foreign` FOREIGN KEY (`approved_by`) REFERENCES `users` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `commission_withdrawals_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `commission_withdrawals`
+--
+
+LOCK TABLES `commission_withdrawals` WRITE;
+/*!40000 ALTER TABLE `commission_withdrawals` DISABLE KEYS */;
+INSERT INTO `commission_withdrawals` (`id`, `withdrawal_code`, `user_id`, `amount`, `fee`, `net_amount`, `status`, `payment_method`, `payment_info`, `reason`, `admin_notes`, `requested_at`, `approved_at`, `completed_at`, `approved_by`, `created_at`, `updated_at`) VALUES (1,'WD202510202680',2,1298610.00,25972.00,1272638.00,'completed','bank_transfer','\"{\\\"bank_name\\\":\\\"Vietcombank\\\",\\\"account_number\\\":\\\"1234567886\\\",\\\"account_name\\\":\\\"Nguy\\\\u1ec5n V\\\\u0103n An\\\"}\"','Yêu cầu rút hoa hồng tháng 10/2025 - Nguyễn Văn An','Cần bổ sung thông tin','2025-10-19 07:24:35','2025-10-16 07:24:35',NULL,NULL,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `commission_withdrawals` (`id`, `withdrawal_code`, `user_id`, `amount`, `fee`, `net_amount`, `status`, `payment_method`, `payment_info`, `reason`, `admin_notes`, `requested_at`, `approved_at`, `completed_at`, `approved_by`, `created_at`, `updated_at`) VALUES (2,'WD202510208300',2,1364407.00,27288.00,1337119.00,'approved','bank_transfer','\"{\\\"bank_name\\\":\\\"Techcombank\\\",\\\"account_number\\\":\\\"1234567878\\\",\\\"account_name\\\":\\\"Nguy\\\\u1ec5n V\\\\u0103n An\\\"}\"','Yêu cầu rút hoa hồng tháng 10/2025 - Nguyễn Văn An',NULL,'2025-10-05 07:24:35','2025-10-16 07:24:35','2025-10-18 07:24:35',1,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `commission_withdrawals` (`id`, `withdrawal_code`, `user_id`, `amount`, `fee`, `net_amount`, `status`, `payment_method`, `payment_info`, `reason`, `admin_notes`, `requested_at`, `approved_at`, `completed_at`, `approved_by`, `created_at`, `updated_at`) VALUES (3,'WD202510204579',3,1804006.00,36080.00,1767926.00,'rejected','e_wallet','\"{\\\"bank_name\\\":\\\"VietinBank\\\",\\\"account_number\\\":\\\"1234567847\\\",\\\"account_name\\\":\\\"Tr\\\\u1ea7n Th\\\\u1ecb B\\\\u00ecnh\\\"}\"','Yêu cầu rút hoa hồng tháng 10/2025 - Trần Thị Bình','Đã chuyển khoản thành công','2025-10-06 07:24:35','2025-10-17 07:24:35',NULL,NULL,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `commission_withdrawals` (`id`, `withdrawal_code`, `user_id`, `amount`, `fee`, `net_amount`, `status`, `payment_method`, `payment_info`, `reason`, `admin_notes`, `requested_at`, `approved_at`, `completed_at`, `approved_by`, `created_at`, `updated_at`) VALUES (4,'WD202510204670',3,1138140.00,22763.00,1115377.00,'rejected','bank_transfer','\"{\\\"bank_name\\\":\\\"BIDV\\\",\\\"account_number\\\":\\\"1234567822\\\",\\\"account_name\\\":\\\"Tr\\\\u1ea7n Th\\\\u1ecb B\\\\u00ecnh\\\"}\"','Yêu cầu rút hoa hồng tháng 10/2025 - Trần Thị Bình','Cần bổ sung thông tin','2025-09-25 07:24:35',NULL,NULL,1,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+/*!40000 ALTER TABLE `commission_withdrawals` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `commissions`
+--
+
+DROP TABLE IF EXISTS `commissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `commissions` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
+  `order_id` bigint unsigned NOT NULL,
+  `product_id` bigint unsigned DEFAULT NULL,
+  `order_amount` decimal(15,2) NOT NULL,
+  `commission_rate` decimal(5,2) NOT NULL,
+  `commission_amount` decimal(15,2) NOT NULL,
+  `status` enum('pending','approved','paid','cancelled') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `notes` text COLLATE utf8mb4_unicode_ci,
+  `approved_at` timestamp NULL DEFAULT NULL,
+  `paid_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `commissions_product_id_foreign` (`product_id`),
+  KEY `commissions_user_id_status_index` (`user_id`,`status`),
+  KEY `commissions_order_id_index` (`order_id`),
+  KEY `commissions_created_at_index` (`created_at`),
+  CONSTRAINT `commissions_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `shop_orders` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `commissions_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `shop_products` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `commissions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `commissions`
+--
+
+LOCK TABLES `commissions` WRITE;
+/*!40000 ALTER TABLE `commissions` DISABLE KEYS */;
+INSERT INTO `commissions` (`id`, `user_id`, `order_id`, `product_id`, `order_amount`, `commission_rate`, `commission_amount`, `status`, `notes`, `approved_at`, `paid_at`, `created_at`, `updated_at`) VALUES (1,2,3,NULL,1201.03,8.00,96.08,'paid','Hoa hồng từ đơn hàng #3 cho CTV: Nguyễn Văn An',NULL,NULL,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `commissions` (`id`, `user_id`, `order_id`, `product_id`, `order_amount`, `commission_rate`, `commission_amount`, `status`, `notes`, `approved_at`, `paid_at`, `created_at`, `updated_at`) VALUES (2,2,3,NULL,1201.03,8.00,96.08,'approved','Hoa hồng từ đơn hàng #3 cho CTV: Nguyễn Văn An',NULL,'2025-10-17 07:24:35','2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `commissions` (`id`, `user_id`, `order_id`, `product_id`, `order_amount`, `commission_rate`, `commission_amount`, `status`, `notes`, `approved_at`, `paid_at`, `created_at`, `updated_at`) VALUES (3,2,2,NULL,128.87,8.00,10.31,'pending','Hoa hồng từ đơn hàng #2 cho CTV: Nguyễn Văn An',NULL,'2025-10-19 07:24:35','2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `commissions` (`id`, `user_id`, `order_id`, `product_id`, `order_amount`, `commission_rate`, `commission_amount`, `status`, `notes`, `approved_at`, `paid_at`, `created_at`, `updated_at`) VALUES (4,3,4,NULL,1219.19,5.00,60.96,'approved','Hoa hồng từ đơn hàng #4 cho CTV: Trần Thị Bình','2025-10-13 07:24:35',NULL,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `commissions` (`id`, `user_id`, `order_id`, `product_id`, `order_amount`, `commission_rate`, `commission_amount`, `status`, `notes`, `approved_at`, `paid_at`, `created_at`, `updated_at`) VALUES (5,3,1,NULL,1262.32,5.00,63.12,'approved','Hoa hồng từ đơn hàng #1 cho CTV: Trần Thị Bình','2025-10-18 07:24:35','2025-10-19 07:24:35','2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `commissions` (`id`, `user_id`, `order_id`, `product_id`, `order_amount`, `commission_rate`, `commission_amount`, `status`, `notes`, `approved_at`, `paid_at`, `created_at`, `updated_at`) VALUES (6,3,1,NULL,1262.32,5.00,63.12,'approved','Hoa hồng từ đơn hàng #1 cho CTV: Trần Thị Bình','2025-10-19 07:24:35',NULL,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+/*!40000 ALTER TABLE `commissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `exports`
+--
+
+DROP TABLE IF EXISTS `exports`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `exports` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `completed_at` timestamp NULL DEFAULT NULL,
+  `file_disk` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `exporter` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `processed_rows` int unsigned NOT NULL DEFAULT '0',
+  `total_rows` int unsigned NOT NULL,
+  `successful_rows` int unsigned NOT NULL DEFAULT '0',
+  `user_id` bigint unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `exports_user_id_foreign` (`user_id`),
+  CONSTRAINT `exports_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `exports`
+--
+
+LOCK TABLES `exports` WRITE;
+/*!40000 ALTER TABLE `exports` DISABLE KEYS */;
+/*!40000 ALTER TABLE `exports` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `failed_import_rows`
+--
+
+DROP TABLE IF EXISTS `failed_import_rows`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `failed_import_rows` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `data` json NOT NULL,
+  `import_id` bigint unsigned NOT NULL,
+  `validation_error` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `failed_import_rows_import_id_foreign` (`import_id`),
+  CONSTRAINT `failed_import_rows_import_id_foreign` FOREIGN KEY (`import_id`) REFERENCES `imports` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `failed_import_rows`
+--
+
+LOCK TABLES `failed_import_rows` WRITE;
+/*!40000 ALTER TABLE `failed_import_rows` DISABLE KEYS */;
+/*!40000 ALTER TABLE `failed_import_rows` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `failed_jobs`
+--
+
+DROP TABLE IF EXISTS `failed_jobs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `failed_jobs` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `failed_jobs`
+--
+
+LOCK TABLES `failed_jobs` WRITE;
+/*!40000 ALTER TABLE `failed_jobs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `failed_jobs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `imports`
+--
+
+DROP TABLE IF EXISTS `imports`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `imports` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `completed_at` timestamp NULL DEFAULT NULL,
+  `file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `importer` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `processed_rows` int unsigned NOT NULL DEFAULT '0',
+  `total_rows` int unsigned NOT NULL,
+  `successful_rows` int unsigned NOT NULL DEFAULT '0',
+  `user_id` bigint unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `imports_user_id_foreign` (`user_id`),
+  CONSTRAINT `imports_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `imports`
+--
+
+LOCK TABLES `imports` WRITE;
+/*!40000 ALTER TABLE `imports` DISABLE KEYS */;
+/*!40000 ALTER TABLE `imports` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `job_batches`
+--
+
+DROP TABLE IF EXISTS `job_batches`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `job_batches` (
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total_jobs` int NOT NULL,
+  `pending_jobs` int NOT NULL,
+  `failed_jobs` int NOT NULL,
+  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext COLLATE utf8mb4_unicode_ci,
+  `cancelled_at` int DEFAULT NULL,
+  `created_at` int NOT NULL,
+  `finished_at` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `job_batches`
+--
+
+LOCK TABLES `job_batches` WRITE;
+/*!40000 ALTER TABLE `job_batches` DISABLE KEYS */;
+/*!40000 ALTER TABLE `job_batches` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `media`
+--
+
+DROP TABLE IF EXISTS `media`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `media` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint unsigned NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `collection_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mime_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `disk` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `conversions_disk` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `size` bigint unsigned NOT NULL,
+  `manipulations` json NOT NULL,
+  `custom_properties` json NOT NULL,
+  `generated_conversions` json NOT NULL,
+  `responsive_images` json NOT NULL,
+  `order_column` int unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `media_uuid_unique` (`uuid`),
+  KEY `media_model_type_model_id_index` (`model_type`,`model_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `media`
+--
+
+LOCK TABLES `media` WRITE;
+/*!40000 ALTER TABLE `media` DISABLE KEYS */;
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (6,'App\\Models\\Blog\\Post',1,'a14a066f-d0ea-4b16-8f82-bb5e3a9195d9','post-images','f3f0ce20-b7a3-47db-b907-c77c5e6ca038','f3f0ce20-b7a3-47db-b907-c77c5e6ca038.jpg','image/jpeg','post-images','post-images',7812,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (7,'App\\Models\\Blog\\Post',2,'79bd4d8b-7564-481d-9a0d-187b0ab766f1','post-images','503a4fac-68d7-4b64-ad44-5c2ec3986b94','503a4fac-68d7-4b64-ad44-5c2ec3986b94.jpg','image/jpeg','post-images','post-images',9025,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (8,'App\\Models\\Blog\\Post',3,'d2fc6ec8-f1ef-4794-bad9-5b83798159c3','post-images','3b95f9cc-e3e3-48d3-b743-443210fa19ec','3b95f9cc-e3e3-48d3-b743-443210fa19ec.jpg','image/jpeg','post-images','post-images',11228,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (9,'App\\Models\\Blog\\Post',4,'bd730c4b-3a42-4cd0-b21d-31cde571ee3b','post-images','b14d2dca-4d45-4cc0-8d8b-864e10081dac','b14d2dca-4d45-4cc0-8d8b-864e10081dac.jpg','image/jpeg','post-images','post-images',4766,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (10,'App\\Models\\Blog\\Post',5,'b1ffb02a-79cf-4724-bb29-9230d53cf009','post-images','447a4c77-e7a2-49a3-8015-2dc5ba055c24','447a4c77-e7a2-49a3-8015-2dc5ba055c24.jpg','image/jpeg','post-images','post-images',8581,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (11,'App\\Models\\Blog\\Post',6,'0c33d9ab-b8ca-455c-be71-2face408b6e2','post-images','e5d18094-036b-4c48-8232-8e0d9971cca0','e5d18094-036b-4c48-8232-8e0d9971cca0.jpg','image/jpeg','post-images','post-images',9194,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (12,'App\\Models\\Blog\\Post',7,'80fc3ccd-d135-42d6-a176-caee82e10416','post-images','7e4b0b96-99df-4d1e-84fa-dad2b398f172','7e4b0b96-99df-4d1e-84fa-dad2b398f172.jpg','image/jpeg','post-images','post-images',5492,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (13,'App\\Models\\Blog\\Post',8,'9f4dcdfe-8247-49f4-a0ad-738e8eeb622d','post-images','b14d2dca-4d45-4cc0-8d8b-864e10081dac','b14d2dca-4d45-4cc0-8d8b-864e10081dac.jpg','image/jpeg','post-images','post-images',4766,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (14,'App\\Models\\Blog\\Post',9,'bd19bdb8-3426-4a45-8e26-78b6d9e1eec7','post-images','948bfac1-6d9b-430f-86fc-8d2d6ef680ed','948bfac1-6d9b-430f-86fc-8d2d6ef680ed.jpg','image/jpeg','post-images','post-images',6633,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (15,'App\\Models\\Blog\\Post',10,'bc964fc0-aac0-49a9-b1b6-4682a6be8ec7','post-images','e5d18094-036b-4c48-8232-8e0d9971cca0','e5d18094-036b-4c48-8232-8e0d9971cca0.jpg','image/jpeg','post-images','post-images',9194,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (16,'App\\Models\\Blog\\Link',1,'a5c71dd7-65ce-417b-969b-7270be43cf85','link-images','b02337ca-473b-4ae1-957b-0c7854161f8e','b02337ca-473b-4ae1-957b-0c7854161f8e.jpg','image/jpeg','link-images','link-images',12758,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (17,'App\\Models\\Blog\\Link',2,'60a3e9c5-f978-442a-a137-a158ca8dd14b','link-images','b02337ca-473b-4ae1-957b-0c7854161f8e','b02337ca-473b-4ae1-957b-0c7854161f8e.jpg','image/jpeg','link-images','link-images',12758,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (18,'App\\Models\\Blog\\Link',3,'d4cfef5d-59f1-4577-8911-7fb66d860c77','link-images','20d2e61e-3273-4521-9c47-e56a68c892fb','20d2e61e-3273-4521-9c47-e56a68c892fb.jpg','image/jpeg','link-images','link-images',18318,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (19,'App\\Models\\Blog\\Link',4,'dfe5a56e-d006-42da-9103-3056fbd62778','link-images','b02337ca-473b-4ae1-957b-0c7854161f8e','b02337ca-473b-4ae1-957b-0c7854161f8e.jpg','image/jpeg','link-images','link-images',12758,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (20,'App\\Models\\Blog\\Link',5,'ba89951f-2fdf-48f0-b89a-4164297d8740','link-images','873353ff-3d3a-4bfc-a02d-22949e6e4558','873353ff-3d3a-4bfc-a02d-22949e6e4558.jpg','image/jpeg','link-images','link-images',6423,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 07:24:35','2025-10-20 07:24:35');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (24,'App\\Models\\Shop\\Product',6,'c11c00b9-0941-4943-9d04-8ed0375826a4','product-images','image','01K812K5K0F5RV4W8ADYP5PTE7.png','image/png','product-images','product-images',230250,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 08:07:51','2025-10-20 08:07:51');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (25,'App\\Models\\Shop\\Product',6,'cbc4aea8-0f51-412f-a4b5-a8b42840c3ba','product-images','image','01K812K5PMK6D5014MCNFR3YCP.png','image/png','product-images','product-images',263625,'[]','[]','{\"thumb\": true}','[]',2,'2025-10-20 08:07:51','2025-10-20 08:07:51');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (26,'App\\Models\\Shop\\Product',6,'ff2d99b2-dfd0-4acc-a3c2-7698df48644c','product-images','image','01K812K5SHXVS7R03P0GQTG803.png','image/png','product-images','product-images',249491,'[]','[]','{\"thumb\": true}','[]',3,'2025-10-20 08:07:51','2025-10-20 08:07:51');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (27,'App\\Models\\Shop\\Brand',1,'03cf9364-4997-44c2-a298-56b3ff9a0805','brand-images','image','01K812NSXZZNBDZ2YK5RCD11D3.png','image/png','brand-images','brand-images',68998,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 08:09:17','2025-10-20 08:09:17');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (28,'App\\Models\\Shop\\Brand',2,'908f9ff4-175e-41d8-afe8-ef9d4d3309c9','brand-images','image','01K812PWE2HBEA1CFR7FN55Y4T.png','image/png','brand-images','brand-images',52884,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 08:09:52','2025-10-20 08:09:52');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (29,'App\\Models\\Shop\\Brand',5,'90bc8446-38f2-4241-8665-400ed33276d4','brand-images','image','01K812R1MEX099GY1F5PFN34TV.png','image/png','brand-images','brand-images',23710,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 08:10:31','2025-10-20 08:10:31');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (30,'App\\Models\\Shop\\Brand',6,'5e060ee6-34d1-4bb8-8a2c-be013d7f190a','brand-images','image','01K812SNBBC2ZKQ1TF95B197E0.png','image/png','brand-images','brand-images',21559,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 08:11:24','2025-10-20 08:11:24');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (31,'App\\Models\\Shop\\Product',7,'89eaa102-0b9e-439f-a5ed-96803359ee60','product-images','image','01K81315Q09FQDNH6F6S3J3EM6.png','image/png','product-images','product-images',253205,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 08:15:30','2025-10-20 08:15:30');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (32,'App\\Models\\Shop\\Product',7,'b50ea89b-4140-4380-9d20-b287252cb458','product-images','image','01K81315SY92JB3S0VR2M2D87X.png','image/png','product-images','product-images',253594,'[]','[]','{\"thumb\": true}','[]',2,'2025-10-20 08:15:30','2025-10-20 08:15:30');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (33,'App\\Models\\Shop\\Product',7,'1010cd77-64d5-4b79-9080-bccf930ca866','product-images','image','01K81315WTXVGTGYYXHGHQX7D5.png','image/png','product-images','product-images',237040,'[]','[]','{\"thumb\": true}','[]',3,'2025-10-20 08:15:30','2025-10-20 08:15:30');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (37,'App\\Models\\Shop\\Product',9,'0ef4ddcd-f303-4458-844f-648e11e4feb0','product-images','image','01K813YNHXS8KW7QRJ3BH7FJ4Q.png','image/png','product-images','product-images',150254,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 08:31:36','2025-10-20 08:31:36');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (38,'App\\Models\\Shop\\Product',9,'e2acb358-5d9d-404c-8439-8548c1511b55','product-images','image','01K813YNMNMF3YQX5MN889H72C.png','image/png','product-images','product-images',164666,'[]','[]','{\"thumb\": true}','[]',2,'2025-10-20 08:31:36','2025-10-20 08:31:36');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (39,'App\\Models\\Shop\\Product',9,'2605591b-9f85-478e-b39e-9f000ae7a928','product-images','image','01K813YNQJVPEYKCB4WEHXCHB4.png','image/png','product-images','product-images',205729,'[]','[]','{\"thumb\": true}','[]',3,'2025-10-20 08:31:36','2025-10-20 08:31:36');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (40,'App\\Models\\Shop\\Brand',7,'33e8adfa-1d01-48f3-873d-be206e9c6807','brand-images','image','01K813ZX0DCFSF5VXS1VD303MG.png','image/png','brand-images','brand-images',13372,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 08:32:17','2025-10-20 08:32:17');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (41,'App\\Models\\Shop\\Product',10,'eb64f45b-d170-4f2f-8f8a-ce3c4251a2aa','product-images','image','01K81FGXC8PE1JBJ70P8N9VBYS.png','image/png','product-images','product-images',259047,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 11:53:48','2025-10-20 11:53:48');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (42,'App\\Models\\Shop\\Product',10,'ad6c86b8-3fab-4cd4-9c10-c7d65d639590','product-images','image','01K81FGXG0T4FF51PJPY8M1ZR1.png','image/png','product-images','product-images',276145,'[]','[]','{\"thumb\": true}','[]',2,'2025-10-20 11:53:48','2025-10-20 11:53:49');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (43,'App\\Models\\Shop\\Product',10,'d0e23767-0483-4d4c-9253-1bbb7641440b','product-images','image','01K81FGXJWKSD669E07B36A8QP.png','image/png','product-images','product-images',269643,'[]','[]','{\"thumb\": true}','[]',3,'2025-10-20 11:53:49','2025-10-20 11:53:49');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (44,'App\\Models\\Shop\\Product',11,'64b54066-5c79-4c7a-81c5-143d9a1b72c3','product-images','image','01K81FMRXG3V0VNHE4BARM18BK.png','image/png','product-images','product-images',301815,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 11:55:55','2025-10-20 11:55:55');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (45,'App\\Models\\Shop\\Product',11,'56869316-fc56-4800-b36a-40da6e0e3065','product-images','image','01K81FMS061KN5H0KZ8PW95JBY.png','image/png','product-images','product-images',220636,'[]','[]','{\"thumb\": true}','[]',2,'2025-10-20 11:55:55','2025-10-20 11:55:55');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (46,'App\\Models\\Shop\\Product',12,'a7063746-07a4-4400-a952-e86a3c1b7313','product-images','image','01K81FW5XZ9KQPJ6SH0HZV1KXQ.png','image/png','product-images','product-images',374817,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 11:59:58','2025-10-20 11:59:58');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (47,'App\\Models\\Shop\\Product',13,'1b504271-0586-4795-abdf-3e32b75d6e4b','product-images','image','01K81FYNM7GDAG86XPH4JVWHBD.png','image/png','product-images','product-images',279191,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 12:01:19','2025-10-20 12:01:19');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (48,'App\\Models\\Shop\\Product',13,'8b7ea3e6-8dc1-4938-a814-6dce8be49545','product-images','image','01K81FYNQANCJ4Y751NVR3R73A.png','image/png','product-images','product-images',430027,'[]','[]','{\"thumb\": true}','[]',2,'2025-10-20 12:01:19','2025-10-20 12:01:19');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (49,'App\\Models\\Shop\\Product',14,'7ca97996-77ca-47d3-ad8b-0dadf9ecaf44','product-images','image','01K81G5DQDZJ7PF6N9SBDB0T5V.png','image/png','product-images','product-images',349636,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 12:05:00','2025-10-20 12:05:01');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (50,'App\\Models\\Shop\\Product',14,'82845529-2570-43e7-990a-5c66bf29f5d0','product-images','image','01K81G5DTQDVHETKW1CFJFQNVS.png','image/png','product-images','product-images',272816,'[]','[]','{\"thumb\": true}','[]',2,'2025-10-20 12:05:01','2025-10-20 12:05:01');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (51,'App\\Models\\Shop\\Product',14,'3f49190f-24a7-40e3-814a-adbcf3725a92','product-images','image','01K81G5DXQYQDY3A6KS10AAZXW.png','image/png','product-images','product-images',286628,'[]','[]','{\"thumb\": true}','[]',3,'2025-10-20 12:05:01','2025-10-20 12:05:01');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (52,'App\\Models\\Shop\\Brand',8,'62247212-e893-4694-86bc-888593ec82d5','brand-images','image','01K81GA53N024SB4QJZRR619G7.png','image/png','brand-images','brand-images',18782,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 12:07:35','2025-10-20 12:07:35');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (53,'App\\Models\\Shop\\Product',15,'1252c2c0-c355-4e2a-b799-1be446b6f49d','product-images','image','01K81GCBMJ00SMY8RH6S0MZCES.png','image/png','product-images','product-images',338655,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 12:08:48','2025-10-20 12:08:48');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (54,'App\\Models\\Shop\\Product',16,'61ffb57c-a702-442e-ac8d-936a631d7a09','product-images','image','01K81GEVE9Z0FKDQ76CD752RM0.png','image/png','product-images','product-images',303095,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 12:10:09','2025-10-20 12:10:09');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (55,'App\\Models\\Shop\\Product',17,'f94b74f4-4f16-414a-9cd1-9a3f4c2267a1','product-images','100225501_SLC_eCom','01K81GJNR4D9W26QSB58HGHAMW.png','image/png','product-images','product-images',299220,'[]','[]','{\"thumb\": true}','[]',1,'2025-10-20 12:12:15','2025-10-20 12:12:15');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (56,'App\\Models\\Shop\\Product',17,'b8eb0c7f-9c8f-4d67-a7af-9f07afcc05c8','product-images','100225499_SLC_eCom','01K81GJNV64BTQZSTQ01F8JYBH.png','image/png','product-images','product-images',308269,'[]','[]','{\"thumb\": true}','[]',2,'2025-10-20 12:12:15','2025-10-20 12:12:15');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (57,'App\\Models\\Shop\\Product',6,'53c357a2-1821-4268-adad-82a2ca1616d1','product-images','featured_6_1aa69e68-a504-4495-bc38-5c520d035d8b','featured_6_1aa69e68-a504-4495-bc38-5c520d035d8b.jpg','image/jpeg','product-images','product-images',9741,'[]','[]','{\"thumb\": true}','[]',4,'2025-10-24 09:45:12','2025-10-24 09:45:12');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (58,'App\\Models\\Shop\\Product',7,'defed842-aabf-4769-b617-a718de7eabbe','product-images','featured_7_20d2e61e-3273-4521-9c47-e56a68c892fb','featured_7_20d2e61e-3273-4521-9c47-e56a68c892fb.jpg','image/jpeg','product-images','product-images',18318,'[]','[]','{\"thumb\": true}','[]',4,'2025-10-24 09:45:12','2025-10-24 09:45:12');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (59,'App\\Models\\Shop\\Product',9,'3ddf4bfe-0018-40ef-a7fa-d66ecec0f010','product-images','featured_9_248eadf6-5227-42f3-ad31-1c320febdb7b','featured_9_248eadf6-5227-42f3-ad31-1c320febdb7b.jpg','image/jpeg','product-images','product-images',8217,'[]','[]','{\"thumb\": true}','[]',4,'2025-10-24 09:45:12','2025-10-24 09:45:12');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES (60,'App\\Models\\Shop\\Product',10,'eb07f923-7cde-4c67-a5d9-c44098ca49ed','product-images','featured_10_2f5c09b5-6268-47b2-8e0b-c4890850e727','featured_10_2f5c09b5-6268-47b2-8e0b-c4890850e727.jpg','image/jpeg','product-images','product-images',9707,'[]','[]','{\"thumb\": true}','[]',4,'2025-10-24 09:45:12','2025-10-24 09:45:12');
+/*!40000 ALTER TABLE `media` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `migrations`
+--
+
+DROP TABLE IF EXISTS `migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `migrations` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `migrations`
+--
+
+LOCK TABLES `migrations` WRITE;
+/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (1,'2014_10_12_000000_create_users_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (2,'2014_10_12_100000_create_password_resets_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (3,'2019_08_19_000000_create_failed_jobs_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (4,'2019_12_14_000001_create_personal_access_tokens_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (5,'2021_12_13_055514_create_media_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (6,'2021_12_13_072541_create_tag_tables',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (7,'2021_12_13_072624_create_settings_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (8,'2021_12_13_073001_create_blog_authors_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (9,'2021_12_13_073006_create_blog_categories_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (10,'2021_12_13_073022_create_blog_posts_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (11,'2021_12_13_153307_create_shop_customers_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (12,'2021_12_13_155621_create_shop_categories_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (13,'2021_12_13_164316_create_shop_brands_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (14,'2021_12_13_164519_create_shop_products_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (15,'2021_12_13_164524_create_shop_category_product_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (16,'2021_12_13_165855_create_shop_orders_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (17,'2021_12_13_182904_create_shop_order_items_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (18,'2021_12_13_184540_create_addresses_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (19,'2022_06_01_232533_alter_order_items_add_sort_column',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (20,'2022_06_09_091930_create_comments_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (21,'2022_06_09_092322_create_payments_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (22,'2022_06_09_155042_create_addressable_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (23,'2022_09_10_131605_create_notifications_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (24,'2022_10_27_140431_create_teams_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (25,'2023_11_29_144716_create_job_batches_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (26,'2023_11_29_144720_create_imports_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (27,'2023_11_29_144721_create_failed_import_rows_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (28,'2023_12_17_112735_create_blog_links_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (29,'2024_01_01_105157_create_exports_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (30,'2024_01_15_000001_add_role_to_users_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (31,'2025_01_15_000000_create_shop_coupons_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (32,'2025_01_15_000001_create_shop_coupon_product_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (33,'2025_01_16_000000_create_banners_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (34,'2025_01_19_000000_add_paypal_fields_to_payments_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (35,'2025_10_11_080356_create_roles_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (36,'2025_10_11_080605_add_role_id_to_users_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (37,'2025_10_11_092655_create_commission_settings_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (38,'2025_10_11_092655_create_commission_withdrawals_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (39,'2025_10_11_092655_create_commissions_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (40,'2025_10_11_101516_remove_old_role_column_from_users_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (41,'2025_10_12_063134_add_size_and_color_to_shop_products_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (42,'2025_10_12_072426_update_price_column_in_shop_products_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (43,'2025_10_12_085416_add_image_path_to_banners_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (44,'2025_10_14_122507_create_shop_wishlists_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (45,'2025_10_14_153924_create_carts_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (46,'2025_10_15_145149_create_collaborator_applications_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (47,'2025_10_16_142927_add_affiliate_code_to_users_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (48,'2025_10_16_142927_create_affiliate_links_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (49,'2025_10_16_142928_add_affiliate_user_to_orders_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (50,'2025_10_16_171145_add_color_size_to_shop_carts_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (51,'2025_10_16_171146_fix_cart_unique_constraint_with_variants',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (52,'2025_10_17_123918_update_orders_for_new_checkout_system',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (53,'2025_10_18_001500_add_size_color_to_shop_order_items_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (54,'2025_10_18_110326_add_color_size_to_shop_carts_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (55,'2025_10_18_120000_add_color_code_to_shop_carts_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (56,'2025_10_19_064807_increase_amount_precision_in_shop_payments_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (57,'2025_10_19_065230_add_paid_at_to_shop_orders_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (58,'2025_10_19_070633_create_user_wallets_and_transactions_tables',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (59,'2025_10_19_072252_add_status_and_metadata_to_shop_payments_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (60,'2025_10_19_072856_create_wallet_deposits_table',1);
+/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notifications`
+--
+
+DROP TABLE IF EXISTS `notifications`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notifications` (
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_id` bigint unsigned NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `read_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notifications`
+--
+
+LOCK TABLES `notifications` WRITE;
+/*!40000 ALTER TABLE `notifications` DISABLE KEYS */;
+INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES ('af3c2168-cd66-4e23-83e7-5af9308ae709','Filament\\Notifications\\DatabaseNotification','App\\Models\\User',1,'{\"actions\":[{\"name\":\"View\",\"color\":null,\"event\":null,\"eventData\":[],\"dispatchDirection\":false,\"dispatchToComponent\":null,\"extraAttributes\":[],\"icon\":null,\"iconPosition\":\"before\",\"iconSize\":null,\"isOutlined\":false,\"isDisabled\":false,\"label\":\"View\",\"shouldClose\":false,\"shouldMarkAsRead\":false,\"shouldMarkAsUnread\":false,\"shouldOpenUrlInNewTab\":false,\"shouldPostToUrl\":false,\"size\":\"sm\",\"tooltip\":null,\"url\":\"http:\\/\\/127.0.0.1:8000\\/admin\\/shop\\/orders\\/4\\/edit\",\"view\":\"filament::components.link\"}],\"body\":\"L\\u00ea Ho\\u00e0ng Nam 62 ordered 1 products.\",\"color\":null,\"duration\":\"persistent\",\"icon\":\"heroicon-o-shopping-bag\",\"iconColor\":null,\"status\":null,\"title\":\"\\u0110\\u01a1n h\\u00e0ng m\\u1edbi\",\"view\":null,\"viewData\":[],\"format\":\"filament\"}',NULL,'2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES ('b08195db-5fb5-489a-9ad4-f9b9da87635a','Filament\\Notifications\\DatabaseNotification','App\\Models\\User',1,'{\"actions\":[{\"name\":\"View\",\"color\":null,\"event\":null,\"eventData\":[],\"dispatchDirection\":false,\"dispatchToComponent\":null,\"extraAttributes\":[],\"icon\":null,\"iconPosition\":\"before\",\"iconSize\":null,\"isOutlined\":false,\"isDisabled\":false,\"label\":\"View\",\"shouldClose\":false,\"shouldMarkAsRead\":false,\"shouldMarkAsUnread\":false,\"shouldOpenUrlInNewTab\":false,\"shouldPostToUrl\":false,\"size\":\"sm\",\"tooltip\":null,\"url\":\"http:\\/\\/127.0.0.1:8000\\/admin\\/shop\\/orders\\/5\\/edit\",\"view\":\"filament::components.link\"}],\"body\":\"L\\u00ea Ho\\u00e0ng Nam 62 ordered 1 products.\",\"color\":null,\"duration\":\"persistent\",\"icon\":\"heroicon-o-shopping-bag\",\"iconColor\":null,\"status\":null,\"title\":\"\\u0110\\u01a1n h\\u00e0ng m\\u1edbi\",\"view\":null,\"viewData\":[],\"format\":\"filament\"}',NULL,'2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES ('dc6c49d7-3528-4abe-bb95-e15a791ae895','Filament\\Notifications\\DatabaseNotification','App\\Models\\User',1,'{\"actions\":[{\"name\":\"View\",\"color\":null,\"event\":null,\"eventData\":[],\"dispatchDirection\":false,\"dispatchToComponent\":null,\"extraAttributes\":[],\"icon\":null,\"iconPosition\":\"before\",\"iconSize\":null,\"isOutlined\":false,\"isDisabled\":false,\"label\":\"View\",\"shouldClose\":false,\"shouldMarkAsRead\":false,\"shouldMarkAsUnread\":false,\"shouldOpenUrlInNewTab\":false,\"shouldPostToUrl\":false,\"size\":\"sm\",\"tooltip\":null,\"url\":\"http:\\/\\/127.0.0.1:8000\\/admin\\/shop\\/orders\\/3\\/edit\",\"view\":\"filament::components.link\"}],\"body\":\"L\\u00ea Ho\\u00e0ng Nam 62 ordered 1 products.\",\"color\":null,\"duration\":\"persistent\",\"icon\":\"heroicon-o-shopping-bag\",\"iconColor\":null,\"status\":null,\"title\":\"\\u0110\\u01a1n h\\u00e0ng m\\u1edbi\",\"view\":null,\"viewData\":[],\"format\":\"filament\"}',NULL,'2025-10-20 07:24:34','2025-10-20 07:24:34');
+/*!40000 ALTER TABLE `notifications` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `password_resets`
+--
+
+DROP TABLE IF EXISTS `password_resets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `password_resets` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `password_resets`
+--
+
+LOCK TABLES `password_resets` WRITE;
+/*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
+/*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `personal_access_tokens`
+--
+
+DROP TABLE IF EXISTS `personal_access_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint unsigned NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `personal_access_tokens`
+--
+
+LOCK TABLES `personal_access_tokens` WRITE;
+/*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
+/*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `roles` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `permissions` json DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `sort_order` int NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `roles_name_unique` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `roles`
+--
+
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` (`id`, `name`, `label`, `description`, `permissions`, `is_active`, `sort_order`, `created_at`, `updated_at`) VALUES (1,'admin','Quản trị viên','Có quyền cao nhất, quản lý toàn bộ hệ thống','[\"view_admin_panel\", \"manage_users\", \"manage_roles\", \"manage_products\", \"manage_orders\", \"manage_customers\", \"manage_brands\", \"manage_categories\", \"view_dashboard\", \"manage_settings\", \"manage_commissions\", \"manage_withdrawals\"]',1,1,'2025-10-20 07:24:33','2025-10-20 07:24:33');
+INSERT INTO `roles` (`id`, `name`, `label`, `description`, `permissions`, `is_active`, `sort_order`, `created_at`, `updated_at`) VALUES (2,'ctv','Cộng tác viên','Hỗ trợ bán hàng và chăm sóc khách hàng, nhận hoa hồng','[\"view_products\", \"create_orders\", \"view_orders\", \"update_orders\", \"view_customers\", \"create_customers\", \"update_customers\", \"view_own_profile\", \"update_own_profile\", \"view_own_commissions\", \"request_withdrawals\"]',1,2,'2025-10-20 07:24:33','2025-10-20 07:24:33');
+INSERT INTO `roles` (`id`, `name`, `label`, `description`, `permissions`, `is_active`, `sort_order`, `created_at`, `updated_at`) VALUES (3,'registered','Người mua hàng','Khách hàng đã đăng ký, có thể mua hàng','[\"view_products\", \"create_orders\", \"view_own_orders\", \"update_own_profile\"]',1,3,'2025-10-20 07:24:33','2025-10-20 07:24:33');
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `settings`
+--
+
+DROP TABLE IF EXISTS `settings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `settings` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `group` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `locked` tinyint(1) NOT NULL,
+  `payload` json NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `settings_group_index` (`group`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `settings`
+--
+
+LOCK TABLES `settings` WRITE;
+/*!40000 ALTER TABLE `settings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `settings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_brands`
+--
+
+DROP TABLE IF EXISTS `shop_brands`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shop_brands` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `website` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci,
+  `position` smallint unsigned NOT NULL DEFAULT '0',
+  `is_visible` tinyint(1) NOT NULL DEFAULT '0',
+  `seo_title` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seo_description` varchar(160) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sort` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `shop_brands_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_brands`
+--
+
+LOCK TABLES `shop_brands` WRITE;
+/*!40000 ALTER TABLE `shop_brands` DISABLE KEYS */;
+INSERT INTO `shop_brands` (`id`, `name`, `slug`, `website`, `description`, `position`, `is_visible`, `seo_title`, `seo_description`, `sort`, `created_at`, `updated_at`) VALUES (1,'Reebok VN','reebok-vn','https://www.reebokvn.vn','<p>Thương hiệu Reebok VN - Chuyên cung cấp giày dép chất lượng cao tại Việt Nam.</p>',0,1,NULL,NULL,1,'2024-10-22 21:57:17','2025-10-20 08:09:17');
+INSERT INTO `shop_brands` (`id`, `name`, `slug`, `website`, `description`, `position`, `is_visible`, `seo_title`, `seo_description`, `sort`, `created_at`, `updated_at`) VALUES (2,'Vans Vietnam','vans-vietnam','https://www.vansvietnam.vn','<p>Thương hiệu Vans Vietnam - Chuyên cung cấp giày dép chất lượng cao tại Việt Nam.</p>',0,1,NULL,NULL,2,'2025-04-10 05:03:30','2025-10-20 08:09:52');
+INSERT INTO `shop_brands` (`id`, `name`, `slug`, `website`, `description`, `position`, `is_visible`, `seo_title`, `seo_description`, `sort`, `created_at`, `updated_at`) VALUES (5,'Fila Vietnam','fila-vietnam','https://www.filavietnam.vn','<p>Thương hiệu Fila Vietnam - Chuyên cung cấp giày dép chất lượng cao tại Việt Nam.</p>',0,1,NULL,NULL,5,'2025-01-10 02:17:48','2025-10-20 08:10:31');
+INSERT INTO `shop_brands` (`id`, `name`, `slug`, `website`, `description`, `position`, `is_visible`, `seo_title`, `seo_description`, `sort`, `created_at`, `updated_at`) VALUES (6,'Adidas VN','adidas-vn','http://adidas.com/','<p></p>',0,1,NULL,NULL,NULL,'2025-10-20 08:11:24','2025-10-20 08:11:24');
+INSERT INTO `shop_brands` (`id`, `name`, `slug`, `website`, `description`, `position`, `is_visible`, `seo_title`, `seo_description`, `sort`, `created_at`, `updated_at`) VALUES (7,'Puma Việt Nam','puma-viet-nam','https://us.puma.com/','<p></p>',0,1,NULL,NULL,NULL,'2025-10-20 08:32:17','2025-10-20 08:32:17');
+INSERT INTO `shop_brands` (`id`, `name`, `slug`, `website`, `description`, `position`, `is_visible`, `seo_title`, `seo_description`, `sort`, `created_at`, `updated_at`) VALUES (8,'Nike VN','nike-vn','https://www.nike.vn','<p></p>',0,1,NULL,NULL,NULL,'2025-10-20 12:07:35','2025-10-20 12:07:35');
+/*!40000 ALTER TABLE `shop_brands` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_carts`
+--
+
+DROP TABLE IF EXISTS `shop_carts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shop_carts` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
+  `shop_product_id` bigint unsigned NOT NULL,
+  `quantity` int NOT NULL DEFAULT '1',
+  `price` decimal(10,2) NOT NULL,
+  `size` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cart_unique_with_variants` (`user_id`,`shop_product_id`,`color`,`size`),
+  KEY `shop_carts_shop_product_id_index` (`shop_product_id`),
+  KEY `shop_carts_user_id_index` (`user_id`),
+  CONSTRAINT `shop_carts_shop_product_id_foreign` FOREIGN KEY (`shop_product_id`) REFERENCES `shop_products` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `shop_carts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_carts`
+--
+
+LOCK TABLES `shop_carts` WRITE;
+/*!40000 ALTER TABLE `shop_carts` DISABLE KEYS */;
+INSERT INTO `shop_carts` (`id`, `user_id`, `shop_product_id`, `quantity`, `price`, `size`, `color`, `color_code`, `created_at`, `updated_at`) VALUES (62,1,17,2,1500000.00,'39','Đen','#000000','2025-11-01 12:59:24','2025-11-01 12:59:24');
+/*!40000 ALTER TABLE `shop_carts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_categories`
+--
+
+DROP TABLE IF EXISTS `shop_categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shop_categories` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `parent_id` bigint unsigned DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci,
+  `position` smallint unsigned NOT NULL DEFAULT '0',
+  `is_visible` tinyint(1) NOT NULL DEFAULT '0',
+  `seo_title` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seo_description` varchar(160) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `shop_categories_slug_unique` (`slug`),
+  KEY `shop_categories_parent_id_foreign` (`parent_id`),
+  CONSTRAINT `shop_categories_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `shop_categories` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_categories`
+--
+
+LOCK TABLES `shop_categories` WRITE;
+/*!40000 ALTER TABLE `shop_categories` DISABLE KEYS */;
+INSERT INTO `shop_categories` (`id`, `parent_id`, `name`, `slug`, `description`, `position`, `is_visible`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (1,NULL,'Giày sandal','giay-sandal','Danh mục Giày sandal với nhiều mẫu mã đa dạng, chất lượng cao.',0,1,NULL,NULL,'2024-11-08 04:56:39','2025-08-12 20:49:22');
+INSERT INTO `shop_categories` (`id`, `parent_id`, `name`, `slug`, `description`, `position`, `is_visible`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (2,NULL,'Giày dép nữ','giay-dep-nu','Danh mục Giày dép nữ với nhiều mẫu mã đa dạng, chất lượng cao.',0,1,NULL,NULL,'2024-12-21 23:37:31','2025-08-05 11:35:50');
+INSERT INTO `shop_categories` (`id`, `parent_id`, `name`, `slug`, `description`, `position`, `is_visible`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (3,NULL,'Giày búp bê','giay-bup-be','Danh mục Giày búp bê với nhiều mẫu mã đa dạng, chất lượng cao.',0,1,NULL,NULL,'2025-01-05 19:46:22','2025-06-16 21:53:00');
+INSERT INTO `shop_categories` (`id`, `parent_id`, `name`, `slug`, `description`, `position`, `is_visible`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (4,NULL,'Giày cao gót','giay-cao-got','Danh mục Giày cao gót với nhiều mẫu mã đa dạng, chất lượng cao.',0,1,NULL,NULL,'2024-12-03 11:49:56','2025-05-25 04:59:47');
+INSERT INTO `shop_categories` (`id`, `parent_id`, `name`, `slug`, `description`, `position`, `is_visible`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (5,NULL,'Giày công sở','giay-cong-so','Danh mục Giày công sở với nhiều mẫu mã đa dạng, chất lượng cao.',0,1,NULL,NULL,'2025-03-12 10:23:56','2025-07-13 00:32:07');
+INSERT INTO `shop_categories` (`id`, `parent_id`, `name`, `slug`, `description`, `position`, `is_visible`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (6,NULL,'Giày thể thao','giay-the-thao','<p></p>',0,1,NULL,NULL,'2025-10-20 08:08:13','2025-10-20 08:08:13');
+INSERT INTO `shop_categories` (`id`, `parent_id`, `name`, `slug`, `description`, `position`, `is_visible`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES (7,NULL,'Giày chạy bộ','giay-chay-bo','<p></p>',0,1,NULL,NULL,'2025-10-20 08:08:24','2025-10-20 08:08:24');
+/*!40000 ALTER TABLE `shop_categories` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_category_product`
+--
+
+DROP TABLE IF EXISTS `shop_category_product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shop_category_product` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `shop_category_id` bigint unsigned NOT NULL,
+  `shop_product_id` bigint unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_category_product`
+--
+
+LOCK TABLES `shop_category_product` WRITE;
+/*!40000 ALTER TABLE `shop_category_product` DISABLE KEYS */;
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (1,3,1,'2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (2,3,2,'2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (3,3,3,'2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (4,3,4,'2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (5,3,5,'2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (6,1,6,'2025-10-20 08:07:51','2025-10-20 08:07:51');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (8,7,6,'2025-10-20 08:11:49','2025-10-20 08:11:49');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (9,6,6,'2025-10-20 08:11:49','2025-10-20 08:11:49');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (10,7,7,'2025-10-20 08:15:30','2025-10-20 08:15:30');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (11,6,7,'2025-10-20 08:15:30','2025-10-20 08:15:30');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (12,1,7,'2025-10-20 08:15:30','2025-10-20 08:15:30');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (13,7,8,'2025-10-20 08:19:32','2025-10-20 08:19:32');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (14,1,8,'2025-10-20 08:19:32','2025-10-20 08:19:32');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (15,7,9,'2025-10-20 08:31:36','2025-10-20 08:31:36');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (16,6,9,'2025-10-20 08:31:36','2025-10-20 08:31:36');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (17,1,9,'2025-10-20 08:31:36','2025-10-20 08:31:36');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (18,1,10,'2025-10-20 11:53:49','2025-10-20 11:53:49');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (19,6,10,'2025-10-20 11:53:49','2025-10-20 11:53:49');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (20,1,11,'2025-10-20 11:55:55','2025-10-20 11:55:55');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (21,3,11,'2025-10-20 11:55:55','2025-10-20 11:55:55');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (22,7,11,'2025-10-20 11:55:55','2025-10-20 11:55:55');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (23,4,12,'2025-10-20 11:59:58','2025-10-20 11:59:58');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (24,5,12,'2025-10-20 11:59:58','2025-10-20 11:59:58');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (25,6,13,'2025-10-20 12:01:19','2025-10-20 12:01:19');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (26,2,13,'2025-10-20 12:01:19','2025-10-20 12:01:19');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (27,1,13,'2025-10-20 12:01:19','2025-10-20 12:01:19');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (28,6,14,'2025-10-20 12:05:01','2025-10-20 12:05:01');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (29,5,14,'2025-10-20 12:05:01','2025-10-20 12:05:01');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (30,4,15,'2025-10-20 12:08:48','2025-10-20 12:08:48');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (31,2,15,'2025-10-20 12:08:48','2025-10-20 12:08:48');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (32,4,16,'2025-10-20 12:10:09','2025-10-20 12:10:09');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (33,2,16,'2025-10-20 12:10:09','2025-10-20 12:10:09');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (34,6,16,'2025-10-20 12:10:09','2025-10-20 12:10:09');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (35,4,17,'2025-10-20 12:12:15','2025-10-20 12:12:15');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (36,2,17,'2025-10-20 12:12:15','2025-10-20 12:12:15');
+INSERT INTO `shop_category_product` (`id`, `shop_category_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (37,1,17,'2025-10-20 12:12:15','2025-10-20 12:12:15');
+/*!40000 ALTER TABLE `shop_category_product` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_coupon_product`
+--
+
+DROP TABLE IF EXISTS `shop_coupon_product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shop_coupon_product` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `shop_coupon_id` bigint unsigned NOT NULL,
+  `shop_product_id` bigint unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `shop_coupon_product_shop_coupon_id_shop_product_id_unique` (`shop_coupon_id`,`shop_product_id`),
+  KEY `shop_coupon_product_shop_product_id_foreign` (`shop_product_id`),
+  CONSTRAINT `shop_coupon_product_shop_coupon_id_foreign` FOREIGN KEY (`shop_coupon_id`) REFERENCES `shop_coupons` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `shop_coupon_product_shop_product_id_foreign` FOREIGN KEY (`shop_product_id`) REFERENCES `shop_products` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_coupon_product`
+--
+
+LOCK TABLES `shop_coupon_product` WRITE;
+/*!40000 ALTER TABLE `shop_coupon_product` DISABLE KEYS */;
+INSERT INTO `shop_coupon_product` (`id`, `shop_coupon_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (28,28,6,'2025-10-25 06:29:54','2025-10-25 06:29:54');
+INSERT INTO `shop_coupon_product` (`id`, `shop_coupon_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (29,28,16,'2025-10-25 06:29:54','2025-10-25 06:29:54');
+INSERT INTO `shop_coupon_product` (`id`, `shop_coupon_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (30,28,13,'2025-10-25 06:29:54','2025-10-25 06:29:54');
+/*!40000 ALTER TABLE `shop_coupon_product` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_coupons`
+--
+
+DROP TABLE IF EXISTS `shop_coupons`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shop_coupons` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `type` enum('percentage','fixed_amount') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` decimal(10,2) NOT NULL,
+  `minimum_amount` decimal(10,2) DEFAULT NULL,
+  `maximum_amount` decimal(10,2) DEFAULT NULL,
+  `usage_limit` int DEFAULT NULL,
+  `used_count` int NOT NULL DEFAULT '0',
+  `starts_at` datetime DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `shop_coupons_code_unique` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_coupons`
+--
+
+LOCK TABLES `shop_coupons` WRITE;
+/*!40000 ALTER TABLE `shop_coupons` DISABLE KEYS */;
+INSERT INTO `shop_coupons` (`id`, `code`, `name`, `description`, `type`, `value`, `minimum_amount`, `maximum_amount`, `usage_limit`, `used_count`, `starts_at`, `expires_at`, `is_active`, `created_at`, `updated_at`) VALUES (28,'FLASHSALE UPDATE','Flash Sale - Giảm ngay','Giảm giá','percentage',10.00,500000.00,NULL,NULL,0,NULL,NULL,1,'2025-10-25 06:29:54','2025-10-25 06:29:54');
+/*!40000 ALTER TABLE `shop_coupons` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_customers`
+--
+
+DROP TABLE IF EXISTS `shop_customers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shop_customers` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `shop_customers_email_unique` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_customers`
+--
+
+LOCK TABLES `shop_customers` WRITE;
+/*!40000 ALTER TABLE `shop_customers` DISABLE KEYS */;
+INSERT INTO `shop_customers` (`id`, `name`, `email`, `photo`, `phone`, `birthday`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Võ Thị Hoa 82','võ.thị.hoa.82@gmail.com',NULL,'0982606778','1999-10-31','2025-03-10 12:46:59','2025-07-31 05:23:49',NULL);
+INSERT INTO `shop_customers` (`id`, `name`, `email`, `photo`, `phone`, `birthday`, `created_at`, `updated_at`, `deleted_at`) VALUES (2,'Lê Hoàng Nam 62','lê.hoàng.nam.62@gmail.com',NULL,'0975809217','1995-05-23','2025-04-17 05:11:42','2025-09-07 08:59:58',NULL);
+INSERT INTO `shop_customers` (`id`, `name`, `email`, `photo`, `phone`, `birthday`, `created_at`, `updated_at`, `deleted_at`) VALUES (3,'Bùi Thị Nga 80','bùi.thị.nga.80@gmail.com',NULL,'0922643545','1997-02-11','2025-03-04 14:17:22','2025-06-04 05:32:15',NULL);
+INSERT INTO `shop_customers` (`id`, `name`, `email`, `photo`, `phone`, `birthday`, `created_at`, `updated_at`, `deleted_at`) VALUES (4,'Đỗ Minh Tuấn 97','Đỗ.minh.tuấn.97@gmail.com',NULL,'0902603287','1994-12-10','2025-01-20 23:46:03','2025-09-21 01:15:48',NULL);
+INSERT INTO `shop_customers` (`id`, `name`, `email`, `photo`, `phone`, `birthday`, `created_at`, `updated_at`, `deleted_at`) VALUES (5,'Phạm Thị Linh 100','phạm.thị.linh.100@gmail.com',NULL,'0980275289','2003-09-29','2025-01-05 05:25:24','2025-07-18 18:32:18',NULL);
+/*!40000 ALTER TABLE `shop_customers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_order_addresses`
+--
+
+DROP TABLE IF EXISTS `shop_order_addresses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shop_order_addresses` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `addressable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `addressable_id` bigint unsigned NOT NULL,
+  `country` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `street` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `zip` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `shop_order_addresses_addressable_type_addressable_id_index` (`addressable_type`,`addressable_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_order_addresses`
+--
+
+LOCK TABLES `shop_order_addresses` WRITE;
+/*!40000 ALTER TABLE `shop_order_addresses` DISABLE KEYS */;
+INSERT INTO `shop_order_addresses` (`id`, `addressable_type`, `addressable_id`, `country`, `street`, `city`, `state`, `zip`, `created_at`, `updated_at`) VALUES (1,'App\\Models\\Shop\\Order',1,'mc','995 Kunde Park Apt. 539','Gutmannmouth','Missouri','96895-1584','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `shop_order_addresses` (`id`, `addressable_type`, `addressable_id`, `country`, `street`, `city`, `state`, `zip`, `created_at`, `updated_at`) VALUES (2,'App\\Models\\Shop\\Order',2,'tn','826 Halle Pine Apt. 388','West Demetriusside','West Virginia','65453','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `shop_order_addresses` (`id`, `addressable_type`, `addressable_id`, `country`, `street`, `city`, `state`, `zip`, `created_at`, `updated_at`) VALUES (3,'App\\Models\\Shop\\Order',3,'vc','276 Crona Course','New Priceport','Arizona','29915-1755','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `shop_order_addresses` (`id`, `addressable_type`, `addressable_id`, `country`, `street`, `city`, `state`, `zip`, `created_at`, `updated_at`) VALUES (4,'App\\Models\\Shop\\Order',4,'ma','388 Jaylon Groves','New Clair','North Dakota','60906','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `shop_order_addresses` (`id`, `addressable_type`, `addressable_id`, `country`, `street`, `city`, `state`, `zip`, `created_at`, `updated_at`) VALUES (5,'App\\Models\\Shop\\Order',5,'ax','671 Rodriguez Station','East Kacifort','Virginia','05645-2902','2025-10-20 07:24:34','2025-10-20 07:24:34');
+/*!40000 ALTER TABLE `shop_order_addresses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_order_items`
+--
+
+DROP TABLE IF EXISTS `shop_order_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shop_order_items` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `sort` int unsigned NOT NULL DEFAULT '0',
+  `shop_order_id` bigint unsigned DEFAULT NULL,
+  `shop_product_id` bigint unsigned DEFAULT NULL,
+  `size` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `qty` int NOT NULL,
+  `unit_price` decimal(10,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `shop_order_items_shop_order_id_foreign` (`shop_order_id`),
+  KEY `shop_order_items_shop_product_id_foreign` (`shop_product_id`),
+  CONSTRAINT `shop_order_items_shop_order_id_foreign` FOREIGN KEY (`shop_order_id`) REFERENCES `shop_orders` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `shop_order_items_shop_product_id_foreign` FOREIGN KEY (`shop_product_id`) REFERENCES `shop_products` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_order_items`
+--
+
+LOCK TABLES `shop_order_items` WRITE;
+/*!40000 ALTER TABLE `shop_order_items` DISABLE KEYS */;
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (12,0,9,16,'42','Đỏ',3,3000000.00,'2025-10-25 06:31:55','2025-10-25 06:31:55');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (13,0,10,17,'40','Đỏ',1,1500000.00,'2025-10-25 11:31:18','2025-10-25 11:31:18');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (14,0,11,6,'M','Red',2,3000000.00,'2025-10-25 11:35:02','2025-10-25 11:35:02');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (15,0,12,16,'43','Đỏ',1,3000000.00,'2025-10-25 11:38:00','2025-10-25 11:38:00');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (16,0,13,16,'42','Đỏ',2,3000000.00,'2025-10-25 11:50:57','2025-10-25 11:50:57');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (17,0,14,16,'43','Trắng',2,3000000.00,'2025-10-25 11:51:59','2025-10-25 11:51:59');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (18,0,15,16,'43','Trắng',2,3000000.00,'2025-10-25 11:52:14','2025-10-25 11:52:14');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (19,1,16,12,'42','Đen',2,1500000.00,'2025-10-26 10:39:06','2025-10-26 10:39:47');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (20,0,17,16,'42','Đỏ',1,3000000.00,'2025-10-26 10:52:30','2025-10-26 10:52:30');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (21,0,18,16,'43','Trắng',2,3000000.00,'2025-10-26 11:59:14','2025-10-26 11:59:14');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (22,0,19,16,'43','Trắng',2,3000000.00,'2025-10-26 11:59:20','2025-10-26 11:59:20');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (23,0,20,16,'43','Trắng',2,3000000.00,'2025-10-26 11:59:25','2025-10-26 11:59:25');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (24,0,21,16,'43','Trắng',2,3000000.00,'2025-10-26 11:59:31','2025-10-26 11:59:31');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (25,0,22,16,'43','Trắng',2,3000000.00,'2025-10-26 11:59:36','2025-10-26 11:59:36');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (26,0,23,16,'43','Trắng',2,3000000.00,'2025-10-26 11:59:42','2025-10-26 11:59:42');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (27,0,24,13,'38','5',2,2900000.00,'2025-10-26 13:40:59','2025-10-26 13:40:59');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (28,0,25,16,'44','Đỏ',1,3000000.00,'2025-10-26 13:41:42','2025-10-26 13:41:42');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (29,0,26,17,'39','Đỏ',3,1500000.00,'2025-11-01 04:54:51','2025-11-01 04:54:51');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (30,0,27,16,'42','Đỏ',2,3000000.00,'2025-11-01 06:57:57','2025-11-01 06:57:57');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (31,0,27,16,'43','Trắng',5,3000000.00,'2025-11-01 06:57:57','2025-11-01 06:57:57');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (32,0,27,17,'39','Đỏ',1,1500000.00,'2025-11-01 06:57:57','2025-11-01 06:57:57');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (33,0,27,17,'41','Đỏ',2,1500000.00,'2025-11-01 06:57:57','2025-11-01 06:57:57');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (34,0,28,16,'42','Trắng',3,3000000.00,'2025-11-01 12:35:28','2025-11-01 12:35:28');
+INSERT INTO `shop_order_items` (`id`, `sort`, `shop_order_id`, `shop_product_id`, `size`, `color`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES (35,0,28,17,'38','Đỏ',2,1500000.00,'2025-11-01 12:35:28','2025-11-01 12:35:28');
+/*!40000 ALTER TABLE `shop_order_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_orders`
+--
+
+DROP TABLE IF EXISTS `shop_orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shop_orders` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned DEFAULT NULL,
+  `shop_customer_id` bigint unsigned DEFAULT NULL,
+  `number` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `order_number` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_price` decimal(12,2) DEFAULT NULL,
+  `subtotal` decimal(12,2) DEFAULT NULL,
+  `tax_amount` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `shipping_amount` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `discount_amount` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `total_amount` decimal(12,2) DEFAULT NULL,
+  `status` enum('new','processing','shipped','delivered','cancelled') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'new',
+  `currency` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_status` enum('pending','processing','completed','failed','cancelled','refunded') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `shipping_price` decimal(8,2) DEFAULT NULL,
+  `shipping_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notes` text COLLATE utf8mb4_unicode_ci,
+  `billing_address` json DEFAULT NULL,
+  `shipping_address` json DEFAULT NULL,
+  `coupon_code` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `coupon_discount` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `shipped_at` timestamp NULL DEFAULT NULL,
+  `delivered_at` timestamp NULL DEFAULT NULL,
+  `cancelled_at` timestamp NULL DEFAULT NULL,
+  `paid_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `affiliate_user_id` bigint unsigned DEFAULT NULL,
+  `affiliate_code` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `affiliate_link_code` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `shop_orders_number_unique` (`number`),
+  UNIQUE KEY `shop_orders_order_number_unique` (`order_number`),
+  KEY `shop_orders_shop_customer_id_foreign` (`shop_customer_id`),
+  KEY `shop_orders_affiliate_user_id_foreign` (`affiliate_user_id`),
+  KEY `shop_orders_user_id_foreign` (`user_id`),
+  CONSTRAINT `shop_orders_affiliate_user_id_foreign` FOREIGN KEY (`affiliate_user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `shop_orders_shop_customer_id_foreign` FOREIGN KEY (`shop_customer_id`) REFERENCES `shop_customers` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `shop_orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_orders`
+--
+
+LOCK TABLES `shop_orders` WRITE;
+/*!40000 ALTER TABLE `shop_orders` DISABLE KEYS */;
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (1,NULL,5,'OR42852',NULL,1262.32,NULL,0.00,0.00,0.00,NULL,'delivered','irr',NULL,'pending',483.52,'flat_rate_per_item','Alice noticed, had powdered hair that WOULD always get into the open air. \'IF I don\'t like the.',NULL,NULL,NULL,0.00,NULL,NULL,NULL,NULL,'2025-04-26 18:35:42','2025-10-20 08:00:45','2025-10-20 08:00:45',NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (2,NULL,5,'OR9427',NULL,128.87,NULL,0.00,0.00,0.00,NULL,'new','ugx',NULL,'pending',301.63,'free','King, looking round the refreshments!\' But there seemed to be Involved in this way! Stop this.',NULL,NULL,NULL,0.00,NULL,NULL,NULL,NULL,'2025-03-30 09:12:26','2025-10-20 08:00:45','2025-10-20 08:00:45',NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (3,NULL,2,'OR389686',NULL,1201.03,NULL,0.00,0.00,0.00,NULL,'cancelled','egp',NULL,'pending',355.75,'flat_rate_per_item','YOUR shoes done with?\' said the Footman, and began smoking again. This time there could be NO.',NULL,NULL,NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-16 08:00:35','2025-10-20 08:00:45','2025-10-20 08:00:45',NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (4,NULL,2,'OR376395',NULL,1219.19,NULL,0.00,0.00,0.00,NULL,'processing','htg',NULL,'pending',260.80,'flat_rate_per_item','She soon got it out loud. \'Thinking again?\' the Duchess asked, with another dig of her head to.',NULL,NULL,NULL,0.00,NULL,NULL,NULL,NULL,'2024-10-26 19:06:26','2025-10-20 08:00:45','2025-10-20 08:00:45',NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (5,NULL,2,'OR351495',NULL,1464.75,NULL,0.00,0.00,0.00,NULL,'new','bob',NULL,'pending',457.50,'flat_rate_per_item','Pigeon; \'but if you\'ve seen them at dinn--\' she checked herself hastily. \'I don\'t quite understand.',NULL,NULL,NULL,0.00,NULL,NULL,NULL,NULL,'2025-07-13 01:33:35','2025-10-20 08:00:45','2025-10-20 08:00:45',NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (6,20,NULL,'ORD-20251020-A41A1A','ORD-20251020-A41A1A',1429186.00,1299260.00,129926.00,0.00,0.00,1429186.00,'new','USD','paypal','pending',0.00,'standard',NULL,'{\"city\": \"Hà Nội\", \"phone\": \"0388 335 845\", \"state\": \"Ha Noi\", \"country\": \"Vietnam\", \"postal_code\": \"2244444\", \"address_line_1\": \"Tổ 7, Đà Nội, Hà Nội\", \"address_line_2\": \"Không có\"}','{\"city\": \"Hà Nội\", \"phone\": \"0388 335 845\", \"state\": \"Ha Noi\", \"country\": \"Vietnam\", \"postal_code\": \"2244444\", \"address_line_1\": \"Tổ 7, Đà Nội, Hà Nội\", \"address_line_2\": \"Không có\"}',NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-20 07:32:26','2025-10-20 08:00:45','2025-10-20 08:00:45',NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (7,1,NULL,'ORD-20251020-DA015D','ORD-20251020-DA015D',2445478.20,2223162.00,222316.20,0.00,0.00,2445478.20,'processing','USD','paypal','completed',0.00,'standard',NULL,'{\"city\": \"Hà Nội\", \"phone\": \"0388 335 845\", \"state\": \"Ha Noi\", \"country\": \"Vietnam\", \"postal_code\": \"2244444\", \"address_line_1\": \"Tổ 7, Đà Nội, Hà Nội\", \"address_line_2\": \"Không có\"}','{\"city\": \"Hà Nội\", \"phone\": \"0388 335 845\", \"state\": \"Ha Noi\", \"country\": \"Vietnam\", \"postal_code\": \"2244444\", \"address_line_1\": \"Tổ 7, Đà Nội, Hà Nội\", \"address_line_2\": \"Không có\"}',NULL,0.00,NULL,NULL,NULL,'2025-10-20 07:33:32','2025-10-20 07:33:17','2025-10-20 08:00:45','2025-10-20 08:00:45',NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (8,1,NULL,'ORD-20251020-6C400D','ORD-20251020-6C400D',4117161.40,3742874.00,374287.40,0.00,0.00,4117161.40,'new','USD','cod','pending',0.00,'standard',NULL,'{\"city\": \"Hà Nội\", \"phone\": \"0388 335 845\", \"state\": \"Ha Noi\", \"country\": \"Vietnam\", \"postal_code\": \"2244444\", \"address_line_1\": \"Tổ 7, Đà Nội, Hà Nội\", \"address_line_2\": \"Không có\"}','{\"city\": \"Hà Nội\", \"phone\": \"0388 335 845\", \"state\": \"Ha Noi\", \"country\": \"Vietnam\", \"postal_code\": \"2244444\", \"address_line_1\": \"Tổ 7, Đà Nội, Hà Nội\", \"address_line_2\": \"Không có\"}',NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-20 07:43:18','2025-10-20 08:00:45','2025-10-20 08:00:45',NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (9,20,NULL,'ORD-20251025-5C7CD9','ORD-20251025-5C7CD9',9900000.00,9000000.00,900000.00,0.00,0.00,9900000.00,'new','USD','cod','pending',0.00,'standard',NULL,'{\"city\": \"Da Nang\", \"phone\": \"0388 335 845\", \"state\": \"Ha Noi\", \"country\": \"Vietnam\", \"postal_code\": \"2244444\", \"address_line_1\": \"Tổ 7, Đà Nội, Hà Nội\", \"address_line_2\": \"Không có\"}','{\"city\": \"Da Nang\", \"phone\": \"0388 335 845\", \"state\": \"Ha Noi\", \"country\": \"Vietnam\", \"postal_code\": \"2244444\", \"address_line_1\": \"Tổ 7, Đà Nội, Hà Nội\", \"address_line_2\": \"Không có\"}',NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-25 06:31:49','2025-10-26 10:37:28','2025-10-26 10:37:28',NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (10,1,NULL,'ORD-20251025-0E341C','ORD-20251025-0E341C',1650000.00,1500000.00,150000.00,0.00,0.00,1650000.00,'new','USD','cod','pending',0.00,'standard','ádfafsd','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Bình Phước\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"fasd\", \"address_line_2\": \"Không có\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Bình Phước\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"fasd\", \"address_line_2\": \"Không có\"}',NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-25 11:31:12','2025-10-26 10:37:28','2025-10-26 10:37:28',NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (11,1,NULL,'ORD-20251025-17442A','ORD-20251025-17442A',6600000.00,6000000.00,600000.00,0.00,0.00,6600000.00,'new','USD','cod','pending',0.00,'standard','Gọi trước khi giao hàng','{\"city\": null, \"phone\": \"0123456789\", \"state\": \"TP Hồ Chí Minh\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"123 Đường Nguyễn Huệ, Phường Bến Nghé\", \"address_line_2\": \"Tầng 5, Tòa nhà ABC\"}','{\"city\": null, \"phone\": \"0123456789\", \"state\": \"TP Hồ Chí Minh\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"123 Đường Nguyễn Huệ, Phường Bến Nghé\", \"address_line_2\": \"Tầng 5, Tòa nhà ABC\"}',NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-25 11:34:57','2025-10-26 10:37:28','2025-10-26 10:37:28',NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (12,1,NULL,'ORD-20251025-2546ED','ORD-20251025-2546ED',3300000.00,3000000.00,300000.00,0.00,0.00,3300000.00,'new','USD','cod','pending',0.00,'standard',NULL,'{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Lắk\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"123\", \"address_line_2\": \"Không có\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Lắk\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"123\", \"address_line_2\": \"Không có\"}',NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-25 11:37:54','2025-10-26 10:37:28','2025-10-26 10:37:28',NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (13,1,NULL,'ORD-20251025-C6EAA0','ORD-20251025-C6EAA0',6600000.00,6000000.00,600000.00,0.00,0.00,6600000.00,'new','USD','cod','pending',0.00,'standard','3','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Cà Mau\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"123123\", \"address_line_2\": \"Không có\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Cà Mau\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"123123\", \"address_line_2\": \"Không có\"}',NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-25 11:50:52','2025-10-26 10:37:28','2025-10-26 10:37:28',NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (14,1,NULL,'ORD-20251025-A84AD5','ORD-20251025-A84AD5',6600000.00,6000000.00,600000.00,0.00,0.00,6600000.00,'new','USD','paypal','pending',0.00,'standard','ádf','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Cà Mau\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"dfasd\", \"address_line_2\": \"fasdf\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Cà Mau\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"dfasd\", \"address_line_2\": \"fasdf\"}',NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-25 11:51:54','2025-10-26 10:37:28','2025-10-26 10:37:28',NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (15,1,NULL,'ORD-20251025-9870A7','ORD-20251025-9870A7',6600000.00,6000000.00,600000.00,0.00,0.00,6600000.00,'new','USD','cod','pending',0.00,'standard','ádf','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Cà Mau\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"dfasd\", \"address_line_2\": \"fasdf\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Cà Mau\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"dfasd\", \"address_line_2\": \"fasdf\"}',NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-25 11:52:09','2025-10-26 10:37:28','2025-10-26 10:37:28',NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (16,1,NULL,'ORD-20251026-51C50B','ORD-20251026-51C50B',3300000.00,3000000.00,300000.00,0.00,0.00,3300000.00,'delivered','USD','cod','completed',0.00,'standard',NULL,'{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đồng Tháp\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": \"Không có\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đồng Tháp\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": \"Không có\"}',NULL,0.00,NULL,'2025-10-26 10:40:06',NULL,NULL,'2025-10-26 10:39:01','2025-10-26 10:40:06',NULL,NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (17,1,NULL,'ORD-20251026-9418EC','ORD-20251026-9418EC',3300000.00,3000000.00,300000.00,0.00,0.00,3300000.00,'new','USD','cod','pending',0.00,'standard',NULL,'{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Lắk\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": null}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Lắk\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": null}',NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-26 10:52:25','2025-10-26 10:52:25',NULL,NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (18,1,NULL,'ORD-20251026-D1AFBB','ORD-20251026-D1AFBB',6600000.00,6000000.00,600000.00,0.00,0.00,6600000.00,'new','USD','paypal','pending',0.00,'standard',NULL,'{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Nông\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": \"Không có\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Nông\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": \"Không có\"}',NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-26 11:59:09','2025-10-26 11:59:09',NULL,NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (19,1,NULL,'ORD-20251026-2E64D2','ORD-20251026-2E64D2',6600000.00,6000000.00,600000.00,0.00,0.00,6600000.00,'new','USD','paypal','pending',0.00,'standard',NULL,'{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Nông\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": \"Không có\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Nông\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": \"Không có\"}',NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-26 11:59:14','2025-10-26 11:59:14',NULL,NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (20,1,NULL,'ORD-20251026-871BD9','ORD-20251026-871BD9',6600000.00,6000000.00,600000.00,0.00,0.00,6600000.00,'new','USD','paypal','pending',0.00,'standard',NULL,'{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Nông\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": \"Không có\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Nông\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": \"Không có\"}',NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-26 11:59:20','2025-10-26 11:59:20',NULL,NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (21,1,NULL,'ORD-20251026-DC0602','ORD-20251026-DC0602',6600000.00,6000000.00,600000.00,0.00,0.00,6600000.00,'new','USD','paypal','pending',0.00,'standard',NULL,'{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Nông\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": \"Không có\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Nông\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": \"Không có\"}',NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-26 11:59:25','2025-10-26 11:59:25',NULL,NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (22,1,NULL,'ORD-20251026-36CDA4','ORD-20251026-36CDA4',6600000.00,6000000.00,600000.00,0.00,0.00,6600000.00,'new','USD','paypal','pending',0.00,'standard',NULL,'{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Nông\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": \"Không có\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Nông\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": \"Không có\"}',NULL,0.00,NULL,NULL,NULL,NULL,'2025-10-26 11:59:31','2025-10-26 11:59:31',NULL,NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (23,1,NULL,'ORD-20251026-8E81F1','ORD-20251026-8E81F1',6600000.00,6000000.00,600000.00,0.00,0.00,6600000.00,'cancelled','USD','paypal','refunded',0.00,'standard',NULL,'{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Nông\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": \"Không có\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Nông\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"Demo\", \"address_line_2\": \"Không có\"}',NULL,0.00,NULL,NULL,'2025-10-26 13:32:59','2025-10-26 12:00:20','2025-10-26 11:59:36','2025-10-26 13:32:59',NULL,NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (24,1,NULL,'ORD-20251026-628B93','ORD-20251026-628B93',6380000.00,5800000.00,580000.00,0.00,0.00,6380000.00,'cancelled','USD','cod','pending',0.00,'standard',NULL,'{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Lắk\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"To 7, Hoa Xuan, Da Nang\", \"address_line_2\": \"To 7, Hoa Xuan, Da Nang\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Đắk Lắk\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"To 7, Hoa Xuan, Da Nang\", \"address_line_2\": \"To 7, Hoa Xuan, Da Nang\"}',NULL,0.00,NULL,NULL,'2025-11-01 06:29:03',NULL,'2025-10-26 13:40:54','2025-11-01 06:29:03',NULL,NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (25,1,NULL,'ORD-20251026-0DAAE0','ORD-20251026-0DAAE0',3300000.00,3000000.00,300000.00,0.00,0.00,3300000.00,'processing','USD','paypal','completed',0.00,'standard',NULL,'{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Bắc Giang\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"To 7, Hoa Xuan, Da Nang\", \"address_line_2\": \"To 7, Hoa Xuan, Da Nang\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Bắc Giang\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"To 7, Hoa Xuan, Da Nang\", \"address_line_2\": \"To 7, Hoa Xuan, Da Nang\"}',NULL,0.00,NULL,NULL,NULL,'2025-10-26 13:42:22','2025-10-26 13:41:36','2025-10-26 13:42:22',NULL,NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (26,1,NULL,'ORD-20251101-5F3ABF','ORD-20251101-5F3ABF',4950000.00,4500000.00,450000.00,0.00,0.00,4950000.00,'cancelled','USD','cod','pending',0.00,'standard','dfdfdf','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Điện Biên\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"To 7, Hoa Xuan, Da Nang\", \"address_line_2\": \"To 7, Hoa Xuan, Da Nang\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Điện Biên\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"To 7, Hoa Xuan, Da Nang\", \"address_line_2\": \"To 7, Hoa Xuan, Da Nang\"}',NULL,0.00,NULL,NULL,'2025-11-01 12:28:35',NULL,'2025-11-01 04:54:46','2025-11-01 12:28:35',NULL,NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (27,1,NULL,'ORD-20251101-10A3E7','ORD-20251101-10A3E7',28050000.00,25500000.00,2550000.00,0.00,0.00,28050000.00,'cancelled','USD','cod','pending',0.00,'standard',NULL,'{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Bình Định\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"To 7, Hoa Xuan, Da Nang\", \"address_line_2\": \"To 7, Hoa Xuan, Da Nang\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Bình Định\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"To 7, Hoa Xuan, Da Nang\", \"address_line_2\": \"To 7, Hoa Xuan, Da Nang\"}',NULL,0.00,NULL,NULL,'2025-11-01 11:12:44',NULL,'2025-11-01 06:57:53','2025-11-01 11:12:44',NULL,NULL,NULL,NULL);
+INSERT INTO `shop_orders` (`id`, `user_id`, `shop_customer_id`, `number`, `order_number`, `total_price`, `subtotal`, `tax_amount`, `shipping_amount`, `discount_amount`, `total_amount`, `status`, `currency`, `payment_method`, `payment_status`, `shipping_price`, `shipping_method`, `notes`, `billing_address`, `shipping_address`, `coupon_code`, `coupon_discount`, `shipped_at`, `delivered_at`, `cancelled_at`, `paid_at`, `created_at`, `updated_at`, `deleted_at`, `affiliate_user_id`, `affiliate_code`, `affiliate_link_code`) VALUES (28,1,NULL,'ORD-20251101-C1E1FC','ORD-20251101-C1E1FC',13200000.00,12000000.00,1200000.00,0.00,0.00,13200000.00,'processing','USD','paypal','completed',0.00,'standard',NULL,'{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Bắc Giang\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"To 7, Hoa Xuan, Da Nang\", \"address_line_2\": \"To 7, Hoa Xuan, Da Nang\"}','{\"city\": null, \"phone\": \"0388 335 845\", \"state\": \"Bắc Giang\", \"country\": \"Việt Nam\", \"postal_code\": null, \"address_line_1\": \"To 7, Hoa Xuan, Da Nang\", \"address_line_2\": \"To 7, Hoa Xuan, Da Nang\"}',NULL,0.00,NULL,NULL,NULL,'2025-11-01 12:35:45','2025-11-01 12:35:24','2025-11-01 12:35:45',NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `shop_orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_payments`
+--
+
+DROP TABLE IF EXISTS `shop_payments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shop_payments` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` bigint unsigned NOT NULL,
+  `reference` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `provider` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `provider_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `response_data` json DEFAULT NULL,
+  `paid_at` timestamp NULL DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `metadata` json DEFAULT NULL,
+  `method` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` decimal(15,2) NOT NULL,
+  `currency` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_payments`
+--
+
+LOCK TABLES `shop_payments` WRITE;
+/*!40000 ALTER TABLE `shop_payments` DISABLE KEYS */;
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (1,1,'PAY575484','stripe',NULL,NULL,NULL,'pending',NULL,'credit_card',1046.92,'RWF','2025-02-26 05:15:04','2025-05-31 21:22:58');
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (2,2,'PAY147346','stripe',NULL,NULL,NULL,'pending',NULL,'credit_card',742.35,'ILS','2025-01-01 07:07:51','2025-07-17 20:11:26');
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (3,3,'PAY771949','paypal',NULL,NULL,NULL,'pending',NULL,'paypal',1802.04,'LKR','2025-03-27 11:51:40','2025-09-08 16:28:44');
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (4,4,'PAY187671','paypal',NULL,NULL,NULL,'pending',NULL,'credit_card',1500.92,'TTD','2025-04-03 16:08:26','2025-07-02 14:15:54');
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (5,5,'PAY902390','paypal',NULL,NULL,NULL,'pending',NULL,'bank_transfer',293.55,'CUC','2024-12-03 03:38:08','2025-09-07 14:10:25');
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (6,6,'PAYID-ND3EQAQ4G786771XB818421Y','paypal','PAYID-ND3EQAQ4G786771XB818421Y',NULL,NULL,'pending',NULL,'paypal',1429186.00,'VND','2025-10-20 07:32:34','2025-10-20 07:32:34');
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (7,7,'PAYID-ND3EQNI4SY75494U58908300','paypal','PAYID-ND3EQNI4SY75494U58908300','{\"id\": \"PAYID-ND3EQNI4SY75494U58908300\", \"cart\": \"9KE86629GJ599244V\", \"links\": [{\"rel\": \"self\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/payment/PAYID-ND3EQNI4SY75494U58908300\", \"method\": \"GET\"}], \"payer\": {\"status\": \"VERIFIED\", \"payer_info\": {\"email\": \"sb-bf2bi22143101@personal.example.com\", \"payer_id\": \"VMLDZKEQDDMXA\", \"last_name\": \"Doe\", \"first_name\": \"John\", \"country_code\": \"US\", \"shipping_address\": {\"city\": \"San Jose\", \"line1\": \"1 Main St\", \"state\": \"CA\", \"postal_code\": \"95131\", \"country_code\": \"US\", \"recipient_name\": \"John Doe\"}}, \"payment_method\": \"paypal\"}, \"state\": \"approved\", \"intent\": \"sale\", \"create_time\": \"2025-10-20T14:33:25Z\", \"update_time\": \"2025-10-20T14:33:32Z\", \"transactions\": [{\"payee\": {\"email\": \"sb-x7mhq22142981@business.example.com\", \"merchant_id\": \"UDFS7HV84RXPC\"}, \"amount\": {\"total\": \"101.89\", \"details\": {\"discount\": \"0.00\", \"shipping\": \"0.00\", \"subtotal\": \"101.89\", \"insurance\": \"0.00\", \"handling_fee\": \"0.00\", \"shipping_discount\": \"0.00\"}, \"currency\": \"USD\"}, \"item_list\": {\"shipping_address\": {\"city\": \"San Jose\", \"line1\": \"1 Main St\", \"state\": \"CA\", \"postal_code\": \"95131\", \"country_code\": \"US\", \"recipient_name\": \"John Doe\"}}, \"description\": \"Order #7 - Total: 2,445,478 VND\", \"invoice_number\": \"ORD-20251020-DA015D\", \"related_resources\": [{\"sale\": {\"id\": \"4Y9485045X3493057\", \"links\": [{\"rel\": \"self\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/sale/4Y9485045X3493057\", \"method\": \"GET\"}, {\"rel\": \"refund\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/sale/4Y9485045X3493057/refund\", \"method\": \"POST\"}, {\"rel\": \"parent_payment\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/payment/PAYID-ND3EQNI4SY75494U58908300\", \"method\": \"GET\"}], \"state\": \"completed\", \"amount\": {\"total\": \"101.89\", \"details\": {\"discount\": \"0.00\", \"shipping\": \"0.00\", \"subtotal\": \"101.89\", \"insurance\": \"0.00\", \"handling_fee\": \"0.00\", \"shipping_discount\": \"0.00\"}, \"currency\": \"USD\"}, \"create_time\": \"2025-10-20T14:33:32Z\", \"update_time\": \"2025-10-20T14:33:32Z\", \"payment_mode\": \"INSTANT_TRANSFER\", \"parent_payment\": \"PAYID-ND3EQNI4SY75494U58908300\", \"transaction_fee\": {\"value\": \"4.05\", \"currency\": \"USD\"}, \"protection_eligibility\": \"ELIGIBLE\", \"protection_eligibility_type\": \"ITEM_NOT_RECEIVED_ELIGIBLE,UNAUTHORIZED_PAYMENT_ELIGIBLE\"}}]}], \"failed_transactions\": []}','2025-10-20 07:33:32','completed',NULL,'paypal',2445478.20,'VND','2025-10-20 07:33:25','2025-10-20 07:33:32');
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (8,14,'PAYID-ND6RYUY3GM62109SD4917923','paypal','PAYID-ND6RYUY3GM62109SD4917923',NULL,NULL,'pending',NULL,'paypal',6600000.00,'VND','2025-10-25 11:52:03','2025-10-25 11:52:03');
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (9,18,'PAYID-ND7G7IQ6VT45103PY538482T','paypal','PAYID-ND7G7IQ6VT45103PY538482T',NULL,NULL,'pending',NULL,'paypal',6600000.00,'VND','2025-10-26 11:59:46','2025-10-26 11:59:46');
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (10,19,'PAYID-ND7G7JA65353964C9227730V','paypal','PAYID-ND7G7JA65353964C9227730V',NULL,NULL,'pending',NULL,'paypal',6600000.00,'VND','2025-10-26 11:59:48','2025-10-26 11:59:48');
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (11,20,'PAYID-ND7G7JQ7NG30987N5302580S','paypal','PAYID-ND7G7JQ7NG30987N5302580S',NULL,NULL,'pending',NULL,'paypal',6600000.00,'VND','2025-10-26 11:59:50','2025-10-26 11:59:50');
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (12,21,'PAYID-ND7G7KI76R522755N893111A','paypal','PAYID-ND7G7KI76R522755N893111A',NULL,NULL,'pending',NULL,'paypal',6600000.00,'VND','2025-10-26 11:59:52','2025-10-26 11:59:52');
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (13,22,'PAYID-ND7G7KY92J60234S37473734','paypal','PAYID-ND7G7KY92J60234S37473734',NULL,NULL,'pending',NULL,'paypal',6600000.00,'VND','2025-10-26 11:59:55','2025-10-26 11:59:55');
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (14,23,'PAYID-ND7G7LI26T52639MV702242S','paypal','PAYID-ND7G7LI26T52639MV702242S','{\"id\": \"PAYID-ND7G7LI26T52639MV702242S\", \"cart\": \"33E00261ES881844S\", \"links\": [{\"rel\": \"self\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/payment/PAYID-ND7G7LI26T52639MV702242S\", \"method\": \"GET\"}], \"payer\": {\"status\": \"VERIFIED\", \"payer_info\": {\"email\": \"sb-bf2bi22143101@personal.example.com\", \"payer_id\": \"VMLDZKEQDDMXA\", \"last_name\": \"Doe\", \"first_name\": \"John\", \"country_code\": \"US\", \"shipping_address\": {\"city\": \"San Jose\", \"line1\": \"1 Main St\", \"state\": \"CA\", \"postal_code\": \"95131\", \"country_code\": \"US\", \"recipient_name\": \"John Doe\"}}, \"payment_method\": \"paypal\"}, \"state\": \"approved\", \"intent\": \"sale\", \"create_time\": \"2025-10-26T18:59:57Z\", \"update_time\": \"2025-10-26T19:00:20Z\", \"transactions\": [{\"payee\": {\"email\": \"sb-x7mhq22142981@business.example.com\", \"merchant_id\": \"UDFS7HV84RXPC\"}, \"amount\": {\"total\": \"275.00\", \"details\": {\"discount\": \"0.00\", \"shipping\": \"0.00\", \"subtotal\": \"275.00\", \"insurance\": \"0.00\", \"handling_fee\": \"0.00\", \"shipping_discount\": \"0.00\"}, \"currency\": \"USD\"}, \"item_list\": {\"shipping_address\": {\"city\": \"San Jose\", \"line1\": \"1 Main St\", \"state\": \"CA\", \"postal_code\": \"95131\", \"country_code\": \"US\", \"recipient_name\": \"John Doe\"}}, \"description\": \"Order #23 - Total: 6,600,000 VND\", \"invoice_number\": \"ORD-20251026-8E81F1\", \"related_resources\": [{\"sale\": {\"id\": \"8CY78763UW029473E\", \"links\": [{\"rel\": \"self\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/sale/8CY78763UW029473E\", \"method\": \"GET\"}, {\"rel\": \"refund\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/sale/8CY78763UW029473E/refund\", \"method\": \"POST\"}, {\"rel\": \"parent_payment\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/payment/PAYID-ND7G7LI26T52639MV702242S\", \"method\": \"GET\"}], \"state\": \"completed\", \"amount\": {\"total\": \"275.00\", \"details\": {\"discount\": \"0.00\", \"shipping\": \"0.00\", \"subtotal\": \"275.00\", \"insurance\": \"0.00\", \"handling_fee\": \"0.00\", \"shipping_discount\": \"0.00\"}, \"currency\": \"USD\"}, \"create_time\": \"2025-10-26T19:00:20Z\", \"update_time\": \"2025-10-26T19:00:20Z\", \"payment_mode\": \"INSTANT_TRANSFER\", \"parent_payment\": \"PAYID-ND7G7LI26T52639MV702242S\", \"transaction_fee\": {\"value\": \"10.09\", \"currency\": \"USD\"}, \"protection_eligibility\": \"ELIGIBLE\", \"protection_eligibility_type\": \"ITEM_NOT_RECEIVED_ELIGIBLE,UNAUTHORIZED_PAYMENT_ELIGIBLE\"}}]}], \"failed_transactions\": []}','2025-10-26 12:00:20','refunded',NULL,'paypal',6600000.00,'VND','2025-10-26 11:59:57','2025-10-26 13:32:59');
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (15,25,'PAYID-ND7IPDA4GN9211164071714H','paypal','PAYID-ND7IPDA4GN9211164071714H','{\"id\": \"PAYID-ND7IPDA4GN9211164071714H\", \"cart\": \"0M794811BA861321E\", \"links\": [{\"rel\": \"self\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/payment/PAYID-ND7IPDA4GN9211164071714H\", \"method\": \"GET\"}], \"payer\": {\"status\": \"VERIFIED\", \"payer_info\": {\"email\": \"sb-bf2bi22143101@personal.example.com\", \"payer_id\": \"VMLDZKEQDDMXA\", \"last_name\": \"Doe\", \"first_name\": \"John\", \"country_code\": \"US\", \"shipping_address\": {\"city\": \"San Jose\", \"line1\": \"1 Main St\", \"state\": \"CA\", \"postal_code\": \"95131\", \"country_code\": \"US\", \"recipient_name\": \"John Doe\"}}, \"payment_method\": \"paypal\"}, \"state\": \"approved\", \"intent\": \"sale\", \"create_time\": \"2025-10-26T20:41:48Z\", \"update_time\": \"2025-10-26T20:42:22Z\", \"transactions\": [{\"payee\": {\"email\": \"sb-x7mhq22142981@business.example.com\", \"merchant_id\": \"UDFS7HV84RXPC\"}, \"amount\": {\"total\": \"137.50\", \"details\": {\"discount\": \"0.00\", \"shipping\": \"0.00\", \"subtotal\": \"137.50\", \"insurance\": \"0.00\", \"handling_fee\": \"0.00\", \"shipping_discount\": \"0.00\"}, \"currency\": \"USD\"}, \"item_list\": {\"shipping_address\": {\"city\": \"San Jose\", \"line1\": \"1 Main St\", \"state\": \"CA\", \"postal_code\": \"95131\", \"country_code\": \"US\", \"recipient_name\": \"John Doe\"}}, \"description\": \"Order #25 - Total: 3,300,000 VND\", \"invoice_number\": \"ORD-20251026-0DAAE0\", \"related_resources\": [{\"sale\": {\"id\": \"8R355922P4659602L\", \"links\": [{\"rel\": \"self\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/sale/8R355922P4659602L\", \"method\": \"GET\"}, {\"rel\": \"refund\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/sale/8R355922P4659602L/refund\", \"method\": \"POST\"}, {\"rel\": \"parent_payment\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/payment/PAYID-ND7IPDA4GN9211164071714H\", \"method\": \"GET\"}], \"state\": \"completed\", \"amount\": {\"total\": \"137.50\", \"details\": {\"discount\": \"0.00\", \"shipping\": \"0.00\", \"subtotal\": \"137.50\", \"insurance\": \"0.00\", \"handling_fee\": \"0.00\", \"shipping_discount\": \"0.00\"}, \"currency\": \"USD\"}, \"create_time\": \"2025-10-26T20:42:22Z\", \"update_time\": \"2025-10-26T20:42:22Z\", \"payment_mode\": \"INSTANT_TRANSFER\", \"parent_payment\": \"PAYID-ND7IPDA4GN9211164071714H\", \"transaction_fee\": {\"value\": \"5.29\", \"currency\": \"USD\"}, \"protection_eligibility\": \"ELIGIBLE\", \"protection_eligibility_type\": \"ITEM_NOT_RECEIVED_ELIGIBLE,UNAUTHORIZED_PAYMENT_ELIGIBLE\"}}]}], \"failed_transactions\": []}','2025-10-26 13:42:22','completed',NULL,'paypal',3300000.00,'VND','2025-10-26 13:41:49','2025-10-26 13:42:22');
+INSERT INTO `shop_payments` (`id`, `order_id`, `reference`, `provider`, `provider_id`, `response_data`, `paid_at`, `status`, `metadata`, `method`, `amount`, `currency`, `created_at`, `updated_at`) VALUES (16,28,'PAYID-NEDGCBA05J4060671731581Y','paypal','PAYID-NEDGCBA05J4060671731581Y','{\"id\": \"PAYID-NEDGCBA05J4060671731581Y\", \"cart\": \"2TR74236T7436473Y\", \"links\": [{\"rel\": \"self\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/payment/PAYID-NEDGCBA05J4060671731581Y\", \"method\": \"GET\"}], \"payer\": {\"status\": \"VERIFIED\", \"payer_info\": {\"email\": \"sb-bf2bi22143101@personal.example.com\", \"payer_id\": \"VMLDZKEQDDMXA\", \"last_name\": \"Doe\", \"first_name\": \"John\", \"country_code\": \"US\", \"shipping_address\": {\"city\": \"San Jose\", \"line1\": \"1 Main St\", \"state\": \"CA\", \"postal_code\": \"95131\", \"country_code\": \"US\", \"recipient_name\": \"John Doe\"}}, \"payment_method\": \"paypal\"}, \"state\": \"approved\", \"intent\": \"sale\", \"create_time\": \"2025-11-01T19:35:32Z\", \"update_time\": \"2025-11-01T19:35:44Z\", \"transactions\": [{\"payee\": {\"email\": \"sb-x7mhq22142981@business.example.com\", \"merchant_id\": \"UDFS7HV84RXPC\"}, \"amount\": {\"total\": \"550.00\", \"details\": {\"discount\": \"0.00\", \"shipping\": \"0.00\", \"subtotal\": \"550.00\", \"insurance\": \"0.00\", \"handling_fee\": \"0.00\", \"shipping_discount\": \"0.00\"}, \"currency\": \"USD\"}, \"item_list\": {\"shipping_address\": {\"city\": \"San Jose\", \"line1\": \"1 Main St\", \"state\": \"CA\", \"postal_code\": \"95131\", \"country_code\": \"US\", \"recipient_name\": \"John Doe\"}}, \"description\": \"Order #28 - Total: 13,200,000 VND\", \"invoice_number\": \"ORD-20251101-C1E1FC\", \"related_resources\": [{\"sale\": {\"id\": \"8SL71001RS843043W\", \"links\": [{\"rel\": \"self\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/sale/8SL71001RS843043W\", \"method\": \"GET\"}, {\"rel\": \"refund\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/sale/8SL71001RS843043W/refund\", \"method\": \"POST\"}, {\"rel\": \"parent_payment\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/payment/PAYID-NEDGCBA05J4060671731581Y\", \"method\": \"GET\"}], \"state\": \"completed\", \"amount\": {\"total\": \"550.00\", \"details\": {\"discount\": \"0.00\", \"shipping\": \"0.00\", \"subtotal\": \"550.00\", \"insurance\": \"0.00\", \"handling_fee\": \"0.00\", \"shipping_discount\": \"0.00\"}, \"currency\": \"USD\"}, \"create_time\": \"2025-11-01T19:35:44Z\", \"update_time\": \"2025-11-01T19:35:44Z\", \"payment_mode\": \"INSTANT_TRANSFER\", \"parent_payment\": \"PAYID-NEDGCBA05J4060671731581Y\", \"transaction_fee\": {\"value\": \"19.69\", \"currency\": \"USD\"}, \"protection_eligibility\": \"ELIGIBLE\", \"protection_eligibility_type\": \"ITEM_NOT_RECEIVED_ELIGIBLE,UNAUTHORIZED_PAYMENT_ELIGIBLE\"}}]}], \"failed_transactions\": []}','2025-11-01 12:35:45','completed',NULL,'paypal',13200000.00,'VND','2025-11-01 12:35:33','2025-11-01 12:35:45');
+/*!40000 ALTER TABLE `shop_payments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_products`
+--
+
+DROP TABLE IF EXISTS `shop_products`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shop_products` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `shop_brand_id` bigint unsigned DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sku` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `barcode` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci,
+  `sizes` json DEFAULT NULL,
+  `colors` json DEFAULT NULL,
+  `qty` bigint unsigned NOT NULL DEFAULT '0',
+  `security_stock` bigint unsigned NOT NULL DEFAULT '0',
+  `featured` tinyint(1) NOT NULL DEFAULT '0',
+  `is_visible` tinyint(1) NOT NULL DEFAULT '0',
+  `old_price` decimal(12,2) DEFAULT NULL,
+  `price` decimal(12,2) DEFAULT NULL,
+  `cost` decimal(12,2) DEFAULT NULL,
+  `type` enum('deliverable','downloadable') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `backorder` tinyint(1) NOT NULL DEFAULT '0',
+  `requires_shipping` tinyint(1) NOT NULL DEFAULT '0',
+  `published_at` date DEFAULT NULL,
+  `seo_title` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seo_description` varchar(160) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `weight_value` decimal(10,2) unsigned DEFAULT '0.00',
+  `weight_unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'kg',
+  `height_value` decimal(10,2) unsigned DEFAULT '0.00',
+  `height_unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'cm',
+  `width_value` decimal(10,2) unsigned DEFAULT '0.00',
+  `width_unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'cm',
+  `depth_value` decimal(10,2) unsigned DEFAULT '0.00',
+  `depth_unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'cm',
+  `volume_value` decimal(10,2) unsigned DEFAULT '0.00',
+  `volume_unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'l',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `shop_products_slug_unique` (`slug`),
+  UNIQUE KEY `shop_products_sku_unique` (`sku`),
+  UNIQUE KEY `shop_products_barcode_unique` (`barcode`),
+  KEY `shop_products_shop_brand_id_foreign` (`shop_brand_id`),
+  CONSTRAINT `shop_products_shop_brand_id_foreign` FOREIGN KEY (`shop_brand_id`) REFERENCES `shop_brands` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_products`
+--
+
+LOCK TABLES `shop_products` WRITE;
+/*!40000 ALTER TABLE `shop_products` DISABLE KEYS */;
+INSERT INTO `shop_products` (`id`, `shop_brand_id`, `name`, `slug`, `sku`, `barcode`, `description`, `sizes`, `colors`, `qty`, `security_stock`, `featured`, `is_visible`, `old_price`, `price`, `cost`, `type`, `backorder`, `requires_shipping`, `published_at`, `seo_title`, `seo_description`, `weight_value`, `weight_unit`, `height_value`, `height_unit`, `width_value`, `width_unit`, `depth_value`, `depth_unit`, `volume_value`, `volume_unit`, `created_at`, `updated_at`) VALUES (6,6,'Samba OG Shoes','samba-og-shoes','SKU-10312','9093391592211','<h3><strong>The classic Samba Shoes, reimagined.</strong></h3><p>These adidas Samba OG shoes are a true representation of 3-Stripes style, kicking their way from soccer pitches to skate parks since the 1950s. This pair gives the legendary style a refresh with a mix of tech-forward materials. It features a shiny mesh quarter with smooth leather overlays and a soft mesh lining. Reflective laces and 3-Stripes add the finishing touch. The shoes come with a second set of tonal laces as well.</p>','[\"40\", \"41\", \"42\"]','[\"Đen\", \"Đỏ\", \"Tím\"]',998,10,1,1,NULL,3000000.00,NULL,NULL,1,1,'2025-10-20',NULL,NULL,0.00,'kg',0.00,'cm',0.00,'cm',0.00,'cm',0.00,'l','2025-10-20 08:07:51','2025-10-25 11:35:02');
+INSERT INTO `shop_products` (`id`, `shop_brand_id`, `name`, `slug`, `sku`, `barcode`, `description`, `sizes`, `colors`, `qty`, `security_stock`, `featured`, `is_visible`, `old_price`, `price`, `cost`, `type`, `backorder`, `requires_shipping`, `published_at`, `seo_title`, `seo_description`, `weight_value`, `weight_unit`, `height_value`, `height_unit`, `width_value`, `width_unit`, `depth_value`, `depth_unit`, `volume_value`, `volume_unit`, `created_at`, `updated_at`) VALUES (7,6,'Samba XLG Shoes','samba-xlg-shoes','SKU-10011','7010437821669','<h3><strong>A strikingly sophisticated one-color Samba, dressed up for brilliance.</strong></h3><p>Lace up a more sophisticated take on the iconic Samba, the adidas indoor football shoe that&#039;s been kicking it for decades. Riding on a built-up rubber cupsole with famous sidewall texturing and a mixed traction pattern, these Samba XLG Shoes tap the powerful energy of monochrome coloring to strip it down to essential elegance. The nubuck and textile upper is supple yet structured, with drop-in cushioning and a generously padded tongue for top-to-bottom comfort. Neutral shades and a versatile silhouette make these shoes a great match with virtually anything.</p>','[\"39\", \"40\", \"41\", \"42\"]','[\"Lam\", \"Đỏ\", \"Trắng\"]',2000,20,1,1,NULL,2500000.00,NULL,NULL,1,1,'2025-10-20',NULL,NULL,0.00,'kg',0.00,'cm',0.00,'cm',0.00,'cm',0.00,'l','2025-10-20 08:15:30','2025-10-24 09:44:38');
+INSERT INTO `shop_products` (`id`, `shop_brand_id`, `name`, `slug`, `sku`, `barcode`, `description`, `sizes`, `colors`, `qty`, `security_stock`, `featured`, `is_visible`, `old_price`, `price`, `cost`, `type`, `backorder`, `requires_shipping`, `published_at`, `seo_title`, `seo_description`, `weight_value`, `weight_unit`, `height_value`, `height_unit`, `width_value`, `width_unit`, `depth_value`, `depth_unit`, `volume_value`, `volume_unit`, `created_at`, `updated_at`) VALUES (9,7,'GV Special','gv-special','SKU-10023','7010437821663','<p>Back in the 1970s, Argentinian tennis player Guillermo Vilas smashed through winning streaks. On the court he dominated any surface and serve sent his way. Off the court, he was equally renowned for his confidence and charisma. In the ‘80s we created his signature shoe, the GV Special, which pays tribute to its namesake with a court-meets-street aesthetic that is iconic to this day. Its silhouette features perforated detailing for breathability, plus a chunky sole. Today, the GV Special has been upgraded with new colorways and maximized comfort.</p>','[\"38\", \"39\", \"40\"]','[\"Trắng\", \"Xanh\", \"Đen\"]',5000,30,1,1,NULL,2000000.00,NULL,NULL,1,1,'2025-10-20',NULL,NULL,0.00,'kg',0.00,'cm',0.00,'cm',0.00,'cm',0.00,'l','2025-10-20 08:31:36','2025-10-24 09:44:38');
+INSERT INTO `shop_products` (`id`, `shop_brand_id`, `name`, `slug`, `sku`, `barcode`, `description`, `sizes`, `colors`, `qty`, `security_stock`, `featured`, `is_visible`, `old_price`, `price`, `cost`, `type`, `backorder`, `requires_shipping`, `published_at`, `seo_title`, `seo_description`, `weight_value`, `weight_unit`, `height_value`, `height_unit`, `width_value`, `width_unit`, `depth_value`, `depth_unit`, `volume_value`, `volume_unit`, `created_at`, `updated_at`) VALUES (10,5,'Handball Spezial Shoes','handball-spezial-shoes','SKU-103113','7010437821611','<h3><strong>A style embraced by football fans and fashionistas, done in nubuck suede.</strong></h3><p>First introduced in 1979 for elite handball players, these shoes are now beloved for their classic style. This version is built with a cow suede upper for a supple feel. A soft gum rubber outsole keeps them true to their vintage roots.</p>','[\"40\", \"41\", \"42\", \"43\"]','[\"Xanh\", \"Cam\", \"Đen\"]',5000,20,1,1,NULL,1500000.00,NULL,NULL,1,1,'2025-10-20',NULL,NULL,0.00,'kg',0.00,'cm',0.00,'cm',0.00,'cm',0.00,'l','2025-10-20 11:53:48','2025-10-24 09:44:38');
+INSERT INTO `shop_products` (`id`, `shop_brand_id`, `name`, `slug`, `sku`, `barcode`, `description`, `sizes`, `colors`, `qty`, `security_stock`, `featured`, `is_visible`, `old_price`, `price`, `cost`, `type`, `backorder`, `requires_shipping`, `published_at`, `seo_title`, `seo_description`, `weight_value`, `weight_unit`, `height_value`, `height_unit`, `width_value`, `width_unit`, `depth_value`, `depth_unit`, `volume_value`, `volume_unit`, `created_at`, `updated_at`) VALUES (11,1,'Adizero EVO SL Shoes','adizero-evo-sl-shoes','SKU-12023','9013391592255','<h3><strong>SPEED-INSPIRED SHOES DESIGNED FOR FAST CULTURE</strong></h3><p>Experience the feeling of fast in the Adizero Evo SL. Inspired by the innovation of record-breaking shoes in the Adizero running family - and specifically the Pro Evo 1 - the Evo SL is designed for you to run in it, or not. Combining Adizero technology with a bold and unique racing-inspired aesthetic, it&#039;s an evolution of speed in all aspects of life. A responsive layer of LIGHTSTRIKE PRO foam in the midsole provides comfort and cushioning for optimal energy return.</p>','[\"38\", \"39\", \"40\", \"41\"]','[\"Trắng\", \"Hồng\", \"Tím\"]',400,20,0,1,NULL,2200000.00,NULL,NULL,1,1,'2025-10-20',NULL,NULL,0.00,'kg',0.00,'cm',0.00,'cm',0.00,'cm',0.00,'l','2025-10-20 11:55:55','2025-10-20 11:55:55');
+INSERT INTO `shop_products` (`id`, `shop_brand_id`, `name`, `slug`, `sku`, `barcode`, `description`, `sizes`, `colors`, `qty`, `security_stock`, `featured`, `is_visible`, `old_price`, `price`, `cost`, `type`, `backorder`, `requires_shipping`, `published_at`, `seo_title`, `seo_description`, `weight_value`, `weight_unit`, `height_value`, `height_unit`, `width_value`, `width_unit`, `depth_value`, `depth_unit`, `volume_value`, `volume_unit`, `created_at`, `updated_at`) VALUES (12,5,'Women\'s Fila Ray Tracer Sneakers','womens-fila-ray-tracer-sneakers','SKU-11312','1093391592211','<p>This chunky sneaker delivers a bold, athletic-inspired design with a trail-ready edge. Constructed with a layered upper and rugged detailing, it combines both fashion-forward aesthetics and practical comfort. The padded interior and thick sole support daily wear, while the aggressive tread pattern gives it standout traction and grip on various terrains.</p>','[\"40\", \"41\", \"42\"]','[\"Xám\", \"Đen\", \"Trắng\"]',998,10,0,1,NULL,1500000.00,NULL,NULL,1,1,'2025-10-20',NULL,NULL,0.00,'kg',0.00,'cm',0.00,'cm',0.00,'cm',0.00,'l','2025-10-20 11:59:58','2025-10-26 10:39:06');
+INSERT INTO `shop_products` (`id`, `shop_brand_id`, `name`, `slug`, `sku`, `barcode`, `description`, `sizes`, `colors`, `qty`, `security_stock`, `featured`, `is_visible`, `old_price`, `price`, `cost`, `type`, `backorder`, `requires_shipping`, `published_at`, `seo_title`, `seo_description`, `weight_value`, `weight_unit`, `height_value`, `height_unit`, `width_value`, `width_unit`, `depth_value`, `depth_unit`, `volume_value`, `volume_unit`, `created_at`, `updated_at`) VALUES (13,5,'Men\'s Fila Vulc 13 SC High-Top Sneakers','mens-fila-vulc-13-sc-high-top-sneakers','SKU-10654','7012337821669','<p>Step up your game with the Men&#039;s Fila Vulc 13 High-Top Sneakers, where street style meets unbeatable comfort. The high-top design, complete with bold embroidered logos, ensures both a secure fit and eye-catching flair. Plus, the cushioned collar, cushioned insole, and reliable rubber outsole offer a smooth ride whether you&#039;re hitting the court or the streets!</p>','[\"36\", \"38\", \"40\"]','[\"2\", \"4\", \"5\"]',3998,10,0,1,NULL,2900000.00,NULL,NULL,1,1,'2025-10-20',NULL,NULL,0.00,'kg',0.00,'cm',0.00,'cm',0.00,'cm',0.00,'l','2025-10-20 12:01:19','2025-10-26 13:40:59');
+INSERT INTO `shop_products` (`id`, `shop_brand_id`, `name`, `slug`, `sku`, `barcode`, `description`, `sizes`, `colors`, `qty`, `security_stock`, `featured`, `is_visible`, `old_price`, `price`, `cost`, `type`, `backorder`, `requires_shipping`, `published_at`, `seo_title`, `seo_description`, `weight_value`, `weight_unit`, `height_value`, `height_unit`, `width_value`, `width_unit`, `depth_value`, `depth_unit`, `volume_value`, `volume_unit`, `created_at`, `updated_at`) VALUES (14,5,'Men\'s Fila A-Low Sneakers','mens-fila-a-low-sneakers','SKU-10231','9093391592000','<p>The Men&#039;s Fila A-Low Sneakers combine a tough synthetic leather upper with sleek stitched details for a modern, rugged style. A padded collar and tongue enhance comfort, while the durable rubber outsole ensures superior traction and stability for every step. Designed for everyday wear, these sneakers offer a bold, versatile look with excellent support and long-lasting durability!</p>','[\"41\", \"42\", \"43\"]','[\"Vàng\", \"Đen\", \"Đỏ\"]',1000,10,0,1,NULL,900000.00,NULL,NULL,1,1,'2025-10-20',NULL,NULL,0.00,'kg',0.00,'cm',0.00,'cm',0.00,'cm',0.00,'l','2025-10-20 12:05:00','2025-10-20 12:05:00');
+INSERT INTO `shop_products` (`id`, `shop_brand_id`, `name`, `slug`, `sku`, `barcode`, `description`, `sizes`, `colors`, `qty`, `security_stock`, `featured`, `is_visible`, `old_price`, `price`, `cost`, `type`, `backorder`, `requires_shipping`, `published_at`, `seo_title`, `seo_description`, `weight_value`, `weight_unit`, `height_value`, `height_unit`, `width_value`, `width_unit`, `depth_value`, `depth_unit`, `volume_value`, `volume_unit`, `created_at`, `updated_at`) VALUES (15,8,'Air Jordan 3 Retro \"Medium Olive\"','air-jordan-3-retro-medium-olive','SKU-10123','9093391592444','<p>This edition of the AJ3 balances a luxe leather and nubuck upper in Medium Olive and Neutral Olive hues. To finish off the rich, autumn-inspired design, Sequoia accents and elephant print overlays combine with a Sail midsole and Gum Medium Brown outsole. Bold Nike Air heel branding adds a classic touch—straight from the &#039;88 original.</p>','[\"40\", \"41\", \"42\", \"43\"]','[\"Xanh\", \"Trắng\", \"Đen\"]',1000,10,0,1,NULL,1000000.00,NULL,NULL,1,0,'2025-10-20',NULL,NULL,0.00,'kg',0.00,'cm',0.00,'cm',0.00,'cm',0.00,'l','2025-10-20 12:08:48','2025-10-20 12:08:48');
+INSERT INTO `shop_products` (`id`, `shop_brand_id`, `name`, `slug`, `sku`, `barcode`, `description`, `sizes`, `colors`, `qty`, `security_stock`, `featured`, `is_visible`, `old_price`, `price`, `cost`, `type`, `backorder`, `requires_shipping`, `published_at`, `seo_title`, `seo_description`, `weight_value`, `weight_unit`, `height_value`, `height_unit`, `width_value`, `width_unit`, `depth_value`, `depth_unit`, `volume_value`, `volume_unit`, `created_at`, `updated_at`) VALUES (16,8,'Nike Dunk Low Retro','nike-dunk-low-retro','SKU-10555','9093121592211','<p>You can always count on a classic. The Dunk Low pairs its iconic colour-blocking with premium materials and plush padding for game-changing comfort that lasts. The possibilities are endless—how will you wear your Dunks?</p>','[\"40\", \"42\", \"43\", \"44\"]','[\"Cam\", \"Đỏ\", \"Trắng\"]',966,10,0,1,NULL,3000000.00,NULL,NULL,1,1,'2025-10-20',NULL,NULL,0.00,'kg',0.00,'cm',0.00,'cm',0.00,'cm',0.00,'l','2025-10-20 12:10:09','2025-11-01 12:35:28');
+INSERT INTO `shop_products` (`id`, `shop_brand_id`, `name`, `slug`, `sku`, `barcode`, `description`, `sizes`, `colors`, `qty`, `security_stock`, `featured`, `is_visible`, `old_price`, `price`, `cost`, `type`, `backorder`, `requires_shipping`, `published_at`, `seo_title`, `seo_description`, `weight_value`, `weight_unit`, `height_value`, `height_unit`, `width_value`, `width_unit`, `depth_value`, `depth_unit`, `volume_value`, `volume_unit`, `created_at`, `updated_at`) VALUES (17,1,'Men\'s FloatZig 2 Running Shoes','mens-floatzig-2-running-shoes','SKU-10413','4493391592255','<p>If we had to describe what Floatzig feels like in one word, it would be this: springy. These Reebok running shoes are made with a supportive upper, energy-returning Superfloat+ cushioning and responsive carbon rubber. Translation? You get a soft, smooth ride through easy miles and fast-paced runs.</p>','[\"38\", \"39\", \"40\", \"41\"]','[\"Vàng\", \"Đen\", \"Đỏ\"]',991,10,0,1,NULL,1500000.00,NULL,NULL,0,1,'2025-10-20',NULL,NULL,0.00,'kg',0.00,'cm',0.00,'cm',0.00,'cm',0.00,'l','2025-10-20 12:12:15','2025-11-01 12:35:28');
+/*!40000 ALTER TABLE `shop_products` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_wishlists`
+--
+
+DROP TABLE IF EXISTS `shop_wishlists`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shop_wishlists` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
+  `shop_product_id` bigint unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `shop_wishlists_user_id_shop_product_id_unique` (`user_id`,`shop_product_id`),
+  KEY `shop_wishlists_shop_product_id_foreign` (`shop_product_id`),
+  CONSTRAINT `shop_wishlists_shop_product_id_foreign` FOREIGN KEY (`shop_product_id`) REFERENCES `shop_products` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `shop_wishlists_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_wishlists`
+--
+
+LOCK TABLES `shop_wishlists` WRITE;
+/*!40000 ALTER TABLE `shop_wishlists` DISABLE KEYS */;
+INSERT INTO `shop_wishlists` (`id`, `user_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (12,20,16,'2025-10-25 08:28:33','2025-10-25 08:28:33');
+INSERT INTO `shop_wishlists` (`id`, `user_id`, `shop_product_id`, `created_at`, `updated_at`) VALUES (41,1,16,'2025-11-01 12:34:53','2025-11-01 12:34:53');
+/*!40000 ALTER TABLE `shop_wishlists` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `taggables`
+--
+
+DROP TABLE IF EXISTS `taggables`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `taggables` (
+  `tag_id` bigint unsigned NOT NULL,
+  `taggable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `taggable_id` bigint unsigned NOT NULL,
+  UNIQUE KEY `taggables_tag_id_taggable_id_taggable_type_unique` (`tag_id`,`taggable_id`,`taggable_type`),
+  KEY `taggables_taggable_type_taggable_id_index` (`taggable_type`,`taggable_id`),
+  CONSTRAINT `taggables_tag_id_foreign` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `taggables`
+--
+
+LOCK TABLES `taggables` WRITE;
+/*!40000 ALTER TABLE `taggables` DISABLE KEYS */;
+/*!40000 ALTER TABLE `taggables` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tags`
+--
+
+DROP TABLE IF EXISTS `tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tags` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` json NOT NULL,
+  `slug` json NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_column` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tags`
+--
+
+LOCK TABLES `tags` WRITE;
+/*!40000 ALTER TABLE `tags` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tags` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `teams`
+--
+
+DROP TABLE IF EXISTS `teams`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `teams` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `teams`
+--
+
+LOCK TABLES `teams` WRITE;
+/*!40000 ALTER TABLE `teams` DISABLE KEYS */;
+/*!40000 ALTER TABLE `teams` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_wallets`
+--
+
+DROP TABLE IF EXISTS `user_wallets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_wallets` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
+  `balance` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `currency` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'VND',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_wallets_user_id_unique` (`user_id`),
+  CONSTRAINT `user_wallets_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_wallets`
+--
+
+LOCK TABLES `user_wallets` WRITE;
+/*!40000 ALTER TABLE `user_wallets` DISABLE KEYS */;
+INSERT INTO `user_wallets` (`id`, `user_id`, `balance`, `currency`, `created_at`, `updated_at`) VALUES (1,1,9600000.00,'VND','2025-10-25 10:49:31','2025-11-01 12:46:56');
+/*!40000 ALTER TABLE `user_wallets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `role_id` bigint unsigned DEFAULT NULL,
+  `affiliate_code` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `commission_rate` decimal(5,2) NOT NULL DEFAULT '5.00',
+  `is_affiliate_active` tinyint(1) NOT NULL DEFAULT '0',
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `last_login_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  UNIQUE KEY `users_affiliate_code_unique` (`affiliate_code`),
+  KEY `users_role_id_foreign` (`role_id`),
+  CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (1,'Administrator update 2','admin@example.com','0123456789','Hà Nội, Việt Nam','2025-10-20 07:24:33',1,NULL,5.00,0,1,'2025-11-03 06:13:18','$2y$10$h0YmgDSlazVjT2hlu0.xvuLPrElvwEdkjx4E63/G13Mm3VGubNkxu','XVF1GWLU5tMtoOvbrQtZhb1yWIMcYeJsULdwjNTYPz19fvibpfKFYoDOZ9Ff','2025-10-20 07:24:33','2025-11-03 06:13:18');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (2,'Nguyễn Văn An','ctv1@example.com','0901234567','Hà Nội','2025-10-20 07:24:33',2,'CTV0001',5.00,1,1,NULL,'$2y$10$kJ9txLSxPYomyI7kCCg4cOZzGi4.vu26fdK4LPE64byuyY7pz73IS',NULL,'2025-10-20 07:24:33','2025-10-20 07:24:33');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (3,'Trần Thị Bình','ctv2@example.com','0902345678','Hồ Chí Minh','2025-10-20 07:24:33',2,'CTV0002',5.00,1,1,NULL,'$2y$10$yFBoNwEE4RY9WuLPzSQ48.hnibdE2EfzaAzR8hyAHbDaT6sKP6CW2',NULL,'2025-10-20 07:24:33','2025-10-20 07:24:33');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (4,'Lê Minh Cường','ctv3@example.com','0903456789','Đà Nẵng','2025-10-20 07:24:34',3,NULL,5.00,0,1,NULL,'$2y$10$4cIsc4me4j3dbD2.bfcy8e2Evp6.gztrJvZJQCqtdoyo00AtWCrG2',NULL,'2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (5,'Phạm Thu Dung','ctv4@example.com','0904567890','Cần Thơ','2025-10-20 07:24:34',3,NULL,5.00,0,1,NULL,'$2y$10$ag4vN5ZLHOzoD8IVaQ7d2uRhMP9g5Z.0ndIEeJiIVEUYnWexgyjYW',NULL,'2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (6,'Hoàng Văn Em','ctv5@example.com','0905678901','Hải Phòng','2025-10-20 07:24:34',3,NULL,5.00,0,1,NULL,'$2y$10$fY9eKoU3TYBuH49mK5rpZu6mgTqslQXALiQb1s4oZvhFUnsP/3CdG',NULL,'2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (7,'Người Dùng Thường','user@example.com','0123987456','Đà Nẵng, Việt Nam','2025-10-20 07:24:34',3,NULL,5.00,0,1,NULL,'$2y$10$YuEj5MGHb3QmZeMCCc.l4OJTOK3.xX7UQmlwlcFyLlFNL21dK6YlG',NULL,'2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (8,'Stephania Quigley','alexandro19@example.org','629.688.7812','780 Ortiz Mountain\nNew Samson, MN 00397-6504','2025-10-20 07:24:34',1,NULL,5.00,0,1,'2025-09-30 07:41:33','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','agOO8u6RDd','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (9,'Martina D\'Amore','micah98@example.org','+1 (502) 959-0387','782 Friesen Centers Apt. 449\nNew Vivienneton, MT 74533','2025-10-20 07:24:34',1,NULL,5.00,0,1,'2025-10-19 21:21:02','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','6pKelY9Hhv','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (10,'Miss Mariam Shanahan II','laverna52@example.org','(629) 476-9089','392 Abshire Plains Apt. 320\nCollinsland, CA 31837','2025-10-20 07:24:34',3,NULL,5.00,0,1,'2025-09-24 12:43:43','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','ojEinc0Ibm','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (11,'Isaias Brekke','crooks.anjali@example.com','727.237.4993','84290 Homenick Isle Suite 502\nNew Sadyeland, OK 25695','2025-10-20 07:24:34',3,NULL,5.00,0,1,NULL,'$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','m6Tf4fZgkw','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (12,'Freida Kuhlman','tavares58@example.net','731-430-3304','10524 Corbin Spur Suite 158\nLake Jackelinefurt, GA 49203','2025-10-20 07:24:34',3,NULL,5.00,0,1,'2025-09-21 23:38:41','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','7PKIlqpP05','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (13,'Prof. Sedrick Dibbert MD','angela.hartmann@example.org','1-925-572-4846','786 Fisher Mews Apt. 514\nSouth Bennett, CT 82323-8988','2025-10-20 07:24:34',3,NULL,5.00,0,1,NULL,'$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','3gTQKsFpc9','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (14,'Ashly Kuhlman PhD','nader.jammie@example.org','+1.325.908.2130','46056 Rafael Loaf Suite 373\nNorth Clarabelle, NC 01357-9451','2025-10-20 07:24:34',3,NULL,5.00,0,1,'2025-10-18 08:41:57','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','a6Tw6609Si','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (15,'Prof. Lionel Jones PhD','strosin.lillian@example.net','1-380-578-0731','64485 Hanna Falls\nAugustashire, NM 97729','2025-10-20 07:24:34',3,NULL,5.00,0,1,NULL,'$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','BKExTEtwA5','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (16,'Chelsea Kirlin II','jamison.fisher@example.org','+1 (972) 549-6243','6720 Danial Oval Apt. 314\nYasmineshire, KS 89176','2025-10-20 07:24:34',3,NULL,5.00,0,1,'2025-10-11 15:01:54','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','XpxA0uaNYW','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (17,'Dr. Eleanore Paucek Sr.','boyd56@example.net','+18049969913','45800 Grimes Harbor\nLockmanport, VT 08365','2025-10-20 07:24:34',3,NULL,5.00,0,1,'2025-10-09 19:32:20','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','W7L74xYHkv','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (18,'Russell Nitzsche','yesenia.herman@example.com','+18022100442','321 Hartmann Brooks Suite 882\nMertzton, WY 22527','2025-10-20 07:24:34',3,NULL,5.00,0,0,'2025-09-25 06:22:03','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','mUSK0uXXxI','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (19,'Prof. Ida Upton','connor.dare@example.com','(321) 994-3046','686 Mariana Rest Suite 615\nSouth Zora, AZ 22857','2025-10-20 07:24:34',3,NULL,5.00,0,0,NULL,'$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','nQ83eRqufO','2025-10-20 07:24:34','2025-10-20 07:24:34');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `address`, `email_verified_at`, `role_id`, `affiliate_code`, `commission_rate`, `is_affiliate_active`, `is_active`, `last_login_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (20,'Nguyễn Văn Hiếu','hieunguyen201103@gmail.com','0388335845','123123','2025-10-20 07:31:55',3,NULL,5.00,0,1,'2025-11-03 06:39:25','$2y$10$FC1mCzM7eXDniegcxrKQh.c6VC9w3NKeW.Oyg8yIgS388Ln2NLkKC','0V9GtAchmlZ1nCirhKK5N2rf8EcJAza4mq1AznmKS3VducgNpXgd4w35SB6g','2025-10-20 07:31:55','2025-11-03 06:39:25');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wallet_deposits`
+--
+
+DROP TABLE IF EXISTS `wallet_deposits`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wallet_deposits` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
+  `amount` decimal(15,2) NOT NULL,
+  `payment_method` enum('paypal','bank_transfer') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('pending','pending_verification','completed','failed','cancelled') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `transaction_reference` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `transfer_proof` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_data` json DEFAULT NULL,
+  `submitted_at` timestamp NULL DEFAULT NULL,
+  `verified_at` timestamp NULL DEFAULT NULL,
+  `verified_by` bigint unsigned DEFAULT NULL,
+  `admin_notes` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `wallet_deposits_verified_by_foreign` (`verified_by`),
+  KEY `wallet_deposits_user_id_status_index` (`user_id`,`status`),
+  KEY `wallet_deposits_created_at_index` (`created_at`),
+  CONSTRAINT `wallet_deposits_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `wallet_deposits_verified_by_foreign` FOREIGN KEY (`verified_by`) REFERENCES `users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wallet_deposits`
+--
+
+LOCK TABLES `wallet_deposits` WRITE;
+/*!40000 ALTER TABLE `wallet_deposits` DISABLE KEYS */;
+INSERT INTO `wallet_deposits` (`id`, `user_id`, `amount`, `payment_method`, `status`, `transaction_reference`, `transfer_proof`, `payment_data`, `submitted_at`, `verified_at`, `verified_by`, `admin_notes`, `created_at`, `updated_at`) VALUES (1,1,1000000.00,'paypal','completed','PAYID-ND6Q3EQ9S086929A7504932D',NULL,'{\"id\": \"PAYID-ND6Q3EQ9S086929A7504932D\", \"links\": [{\"rel\": \"self\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/payment/PAYID-ND6Q3EQ9S086929A7504932D\", \"method\": \"GET\"}, {\"rel\": \"approval_url\", \"href\": \"https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-32071955NM875161J\", \"method\": \"REDIRECT\"}, {\"rel\": \"execute\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/payment/PAYID-ND6Q3EQ9S086929A7504932D/execute\", \"method\": \"POST\"}], \"payer\": {\"payment_method\": \"paypal\"}, \"state\": \"created\", \"intent\": \"sale\", \"create_time\": \"2025-10-25T17:49:06Z\", \"transactions\": [{\"amount\": {\"total\": \"41.67\", \"currency\": \"USD\"}, \"description\": \"Nạp tiền vào ví - 1,000,000 VND\", \"invoice_number\": \"DEPOSIT-1\", \"related_resources\": []}]}',NULL,'2025-10-25 10:49:31',NULL,NULL,'2025-10-25 10:49:04','2025-10-25 10:49:31');
+INSERT INTO `wallet_deposits` (`id`, `user_id`, `amount`, `payment_method`, `status`, `transaction_reference`, `transfer_proof`, `payment_data`, `submitted_at`, `verified_at`, `verified_by`, `admin_notes`, `created_at`, `updated_at`) VALUES (2,1,2000000.00,'paypal','completed','PAYID-NEDGHKA7VX414374J256403A',NULL,'{\"id\": \"PAYID-NEDGHKA7VX414374J256403A\", \"links\": [{\"rel\": \"self\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/payment/PAYID-NEDGHKA7VX414374J256403A\", \"method\": \"GET\"}, {\"rel\": \"approval_url\", \"href\": \"https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-3N001901017396735\", \"method\": \"REDIRECT\"}, {\"rel\": \"execute\", \"href\": \"https://api.sandbox.paypal.com/v1/payments/payment/PAYID-NEDGHKA7VX414374J256403A/execute\", \"method\": \"POST\"}], \"payer\": {\"payment_method\": \"paypal\"}, \"state\": \"created\", \"intent\": \"sale\", \"create_time\": \"2025-11-01T19:46:48Z\", \"transactions\": [{\"amount\": {\"total\": \"83.33\", \"currency\": \"USD\"}, \"description\": \"Nạp tiền vào ví - 2,000,000 VND\", \"invoice_number\": \"DEPOSIT-2\", \"related_resources\": []}]}',NULL,'2025-11-01 12:46:56',NULL,NULL,'2025-11-01 12:46:45','2025-11-01 12:46:56');
+/*!40000 ALTER TABLE `wallet_deposits` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wallet_transactions`
+--
+
+DROP TABLE IF EXISTS `wallet_transactions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wallet_transactions` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
+  `order_id` bigint unsigned DEFAULT NULL,
+  `type` enum('refund','withdrawal','deposit','payment') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` decimal(15,2) NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'completed',
+  `metadata` json DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `wallet_transactions_user_id_created_at_index` (`user_id`,`created_at`),
+  KEY `wallet_transactions_order_id_index` (`order_id`),
+  CONSTRAINT `wallet_transactions_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `shop_orders` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `wallet_transactions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wallet_transactions`
+--
+
+LOCK TABLES `wallet_transactions` WRITE;
+/*!40000 ALTER TABLE `wallet_transactions` DISABLE KEYS */;
+INSERT INTO `wallet_transactions` (`id`, `user_id`, `order_id`, `type`, `amount`, `description`, `status`, `metadata`, `created_at`, `updated_at`) VALUES (1,1,NULL,'deposit',1000000.00,'Nạp tiền qua PayPal - Mã giao dịch: PAYID-ND6Q3EQ9S086929A7504932D','completed','{\"deposit_id\": 1, \"paypal_payment_id\": \"PAYID-ND6Q3EQ9S086929A7504932D\"}','2025-10-25 10:49:31','2025-10-25 10:49:31');
+INSERT INTO `wallet_transactions` (`id`, `user_id`, `order_id`, `type`, `amount`, `description`, `status`, `metadata`, `created_at`, `updated_at`) VALUES (2,1,23,'refund',6600000.00,'Hoàn tiền đơn hàng #23 vào ví (PayPal không khả dụng)','completed',NULL,'2025-10-26 13:32:59','2025-10-26 13:32:59');
+INSERT INTO `wallet_transactions` (`id`, `user_id`, `order_id`, `type`, `amount`, `description`, `status`, `metadata`, `created_at`, `updated_at`) VALUES (3,1,NULL,'deposit',2000000.00,'Nạp tiền qua PayPal - Mã giao dịch: PAYID-NEDGHKA7VX414374J256403A','completed','{\"deposit_id\": 2, \"paypal_payment_id\": \"PAYID-NEDGHKA7VX414374J256403A\"}','2025-11-01 12:46:56','2025-11-01 12:46:56');
+/*!40000 ALTER TABLE `wallet_transactions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'shosedb'
+--
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-11-03 21:45:48

@@ -6,7 +6,7 @@
 <!-- Breadcrumb -->
 <x-breadcrumb :items="[
     ['label' => 'Trang chủ', 'url' => route('home'), 'icon' => 'home'],
-    ['label' => 'Giỏ hàng', 'url' => route('cart.index'), 'icon' => 'shopping-cart'],
+    ['label' => 'Giỏ hàng', 'url' => route('cart'), 'icon' => 'shopping-cart'],
     ['label' => 'Thanh toán', 'icon' => 'credit-card', 'active' => true]
 ]" />
 
