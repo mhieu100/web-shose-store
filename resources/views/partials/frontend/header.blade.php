@@ -13,17 +13,43 @@
                             <div class="header-info-items">
                                 <div class="info-items">
                                     <ul>
-                                        <li class="number"><i class="fa fa-phone"></i><a href="tel://0123456789">+00 123
-                                                456 789</a></li>
+                                        <li class="number"><i class="fa fa-phone"></i><a href="tel://0123456789">+84 036
+                                                593 536</a></li>
                                         <li class="email"><i class="fa fa-envelope"></i><a
                                                 href="mailto://shose@example.com">shose@example.com</a></li>
-                                        <li class="account">
-                                            <i class="fa fa-user"></i>
-                                            @auth
-                                                <a href="{{ route('account.index') }}">{{ auth()->user()->name }}</a>
-                                            @else
-                                                <a href="{{ route('login') }}">Tài khoản</a>
-                                            @endauth
+                                        <li class="account dropdown">
+                                            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none; color: inherit;">
+                                                <i class="fa fa-user"></i>
+                                                @auth
+                                                    {{ auth()->user()->name }}
+                                                @else
+                                                    Tài khoản
+                                                @endauth
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm" style="min-width: 200px;">
+                                                @auth
+                                                    @if(Auth::user()->role?->name === 'admin')
+                                                        <li><a class="dropdown-item py-2" href="{{ url('/admin') }}">Trang Admin</a></li>
+                                                        <li><hr class="dropdown-divider"></li>
+                                                    @endif
+                                                    <li><a class="dropdown-item py-2" href="{{ route('account.index') }}">Tài khoản của tôi</a></li>
+                                                    @if(Auth::user()->isActiveAffiliate())
+                                                        <li><a class="dropdown-item py-2" href="{{ route('affiliate.dashboard') }}">Dashboard CTV</a></li>
+                                                    @else
+                                                        <li><a class="dropdown-item py-2" href="{{ route('collaborator.register') }}">Đăng ký cộng tác viên</a></li>
+                                                    @endif
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li>
+                                                        <form method="POST" action="{{ route('logout') }}">
+                                                            @csrf
+                                                            <button type="submit" class="dropdown-item py-2" style="border: none; background: none; width: 100%; text-align: left;">Đăng xuất</button>
+                                                        </form>
+                                                    </li>
+                                                @else
+                                                    <li><a class="dropdown-item py-2" href="{{ route('login') }}">Đăng nhập</a></li>
+                                                    <li><a class="dropdown-item py-2" href="{{ route('register') }}">Đăng ký</a></li>
+                                                @endauth
+                                            </ul>
                                         </li>
                                     </ul>
                                 </div>
@@ -105,20 +131,7 @@
                             <ul class="main-menu nav">
                                 <li><a href="{{ route('home') }}"><span>Trang chủ</span></a></li>
                                 <li><a href="{{ route('about') }}"><span>Giới thiệu</span></a></li>
-                                <li class="has-submenu"><a href="#/"><span>Trang</span></a>
-                                    <ul class="submenu-nav">
-                                        <li><a href="{{ route('account.index') }}"><span>Tài khoản</span></a></li>
-                                        <li><a href="{{ route('login') }}"><span>Đăng nhập</span></a></li>
-                                        <li><a href="{{ route('register') }}"><span>Đăng ký</span></a></li>
-                                        <li><a href="{{ route('collaborator.register') }}"><span>Đăng ký cộng tác viên</span></a></li>
-                                        @auth
-                                            @if(Auth::user()->isActiveAffiliate())
-                                                <li><a href="{{ route('affiliate.dashboard') }}"><span>Dashboard CTV</span></a></li>
-                                            @endif
-                                        @endauth
 
-                                    </ul>
-                                </li>
                                 <li class="has-submenu position-static"><a href="{{ route('shop') }}"><span>Cửa hàng</span></a>
                                     <ul class="submenu-nav submenu-nav-mega column-2">
                                         <li class="mega-menu-item"><a href="{{ route('shop') }}" class="mega-title"><span>Danh mục</span></a>

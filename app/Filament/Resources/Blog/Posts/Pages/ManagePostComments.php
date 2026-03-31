@@ -39,6 +39,7 @@ class ManagePostComments extends ManageRelatedRecords
                 Select::make('customer_id')
                     ->relationship('customer', 'name')
                     ->searchable()
+                    ->preload()
                     ->required(),
 
                 Toggle::make('is_visible')

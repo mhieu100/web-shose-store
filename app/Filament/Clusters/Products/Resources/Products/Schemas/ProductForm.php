@@ -205,10 +205,12 @@ class ProductForm
                                 Select::make('shop_brand_id')
                                     ->relationship('brand', 'name')
                                     ->searchable()
+                                    ->preload()
                                     ->hiddenOn(ProductsRelationManager::class),
 
                                 Select::make('categories')
                                     ->relationship('categories', 'name')
+                                    ->preload()
                                     ->multiple()
                                     ->required(),
                             ]),

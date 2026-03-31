@@ -228,6 +228,7 @@ class OrderForm
             Select::make('shop_customer_id')
                 ->relationship('customer', 'name')
                 ->searchable()
+                ->preload()
                 ->required()
                 ->createOptionForm([
                     TextInput::make('name')

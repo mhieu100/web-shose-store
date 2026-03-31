@@ -115,17 +115,21 @@ class ShopController extends Controller
         $products = $query->paginate($perPage)->withQueryString();
 
         // Get filter data for sidebar
-        $brands = Brand::where('is_visible', true)
-            ->withCount('products')
-            ->having('products_count', '>', 0)
-            ->orderBy('name')
-            ->get();
+        $brands = \Illuminate\Support\Facades\Cache::remember('shop_sidebar_brands', 86400, function () {
+            return Brand::where('is_visible', true)
+                ->withCount('products')
+                ->having('products_count', '>', 0)
+                ->orderBy('name')
+                ->get();
+        });
 
-        $categories = Category::where('is_visible', true)
-            ->withCount('products')
-            ->having('products_count', '>', 0)
-            ->orderBy('name')
-            ->get();
+        $categories = \Illuminate\Support\Facades\Cache::remember('shop_sidebar_categories', 86400, function () {
+            return Category::where('is_visible', true)
+                ->withCount('products')
+                ->having('products_count', '>', 0)
+                ->orderBy('name')
+                ->get();
+        });
 
         // Get current filter info
         $currentBrand = null;

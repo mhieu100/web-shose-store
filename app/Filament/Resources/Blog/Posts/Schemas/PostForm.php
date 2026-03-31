@@ -42,11 +42,13 @@ class PostForm
                         Select::make('blog_author_id')
                             ->relationship('author', 'name')
                             ->searchable()
+                            ->preload()
                             ->required(),
 
                         Select::make('blog_category_id')
                             ->relationship('category', 'name')
                             ->searchable()
+                            ->preload()
                             ->required(),
 
                         DatePicker::make('published_at')
@@ -61,7 +63,7 @@ class PostForm
                         SpatieMediaLibraryFileUpload::make('image')
                             ->collection('post-images')
                             ->hiddenLabel()
-                            ->acceptedFileTypes(['image/jpeg']),
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp']),
                     ])
                     ->collapsible(),
             ]);

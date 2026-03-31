@@ -55,14 +55,18 @@ class Post extends Model implements HasMedia
     {
         $this
             ->addMediaCollection('post-images')
-            ->useDisk('post-images')
-            ->acceptsMimeTypes(['image/jpeg'])
-            ->singleFile()
-            ->registerMediaConversions(function (Media $media): void {
-                $this
-                    ->addMediaConversion('thumb')
-                    ->width(40)
-                    ->height(40);
-            });
+            ->useDisk('public')
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp', 'image/jpg'])
+            ->singleFile();
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('thumb')
+            ->width(400)
+            ->height(400)
+            ->format('webp')
+            ->nonQueued();
     }
 }

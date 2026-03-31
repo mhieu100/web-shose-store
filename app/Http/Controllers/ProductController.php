@@ -22,11 +22,13 @@ class ProductController extends Controller
         $relatedProducts = Product::whereHas('categories', function($query) use ($categoryIds) {
                 $query->whereIn('shop_categories.id', $categoryIds);
             })
+            ->with(['categories', 'media', 'brand'])
             ->where('id', '!=', $product->id)
             ->where('is_visible', true)
             ->take(4)
             ->get();        // Recently viewed products (you can implement this later with sessions)
-        $recentlyViewed = Product::where('is_visible', true)
+        $recentlyViewed = Product::with(['categories', 'media', 'brand'])
+            ->where('is_visible', true)
             ->where('id', '!=', $product->id)
             ->inRandomOrder()
             ->take(4)

@@ -99,6 +99,10 @@
       fadeEffect: {
           crossFade: true,
       },
+      autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+      },
       navigation: {
         nextEl: '.default-slider-container .swiper-btn-next',
         prevEl: '.default-slider-container .swiper-btn-prev',

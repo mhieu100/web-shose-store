@@ -9385,7 +9385,7 @@ table p {
 -----------------------------------------------------------------------
 */
 .footer-area {
-  background-color: #26292e;
+  background-color: #eb3e32;
 }
 @media only screen and (max-width: 991px) {
   .footer-area .widget-item {
@@ -9420,7 +9420,7 @@ table p {
   }
 }
 .footer-area .widget-contact-wrap ul > li {
-  color: #cacaca;
+  color: #f2f2f2;
   font-size: 16px;
   line-height: 2.0625;
   font-weight: 300;
@@ -9436,8 +9436,8 @@ table p {
 .footer-area .widget-collapsed-title {
   display: block;
   position: relative;
-  background-color: #36393f;
-  border: 1px solid #36393f;
+  background-color: #c93026;
+  border: 1px solid #c93026;
   height: 65px;
   line-height: 64px;
   padding: 0 24px;
@@ -9481,8 +9481,8 @@ table p {
 }
 @media only screen and (max-width: 767px) {
   .footer-area .widget-collapse-body {
-    background-color: #26292e;
-    border: 1px solid #36393f;
+    background-color: #eb3e32;
+    border: 1px solid #c93026;
   }
 }
 @media only screen and (max-width: 767px) {
@@ -9510,13 +9510,13 @@ table p {
   }
 }
 .footer-main a {
-  color: #cacaca;
+  color: #f2f2f2;
 }
 .footer-main a:hover {
-  color: #eb3e32;
+  color: #ffffff;
 }
 .footer-main p {
-  color: #cacaca;
+  color: #f2f2f2;
   font-size: 16px;
   line-height: 2;
 }
@@ -9591,8 +9591,8 @@ table p {
   margin-left: 10px;
 }
 .footer-main .social-icons a:hover {
-  background-color: #eb3e32;
-  color: #fff;
+  background-color: #f2f2f2;
+  color: #eb3e32;
 }
 @media only screen and (max-width: 767px) {
   .footer-main .widget-item {
@@ -9617,7 +9617,7 @@ table p {
 }
 
 .footer-bottom {
-  background-color: #36393f;
+  background-color: #c93026;
   padding: 19px 0 19px;
 }
 @media only screen and (max-width: 767px) {
@@ -9634,7 +9634,7 @@ table p {
   }
 }
 .footer-bottom .copyright {
-  color: #cacaca;
+  color: #f2f2f2;
   font-size: 16px;
   line-height: 1.75;
   position: relative;
@@ -9653,13 +9653,13 @@ table p {
   }
 }
 .footer-bottom .copyright a {
-  color: #cacaca;
+  color: #f2f2f2;
 }
 .footer-bottom .copyright a:hover {
   color: #fff;
 }
 .footer-bottom .copyright i {
-  color: #eb3e32;
+  color: #ffffff;
   font-size: 16px;
   margin: 0 2px;
 }

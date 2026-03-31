@@ -43,6 +43,7 @@ class CategoryForm
                         Select::make('parent_id')
                             ->relationship('parent', 'name', fn (Builder $query) => $query->where('parent_id', null))
                             ->searchable()
+                            ->preload()
                             ->placeholder('Chọn danh mục cha'),
 
                         Toggle::make('is_visible')

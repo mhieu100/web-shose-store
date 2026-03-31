@@ -34,21 +34,25 @@ class AppServiceProvider extends ServiceProvider
         // Register observers
         \App\Models\Shop\Order::observe(\App\Observers\OrderObserver::class);
 
-        // Share categories and brands to header
+        // Share categories and brands to header with caching
         view()->composer('partials.frontend.header', function ($view) {
-            $headerCategories = \App\Models\Shop\Category::where('is_visible', true)
-                ->withCount('products')
-                ->having('products_count', '>', 0)
-                ->orderBy('name')
-                ->limit(10)
-                ->get();
+            $headerCategories = \Illuminate\Support\Facades\Cache::remember('header_categories', 86400, function () {
+                return \App\Models\Shop\Category::where('is_visible', true)
+                    ->withCount('products')
+                    ->having('products_count', '>', 0)
+                    ->orderBy('name')
+                    ->limit(10)
+                    ->get();
+            });
 
-            $headerBrands = \App\Models\Shop\Brand::where('is_visible', true)
-                ->withCount('products')
-                ->having('products_count', '>', 0)
-                ->orderBy('name')
-                ->limit(10)
-                ->get();
+            $headerBrands = \Illuminate\Support\Facades\Cache::remember('header_brands', 86400, function () {
+                return \App\Models\Shop\Brand::where('is_visible', true)
+                    ->withCount('products')
+                    ->having('products_count', '>', 0)
+                    ->orderBy('name')
+                    ->limit(10)
+                    ->get();
+            });
 
             $view->with([
                 'headerCategories' => $headerCategories,

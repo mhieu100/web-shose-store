@@ -36,6 +36,7 @@ class PaymentsRelationManager extends RelationManager
                         fn (Builder $query, RelationManager $livewire) => $query->whereBelongsTo($livewire->ownerRecord)
                     )
                     ->searchable()
+                    ->preload()
                     ->hiddenOn('edit')
                     ->required(),
 

@@ -90,6 +90,7 @@ FLUSH PRIVILEGES;
 
 ```bash
 php artisan migrate
+php artisan storage:link
 ```
 
 ### 8. Seed Database (Optional)

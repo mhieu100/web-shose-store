@@ -16,6 +16,8 @@ class AffiliateLinkForm
             ->components([
                 Select::make('user_id')
                     ->relationship('user', 'name')
+                    ->searchable()
+                    ->preload()
                     ->required(),
                 TextInput::make('shop_product_id')
                     ->required()

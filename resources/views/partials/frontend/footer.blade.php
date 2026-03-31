@@ -74,8 +74,8 @@
                 <div class="collapse-body">
                   <div class="widget-contact-wrap">
                     <ul>
-                      <li><span>Địa chỉ:</span> 123 Đường ABC, Quận XYZ, TP.HCM</li>
-                      <li><span>Điện thoại:</span> <a href="tel://0123456789">0123456789</a></li>
+                      <li><span>Địa chỉ:</span> 636 Tôn Đức Thắng, Phường Hòa Khánh, Đà Nẵng</li>
+                      <li><span>Điện thoại:</span> <a href="tel://0123456789">0365933536</a></li>
                       <li><span>Email:</span> <a href="mailto://info@shoestore.com">info@shoestore.com</a></li>
                       <li><a target="_blank" href="{{ route('home') }}">www.shoestore.com</a></li>
                     </ul>
