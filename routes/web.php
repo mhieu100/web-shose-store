@@ -29,7 +29,7 @@ Route::get('/cart/count', [App\Http\Controllers\CartController::class, 'count'])
 Route::get('/cart/sidebar-content', [App\Http\Controllers\CartController::class, 'getSidebarContent'])->name('cart.sidebar-content');
 
 // Cart actions requiring authentication
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'no.cache'])->group(function () {
     Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'store'])->name('cart.add');
     Route::put('/cart/update', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
     Route::post('/cart/increment', [App\Http\Controllers\CartController::class, 'increment'])->name('cart.increment');
@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/cart/coupon', [App\Http\Controllers\CartController::class, 'removeCoupon'])->name('cart.coupon.remove');
 });
 // Checkout routes
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'no.cache'])->group(function () {
     Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
     Route::post('/checkout/process', [App\Http\Controllers\CheckoutController::class, 'processCheckout'])->name('checkout.process');
     Route::post('/checkout/apply-coupon', [App\Http\Controllers\CheckoutController::class, 'applyCoupon'])->name('checkout.apply_coupon');
@@ -64,7 +64,7 @@ Route::get('/wishlist', [App\Http\Controllers\WishlistController::class, 'index'
 Route::get('/wishlist/count', [App\Http\Controllers\WishlistController::class, 'count'])->name('wishlist.count');
 
 // Wishlist actions requiring authentication
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'no.cache'])->group(function () {
     Route::post('/wishlist/add', [App\Http\Controllers\WishlistController::class, 'store'])->name('wishlist.add');
     Route::delete('/wishlist/remove', [App\Http\Controllers\WishlistController::class, 'destroy'])->name('wishlist.remove');
     Route::post('/wishlist/toggle', [App\Http\Controllers\WishlistController::class, 'toggle'])->name('wishlist.toggle');
@@ -101,7 +101,7 @@ Route::get('/csrf-token', function() {
 
 
 // Account routes - require authentication
-Route::middleware('auth')->prefix('account')->name('account.')->group(function () {
+Route::middleware(['auth', 'no.cache'])->prefix('account')->name('account.')->group(function () {
     Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('index');
     Route::put('/profile', [App\Http\Controllers\AccountController::class, 'updateProfile'])->name('update-profile');
     Route::put('/password', [App\Http\Controllers\AccountController::class, 'updatePassword'])->name('update-password');
@@ -127,12 +127,12 @@ Route::middleware('auth')->prefix('wallet/deposit')->name('wallet.deposit.')->gr
 Route::get('/404', function() { return view('errors.404'); })->name('404');
 
 // Admin routes - chỉ admin mới được truy cập
-Route::prefix('admin')->middleware(['auth', 'admin.only'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin.only', 'no.cache'])->group(function () {
     // Filament sẽ tự động handle các routes này
 });
 
 // Authentication routes
-Route::middleware('guest')->group(function () {
+Route::middleware(['guest', 'no.cache'])->group(function () {
     Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
     Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
@@ -145,7 +145,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'no.cache'])->group(function () {
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 });
 
@@ -162,7 +162,7 @@ Route::post('/dang-ky-cong-tac-vien', [App\Http\Controllers\CollaboratorControll
 Route::get('/trang-thai-cong-tac-vien', [App\Http\Controllers\CollaboratorController::class, 'status'])->name('collaborator.status');
 
 // Affiliate routes - only for authenticated CTVs
-Route::middleware(['auth'])->prefix('affiliate')->name('affiliate.')->group(function () {
+Route::middleware(['auth', 'no.cache'])->prefix('affiliate')->name('affiliate.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\AffiliateController::class, 'dashboard'])->name('dashboard');
     Route::get('/products', [App\Http\Controllers\AffiliateController::class, 'products'])->name('products');
     Route::get('/guide', function() {
@@ -175,7 +175,7 @@ Route::middleware(['auth'])->prefix('affiliate')->name('affiliate.')->group(func
 });
 
 // Invoice routes - chỉ admin mới được in hóa đơn
-Route::middleware(['auth', 'admin.only'])->group(function () {
+Route::middleware(['auth', 'admin.only', 'no.cache'])->group(function () {
     Route::get('/invoice/{order}/download', [\App\Http\Controllers\InvoiceController::class, 'downloadInvoice'])->name('invoice.download');
     Route::get('/invoice/{order}/view', [\App\Http\Controllers\InvoiceController::class, 'viewInvoice'])->name('invoice.view');
 });

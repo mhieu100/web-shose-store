@@ -155,6 +155,16 @@
 
 @stack('scripts')
 
+@if(request()->is('account*'))
+    <script>
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        });
+    </script>
+@endif
+
     <!-- Include Toast Message Component -->
     @include('components.toast-message')
 

@@ -103,6 +103,8 @@ class OrderResource extends Resource
         /** @var class-string<Model> $modelClass */
         $modelClass = static::$model;
 
-        return (string) $modelClass::where('status', 'new')->count();
+        return (string) \Illuminate\Support\Facades\Cache::remember('admin_orders_new_badge', 60, function () use ($modelClass): int {
+            return $modelClass::where('status', 'new')->count();
+        });
     }
 }

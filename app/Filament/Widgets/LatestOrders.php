@@ -21,7 +21,7 @@ class LatestOrders extends BaseWidget
     public function table(Table $table): Table
     {
         return $table
-            ->query(OrderResource::getEloquentQuery())
+            ->query(OrderResource::getEloquentQuery()->with('customer'))
             ->defaultPaginationPageOption(5)
             ->defaultSort('created_at', 'desc')
             ->columns([
@@ -42,7 +42,15 @@ class LatestOrders extends BaseWidget
                     ->badge(),
                 TextColumn::make('currency')
                     ->label('Tiền tệ')
-                    ->getStateUsing(fn ($record): ?string => Currency::find($record->currency)->name ?? null)
+                    ->getStateUsing(function ($record): ?string {
+                        static $currencyNames = null;
+
+                        if ($currencyNames === null) {
+                            $currencyNames = Currency::query()->pluck('name', 'id')->all();
+                        }
+
+                        return $currencyNames[$record->currency] ?? null;
+                    })
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('total_price')

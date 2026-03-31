@@ -49,8 +49,11 @@ class LoginController extends Controller
                 return redirect()->intended('/admin');
             }
 
+            // For non-admins, ignore any intended admin URL
+            $request->session()->forget('url.intended');
+
             // CTV and registered users go to home
-            return redirect()->intended('/');
+            return redirect('/');
         }
 
         return back()->withErrors([
