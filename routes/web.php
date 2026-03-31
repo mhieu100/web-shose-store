@@ -128,6 +128,10 @@ Route::get('/404', function() { return view('errors.404'); })->name('404');
 
 // Admin routes - chỉ admin mới được truy cập
 Route::prefix('admin')->middleware(['auth', 'admin.only', 'no.cache'])->group(function () {
+    Route::get('/products', function () {
+        return redirect(\App\Filament\Clusters\Products\Resources\Products\ProductResource::getUrl('index'));
+    });
+
     // Filament sẽ tự động handle các routes này
 });
 
