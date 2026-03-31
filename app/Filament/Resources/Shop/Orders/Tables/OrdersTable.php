@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\Shop\Orders\Tables;
 
+use App\Enums\OrderStatus;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\ViewAction;
 use Filament\Actions\Action;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\DatePicker;
@@ -34,25 +34,25 @@ class OrdersTable
                     ->copyable()
                     ->copyMessage('Đã sao chép mã đơn hàng!')
                     ->weight('bold'),
-                    
+
                 TextColumn::make('user.name')
                     ->label('Khách hàng')
                     ->searchable()
                     ->sortable()
                     ->default('Khách vãng lai')
                     ->icon('heroicon-o-user'),
-                    
+
                 TextColumn::make('user.email')
                     ->label('Email')
                     ->searchable()
                     ->toggleable()
                     ->copyable(),
-                    
+
                 TextColumn::make('status')
                     ->label('Trạng thái')
                     ->badge()
                     ->color(fn ($record) => $record->status_color ?? 'secondary'),
-                    
+
                 TextColumn::make('payment_method')
                     ->label('Thanh toán')
                     ->badge()
@@ -68,7 +68,7 @@ class OrdersTable
                         'paypal' => 'success',
                         default => 'secondary',
                     }),
-                    
+
                 TextColumn::make('payment_status')
                     ->label('TT Thanh toán')
                     ->badge()
@@ -82,20 +82,20 @@ class OrdersTable
                         default => ucfirst($state),
                     })
                     ->color(fn ($record) => $record->payment_status_color ?? 'secondary'),
-                    
+
                 TextColumn::make('subtotal')
                     ->label('Tạm tính')
                     ->money('USD')
                     ->sortable()
                     ->toggleable(),
-                    
+
                 TextColumn::make('coupon_code')
                     ->label('Mã giảm giá')
                     ->badge()
                     ->color('success')
                     ->placeholder('Không có')
                     ->toggleable(),
-                    
+
                 TextColumn::make('coupon_discount')
                     ->label('Giảm giá')
                     ->money('USD')
@@ -103,19 +103,19 @@ class OrdersTable
                     ->formatStateUsing(fn ($state) => $state > 0 ? '-$' . number_format($state, 2) : '')
                     ->placeholder('$0.00')
                     ->toggleable(),
-                    
+
                 TextColumn::make('shipping_amount')
                     ->label('Phí ship')
                     ->money('USD')
                     ->sortable()
                     ->toggleable(),
-                    
+
                 TextColumn::make('tax_amount')
                     ->label('Thuế')
                     ->money('USD')
                     ->sortable()
                     ->toggleable(),
-                    
+
                 TextColumn::make('total_amount')
                     ->label('Tổng cộng')
                     ->money('USD')
@@ -128,13 +128,13 @@ class OrdersTable
                             ->money('USD')
                             ->label('Tổng doanh thu'),
                     ]),
-                    
+
                 TextColumn::make('created_at')
                     ->label('Ngày đặt')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(),
-                    
+
                 TextColumn::make('shipped_at')
                     ->label('Ngày giao')
                     ->dateTime('d/m/Y H:i')
@@ -220,34 +220,30 @@ class OrdersTable
                     ->toggle(),
             ])
             ->recordActions([
-                ViewAction::make()
-                    ->label('Xem chi tiết')
-                    ->icon('heroicon-o-eye'),
-                    
                 EditAction::make()
                     ->label('Chỉnh sửa')
                     ->icon('heroicon-o-pencil'),
-                    
+
                 Action::make('mark_processing')
                     ->label('Đang xử lý')
                     ->icon('heroicon-o-clock')
                     ->color('warning')
                     ->action(function ($record) {
-                        $record->update(['status' => 'processing']);
+                        $record->update(['status' => OrderStatus::Processing]);
                         Notification::make()
                             ->title('Đã cập nhật trạng thái đơn hàng')
                             ->success()
                             ->send();
                     })
-                    ->visible(fn ($record) => $record->status === 'new'),
-                    
+                    ->visible(fn ($record) => $record->status === OrderStatus::New),
+
                 Action::make('mark_shipped')
                     ->label('Đã giao hàng')
                     ->icon('heroicon-o-truck')
                     ->color('info')
                     ->action(function ($record) {
                         $record->update([
-                            'status' => 'shipped',
+                            'status' => OrderStatus::Shipped,
                             'shipped_at' => now()
                         ]);
                         Notification::make()
@@ -255,15 +251,15 @@ class OrdersTable
                             ->success()
                             ->send();
                     })
-                    ->visible(fn ($record) => $record->status === 'processing'),
-                    
+                    ->visible(fn ($record) => $record->status === OrderStatus::Processing),
+
                 Action::make('mark_delivered')
                     ->label('Đã nhận hàng')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                     ->action(function ($record) {
                         $record->update([
-                            'status' => 'delivered',
+                            'status' => OrderStatus::Delivered,
                             'delivered_at' => now(),
                             'payment_status' => 'completed'
                         ]);
@@ -272,16 +268,16 @@ class OrdersTable
                             ->success()
                             ->send();
                     })
-                    ->visible(fn ($record) => $record->status === 'shipped'),
-                
+                    ->visible(fn ($record) => $record->status === OrderStatus::Shipped),
+
                 Action::make('print_invoice')
                     ->label('In hóa đơn')
                     ->icon('heroicon-o-printer')
                     ->color('gray')
                     ->url(fn ($record) => route('invoice.download', $record))
                     ->openUrlInNewTab()
-                    ->visible(fn ($record) => in_array($record->status, ['delivered', 'shipped'])),
-                    
+                    ->visible(fn ($record) => in_array($record->status, [OrderStatus::Delivered, OrderStatus::Shipped])),
+
                 Action::make('view_address')
                     ->label('Xem địa chỉ')
                     ->icon('heroicon-o-map-pin')
@@ -289,13 +285,13 @@ class OrdersTable
                     ->modalContent(function ($record) {
                         $shipping = $record->shipping_address;
                         if (!$shipping) return 'Không có thông tin địa chỉ';
-                        
+
                         return view('filament.components.address-modal', compact('shipping'));
                     })
                     ->modalHeading('Địa chỉ giao hàng')
                     ->modalSubmitAction(false)
                     ->modalCancelActionLabel('Đóng'),
-                                   
+
                 DeleteAction::make()
                     ->label('Xóa')
                     ->requiresConfirmation()
@@ -325,7 +321,7 @@ class OrdersTable
                     ->modalDescription('Bạn có chắc chắn muốn xóa các đơn hàng đã chọn? Hành động này không thể hoàn tác.')
                     ->modalSubmitActionLabel('Xóa')
                     ->modalCancelActionLabel('Hủy'),
-                    
+
                 Action::make('mark_processing_bulk')
                     ->label('Đánh dấu đang xử lý')
                     ->icon('heroicon-o-clock')
@@ -335,14 +331,14 @@ class OrdersTable
                         $records->where('status', 'new')->each(function ($record) {
                             $record->update(['status' => 'processing']);
                         });
-                        
+
                         Notification::make()
                             ->title("Đã cập nhật {$count} đơn hàng sang trạng thái 'Đang xử lý'")
                             ->success()
                             ->send();
                     })
                     ->deselectRecordsAfterCompletion(),
-                    
+
                 Action::make('export_orders')
                     ->label('Xuất Excel')
                     ->icon('heroicon-o-document-arrow-down')

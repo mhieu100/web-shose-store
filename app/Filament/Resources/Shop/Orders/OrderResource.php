@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Shop\Orders;
 use App\Filament\Resources\Shop\Orders\Pages\CreateOrder;
 use App\Filament\Resources\Shop\Orders\Pages\EditOrder;
 use App\Filament\Resources\Shop\Orders\Pages\ListOrders;
-use App\Filament\Resources\Shop\Orders\Pages\ViewOrder;
 use App\Filament\Resources\Shop\Orders\RelationManagers\PaymentsRelationManager;
 use App\Filament\Resources\Shop\Orders\Schemas\OrderForm;
 use App\Filament\Resources\Shop\Orders\Tables\OrdersTable;
@@ -35,9 +34,9 @@ class OrderResource extends Resource
     protected static ?int $navigationSort = 1;
 
     protected static ?string $navigationLabel = 'Đơn hàng';
-    
+
     protected static ?string $modelLabel = 'Đơn hàng';
-    
+
     protected static ?string $pluralModelLabel = 'Đơn hàng';
 
     public static function form(Schema $schema): Schema
@@ -69,7 +68,6 @@ class OrderResource extends Resource
         return [
             'index' => ListOrders::route('/'),
             'create' => CreateOrder::route('/create'),
-            'view' => ViewOrder::route('/{record}'),
             'edit' => EditOrder::route('/{record}/edit'),
         ];
     }

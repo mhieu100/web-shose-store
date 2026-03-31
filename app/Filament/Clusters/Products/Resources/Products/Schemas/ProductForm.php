@@ -212,6 +212,8 @@ class ProductForm
                                     ->relationship('categories', 'name')
                                     ->preload()
                                     ->multiple()
+                                    ->searchable()
+                                    ->preload()
                                     ->required(),
                             ]),
                     ])
