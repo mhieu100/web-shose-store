@@ -23,7 +23,7 @@ class ProductStats extends BaseWidget
         return [
             Stat::make('Tổng sản phẩm', $this->getPageTableQuery()->count()),
             Stat::make('Tồn kho sản phẩm', $this->getPageTableQuery()->sum('qty')),
-            Stat::make('Giá trung bình', number_format((float) $this->getPageTableQuery()->avg('price'), 2)),
+            Stat::make('Giá trung bình', number_format((float) $this->getPageTableQuery()->avg('price'), 0, ',', '.') . ' VND'),
         ];
     }
 }

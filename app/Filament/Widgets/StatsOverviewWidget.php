@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Shop\Order;
 use Carbon\Carbon;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
@@ -14,57 +15,49 @@ class StatsOverviewWidget extends BaseWidget
 
     protected static ?int $sort = 0;
 
+    protected ?string $pollingInterval = '5s';
+
     protected function getStats(): array
     {
+        $startDate = ! is_null($this->pageFilters['startDate'] ?? null)
+            ? Carbon::parse($this->pageFilters['startDate'])
+            : now()->startOfMonth();
 
-        $startDate = ! is_null($this->pageFilters['startDate'] ?? null) ?
-            Carbon::parse($this->pageFilters['startDate']) :
-            null;
+        $endDate = ! is_null($this->pageFilters['endDate'] ?? null)
+            ? Carbon::parse($this->pageFilters['endDate'])
+            : now();
 
-        $endDate = ! is_null($this->pageFilters['endDate'] ?? null) ?
-            Carbon::parse($this->pageFilters['endDate']) :
-            now();
+        $paidOrdersQuery = Order::query()
+            ->where('payment_status', 'completed')
+            ->whereNotNull('paid_at')
+            ->whereBetween('paid_at', [$startDate->copy()->startOfDay(), $endDate->copy()->endOfDay()]);
 
-        $isBusinessCustomersOnly = $this->pageFilters['businessCustomersOnly'] ?? null;
-        $businessCustomerMultiplier = match (true) {
-            boolval($isBusinessCustomersOnly) => 2 / 3,
-            blank($isBusinessCustomersOnly) => 1,
-            default => 1 / 3,
-        };
+        $revenue = (float) (clone $paidOrdersQuery)->sum('total_price');
+        $paidOrders = (clone $paidOrdersQuery)->count();
+        $newCustomers = (clone $paidOrdersQuery)
+            ->whereNotNull('user_id')
+            ->distinct('user_id')
+            ->count('user_id');
 
-        $diffInDays = $startDate ? $startDate->diffInDays($endDate) : 0;
+        $rangeLabel = $startDate->isSameMonth($endDate)
+            ? 'Tháng ' . $startDate->format('m/Y')
+            : $startDate->format('d/m/Y') . ' - ' . $endDate->format('d/m/Y');
 
-        $revenue = (int) (($startDate ? ($diffInDays * 137) : 192100) * $businessCustomerMultiplier);
-        $newCustomers = (int) (($startDate ? ($diffInDays * 7) : 1340) * $businessCustomerMultiplier);
-        $newOrders = (int) (($startDate ? ($diffInDays * 13) : 3543) * $businessCustomerMultiplier);
-
-        $formatNumber = function (int $number): string {
-            if ($number < 1000) {
-                return (string) Number::format($number, 0);
-            }
-
-            if ($number < 1000000) {
-                return Number::format($number / 1000, 2) . 'k';
-            }
-
-            return Number::format($number / 1000000, 2) . 'm';
-        };
+        $formatNumber = static fn (int $number): string => Number::format($number, 0);
+        $formatCurrency = static fn (float $amount): string => number_format($amount, 0, ',', '.') . ' ₫';
 
         return [
-            Stat::make('Doanh thu', '$' . $formatNumber($revenue))
-                ->description('Tăng 32k')
-                ->descriptionIcon('heroicon-m-arrow-trending-up')
-                ->chart([7, 2, 10, 3, 15, 4, 17])
+            Stat::make('Doanh thu', $formatCurrency($revenue))
+                ->description($rangeLabel)
+                ->descriptionIcon('heroicon-m-calendar')
                 ->color('success'),
             Stat::make('Khách hàng mới', $formatNumber($newCustomers))
-                ->description('Giảm 3%')
-                ->descriptionIcon('heroicon-m-arrow-trending-down')
-                ->chart([17, 16, 14, 15, 14, 13, 12])
-                ->color('danger'),
-            Stat::make('Đơn hàng mới', $formatNumber($newOrders))
-                ->description('Tăng 7%')
-                ->descriptionIcon('heroicon-m-arrow-trending-up')
-                ->chart([15, 4, 10, 2, 12, 4, 12])
+                ->description($rangeLabel)
+                ->descriptionIcon('heroicon-m-calendar')
+                ->color('info'),
+            Stat::make('Đơn hàng thanh toán', $formatNumber($paidOrders))
+                ->description($rangeLabel)
+                ->descriptionIcon('heroicon-m-calendar')
                 ->color('success'),
         ];
     }

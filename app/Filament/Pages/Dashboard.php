@@ -18,8 +18,6 @@ class Dashboard extends BaseDashboard
         return [
             \App\Filament\Widgets\StatsOverviewWidget::class,
             \App\Filament\Widgets\CtvStatsWidget::class,
-            \App\Filament\Widgets\CustomersChart::class,
-            \App\Filament\Widgets\OrdersChart::class,
             \App\Filament\Widgets\LatestOrders::class,
         ];
     }

@@ -13,8 +13,10 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class CategoryForm
 {
@@ -67,7 +69,39 @@ class CategoryForm
                             ->imageResizeTargetHeight('225')
                             ->maxSize(2048) // Limit to 2MB
                             ->previewable()
-                            ->downloadable(),
+                            ->downloadable()
+                            ->saveUploadedFileUsing(static function (SpatieMediaLibraryFileUpload $component, TemporaryUploadedFile $file, ?Model $record): ?string {
+                                if (! $record) {
+                                    return null;
+                                }
+
+                                try {
+                                    if (! $file->exists()) {
+                                        return null;
+                                    }
+                                } catch (\Throwable $exception) {
+                                    return null;
+                                }
+
+                                $filePath = $file->getRealPath();
+
+                                if (! $filePath || ! is_file($filePath)) {
+                                    return null;
+                                }
+
+                                $media = $record->addMedia($filePath)
+                                    ->addCustomHeaders($component->getCustomHeaders())
+                                    ->usingFileName($component->getUploadedFileNameForStorage($file))
+                                    ->usingName($component->getMediaName($file) ?? pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
+                                    ->storingConversionsOnDisk($component->getConversionsDisk() ?? '')
+                                    ->withCustomProperties($component->getCustomProperties())
+                                    ->withManipulations($component->getManipulations())
+                                    ->withResponsiveImagesIf($component->hasResponsiveImages())
+                                    ->withProperties($component->getProperties())
+                                    ->toMediaCollection($component->getCollection() ?? 'default', $component->getDiskName());
+
+                                return $media->getAttributeValue('uuid');
+                            }),
                     ])
                     ->columnSpan(['lg' => 1])
                     ->collapsible(),

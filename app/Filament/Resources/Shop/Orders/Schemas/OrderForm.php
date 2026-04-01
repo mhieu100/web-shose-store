@@ -135,7 +135,7 @@ class OrderForm
                     ->schema([
                         TextEntry::make('subtotal')
                             ->label('Tạm tính')
-                            ->state(fn (Order $record): string => '$' . number_format($record->subtotal ?? 0, 2)),
+                            ->state(fn (Order $record): string => number_format($record->subtotal ?? 0, 0, ',', '.') . ' ₫'),
 
                         TextEntry::make('coupon_code')
                             ->label('Mã giảm giá')
@@ -145,20 +145,20 @@ class OrderForm
 
                         TextEntry::make('coupon_discount')
                             ->label('Giảm giá')
-                            ->state(fn (Order $record): string => $record->coupon_discount > 0 ? '-$' . number_format($record->coupon_discount, 2) : '$0.00')
+                            ->state(fn (Order $record): string => $record->coupon_discount > 0 ? '-' . number_format($record->coupon_discount, 0, ',', '.') . ' ₫' : '0 ₫')
                             ->color('success'),
 
                         TextEntry::make('shipping_amount')
                             ->label('Phí giao hàng')
-                            ->state(fn (Order $record): string => '$' . number_format($record->shipping_amount ?? 0, 2)),
+                            ->state(fn (Order $record): string => number_format($record->shipping_amount ?? 0, 0, ',', '.') . ' ₫'),
 
                         TextEntry::make('tax_amount')
                             ->label('Thuế')
-                            ->state(fn (Order $record): string => '$' . number_format($record->tax_amount ?? 0, 2)),
+                            ->state(fn (Order $record): string => number_format($record->tax_amount ?? 0, 0, ',', '.') . ' ₫'),
 
                         TextEntry::make('total_amount')
                             ->label('Tổng cộng')
-                            ->state(fn (Order $record): string => '$' . number_format($record->total_amount ?? 0, 2))
+                            ->state(fn (Order $record): string => number_format($record->total_amount ?? 0, 0, ',', '.') . ' ₫')
                             ->weight(FontWeight::Bold)
                             ->color('success'),
                     ])

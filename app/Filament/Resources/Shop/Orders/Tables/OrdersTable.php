@@ -85,7 +85,7 @@ class OrdersTable
 
                 TextColumn::make('subtotal')
                     ->label('Tạm tính')
-                    ->money('USD')
+                    ->money('VND')
                     ->sortable()
                     ->toggleable(),
 
@@ -98,34 +98,34 @@ class OrdersTable
 
                 TextColumn::make('coupon_discount')
                     ->label('Giảm giá')
-                    ->money('USD')
+                    ->money('VND')
                     ->color('success')
-                    ->formatStateUsing(fn ($state) => $state > 0 ? '-$' . number_format($state, 2) : '')
-                    ->placeholder('$0.00')
+                    ->formatStateUsing(fn ($state) => $state > 0 ? '-' . number_format($state, 0, ',', '.') . ' ₫' : '')
+                    ->placeholder('0 ₫')
                     ->toggleable(),
 
                 TextColumn::make('shipping_amount')
                     ->label('Phí ship')
-                    ->money('USD')
+                    ->money('VND')
                     ->sortable()
                     ->toggleable(),
 
                 TextColumn::make('tax_amount')
                     ->label('Thuế')
-                    ->money('USD')
+                    ->money('VND')
                     ->sortable()
                     ->toggleable(),
 
                 TextColumn::make('total_amount')
                     ->label('Tổng cộng')
-                    ->money('USD')
+                    ->money('VND')
                     ->searchable()
                     ->sortable()
                     ->weight('bold')
                     ->color('success')
                     ->summarize([
                         Sum::make()
-                            ->money('USD')
+                            ->money('VND')
                             ->label('Tổng doanh thu'),
                     ]),
 
@@ -215,8 +215,8 @@ class OrdersTable
                     ->toggle(),
 
                 Filter::make('high_value')
-                    ->label('Đơn hàng giá trị cao (>$100)')
-                    ->query(fn (Builder $query): Builder => $query->where('total_amount', '>', 100))
+                    ->label('Đơn hàng giá trị cao (>1.000.000 ₫)')
+                    ->query(fn (Builder $query): Builder => $query->where('total_amount', '>', 1000000))
                     ->toggle(),
             ])
             ->recordActions([

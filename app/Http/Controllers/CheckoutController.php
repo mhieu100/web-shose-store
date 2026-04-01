@@ -545,13 +545,8 @@ class CheckoutController extends Controller
      */
     private function calculateShipping(float $subtotal): float
     {
-        // Free shipping over $100
-        if ($subtotal >= 100) {
-            return 0.00;
-        }
-
-        // Standard shipping
-        return 10.00;
+        // Flat shipping fee (VND)
+        return 50000;
     }
 
     /**
@@ -559,7 +554,7 @@ class CheckoutController extends Controller
      */
     private function calculateTax(float $subtotal): float
     {
-        // 10% tax rate
+        // 10% VAT
         return $subtotal * 0.10;
     }
 

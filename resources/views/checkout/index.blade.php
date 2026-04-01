@@ -243,7 +243,7 @@
                                             <p class="value">Subtotal</p>
                                         </td>
                                         <td>
-                                            <p class="price">${{ number_format($subtotal, 2) }}</p>
+                                            <p class="price">{{ number_format($subtotal, 0, ',', '.') }}₫</p>
                                         </td>
                                     </tr>
                                     <tr class="shipping">
@@ -251,13 +251,22 @@
                                             <p class="value">Shipping</p>
                                         </td>
                                         <td>
-                                            <p class="price">
+                                            <span class="price">
                                                 @if(($shipping ?? 0) == 0)
-                                                    <span class="text-green-600">Free</span>
+                                                    <span class="text-green-600">Miễn phí</span>
                                                 @else
-                                                    ${{ number_format($shipping ?? 0, 2) }}
+                                                    {{ number_format($shipping ?? 0, 0, ',', '.') }}₫
                                                 @endif
-                                            </p>
+                                            </span> 
+                                            <span class="text-green-600">( Cố định )</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="tax">
+                                        <td>
+                                            <p class="value">VAT (10%)</p>
+                                        </td>
+                                        <td>
+                                            <p class="price">{{ number_format($tax ?? 0, 0, ',', '.') }}₫</p>
                                         </td>
                                     </tr>
                                     <tr class="order-total">
@@ -265,7 +274,7 @@
                                             <p class="value">Total</p>
                                         </td>
                                         <td>
-                                            <p class="price">${{ number_format($total, 2) }}</p>
+                                            <p class="price">{{ number_format($total, 0, ',', '.') }}₫</p>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -324,14 +333,6 @@
                                         </label>
                                     </div>
 
-                                    <div class="radio">
-                                        <input type="radio" name="payment_method" value="bank_transfer" id="bank_transfer" form="checkout-form">
-                                        <label for="bank_transfer">
-                                            <span></span>
-                                            <i class="fas fa-university me-2"></i>
-                                            Bank Transfer
-                                        </label>
-                                    </div>
                                 </div>
                         </div>
 

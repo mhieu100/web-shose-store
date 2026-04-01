@@ -8,7 +8,6 @@ use Filament\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
-use Squire\Models\Currency;
 
 class LatestOrders extends BaseWidget
 {
@@ -42,23 +41,17 @@ class LatestOrders extends BaseWidget
                     ->badge(),
                 TextColumn::make('currency')
                     ->label('Tiền tệ')
-                    ->getStateUsing(function ($record): ?string {
-                        static $currencyNames = null;
-
-                        if ($currencyNames === null) {
-                            $currencyNames = Currency::query()->pluck('name', 'id')->all();
-                        }
-
-                        return $currencyNames[$record->currency] ?? null;
-                    })
+                    ->getStateUsing(fn (): string => 'VND')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('total_price')
                     ->label('Tổng tiền')
+                    ->money('VND')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('shipping_price')
                     ->label('Phí vận chuyển')
+                    ->money('VND')
                     ->searchable()
                     ->sortable(),
             ])
