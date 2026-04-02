@@ -29,8 +29,7 @@ class StatsOverviewWidget extends BaseWidget
 
         $paidOrdersQuery = Order::query()
             ->where('payment_status', 'completed')
-            ->whereNotNull('paid_at')
-            ->whereBetween('paid_at', [$startDate->copy()->startOfDay(), $endDate->copy()->endOfDay()]);
+            ->whereBetween('created_at', [$startDate->copy()->startOfDay(), $endDate->copy()->endOfDay()]);
 
         $revenue = (float) (clone $paidOrdersQuery)->sum('total_price');
         $paidOrders = (clone $paidOrdersQuery)->count();

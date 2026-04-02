@@ -64,7 +64,8 @@ class EditOrder extends EditRecord
                     $this->record->update([
                         'status' => 'delivered',
                         'delivered_at' => now(),
-                        'payment_status' => 'completed'
+                        'payment_status' => 'completed',
+                        'paid_at' => $this->record->paid_at ?? now(),
                     ]);
                     Notification::make()
                         ->title('Đã hoàn thành đơn hàng')

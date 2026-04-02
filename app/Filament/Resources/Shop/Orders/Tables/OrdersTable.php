@@ -261,7 +261,8 @@ class OrdersTable
                         $record->update([
                             'status' => OrderStatus::Delivered,
                             'delivered_at' => now(),
-                            'payment_status' => 'completed'
+                            'payment_status' => 'completed',
+                            'paid_at' => $record->paid_at ?? now(),
                         ]);
                         Notification::make()
                             ->title('Đã hoàn thành đơn hàng')
